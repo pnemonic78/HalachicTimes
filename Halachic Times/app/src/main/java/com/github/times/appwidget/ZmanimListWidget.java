@@ -15,6 +15,9 @@
  */
 package com.github.times.appwidget;
 
+import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
+import static com.github.graphics.BitmapUtils.isBrightWallpaper;
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -26,9 +29,6 @@ import androidx.annotation.StyleRes;
 
 import com.github.times.R;
 import com.github.times.ZmanimAdapter;
-
-import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
-import static com.github.graphics.BitmapUtils.isBrightWallpaper;
 
 /**
  * Shows a scrollable list of halachic times (<em>zmanim</em>) for prayers in a widget.
@@ -81,8 +81,8 @@ public class ZmanimListWidget extends ZmanimWidget {
      * @param list        the remote list.
      */
     protected void bindListView(Context context, int appWidgetId, RemoteViews list) {
-        Intent adapter = new Intent(context, ZmanimWidgetService.class);
-        adapter.putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
+        Intent adapter = new Intent(context, ZmanimWidgetService.class)
+            .putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
         adapter.setData(Uri.parse(adapter.toUri(Intent.URI_INTENT_SCHEME)));
         list.setRemoteAdapter(android.R.id.list, adapter);
     }

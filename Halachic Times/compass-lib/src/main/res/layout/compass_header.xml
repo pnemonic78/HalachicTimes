@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,7 +7,9 @@
     android:paddingLeft="4dp"
     android:paddingRight="4dp">
 
-    <include layout="@layout/times_location"/>
+    <include
+        android:id="@+id/location"
+        layout="@layout/times_location" />
 
     <TextView
         android:id="@+id/summary"
@@ -17,6 +18,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/compass_summary"
-        tools:text="@string/summaries_title"/>
+        tools:text="@string/summaries_title" />
 
 </LinearLayout>

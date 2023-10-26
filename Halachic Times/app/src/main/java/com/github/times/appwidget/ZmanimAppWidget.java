@@ -58,7 +58,6 @@ import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
-
 import com.kosherjava.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
@@ -167,8 +166,8 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
         ZmanimAdapter adapter = null;
 
         for (int appWidgetId : appWidgetIds) {
-            activityIntent = new Intent(context, ZmanimActivity.class);
-            activityIntent.putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
+            activityIntent = new Intent(context, ZmanimActivity.class)
+                .putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
             activityPendingIntent = PendingIntent.getActivity(context, appWidgetId, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             views = new RemoteViews(packageName, layoutId);
@@ -248,9 +247,9 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      */
     private void schedulePending(Context context, int[] appWidgetIds, long time, int id) {
         Timber.i("schedulePending [%s]", ZmanimHelper.formatDateTime(time));
-        Intent alarmIntent = new Intent(context, getClass());
-        alarmIntent.setAction(ACTION_APPWIDGET_UPDATE);
-        alarmIntent.putExtra(EXTRA_APPWIDGET_IDS, appWidgetIds);
+        Intent alarmIntent = new Intent(context, getClass())
+            .setAction(ACTION_APPWIDGET_UPDATE)
+            .putExtra(EXTRA_APPWIDGET_IDS, appWidgetIds);
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT | FLAG_IMMUTABLE);
         AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         alarm.set(AlarmManager.RTC, time, alarmPendingIntent);

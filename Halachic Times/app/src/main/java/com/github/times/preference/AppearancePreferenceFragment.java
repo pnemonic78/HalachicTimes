@@ -138,9 +138,9 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
         Locale locale = LocaleUtils.parseLocale(newLocale);
         LocaleUtils.applyLocale(context.getApplicationContext(), locale);
 
-        Intent notification = new Intent(ACTION_LOCALE_CHANGED);
-        notification.setPackage(context.getPackageName());
-        notification.putExtra(EXTRA_LOCALE, newLocale);
+        Intent notification = new Intent(ACTION_LOCALE_CHANGED)
+            .setPackage(context.getPackageName())
+            .putExtra(EXTRA_LOCALE, newLocale);
         LocalBroadcastManager.getInstance(context).sendBroadcast(notification);
 
         // Restart the activity to refresh views.

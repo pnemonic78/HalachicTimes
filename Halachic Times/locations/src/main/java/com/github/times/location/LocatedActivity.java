@@ -45,27 +45,43 @@ import timber.log.Timber;
  * @author Moshe Waisberg
  */
 public abstract class LocatedActivity<P extends ThemePreferences> extends AppCompatActivity implements
-        ThemeCallbacks<P>,
-        ZmanimLocationListener {
+    ThemeCallbacks<P>,
+    ZmanimLocationListener {
 
-    /** The location parameter. */
+    /**
+     * The location parameter.
+     */
     public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
 
-    /** Activity id for searching locations. */
+    /**
+     * Activity id for searching locations.
+     */
     protected static final int ACTIVITY_LOCATIONS = 0x10C;
-    /** Activity id for requesting location permissions. */
+    /**
+     * Activity id for requesting location permissions.
+     */
     protected static final int ACTIVITY_PERMISSIONS = 0xA110;
 
     private ThemeCallbacks<P> themeCallbacks;
-    /** The address location. */
+    /**
+     * The address location.
+     */
     private Location addressLocation;
-    /** The address. */
+    /**
+     * The address.
+     */
     private ZmanimAddress address;
-    /** Bind the header in UI thread. */
+    /**
+     * Bind the header in UI thread.
+     */
     private Runnable bindHeader;
-    /** The location header location. */
+    /**
+     * The location header location.
+     */
     protected TextView headerLocation;
-    /** The location header for formatted address. */
+    /**
+     * The location header for formatted address.
+     */
     protected TextView headerAddress;
 
     /**
@@ -220,8 +236,8 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
             return;
 
         final Activity activity = this;
-        Intent intent = new Intent(activity, getLocationActivityClass());
-        intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, location);
+        Intent intent = new Intent(activity, getLocationActivityClass())
+            .putExtra(LocationManager.KEY_LOCATION_CHANGED, location);
         activity.startActivityForResult(intent, ACTIVITY_LOCATIONS);
     }
 
@@ -261,8 +277,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
     /**
      * Format the address for the current location.
      *
-     * @param address
-     *         the address.
+     * @param address the address.
      * @return the formatted address.
      */
     protected CharSequence formatAddress(ZmanimAddress address) {
@@ -278,7 +293,9 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
         }
     }
 
-    /** Bind the header. */
+    /**
+     * Bind the header.
+     */
     protected void bindHeader() {
         // Have we been destroyed?
         LocationsProvider locations = getLocations();
@@ -289,6 +306,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
 
     /**
      * Bind the header.
+     *
      * @param location the location to format.
      */
     protected void bindHeader(Location location) {
@@ -304,7 +322,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
         LocationFormatter formatter = getLocations();
         final CharSequence locationText = formatter.formatCoordinates(location);
         final CharSequence locationName = formatAddress(address);
-        Timber.d("header [" + locationText +"] => [" + locationName + "]");
+        Timber.d("header [" + locationText + "] => [" + locationName + "]");
 
         // Update the location.
         locationLabel.setText(locationText);

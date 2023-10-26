@@ -19,12 +19,12 @@ import android.content.Context
 import android.location.Location
 import android.os.Bundle
 import android.view.Menu
-import android.widget.TextView
 import androidx.core.view.isVisible
 import com.github.app.SimpleThemeCallbacks
 import com.github.app.ThemeCallbacks
 import com.github.preference.ThemePreferences
 import com.github.times.compass.lib.R
+import com.github.times.compass.lib.databinding.CompassActivityBinding
 import com.github.times.compass.preference.CompassPreferences
 import com.github.times.compass.preference.SimpleCompassPreferences
 import com.github.times.compass.preference.ThemeCompassPreferences
@@ -44,6 +44,8 @@ abstract class BaseCompassActivity : LocatedActivity<ThemePreferences>() {
     /** The preferences.  */
     private lateinit var preferences: ThemeCompassPreferences
 
+    private lateinit var binding: CompassActivityBinding
+
     val compassPreferences: CompassPreferences
         get() = preferences
 
@@ -53,9 +55,12 @@ abstract class BaseCompassActivity : LocatedActivity<ThemePreferences>() {
 
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.compass_activity)
-        headerLocation = findViewById(com.github.times.location.R.id.coordinates)
-        headerAddress = findViewById(com.github.times.location.R.id.address)
+        val binding = CompassActivityBinding.inflate(layoutInflater)
+        this.binding = binding
+        setContentView(binding.root)
+
+        headerLocation = binding.header.location.coordinates
+        headerAddress = binding.header.location.address
         fragment = supportFragmentManager.findFragmentById(R.id.compass) as? CompassFragment
         getCompassFragment()?.let {
             supportFragmentManager.beginTransaction()
@@ -64,19 +69,16 @@ abstract class BaseCompassActivity : LocatedActivity<ThemePreferences>() {
             fragment = it
         }
 
-        val summary = findViewById<TextView>(R.id.summary)
-        if (summary != null) {
-            val a =
-                context.obtainStyledAttributes(preferences.compassTheme, R.styleable.CompassView)
-            summary.setTextColor(a.getColorStateList(R.styleable.CompassView_compassColorTarget))
-            a.recycle()
-        }
+        val summary = binding.header.summary
+        val a = context.obtainStyledAttributes(preferences.compassTheme, R.styleable.CompassView)
+        summary.setTextColor(a.getColorStateList(R.styleable.CompassView_compassColorTarget))
+        a.recycle()
     }
 
     override fun onResume() {
         super.onResume()
-        val summary = findViewById<TextView>(R.id.summary)
-        summary?.isVisible = preferences.isSummariesVisible
+        val summary = binding.header.summary
+        summary.isVisible = preferences.isSummariesVisible
     }
 
     override fun createUpdateLocationRunnable(location: Location): Runnable {

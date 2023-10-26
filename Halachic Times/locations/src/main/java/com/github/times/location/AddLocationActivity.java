@@ -15,6 +15,8 @@
  */
 package com.github.times.location;
 
+import static com.github.times.location.GeocoderBase.USER_PROVIDER;
+
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -35,17 +37,16 @@ import android.widget.ViewSwitcher;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
 import com.github.text.method.RangeInputFilter;
+import com.github.times.location.databinding.LocationAddBinding;
 import com.github.times.location.text.LatitudeInputFilter;
 import com.github.times.location.text.LongitudeInputFilter;
 
-import static com.github.times.location.GeocoderBase.USER_PROVIDER;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * Add a location by specifying its coordinates.
@@ -53,20 +54,30 @@ import static com.github.times.location.GeocoderBase.USER_PROVIDER;
  * @author Moshe Waisberg
  */
 public class AddLocationActivity<P extends ThemePreferences> extends AppCompatActivity implements
-        ThemeCallbacks<P>,
-        AdapterView.OnItemSelectedListener,
-        ZmanimLocationListener {
+    ThemeCallbacks<P>,
+    AdapterView.OnItemSelectedListener,
+    ZmanimLocationListener {
 
-    /** The location parameter. */
+    /**
+     * The location parameter.
+     */
     public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
-    /** The location's latitude parameter. */
+    /**
+     * The location's latitude parameter.
+     */
     public static final String EXTRA_LATITUDE = "latitude";
-    /** The location's longitude parameter. */
+    /**
+     * The location's longitude parameter.
+     */
     public static final String EXTRA_LONGITUDE = "longitude";
 
-    /** The location state. */
+    /**
+     * The location state.
+     */
     private static final String SAVE_STATE_LOCATION = EXTRA_LOCATION;
-    /** The address state. */
+    /**
+     * The address state.
+     */
     private static final String SAVE_STATE_ADDRESS = "address";
 
     private static final int FORMAT_DECIMAL = 0;
@@ -108,7 +119,9 @@ public class AddLocationActivity<P extends ThemePreferences> extends AppCompatAc
     private EditText longitudeMillisecondsEdit;
     private Spinner longitudeDirection;
     private TextView addressView;
-    /** Provider for locations. */
+    /**
+     * Provider for locations.
+     */
     private LocationsProvider locations;
     private ZmanimAddress address;
     private Runnable addressFormatRunnable;
@@ -144,8 +157,9 @@ public class AddLocationActivity<P extends ThemePreferences> extends AppCompatAc
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        setContentView(R.layout.location_add);
-        initView();
+        LocationAddBinding binding = LocationAddBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        initView(binding);
 
         if (savedInstanceState == null) {
             Bundle args = getIntent().getExtras();
@@ -197,44 +211,44 @@ public class AddLocationActivity<P extends ThemePreferences> extends AppCompatAc
         return new SimpleThemeCallbacks<>(context);
     }
 
-    private void initView() {
-        coordsFormatSpinner = findViewById(R.id.coords_format);
+    private void initView(LocationAddBinding binding) {
+        coordsFormatSpinner = binding.coordsFormat;
         coordsFormatSpinner.setOnItemSelectedListener(this);
         coordsFormatSpinnerSelectedFirst = true;
 
-        latitudeSwitcher = findViewById(R.id.latitude_switch);
-        latitudeDegreesEdit = findViewById(R.id.latitude_degrees_edit);
+        latitudeSwitcher = binding.latitude.latitudeSwitch;
+        latitudeDegreesEdit = binding.latitude.latitudeDegreesEdit;
         latitudeDegreesEdit.setMinValue(DEGREES_MIN);
         latitudeDegreesEdit.setMaxValue((int) LatitudeInputFilter.LATITUDE_MAX);
-        latitudeDecimalEdit = findViewById(R.id.latitude_decimal_edit);
+        latitudeDecimalEdit = binding.latitude.latitudeDecimalEdit;
         latitudeDecimalEdit.setFilters(new InputFilter[]{new RangeInputFilter(DECIMAL_MIN, DECIMAL_MAX)});
-        latitudeMinutesEdit = findViewById(R.id.latitude_minutes_edit);
+        latitudeMinutesEdit = binding.latitude.latitudeMinutesEdit;
         latitudeMinutesEdit.setMinValue(MINUTES_MIN);
         latitudeMinutesEdit.setMaxValue(MINUTES_MAX);
-        latitudeSecondsEdit = findViewById(R.id.latitude_seconds_edit);
+        latitudeSecondsEdit = binding.latitude.latitudeSecondsEdit;
         latitudeSecondsEdit.setMinValue(SECONDS_MIN);
         latitudeSecondsEdit.setMaxValue(SECONDS_MAX);
-        latitudeMillisecondsEdit = findViewById(R.id.latitude_milliseconds_edit);
+        latitudeMillisecondsEdit = binding.latitude.latitudeMillisecondsEdit;
         latitudeMillisecondsEdit.setFilters(new InputFilter[]{new RangeInputFilter(MILLISECONDS_MIN, MILLISECONDS_MAX)});
-        latitudeDirection = findViewById(R.id.latitude_direction);
+        latitudeDirection = binding.latitude.latitudeDirection;
 
-        longitudeSwitcher = findViewById(R.id.longitude_switch);
-        longitudeDegreesEdit = findViewById(R.id.longitude_degrees_edit);
+        longitudeSwitcher = binding.longitude.longitudeSwitch;
+        longitudeDegreesEdit = binding.longitude.longitudeDegreesEdit;
         longitudeDegreesEdit.setMinValue(DEGREES_MIN);
         longitudeDegreesEdit.setMaxValue((int) LongitudeInputFilter.LONGITUDE_MAX);
-        longitudeDecimalEdit = findViewById(R.id.longitude_decimal_edit);
+        longitudeDecimalEdit = binding.longitude.longitudeDecimalEdit;
         longitudeDecimalEdit.setFilters(new InputFilter[]{new RangeInputFilter(DECIMAL_MIN, DECIMAL_MAX)});
-        longitudeMinutesEdit = findViewById(R.id.longitude_minutes_edit);
+        longitudeMinutesEdit = binding.longitude.longitudeMinutesEdit;
         longitudeMinutesEdit.setMinValue(MINUTES_MIN);
         longitudeMinutesEdit.setMaxValue(MINUTES_MAX);
-        longitudeSecondsEdit = findViewById(R.id.longitude_seconds_edit);
+        longitudeSecondsEdit = binding.longitude.longitudeSecondsEdit;
         longitudeSecondsEdit.setMinValue(SECONDS_MIN);
         longitudeSecondsEdit.setMaxValue(SECONDS_MAX);
-        longitudeMillisecondsEdit = findViewById(R.id.longitude_milliseconds_edit);
+        longitudeMillisecondsEdit = binding.longitude.longitudeMillisecondsEdit;
         longitudeMillisecondsEdit.setFilters(new InputFilter[]{new RangeInputFilter(MILLISECONDS_MIN, MILLISECONDS_MAX)});
-        longitudeDirection = findViewById(R.id.longitude_direction);
+        longitudeDirection = binding.longitude.longitudeDirection;
 
-        addressView = findViewById(R.id.address);
+        addressView = binding.address;
 
         updateNumberPickers();
     }
@@ -280,8 +294,8 @@ public class AddLocationActivity<P extends ThemePreferences> extends AppCompatAc
         }
         if (id == R.id.menu_location_add) {
             if (saveLocation(location, coordsFormatSpinner.getSelectedItemPosition())) {
-                Intent data = new Intent();
-                data.putExtra(EXTRA_LOCATION, location);
+                Intent data = new Intent()
+                    .putExtra(EXTRA_LOCATION, location);
                 setResult(RESULT_OK, data);
                 finish();
             }
@@ -496,9 +510,8 @@ public class AddLocationActivity<P extends ThemePreferences> extends AppCompatAc
     /**
      * Set the formatter to be used for formatting the numbers.
      *
-     * @param formatter
-     *         The formatter object. If formatter is <code>null</code>,
-     *         {@link String#valueOf(int)} will be used.
+     * @param formatter The formatter object. If formatter is <code>null</code>,
+     *                  {@link String#valueOf(int)} will be used.
      */
     public void setFormatter(NumberPicker.Formatter formatter) {
         if (formatter == this.formatter) {

@@ -194,9 +194,8 @@ public class ZmanimReminderWorker extends Worker {
         extras.remove(DATA_ACTION);
         extras.remove(DATA_DATA);
 
-        Intent intent = new Intent()
-                .putExtras(extras)
-                .setAction(action);
+        Intent intent = new Intent(action)
+                .putExtras(extras);
         if (!TextUtils.isEmpty(dataString)) {
             intent.setData(Uri.parse(dataString));
         }

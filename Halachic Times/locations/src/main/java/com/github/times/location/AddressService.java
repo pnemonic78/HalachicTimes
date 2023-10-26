@@ -15,20 +15,21 @@
  */
 package com.github.times.location;
 
+import static com.github.times.location.ZmanimLocationListener.ACTION_ADDRESS;
+import static com.github.times.location.ZmanimLocationListener.ACTION_ELEVATION;
+
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
 
-import com.github.times.location.AddressProvider.OnFindAddressListener;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
-import timber.log.Timber;
 
-import static com.github.times.location.ZmanimLocationListener.ACTION_ADDRESS;
-import static com.github.times.location.ZmanimLocationListener.ACTION_ELEVATION;
+import com.github.times.location.AddressProvider.OnFindAddressListener;
+
+import timber.log.Timber;
 
 /**
  * Service to find an address.
@@ -106,10 +107,10 @@ public class AddressService extends JobIntentService implements OnFindAddressLis
         }
 
         Timber.i("find address: %s %s", location, addr);
-        Intent result = new Intent(ACTION_ADDRESS);
-        result.setPackage(getPackageName());
-        result.putExtra(PARAMETER_LOCATION, location);
-        result.putExtra(PARAMETER_ADDRESS, addr);
+        Intent result = new Intent(ACTION_ADDRESS)
+            .setPackage(getPackageName())
+            .putExtra(PARAMETER_LOCATION, location)
+            .putExtra(PARAMETER_ADDRESS, addr);
         sendBroadcast(result);
     }
 
@@ -119,9 +120,9 @@ public class AddressService extends JobIntentService implements OnFindAddressLis
             provider.insertOrUpdateElevation((ZmanimLocation) elevated);
 
             Timber.i("find elevation: %s %s", location, elevated);
-            Intent result = new Intent(ACTION_ELEVATION);
-            result.setPackage(getPackageName());
-            result.putExtra(PARAMETER_LOCATION, elevated);
+            Intent result = new Intent(ACTION_ELEVATION)
+                .setPackage(getPackageName())
+                .putExtra(PARAMETER_LOCATION, elevated);
             sendBroadcast(result);
         }
     }

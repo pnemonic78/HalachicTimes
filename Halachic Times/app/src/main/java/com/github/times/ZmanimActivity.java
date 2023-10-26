@@ -58,6 +58,8 @@ import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.app.TodayDatePickerDialog;
 import com.github.times.compass.CompassActivity;
+import com.github.times.databinding.TimesBinding;
+import com.github.times.databinding.TimesHeaderBinding;
 import com.github.times.location.LocatedActivity;
 import com.github.times.location.LocationActivity;
 import com.github.times.preference.SimpleZmanimPreferences;
@@ -352,8 +354,8 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     private void init() {
         final Context context = this;
 
-        setContentView(R.layout.times);
-        View view = getWindow().getDecorView();
+        TimesBinding binding = TimesBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         gestureDetector = new GestureDetector(context, this, handler);
         gestureDetector.setIsLongpressEnabled(false);
@@ -361,11 +363,11 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         FragmentManager fragmentManager = getSupportFragmentManager();
         masterFragment = (ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>>) fragmentManager.findFragmentById(R.id.list_fragment);
         masterFragment.setOnClickListener(this);
-        detailsFragmentSwitcher = view.findViewById(R.id.details_fragment);
+        detailsFragmentSwitcher = binding.detailsFragment;
         detailsListFragment = (ZmanimDetailsFragment<ZmanimDetailsAdapter, ZmanimDetailsPopulater<ZmanimDetailsAdapter>>) fragmentManager.findFragmentById(R.id.details_list_fragment);
         candlesFragment = (CandlesFragment) fragmentManager.findFragmentById(R.id.candles_fragment);
 
-        viewSwitcher = view.findViewById(R.id.frame_fragments);
+        viewSwitcher = binding.frameFragments;
         if (viewSwitcher != null) {
             Animation inAnim = AnimationUtils.makeInAnimation(context, false);
             viewSwitcher.setInAnimation(inAnim);
@@ -381,15 +383,15 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
             detailsShrink.setDuration(detailsAnimTime);
         }
 
-        View header = view.findViewById(R.id.header);
-        header.setOnClickListener(this);
-        headerGregorianDate = header.findViewById(R.id.date_gregorian);
-        headerLocation = header.findViewById(com.github.times.location.R.id.coordinates);
-        headerAddress = header.findViewById(com.github.times.location.R.id.address);
+        TimesHeaderBinding header = binding.header;
+        header.getRoot().setOnClickListener(this);
+        headerGregorianDate =  header.dateGregorian;
+        headerLocation = header.headerLocation.coordinates;
+        headerAddress = header.headerLocation.address;
 
-        buttonYesterday = header.findViewById(R.id.nav_yesterday);
+        buttonYesterday = header.navYesterday;
         buttonYesterday.setOnClickListener(this);
-        buttonTomorrow = header.findViewById(R.id.nav_tomorrow);
+        buttonTomorrow = header.navTomorrow;
         buttonTomorrow.setOnClickListener(this);
 
         slideRightToLeft = AnimationUtils.loadAnimation(context, com.github.times.common.R.anim.slide_right_to_left);

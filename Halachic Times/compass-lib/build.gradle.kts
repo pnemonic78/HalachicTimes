@@ -33,6 +33,11 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = BuildVersions.jvm
         targetCompatibility = BuildVersions.jvm

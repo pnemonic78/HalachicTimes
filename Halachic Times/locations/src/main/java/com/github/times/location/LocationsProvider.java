@@ -318,9 +318,9 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     private void broadcastLocationChanged(Location location) {
-        Intent intent = new Intent(ACTION_LOCATION_CHANGED);
-        intent.setPackage(context.getPackageName());
-        intent.putExtra(EXTRA_LOCATION, location);
+        Intent intent = new Intent(ACTION_LOCATION_CHANGED)
+            .setPackage(context.getPackageName())
+            .putExtra(EXTRA_LOCATION, location);
         context.sendBroadcast(intent);
     }
 
@@ -874,15 +874,15 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     public void findAddress(Location location, boolean persist) {
-        Intent findAddress = new Intent(ACTION_ADDRESS);
-        findAddress.putExtra(EXTRA_LOCATION, location);
-        findAddress.putExtra(EXTRA_PERSIST, persist);
+        Intent findAddress = new Intent(ACTION_ADDRESS)
+            .putExtra(EXTRA_LOCATION, location)
+            .putExtra(EXTRA_PERSIST, persist);
         AddressService.enqueueWork(context, findAddress);
     }
 
     public void findElevation(Location location) {
-        Intent findElevation = new Intent(ACTION_ELEVATION);
-        findElevation.putExtra(EXTRA_LOCATION, location);
+        Intent findElevation = new Intent(ACTION_ELEVATION)
+            .putExtra(EXTRA_LOCATION, location);
         AddressService.enqueueWork(context, findElevation);
     }
 

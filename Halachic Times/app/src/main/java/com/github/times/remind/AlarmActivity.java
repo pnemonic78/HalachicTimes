@@ -35,7 +35,6 @@ import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -45,8 +44,8 @@ import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.text.style.TypefaceSpan;
 import com.github.times.BuildConfig;
-import com.github.times.R;
 import com.github.times.ZmanimHelper;
+import com.github.times.databinding.AlarmActivityBinding;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
@@ -64,8 +63,7 @@ import timber.log.Timber;
  * @author Moshe Waisberg
  */
 public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivity implements
-    ThemeCallbacks<P>,
-    View.OnClickListener {
+    ThemeCallbacks<P> {
 
     /**
      * Extras name to silence to alarm.
@@ -81,9 +79,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
     private Format timeFormat;
     private long timeFormatGranularity;
 
-    private TextView timeView;
-    private TextView titleView;
-    private View dismissView;
+    private AlarmActivityBinding binding;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable silenceRunnable;
@@ -111,12 +107,11 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
             | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
             | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
-        setContentView(R.layout.alarm_activity);
+        AlarmActivityBinding binding = AlarmActivityBinding.inflate(getLayoutInflater());
+        this.binding = binding;
+        setContentView(binding.getRoot());
 
-        timeView = findViewById(R.id.time);
-        titleView = findViewById(R.id.title);
-        dismissView = findViewById(R.id.reminder_dismiss);
-        dismissView.setOnClickListener(this);
+        binding.reminderDismiss.setOnClickListener(v -> dismiss(true));
 
         final Context context = this;
         final Locale locale = LocaleUtils.getDefaultLocale(context);
@@ -228,8 +223,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
             }
         }
 
-        timeView.setText(spans);
-        titleView.setText(item.title);
+        binding.time.setText(spans);
+        binding.title.setText(item.title);
     }
 
     /**
@@ -243,13 +238,6 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
             return "NEVER";
         }
         return ZmanimHelper.formatDateTime(new Date(time));
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view == dismissView) {
-            dismiss(true);
-        }
     }
 
     @Override

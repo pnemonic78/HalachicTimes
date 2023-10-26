@@ -380,12 +380,12 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
      * Show the form to add a custom location.
      */
     private void addLocation() {
-        Intent intent = new Intent(this, getAddLocationActivityClass());
-        intent.setAction(Intent.ACTION_INSERT);
         // Don't pass the whole location because we are not editing it, but only using as an example.
         Location location = getLocations().getLocation();
-        intent.putExtra(AddLocationActivity.EXTRA_LATITUDE, location.getLatitude());
-        intent.putExtra(AddLocationActivity.EXTRA_LONGITUDE, location.getLongitude());
+        Intent intent = new Intent(this, getAddLocationActivityClass())
+            .setAction(Intent.ACTION_INSERT)
+            .putExtra(AddLocationActivity.EXTRA_LATITUDE, location.getLatitude())
+            .putExtra(AddLocationActivity.EXTRA_LONGITUDE, location.getLongitude());
         startActivityForResult(intent, REQUEST_ADD);
     }
 

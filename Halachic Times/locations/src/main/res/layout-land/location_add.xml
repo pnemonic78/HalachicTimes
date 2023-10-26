@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:padding="16dp">
 
     <TableLayout
         android:layout_width="match_parent"
@@ -19,14 +18,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="@string/coords_format_label"/>
+                android:text="@string/coords_format_label" />
 
             <Spinner
                 android:id="@+id/coords_format"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:entries="@array/coords_format_editor_entries"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown" />
         </TableRow>
 
         <TableRow
@@ -39,9 +38,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="@string/latitude_label"/>
+                android:text="@string/latitude_label" />
 
-            <include layout="@layout/latitude"/>
+            <include
+                android:id="@+id/latitude"
+                layout="@layout/latitude" />
         </TableRow>
 
         <TableRow
@@ -54,9 +55,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="@string/longitude_label"/>
+                android:text="@string/longitude_label" />
 
-            <include layout="@layout/longitude"/>
+            <include
+                android:id="@+id/longitude"
+                layout="@layout/longitude" />
         </TableRow>
 
         <TableRow
@@ -69,13 +72,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="@string/address_label"/>
+                android:text="@string/address_label" />
 
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/location_unknown"/>
+                android:text="@string/location_unknown" />
         </TableRow>
     </TableLayout>
 </ScrollView>
