@@ -18,13 +18,14 @@ package com.github.times;
 import android.content.Context;
 
 import com.github.times.preference.ZmanimPreferences;
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
 
 /**
  * Populater for candles.
  *
  * @author Moshe Waisberg
  */
-public class CandlesPopulater extends ZmanimPopulater<CandlesAdapter> {
+public class CandlesPopulater extends ZmanimPopulater<ZmanimAdapter> {
 
     /**
      * Creates a new populater.
@@ -33,5 +34,11 @@ public class CandlesPopulater extends ZmanimPopulater<CandlesAdapter> {
      */
     public CandlesPopulater(Context context, ZmanimPreferences settings) {
         super(context, settings);
+    }
+
+    public CandleData populateCandles(ZmanimPreferences preferences) {
+        final JewishCalendar jewishDate = getJewishCalendar();
+        final JewishCalendar jewishDateTomorrow = cloneJewishTomorrow(jewishDate);
+        return calculateCandles(jewishDate, jewishDateTomorrow, preferences);
     }
 }

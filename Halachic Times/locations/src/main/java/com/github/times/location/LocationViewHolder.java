@@ -19,6 +19,9 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
+import com.github.times.location.databinding.LocationBinding;
 import com.github.widget.ArrayAdapter;
 
 /**
@@ -28,20 +31,20 @@ import com.github.widget.ArrayAdapter;
  */
 public class LocationViewHolder extends ArrayAdapter.ArrayViewHolder<LocationAdapter.LocationItem> implements View.OnClickListener {
 
-    protected final TextView cityName;
-    protected final TextView coordinates;
-    protected final CheckBox favorite;
+    private final TextView cityName;
+    private final TextView coordinates;
+    private final CheckBox favorite;
 
-    protected LocationAdapter.LocationItem item;
+    private LocationAdapter.LocationItem item;
 
     private final LocationAdapter.LocationItemListener itemListener;
 
-    public LocationViewHolder(View itemView, int fieldId, LocationAdapter.LocationItemListener itemListener) {
-        super(itemView, fieldId);
+    public LocationViewHolder(LocationBinding binding, int fieldId, LocationAdapter.LocationItemListener itemListener) {
+        super(binding.getRoot(), fieldId);
 
-        this.cityName = textView;
-        this.coordinates = itemView.findViewById(R.id.coordinates);
-        this.favorite = itemView.findViewById(R.id.checkbox);
+        this.cityName = binding.title;
+        this.coordinates = binding.coordinates;
+        this.favorite = binding.checkbox;
 
         this.itemListener = itemListener;
         itemView.setOnClickListener(this);
@@ -49,12 +52,18 @@ public class LocationViewHolder extends ArrayAdapter.ArrayViewHolder<LocationAda
     }
 
     @Override
-    public void bind(LocationAdapter.LocationItem item) {
+    public void bind(@Nullable LocationAdapter.LocationItem item) {
         this.item = item;
 
-        cityName.setText(item.getLabel());
-        coordinates.setText(item.getCoordinates());
-        favorite.setChecked(item.isFavorite());
+        if (item != null) {
+            cityName.setText(item.getLabel());
+            coordinates.setText(item.getCoordinates());
+            favorite.setChecked(item.isFavorite());
+        } else {
+            cityName.setText("");
+            coordinates.setText("");
+            favorite.setChecked(false);
+        }
     }
 
     public LocationAdapter.LocationItem getItem() {

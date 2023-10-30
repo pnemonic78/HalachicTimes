@@ -789,10 +789,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
             return true;
 
         if (candlesFragment.isVisible()) {
-            CandlesAdapter candlesAdapter = candlesFragment.getAdapter();
-            if (candlesAdapter.getCandlesCount() == 0)
-                return false;
-            return true;
+            return candlesFragment.getCandlesCount() != 0;
         }
 
         if (detailsListFragment.isVisible()) {

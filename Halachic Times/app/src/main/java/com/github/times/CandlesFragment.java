@@ -15,166 +15,157 @@
  */
 package com.github.times;
 
+import static com.github.times.ZmanimDays.SHABBATH;
+import static com.github.times.ZmanimPopulater.BEFORE_SUNSET;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.EREV_YOM_KIPPUR;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.EREV_YOM_KIPPUR;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.github.times.databinding.CandlesChannukaBinding;
+import com.github.times.databinding.CandlesFragmentBinding;
+import com.github.times.databinding.CandlesKippurimBinding;
+import com.github.times.databinding.CandlesShabbatBinding;
+import com.github.times.location.ZmanimLocations;
+import com.github.times.preference.SimpleZmanimPreferences;
+import com.github.times.preference.ZmanimPreferences;
+import com.kosherjava.zmanim.util.GeoLocation;
+
+import java.util.Calendar;
 
 /**
  * Shows candle images.
  *
  * @author Moshe Waisberg
  */
-public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopulater> {
-
-    private static final int[] SHABBAT_CANDLES = {R.id.candle_1, R.id.candle_2};
-    private static final int[] YOM_KIPPURIM_CANDLES = {R.id.candle_1};
-    private static final int[] CHANNUKA_CANDLES = {R.id.candle_1, R.id.candle_2, R.id.candle_3, R.id.candle_4, R.id.candle_5, R.id.candle_6, R.id.candle_7, R.id.candle_8};
+public class CandlesFragment extends Fragment {
 
     /**
-     * The candles view for Shabbat.
+     * Provider for locations.
      */
-    private ViewGroup candlesShabbat;
+    private ZmanimLocations locations;
     /**
-     * The candles view for Channuka.
+     * The preferences.
      */
-    private ViewGroup candlesChannuka;
-    /**
-     * The candles view for Yom Kippurim.
-     */
-    private ViewGroup candlesKippurim;
-    /**
-     * The flaming candle animations.
-     */
-    private CandleView[] animations;
-    /**
-     * The flaming candle animations.
-     */
-    private CandleView[] animationsShabbat;
-    /**
-     * The flaming candle animations.
-     */
-    private CandleView[] animationsChannuka;
-    /**
-     * The flaming candle animations.
-     */
-    private CandleView[] animationsKippurim;
+    private ZmanimPreferences preferences;
+
+    private CandlesFragmentBinding _binding = null;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.inflater = inflater;
-        return inflater.inflate(R.layout.candles_fragment, container, false);
-    }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        this.list = (ViewGroup) view;
-    }
-
-    @Override
-    protected CandlesAdapter createAdapter(Context context) {
-        if (context == null) {
-            return null;
+        final Context context = requireContext();
+        if (context instanceof ZmanimActivity) {
+            preferences = ((ZmanimActivity) context).getZmanimPreferences();
+        } else {
+            preferences = new SimpleZmanimPreferences(context);
         }
-        return new CandlesAdapter(context, preferences);
+        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+        locations = app.getLocations();
     }
 
     @Override
-    protected CandlesPopulater createPopulater(@NonNull Context context) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        CandlesFragmentBinding binding = CandlesFragmentBinding.inflate(inflater, container, false);
+        _binding = binding;
+        return binding.getRoot();
+    }
+
+    @NonNull
+    private CandlesPopulater createPopulater(@NonNull Context context) {
         return new CandlesPopulater(context, preferences);
     }
 
-    @Override
-    protected void bindViews(ViewGroup list, CandlesAdapter adapter) {
-        if (list == null)
-            return;
-        list.removeAllViews();
-        if (adapter == null)
-            return;
+    public void populateTimes(@NonNull Calendar date) {
+        // Called before attached to activity?
+        if (!isAdded()) return;
+        CandlesFragmentBinding binding = _binding;
+        if (binding == null) return;
 
-        final int holiday = adapter.getCandlesHoliday();
-        final int candlesCount = adapter.getCandlesCount();
+        ZmanimLocations locations = this.locations;
+        if (locations == null) return;
+        GeoLocation gloc = locations.getGeoLocation();
+        // Have we been destroyed?
+        if (gloc == null) return;
+        Context context = binding.getRoot().getContext();
+
+        CandlesPopulater populater = createPopulater(context);
+        populater.setCalendar(date);
+        populater.setGeoLocation(gloc);
+        populater.setInIsrael(locations.isInIsrael());
+
+        final CandleData candles = populater.populateCandles(preferences);
+
         final boolean animate = preferences.isCandlesAnimated();
-        CandleView view;
-        ViewGroup group = null;
+        bindViews(binding, candles, animate);
+    }
+
+    private void bindViews(@NonNull CandlesFragmentBinding binding, @NonNull CandleData candles, boolean animate) {
+        ViewGroup container = binding.getRoot();
+        container.removeAllViews();
+
+        final int holiday = getCandlesHoliday(candles);
+        final int candlesCount = candles.countTomorrow;
+        CandleView[] candleViews = null;
+
+        Context context = container.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
 
         switch (holiday) {
             case EREV_YOM_KIPPUR:
             case YOM_KIPPUR:
-                group = (ViewGroup) adapter.getView(holiday, candlesKippurim, list);
-                if (candlesKippurim == null) {
-                    candlesKippurim = group;
+                CandlesKippurimBinding bindingKippur = CandlesKippurimBinding.inflate(inflater, container, true);
 
-                    // assert candlesCount == YOM_KIPPURIM_CANDLES.length;
-                    animationsKippurim = new CandleView[candlesCount];
-                    for (int i = 0; i < candlesCount; i++) {
-                        view = group.findViewById(YOM_KIPPURIM_CANDLES[i]);
-                        animationsKippurim[i] = view;
-                    }
-                }
-                list.addView(group);
-                animations = animationsKippurim;
+                candleViews = new CandleView[1];
+                candleViews[0] = bindingKippur.candle1;
                 break;
             case CHANUKAH:
-                group = (ViewGroup) adapter.getView(holiday, candlesChannuka, list);
-                if (candlesChannuka == null) {
-                    candlesChannuka = group;
+                CandlesChannukaBinding bindingChannuka = CandlesChannukaBinding.inflate(inflater, container, true);
 
-                    // create all candles in case user navigates to future day.
-                    final int allCandlesCount = CHANNUKA_CANDLES.length;
-                    // assert candlesCount <= allCandlesCount;
-                    animationsChannuka = new CandleView[allCandlesCount + 1];
-                    for (int i = 0; i < allCandlesCount; i++) {
-                        view = group.findViewById(CHANNUKA_CANDLES[i]);
-                        animationsChannuka[i] = view;
-                    }
-                    view = group.findViewById(R.id.candle_shamash);
-                    animationsChannuka[allCandlesCount] = view;
-                }
-                list.addView(group);
-                animations = animationsChannuka;
+                candleViews = new CandleView[9];
+                candleViews[0] = bindingChannuka.candle1;
+                candleViews[1] = bindingChannuka.candle2;
+                candleViews[2] = bindingChannuka.candle3;
+                candleViews[3] = bindingChannuka.candle4;
+                candleViews[4] = bindingChannuka.candle5;
+                candleViews[5] = bindingChannuka.candle6;
+                candleViews[6] = bindingChannuka.candle7;
+                candleViews[7] = bindingChannuka.candle8;
+                candleViews[8] = bindingChannuka.candleShamash;
+
                 // Only show relevant candles.
                 for (int i = 0; i < candlesCount; i++) {
-                    animations[i].setVisibility(View.VISIBLE);
+                    candleViews[i].setVisibility(View.VISIBLE);
                 }
-                for (int i = candlesCount; i < CHANNUKA_CANDLES.length; i++) {
-                    animations[i].setVisibility(View.INVISIBLE);
+                for (int i = candlesCount; i < 8; i++) {
+                    candleViews[i].setVisibility(View.INVISIBLE);
                 }
                 break;
             default:
                 if (candlesCount > 0) {
-                    group = (ViewGroup) adapter.getView(holiday, candlesShabbat, list);
-                    if (candlesShabbat == null) {
-                        candlesShabbat = group;
+                    CandlesShabbatBinding bindingShabbat = CandlesShabbatBinding.inflate(inflater, container, true);
 
-                        // assert candlesCount == SHABBAT_CANDLES.length;
-                        animationsShabbat = new CandleView[candlesCount];
-                        for (int i = 0; i < candlesCount; i++) {
-                            view = group.findViewById(SHABBAT_CANDLES[i]);
-                            animationsShabbat[i] = view;
-                        }
-                    }
-                    list.addView(group);
-                    animations = animationsShabbat;
+                    candleViews = new CandleView[2];
+                    candleViews[0] = bindingShabbat.candle1;
+                    candleViews[1] = bindingShabbat.candle2;
                 }
                 break;
         }
 
-        if (group != null) {
-            group.setVisibility(View.VISIBLE);
-        }
-
-        setFlickers(animations, animate);
+        setFlickers(candleViews, animate);
     }
 
-    private void setFlickers(CandleView[] candles, boolean enabled) {
+    private void setFlickers(@Nullable CandleView[] candles, boolean enabled) {
         if (candles == null)
             return;
         for (CandleView candle : candles) {
@@ -184,8 +175,36 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
         }
     }
 
-    @Override
-    protected void setOnClickListener(View view, ZmanimItem item) {
-        // No clicking allowed.
+    /**
+     * Set the view's visibility.
+     *
+     * @param visibility the visibility.
+     * @see View#VISIBLE
+     * @see View#INVISIBLE
+     * @see View#GONE
+     */
+    public void setVisibility(int visibility) {
+        View view = getView();
+        if (view != null) {
+            view.setVisibility(visibility);
+        }
+    }
+
+    public int getCandlesCount() {
+        ViewGroup root = (ViewGroup) getView();
+        if (root == null) return 0;
+        return root.getChildCount();
+    }
+
+    /**
+     * Get the occasion for lighting candles.
+     *
+     * @return the candles holiday.
+     */
+    public int getCandlesHoliday(@NonNull CandleData candles) {
+        final int when = candles.whenCandles;
+        final int holidayToday = candles.holidayToday;
+        final int holidayTomorrow = candles.holidayTomorrow;
+        return (when == BEFORE_SUNSET) ? ((holidayTomorrow == SHABBATH) ? holidayTomorrow : holidayToday) : holidayTomorrow;
     }
 }

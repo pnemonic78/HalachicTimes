@@ -49,7 +49,7 @@ class LocationSwipeHandler extends ItemTouchHelper.SimpleCallback {
     public int getSwipeDirs(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         if (viewHolder instanceof LocationViewHolder) {
             LocationViewHolder locationViewHolder = (LocationViewHolder) viewHolder;
-            LocationAdapter.LocationItem item = locationViewHolder.item;
+            LocationAdapter.LocationItem item = locationViewHolder.getItem();
             ZmanimAddress address = item.getAddress();
             long id = address.getId();
 
@@ -76,7 +76,7 @@ class LocationSwipeHandler extends ItemTouchHelper.SimpleCallback {
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         if (viewHolder instanceof LocationViewHolder) {
             LocationViewHolder locationViewHolder = (LocationViewHolder) viewHolder;
-            LocationAdapter.LocationItem item = locationViewHolder.item;
+            LocationAdapter.LocationItem item = locationViewHolder.getItem();
             itemListener.onItemSwipe(item);
         }
     }

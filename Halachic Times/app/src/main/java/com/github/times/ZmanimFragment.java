@@ -155,9 +155,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      * @return the adapter.
      */
     @SuppressWarnings("unchecked")
-    protected A createAdapter(Context context) {
-        if (context == null)
-            return null;
+    @Nullable
+    protected A createAdapter(@NonNull Context context) {
         return (A) new ZmanimAdapter(context, preferences);
     }
 
@@ -178,6 +177,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      * @return the populater.
      */
     @SuppressWarnings("unchecked")
+    @NonNull
     protected P createPopulater(@NonNull Context context) {
         return (P) new ZmanimPopulater<A>(context, preferences);
     }
@@ -240,16 +240,15 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      * @param list    the list.
      * @param adapter the list adapter.
      */
-    protected void bindViews(final ViewGroup list, final A adapter) {
+    protected void bindViews(@NonNull final ViewGroup list, @NonNull final A adapter) {
         if (list == null)
             return;
-        list.removeAllViews();
         if (adapter == null)
             return;
 
+        list.removeAllViews();
+
         final Context context = getContextImpl();
-        if (context == null)
-            return;
 
         final JewishCalendar jcal = adapter.getJewishCalendar();
         if (jcal == null) {

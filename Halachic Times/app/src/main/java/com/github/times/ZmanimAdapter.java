@@ -35,6 +35,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.github.times.preference.ZmanimPreferences;
@@ -165,8 +166,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         return calendar;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder holder = getViewHolder(position, convertView);
         if (holder == null) {
             holder = createViewHolder(position, convertView, parent);

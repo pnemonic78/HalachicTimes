@@ -57,7 +57,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
 
     @SuppressWarnings("unchecked")
     @Override
-    protected A createAdapter(Context context) {
+    protected A createAdapter(@NonNull Context context) {
         if ((masterId == 0) || (context == null)) {
             return null;
         }
@@ -66,7 +66,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
     }
 
     @Override
-    public A populateTimes(Calendar date) {
+    public A populateTimes(@NonNull Calendar date) {
         return populateTimes(date, masterId);
     }
 
@@ -258,10 +258,8 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
     }
 
     @Override
-    protected P createPopulater(Context context) {
-        if (context == null) {
-            return null;
-        }
+    @NonNull
+    protected P createPopulater(@NonNull Context context) {
         return (P) new ZmanimDetailsPopulater<A>(context, preferences);
     }
 }

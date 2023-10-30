@@ -15,33 +15,12 @@
  */
 package com.github.times;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.util.Pair;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.github.times.preference.ZmanimPreferences;
-
-import com.kosherjava.zmanim.ComplexZmanimCalendar;
-import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
-import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
-import com.kosherjava.zmanim.util.GeoLocation;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import timber.log.Timber;
-
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static com.github.times.ZmanimDays.SHABBATH;
 import static com.github.times.ZmanimItem.NEVER;
 import static com.github.util.TimeUtils.isSameDay;
-import static java.util.Calendar.FRIDAY;
-import static java.util.Calendar.SATURDAY;
 import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
 import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHOL_HAMOED_PESACH;
 import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHOL_HAMOED_SUCCOS;
@@ -59,6 +38,26 @@ import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SUCCOS;
 import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.TENTH_OF_TEVES;
 import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.TISHA_BEAV;
 import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
+import static java.util.Calendar.FRIDAY;
+import static java.util.Calendar.SATURDAY;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.Pair;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.github.times.preference.ZmanimPreferences;
+import com.kosherjava.zmanim.ComplexZmanimCalendar;
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
+import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
+import com.kosherjava.zmanim.util.GeoLocation;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import timber.log.Timber;
 
 /**
  * Populate a list of zmanim.
@@ -1581,7 +1580,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         return (date != null) && (date != NEVER);
     }
 
-    protected static JewishCalendar cloneJewishTomorrow(JewishCalendar jcal) {
+    protected static JewishCalendar cloneJewishTomorrow(@NonNull JewishCalendar jcal) {
         JewishCalendar jcalTomorrow = (JewishCalendar) jcal.clone();
         jcalTomorrow.forward(Calendar.DATE, 1);
         return jcalTomorrow;

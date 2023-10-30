@@ -18,11 +18,13 @@ package com.github.times.location;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
-import android.view.View;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.github.times.location.databinding.LocationBinding;
 import com.github.util.LocaleUtils;
 import com.github.widget.ArrayAdapter;
 
@@ -117,8 +119,9 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
 
     @NonNull
     @Override
-    protected LocationViewHolder createArrayViewHolder(@NonNull View view, int fieldId) {
-        return new LocationViewHolder(view, fieldId, listener);
+    protected LocationViewHolder createArrayViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, int viewType, int fieldId) {
+        LocationBinding binding = LocationBinding.inflate(inflater, parent, false);
+        return new LocationViewHolder(binding, fieldId, listener);
     }
 
     @NonNull
