@@ -10,7 +10,7 @@ object BuildVersions {
     const val targetSdkVersion = 33
 
     // App dependencies
-    const val androidTestVersion = "1.5.2"
+    const val androidTestVersion = "1.5.0"
     const val junitVersion = "4.13.2"
     const val junitExt = "1.1.5"
     const val okhttpVersion = "4.8.0"

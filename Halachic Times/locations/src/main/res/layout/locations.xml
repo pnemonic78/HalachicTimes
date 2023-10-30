@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/locations_search"/>
+    <include
+        android:id="@+id/search_bar"
+        layout="@layout/locations_search" />
 
     <com.github.widget.TabHost
         android:id="@android:id/tabhost"
@@ -24,13 +25,13 @@
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="true"/>
+                android:focusable="true" />
 
             <!-- Shadow -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/black_x10"/>
+                android:background="@color/black_x10" />
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -42,21 +43,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/location"/>
+                    tools:listitem="@layout/location" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@android:id/list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/location"/>
+                    tools:listitem="@layout/location" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_history"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/location"/>
+                    tools:listitem="@layout/location" />
             </FrameLayout>
 
         </LinearLayout>

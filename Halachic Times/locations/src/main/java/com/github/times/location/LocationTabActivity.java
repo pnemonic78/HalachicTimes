@@ -47,6 +47,7 @@ import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
 import com.github.times.location.LocationAdapter.LocationItem;
+import com.github.times.location.databinding.LocationsBinding;
 import com.github.times.location.impl.FavoritesLocationAdapter;
 import com.github.times.location.impl.HistoryLocationAdapter;
 
@@ -101,6 +102,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
     private static final int WHAT_DELETE = 3;
 
     private ThemeCallbacks<P> themeCallbacks;
+    private LocationsBinding binding;
     private SearchView searchText;
     private LocationAdapter adapterAll;
     private LocationAdapter adapterFavorites;
@@ -130,13 +132,15 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
         final LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
 
-        setContentView(R.layout.locations);
+        final LocationsBinding binding = LocationsBinding.inflate(getLayoutInflater());
+        this.binding = binding;
+        setContentView(binding.getRoot());
 
-        SearchView searchText = findViewById(R.id.search_location);
+        SearchView searchText = binding.searchBar.searchLocation;
         searchText.setOnQueryTextListener(this);
         this.searchText = searchText;
 
-        TabHost tabs = findViewById(android.R.id.tabhost);
+        TabHost tabs = binding.tabhost;
         tabs.setup();
         this.tabHost = tabs;
 
@@ -261,10 +265,11 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
 
         final LocationAdapter.LocationItemListener itemListener = this;
         final LocationAdapter.FilterListener filterListener = this;
+        final LocationsBinding binding = this.binding;
 
         LocationAdapter adapter = new LocationAdapter(context, items, itemListener);
         adapterAll = adapter;
-        RecyclerView list = findViewById(android.R.id.list);
+        RecyclerView list = binding.list;
         list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
         LocationSwipeHandler swipeHandler = new LocationSwipeHandler(this);
@@ -273,7 +278,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
 
         adapter = new HistoryLocationAdapter(context, items, itemListener, filterListener);
         adapterHistory = adapter;
-        list = findViewById(R.id.list_history);
+        list = binding.listHistory;
         list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
         swipeHandler = new LocationSwipeHandler(this);
@@ -282,7 +287,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
 
         adapter = new FavoritesLocationAdapter(context, items, itemListener, filterListener);
         adapterFavorites = adapter;
-        list = findViewById(R.id.list_favorites);
+        list = binding.listFavorites;
         list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
         swipeHandler = new LocationSwipeHandler(this);
