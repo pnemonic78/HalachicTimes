@@ -16,9 +16,10 @@
 package com.github.compass
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
-import com.github.times.compass.CompassView
+import android.view.ViewGroup
+import com.github.compass.databinding.CompassBearingFragmentBinding
 import com.github.times.location.LocationApplication
 import com.github.times.location.LocationFormatter
 
@@ -27,9 +28,9 @@ import com.github.times.location.LocationFormatter
  *
  * @author Moshe Waisberg
  */
-class CompassFragment : com.github.times.compass.CompassFragment<CompassView>() {
+class CompassFragment : com.github.times.compass.CompassFragment() {
 
-    private var bearingView: TextView? = null
+    private var _binding: CompassBearingFragmentBinding? = null
     private lateinit var formatter: LocationFormatter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,21 +39,38 @@ class CompassFragment : com.github.times.compass.CompassFragment<CompassView>() 
         formatter = app.locations
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val binding = CompassBearingFragmentBinding.inflate(inflater, container, false)
+        _binding = binding
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = view.context
         val a = context.obtainStyledAttributes(
             preferences.compassTheme, com.github.times.compass.lib.R.styleable.CompassView
         )
-        val bearingColor = a.getColorStateList(com.github.times.compass.lib.R.styleable.CompassView_compassColorLabel2)
+        val bearingColor =
+            a.getColorStateList(com.github.times.compass.lib.R.styleable.CompassView_compassColorLabel2)
         a.recycle()
 
-        bearingView = view.findViewById(R.id.bearing)
-        bearingView!!.setTextColor(bearingColor)
+        val binding = _binding!!
+        binding.bearing.setTextColor(bearingColor)
     }
 
     override fun setAzimuth(azimuth: Float) {
-        super.setAzimuth(azimuth)
-        bearingView?.text = formatter.formatBearing(azimuth.toDouble())
+        val binding = _binding ?: return
+        binding.compass.setAzimuth(azimuth)
+        binding.bearing.text = formatter.formatBearing(azimuth.toDouble())
     }
 }

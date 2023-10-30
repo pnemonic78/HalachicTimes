@@ -36,10 +36,10 @@ import com.github.times.location.LocatedActivity
  *
  * @author Moshe Waisberg
  */
-abstract class BaseCompassActivity<V : CompassView> : LocatedActivity<ThemePreferences>() {
+abstract class BaseCompassActivity : LocatedActivity<ThemePreferences>() {
 
     /** The main fragment.  */
-    private var fragment: CompassFragment<V>? = null
+    private var fragment: CompassFragment? = null
 
     /** The preferences.  */
     private lateinit var preferences: ThemeCompassPreferences
@@ -61,7 +61,7 @@ abstract class BaseCompassActivity<V : CompassView> : LocatedActivity<ThemePrefe
 
         headerLocation = binding.header.location.coordinates
         headerAddress = binding.header.location.address
-        fragment = supportFragmentManager.findFragmentById(R.id.compass) as? CompassFragment<V>
+        fragment = supportFragmentManager.findFragmentById(R.id.compass) as? CompassFragment
         getCompassFragment().let {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.compass, it)
@@ -102,5 +102,5 @@ abstract class BaseCompassActivity<V : CompassView> : LocatedActivity<ThemePrefe
         return SimpleThemeCallbacks(context, preferences)
     }
 
-    protected abstract fun getCompassFragment(): CompassFragment<V>
+    protected abstract fun getCompassFragment(): CompassFragment
 }

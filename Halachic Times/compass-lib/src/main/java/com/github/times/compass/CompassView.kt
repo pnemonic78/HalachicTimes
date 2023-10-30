@@ -157,7 +157,7 @@ open class CompassView : View {
 
     /** Initialise.  */
     private fun init(context: Context) {
-        val prefs: CompassPreferences = if (context is BaseCompassActivity<*>) {
+        val prefs: CompassPreferences = if (context is BaseCompassActivity) {
             context.compassPreferences
         } else {
             SimpleCompassPreferences(context)

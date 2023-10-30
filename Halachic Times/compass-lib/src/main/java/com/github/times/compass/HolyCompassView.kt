@@ -69,7 +69,7 @@ class HolyCompassView : CompassView {
     private fun init(context: Context) {
         ticks = false
 
-        val prefs: CompassPreferences = if (context is BaseCompassActivity<*>) {
+        val prefs: CompassPreferences = if (context is BaseCompassActivity) {
             context.compassPreferences
         } else {
             SimpleCompassPreferences(context)

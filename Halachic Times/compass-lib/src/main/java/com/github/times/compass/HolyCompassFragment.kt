@@ -23,7 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.os.VibratorCompat
-import com.github.times.compass.lib.R
+import com.github.times.compass.lib.databinding.HolyCompassFragmentBinding
 import com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE
 import com.github.times.location.GeocoderBase
 import com.github.times.location.ZmanimLocation
@@ -35,7 +35,7 @@ import kotlin.math.abs
  *
  * @author Moshe Waisberg
  */
-open class HolyCompassFragment : CompassFragment<HolyCompassView>() {
+open class HolyCompassFragment : CompassFragment() {
     /**
      * Location of the holy place.
      */
@@ -43,6 +43,8 @@ open class HolyCompassFragment : CompassFragment<HolyCompassView>() {
     private var bearing = 0f
     private var vibrator: VibratorCompat? = null
     private var vibrationTime = 0L
+
+    private var _binding: HolyCompassFragmentBinding? = null
 
     init {
         setHoliest(Double.NaN, Double.NaN, Double.NaN)
@@ -52,12 +54,19 @@ open class HolyCompassFragment : CompassFragment<HolyCompassView>() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.holy_compass_fragment, container, false)
+    ): View {
+        val binding = HolyCompassFragmentBinding.inflate(inflater, container, false)
+        _binding = binding
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun setAzimuth(azimuth: Float) {
-        super.setAzimuth(azimuth)
+        _binding?.compass?.setAzimuth(azimuth)
         maybeVibrate(azimuth)
     }
 
@@ -74,11 +83,7 @@ open class HolyCompassFragment : CompassFragment<HolyCompassView>() {
         } else {
             ZmanimLocation.angleTo(location, holiest)
         }
-        compassView!!.setHoliest(bearing)
-    }
-
-    fun setHoliest(location: Location) {
-        holiest.set(location)
+        _binding?.compass?.setHoliest(bearing)
     }
 
     fun setHoliest(latitude: Double, longitude: Double, elevation: Double) {

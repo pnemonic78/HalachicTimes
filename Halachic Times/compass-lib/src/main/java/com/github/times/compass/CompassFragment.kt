@@ -31,7 +31,7 @@ import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.github.times.compass.lib.R
+import com.github.times.compass.lib.databinding.CompassFragmentBinding
 import com.github.times.compass.preference.CompassPreferences
 import com.github.times.compass.preference.SimpleCompassPreferences
 
@@ -40,7 +40,7 @@ import com.github.times.compass.preference.SimpleCompassPreferences
  *
  * @author Moshe Waisberg
  */
-open class CompassFragment<V : CompassView> : Fragment(), SensorEventListener {
+open class CompassFragment : Fragment(), SensorEventListener {
     /**
      * The sensor manager.
      */
@@ -59,7 +59,7 @@ open class CompassFragment<V : CompassView> : Fragment(), SensorEventListener {
     /**
      * The main view.
      */
-    protected var compassView: V? = null
+    private var _binding: CompassFragmentBinding? = null
 
     /**
      * The accelerometer values.
@@ -105,14 +105,20 @@ open class CompassFragment<V : CompassView> : Fragment(), SensorEventListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.compass_fragment, container, false)
+    ): View {
+        val binding = CompassFragmentBinding.inflate(inflater, container, false)
+        _binding = binding
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        compassView = view.findViewById(R.id.compass) as V
         updateRotation(activity, view)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -128,7 +134,7 @@ open class CompassFragment<V : CompassView> : Fragment(), SensorEventListener {
     }
 
     private fun getPreferences(context: Context): CompassPreferences {
-        return if (context is BaseCompassActivity<*>) {
+        return if (context is BaseCompassActivity) {
             context.compassPreferences
         } else {
             SimpleCompassPreferences(context)
@@ -233,7 +239,8 @@ open class CompassFragment<V : CompassView> : Fragment(), SensorEventListener {
     }
 
     protected open fun setAzimuth(azimuth: Float) {
-        compassView?.setAzimuth(azimuth)
+        val binding = _binding ?: return
+        binding.compass.setAzimuth(azimuth)
     }
 
     /**
