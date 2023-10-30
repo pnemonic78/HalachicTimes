@@ -25,17 +25,12 @@ import com.github.times.location.ZmanimAddress
  *
  * @author Moshe Waisberg
  */
-abstract class SpecificLocationAdapter @JvmOverloads constructor(
+abstract class SpecificLocationAdapter(
     context: Context,
     items: List<LocationItem?>,
     itemListener: LocationItemListener? = null,
     filterListener: FilterListener? = null
 ) : LocationAdapter(context, items, itemListener) {
-    constructor(
-        context: Context,
-        items: List<LocationItem?>,
-        filterListener: FilterListener?
-    ) : this(context, items, null, filterListener)
 
     init {
         val listener = if (filterListener == null) null else Filter.FilterListener { count: Int ->

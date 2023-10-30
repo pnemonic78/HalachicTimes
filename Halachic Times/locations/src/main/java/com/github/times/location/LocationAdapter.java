@@ -15,6 +15,7 @@
  */
 package com.github.times.location;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
@@ -114,8 +115,9 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         return getItem(position).getAddress().getId();
     }
 
+    @NonNull
     @Override
-    protected LocationViewHolder createArrayViewHolder(View view, int fieldId) {
+    protected LocationViewHolder createArrayViewHolder(@NonNull View view, int fieldId) {
         return new LocationViewHolder(view, fieldId, listener);
     }
 
@@ -141,7 +143,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *
      * @param comparator comparator used to sort the objects contained in this adapter.
      */
-    protected void sortNoNotify(Comparator<? super LocationItem> comparator) {
+    protected void sortNoNotify(@NonNull Comparator<? super LocationItem> comparator) {
         if (objectsFiltered) {
             sortNoNotify(originalValues, comparator);
         } else {
@@ -155,7 +157,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      * @param objects    the list of objects to sort.
      * @param comparator comparator used to sort the objects contained in this adapter.
      */
-    protected void sortNoNotify(List<LocationItem> objects, Comparator<? super LocationItem> comparator) {
+    protected void sortNoNotify(@NonNull List<LocationItem> objects, @NonNull Comparator<? super LocationItem> comparator) {
         // Removes duplicate locations.
         Set<LocationItem> items = new TreeSet<>(comparator);
 
@@ -167,17 +169,20 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
     /**
      * Sort.
      */
+    @SuppressLint("NotifyDataSetChanged")
     public void sort() {
         sortNoNotify();
         notifyDataSetChanged();
     }
 
     @Override
-    public void sort(Comparator<? super LocationItem> comparator) {
+    @SuppressLint("NotifyDataSetChanged")
+    public void sort(@NonNull Comparator<? super LocationItem> comparator) {
         sortNoNotify(comparator);
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
     protected ArrayFilter createFilter() {
         return new LocationsFilter();
@@ -238,6 +243,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         public LocationsFilter() {
         }
 
+        @NonNull
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
@@ -304,9 +310,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
             final Collator collator = LocationAdapter.this.collator;
 
             if (len1 == len2) {
-                if (s.equals(search) || collator.equals(s, search))
-                    return true;
-                return false;
+                return s.equals(search) || collator.equals(s, search);
             }
 
             if (s.contains(search))
@@ -451,7 +455,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *
      * @author Moshe Waisberg
      */
-    protected class LocationComparator implements Comparator<LocationItem> {
+    protected static class LocationComparator implements Comparator<LocationItem> {
 
         /**
          * Double subtraction error.
@@ -499,7 +503,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
             // Then sort by id. Positive id is more important.
             long id1 = addr1.getId();
             long id2 = addr2.getId();
-            return (id1 == id2 ? 0 : (id1 < id2 ? -1 : 1));
+            return Long.compare(id1, id2);
         }
     }
 

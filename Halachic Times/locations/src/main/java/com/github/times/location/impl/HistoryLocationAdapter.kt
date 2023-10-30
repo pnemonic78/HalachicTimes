@@ -22,27 +22,12 @@ import android.content.Context
  *
  * @author Moshe Waisberg
  */
-class HistoryLocationAdapter : SpecificLocationAdapter {
-    constructor(context: Context, items: List<LocationItem?>) : super(context, items)
-
-    constructor(
-        context: Context,
-        items: List<LocationItem?>,
-        itemListener: LocationItemListener?
-    ) : super(context, items, itemListener)
-
-    constructor(
-        context: Context,
-        items: List<LocationItem?>,
-        filterListener: FilterListener?
-    ) : super(context, items, filterListener)
-
-    constructor(
-        context: Context,
-        items: List<LocationItem?>,
-        itemListener: LocationItemListener?,
-        filterListener: FilterListener?
-    ) : super(context, items, itemListener, filterListener)
+class HistoryLocationAdapter(
+    context: Context,
+    items: List<LocationItem>,
+    itemListener: LocationItemListener? = null,
+    filterListener: FilterListener? = null
+) : SpecificLocationAdapter(context, items, itemListener, filterListener) {
 
     override fun isSpecific(item: LocationItem): Boolean {
         //FIXME should only filter on items that user ever clicked (e.g. user only ever clicked the favorite star).

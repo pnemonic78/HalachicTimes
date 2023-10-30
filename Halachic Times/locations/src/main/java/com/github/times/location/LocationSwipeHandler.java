@@ -46,7 +46,7 @@ class LocationSwipeHandler extends ItemTouchHelper.SimpleCallback {
     }
 
     @Override
-    public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+    public int getSwipeDirs(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         if (viewHolder instanceof LocationViewHolder) {
             LocationViewHolder locationViewHolder = (LocationViewHolder) viewHolder;
             LocationAdapter.LocationItem item = locationViewHolder.item;
@@ -67,13 +67,13 @@ class LocationSwipeHandler extends ItemTouchHelper.SimpleCallback {
     }
 
     @Override
-    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
         // We don't want support moving items up/down
         return false;
     }
 
     @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         if (viewHolder instanceof LocationViewHolder) {
             LocationViewHolder locationViewHolder = (LocationViewHolder) viewHolder;
             LocationAdapter.LocationItem item = locationViewHolder.item;
@@ -82,7 +82,7 @@ class LocationSwipeHandler extends ItemTouchHelper.SimpleCallback {
     }
 
     @Override
-    public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
         final View itemView = viewHolder.itemView;

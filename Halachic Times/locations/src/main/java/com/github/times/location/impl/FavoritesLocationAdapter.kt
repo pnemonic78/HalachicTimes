@@ -22,27 +22,12 @@ import android.content.Context
  *
  * @author Moshe Waisberg
  */
-class FavoritesLocationAdapter : SpecificLocationAdapter {
-    constructor(context: Context, items: List<LocationItem?>) : super(context, items)
-
-    constructor(
-        context: Context,
-        items: List<LocationItem?>,
-        itemListener: LocationItemListener?
-    ) : super(context, items, itemListener)
-
-    constructor(
-        context: Context,
-        items: List<LocationItem?>,
-        filterListener: FilterListener?
-    ) : super(context, items, filterListener)
-
-    constructor(
-        context: Context,
-        items: List<LocationItem?>,
-        itemListener: LocationItemListener?,
-        filterListener: FilterListener?
-    ) : super(context, items, itemListener, filterListener)
+class FavoritesLocationAdapter(
+    context: Context,
+    items: List<LocationItem>,
+    itemListener: LocationItemListener? = null,
+    filterListener: FilterListener? = null
+) : SpecificLocationAdapter(context, items, itemListener, filterListener) {
 
     override fun isSpecific(item: LocationItem): Boolean {
         return item.isFavorite
