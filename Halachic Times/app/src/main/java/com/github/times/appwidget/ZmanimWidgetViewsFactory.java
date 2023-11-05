@@ -28,6 +28,7 @@ import androidx.annotation.StyleRes;
 import androidx.core.content.ContextCompat;
 
 import com.github.app.LocaleHelper;
+import com.github.preference.LocalePreferences;
 import com.github.times.R;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimApplication;
@@ -88,7 +89,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
     private final boolean directionRTL;
 
     public ZmanimWidgetViewsFactory(Context context, Intent intent) {
-        this.localeCallbacks = new LocaleHelper<>(context);
+        this.localeCallbacks = new LocaleHelper<LocalePreferences>(context);
         this.context = localeCallbacks.attachBaseContext(context);
         this.directionRTL = LocaleUtils.isLocaleRTL(context);
     }
