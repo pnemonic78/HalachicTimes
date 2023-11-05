@@ -24,6 +24,7 @@ import static com.github.times.ZmanimItem.NEVER;
 import static com.github.util.LocaleUtils.isLocaleRTL;
 import static java.lang.System.currentTimeMillis;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -32,6 +33,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -260,7 +262,9 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-        initLocation();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            initPermissions();
+        }
     }
 
     @Override
@@ -357,6 +361,8 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         TimesBinding binding = TimesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        localeRTL = isLocaleRTL(context);
+
         gestureDetector = new GestureDetector(context, this, handler);
         gestureDetector.setIsLongpressEnabled(false);
 
@@ -401,13 +407,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         hideNavigation.setAnimationListener(this);
         showNavigation = AnimationUtils.loadAnimation(context, R.anim.show_nav);
         showNavigation.setAnimationListener(this);
-    }
-
-    /**
-     * Initialise the location providers.
-     */
-    private void initLocation() {
-        localeRTL = isLocaleRTL(this);
     }
 
     /**
@@ -951,5 +950,10 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     @Override
     protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks(Context context) {
         return new SimpleThemeCallbacks<>(context, getZmanimPreferences());
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void initPermissions() {
+        ZmanimReminder.checkPermissions(this);
     }
 }

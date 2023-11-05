@@ -282,8 +282,9 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if (nm.areNotificationsEnabled()) return;
-            permissions.add(ZmanimReminder.PERMISSION_NOTIFICATIONS);
+            if (!nm.areNotificationsEnabled()) {
+                permissions.add(ZmanimReminder.PERMISSION_NOTIFICATIONS);
+            }
         }
         if (permissions.size() > 0) {
             requestPermissions(permissions.toArray(new String[permissions.size()]), REQUEST_PERMISSIONS);
