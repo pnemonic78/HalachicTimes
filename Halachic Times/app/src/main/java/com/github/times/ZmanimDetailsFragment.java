@@ -15,31 +15,22 @@
  */
 package com.github.times;
 
-import static com.github.view.ViewUtils.applyMaxWidth;
-
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 
 import androidx.annotation.NonNull;
 
-import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
-import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Shows a list of all opinions for a halachic time (<em>zman</em>).
  *
  * @author Moshe Waisberg
  */
-public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends ZmanimDetailsPopulater<A>> extends ZmanimFragment<A, P> {
+public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends ZmanimDetailsPopulater<A>> extends ZmanimFragment<ZmanDetailsViewHolder, A, P> {
 
     /**
      * The master id.
@@ -58,10 +49,9 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
     @SuppressWarnings("unchecked")
     @Override
     protected A createAdapter(@NonNull Context context) {
-        if ((masterId == 0) || (context == null)) {
+        if (masterId == 0) {
             return null;
         }
-
         return (A) new ZmanimDetailsAdapter(context, preferences);
     }
 
@@ -95,7 +85,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             setBackgroundColorDark(id, list);
         } else if (theme == R.style.Theme_Zmanim_Light) {
             setBackgroundColorLight(id, list);
-       } else if (theme == R.style.Theme_Zmanim_DayNight) {
+        } else if (theme == R.style.Theme_Zmanim_DayNight) {
             final Context context = list.getContext();
             final int nightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             switch (nightMode) {
@@ -183,78 +173,6 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         } else {
             list.setBackgroundColor(Color.TRANSPARENT);
         }
-    }
-
-    @Override
-    protected void setOnClickListener(View view, ZmanimItem item) {
-        // No clicking allowed.
-    }
-
-    @Override
-    protected void bindViews(final ViewGroup list, A adapter) {
-        if (list == null)
-            return;
-        list.removeAllViews();
-        if (adapter == null)
-            return;
-
-        final Context context = list.getContext();
-        if (context == null)
-            return;
-
-        JewishCalendar jcal = adapter.getJewishCalendar();
-        if (jcal == null) {
-            // Ignore potential "IllegalArgumentException".
-            return;
-        }
-        final Calendar gcal = (Calendar) jcal.getGregorianCalendar().clone();
-        CharSequence dateHebrew;
-        JewishDate jewishDatePrevious = null;
-        JewishDate jewishDate;
-
-        final int count = adapter.getCount();
-        ZmanimItem item;
-        View row;
-        final List<View> timeViews = new ArrayList<>(count);
-
-        for (int position = 0; position < count; position++) {
-            item = adapter.getItem(position);
-            if (item == null) {
-                continue;
-            }
-
-            if ((jewishDatePrevious == null) || ((item.jewishDate != null) && !jewishDatePrevious.equals(item.jewishDate))) {
-                if (item.jewishDate != null) {
-                    jewishDate = item.jewishDate;
-                } else if (item.isEmptyOrElapsed()) {
-                    continue;
-                } else {
-                    gcal.setTimeInMillis(item.time);
-                    jcal.setDate(gcal);
-                    jewishDate = jcal;
-                }
-                jewishDatePrevious = jewishDate;
-                dateHebrew = adapter.formatDate(context, jewishDate);
-                bindViewGrouping(list, dateHebrew);
-            }
-
-            row = adapter.getView(position, null, list);
-            timeViews.add(row.findViewById(R.id.time));
-            bindView(list, position, row, item);
-        }
-
-        list.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                list.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                // Make all time texts same width.
-                try {
-                    applyMaxWidth(timeViews);
-                } catch (NullPointerException e) {
-                    throw new NullPointerException("null object reference for " + context.getString(masterId) + " on " + gcal);
-                }
-            }
-        });
     }
 
     @Override

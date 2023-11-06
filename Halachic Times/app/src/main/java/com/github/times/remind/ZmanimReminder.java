@@ -85,6 +85,7 @@ import androidx.core.content.PermissionChecker;
 
 import com.github.times.CandleData;
 import com.github.times.R;
+import com.github.times.ZmanItemViewHolder;
 import com.github.times.ZmanimActivity;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimApplication;
@@ -246,12 +247,12 @@ public class ZmanimReminder {
         if (gloc == null)
             return;
 
-        ZmanimPopulater<ZmanimAdapter> populater = new ZmanimPopulater<>(context, settings);
+        ZmanimPopulater populater = new ZmanimPopulater<>(context, settings);
         populater.setCalendar(currentTimeMillis());
         populater.setGeoLocation(gloc);
         populater.setInIsrael(locations.isInIsrael());
 
-        ZmanimAdapter adapter = new ZmanimAdapter(context, settings);
+        ZmanimAdapter adapter = new ZmanimAdapter(context, settings, null);
         remind(settings, populater, adapter);
     }
 
@@ -261,7 +262,7 @@ public class ZmanimReminder {
      * @param settings the preferences.
      * @param adapter  the populated adapter.
      */
-    private void remind(ZmanimPreferences settings, ZmanimPopulater<ZmanimAdapter> populater, ZmanimAdapter adapter) {
+    private void remind(ZmanimPreferences settings, ZmanimPopulater populater, ZmanimAdapter<ZmanItemViewHolder> adapter) {
         final long latest = settings.getLatestReminder();
         Timber.i("remind latest [%s]", formatDateTime(latest));
 
@@ -295,7 +296,7 @@ public class ZmanimReminder {
             populater.populate(adapter, false);
             candles = adapter.getCandles();
 
-            count = adapter.getCount();
+            count = adapter.getItemCount();
             for (int i = 0; i < count; i++) {
                 item = adapter.getItem(i);
                 if ((item == null) || item.isEmptyOrElapsed()) {
@@ -1042,7 +1043,7 @@ public class ZmanimReminder {
             }
         }
         if (!permissions.isEmpty()) {
-            activity.requestPermissions(permissions.toArray(new String[permissions.size()]), ACTIVITY_PERMISSIONS);
+            activity.requestPermissions(permissions.toArray(new String[0]), ACTIVITY_PERMISSIONS);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

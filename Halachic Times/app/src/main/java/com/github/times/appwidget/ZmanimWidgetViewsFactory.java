@@ -15,6 +15,9 @@
  */
 package com.github.times.appwidget;
 
+import static com.github.graphics.BitmapUtils.isBrightWallpaper;
+import static java.lang.System.currentTimeMillis;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -30,6 +33,7 @@ import androidx.core.content.ContextCompat;
 import com.github.app.LocaleHelper;
 import com.github.preference.LocalePreferences;
 import com.github.times.R;
+import com.github.times.ZmanViewHolder;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimApplication;
 import com.github.times.ZmanimDays;
@@ -39,7 +43,6 @@ import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
-
 import com.kosherjava.zmanim.ComplexZmanimCalendar;
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
@@ -50,9 +53,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import timber.log.Timber;
-
-import static com.github.graphics.BitmapUtils.isBrightWallpaper;
-import static java.lang.System.currentTimeMillis;
 
 /**
  * Factory to create views for list widget.
@@ -74,10 +74,6 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
      * The preferences.
      */
     private ZmanimPreferences preferences;
-    /**
-     * The adapter.
-     */
-    private ZmanimAdapter adapter;
     private final List<ZmanimItem> items = new ArrayList<>();
     @ColorInt
     private int colorDisabled = Color.DKGRAY;
@@ -188,9 +184,8 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
         populater.setInIsrael(locations.isInIsrael());
 
         // Always create new adapter to avoid concurrency bugs.
-        ZmanimAdapter adapter = new ZmanimAdapter(context, preferences);
+        ZmanimAdapter<ZmanViewHolder> adapter = new ZmanimAdapter<>(context, preferences, null);
         populater.populate(adapter, false);
-        this.adapter = adapter;
 
         List<ZmanimItem> items = new ArrayList<>();
 
@@ -221,7 +216,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
 
         ZmanimItem itemTomorrow = null;
 
-        final int count = adapter.getCount();
+        final int count = adapter.getItemCount();
         if (count > 0) {
             JewishDate jewishDate = null;
             ZmanimItem item;

@@ -16,9 +16,12 @@
 package com.github.times;
 
 import android.content.Context;
-import android.view.View;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+
+import com.github.times.databinding.TimesDetailBinding;
 import com.github.times.preference.ZmanimPreferences;
 
 /**
@@ -26,15 +29,16 @@ import com.github.times.preference.ZmanimPreferences;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimDetailsAdapter extends ZmanimAdapter {
+public class ZmanimDetailsAdapter extends ZmanimAdapter<ZmanDetailsViewHolder> {
 
     public ZmanimDetailsAdapter(Context context, ZmanimPreferences settings) {
-        super(context, settings);
+        super(context, settings, null);
     }
 
+    @NonNull
     @Override
-    protected ViewHolder createViewHolder(int position, View convertView, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.times_detail, parent, false);
-        return new ViewHolder(view);
+    protected ZmanDetailsViewHolder createArrayViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, int viewType, int fieldId) {
+        TimesDetailBinding binding = TimesDetailBinding.inflate(inflater, parent, false);
+        return new ZmanDetailsViewHolder(binding);
     }
 }

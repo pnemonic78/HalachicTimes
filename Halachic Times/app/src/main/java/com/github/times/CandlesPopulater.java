@@ -25,7 +25,7 @@ import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
  *
  * @author Moshe Waisberg
  */
-public class CandlesPopulater extends ZmanimPopulater<ZmanimAdapter> {
+public class CandlesPopulater extends ZmanimPopulater<ZmanViewHolder, ZmanimAdapter<ZmanViewHolder>> {
 
     /**
      * Creates a new populater.

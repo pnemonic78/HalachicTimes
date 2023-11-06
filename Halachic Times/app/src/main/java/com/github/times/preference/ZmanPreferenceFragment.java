@@ -287,7 +287,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
             }
         }
         if (permissions.size() > 0) {
-            requestPermissions(permissions.toArray(new String[permissions.size()]), REQUEST_PERMISSIONS);
+            requestPermissions(permissions.toArray(new String[0]), REQUEST_PERMISSIONS);
         }
     }
 }

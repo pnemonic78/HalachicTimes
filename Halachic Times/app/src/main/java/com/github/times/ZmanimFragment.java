@@ -17,7 +17,6 @@ package com.github.times;
 
 import static com.github.view.ViewUtils.applyMaxWidth;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -26,17 +25,19 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import com.github.times.databinding.DateGroupBinding;
+import com.github.times.databinding.DateGroupLightBinding;
+import com.github.times.databinding.DividerBinding;
+import com.github.times.databinding.TimesListBinding;
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
@@ -51,11 +52,11 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A>> extends Fragment {
+public class ZmanimFragment<VH extends ZmanViewHolder, A extends ZmanimAdapter<VH>, P extends ZmanimPopulater<VH, A>> extends Fragment {
 
     private Context context;
-    protected LayoutInflater inflater;
-    private OnClickListener onClickListener;
+    private OnZmanItemClickListener onClickListener;
+    private TimesListBinding _binding;
     /**
      * The scroller.
      */
@@ -110,13 +111,13 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(@NonNull Activity activity) {
         super.onAttach(activity);
         this.context = activity;
     }
@@ -137,15 +138,23 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.inflater = inflater;
-        return inflater.inflate(R.layout.times_list, container, false);
+        TimesListBinding binding = TimesListBinding.inflate(inflater, container, false);
+        _binding = binding;
+        return binding.getRoot();
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.scrollView = (ScrollView) view;
-        this.list = view.findViewById(android.R.id.list);
+        TimesListBinding binding = _binding;
+        this.scrollView = binding.getRoot();
+        this.list = binding.list;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        _binding = null;
     }
 
     /**
@@ -157,7 +166,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     @SuppressWarnings("unchecked")
     @Nullable
     protected A createAdapter(@NonNull Context context) {
-        return (A) new ZmanimAdapter(context, preferences);
+        return (A) new ZmanimAdapter(context, preferences, onClickListener);
     }
 
     /**
@@ -179,7 +188,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     @SuppressWarnings("unchecked")
     @NonNull
     protected P createPopulater(@NonNull Context context) {
-        return (P) new ZmanimPopulater<A>(context, preferences);
+        return (P) new ZmanimPopulater<VH, A>(context, preferences);
     }
 
     /**
@@ -258,10 +267,10 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         JewishDate jewishDate = jcal;
         CharSequence dateHebrew = adapter.formatDate(context, jewishDate);
 
-        final int count = adapter.getCount();
+        final int count = adapter.getItemCount();
         int position = 0;
         ZmanimItem item;
-        View row;
+        ZmanViewHolder viewHolder;
         final View[] timeViews = new View[count];
         JewishDate jewishDatePrevious = null;
 
@@ -269,9 +278,9 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
             item = adapter.getItem(position);
             if (item != null) {
                 if (item.titleId == R.string.hour) {
-                    row = adapter.getView(position, null, list);
-                    timeViews[position] = row.findViewById(R.id.time);
-                    bindView(list, position, row, item);
+                    viewHolder = adapter.onCreateViewHolder(list, 0);
+                    timeViews[position] = viewHolder.getTime();
+                    bindView(list, viewHolder, item);
                     position++;
                     if (position < count) {
                         item = adapter.getItem(position);
@@ -322,9 +331,9 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                     }
                 }
 
-                row = adapter.getView(position, null, list);
-                timeViews[position] = row.findViewById(R.id.time);
-                bindView(list, position, row, item);
+                viewHolder = adapter.onCreateViewHolder(list, 0);
+                timeViews[position] = viewHolder.getTime();
+                bindView(list, viewHolder, item);
             }
         }
 
@@ -347,18 +356,22 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Bind the time to a list.
      *
-     * @param list     the list.
-     * @param position the position index.
-     * @param row      the row view.
-     * @param item     the item.
+     * @param list       the list.
+     * @param viewHolder the view holder.
+     * @param item       the item.
      */
-    protected void bindView(ViewGroup list, int position, View row, ZmanimItem item) {
-        if (row == null) {
-            throw new IllegalArgumentException("row required");
+    protected void bindView(ViewGroup list, ZmanViewHolder viewHolder, ZmanimItem item) {
+        if (viewHolder == null) {
+            throw new IllegalArgumentException("holder required");
         }
-        setOnClickListener(row, item);
-        inflater.inflate(R.layout.divider, list);
-        list.addView(row);
+        viewHolder.bind(item);
+        bindDivider(list);
+        list.addView(viewHolder.itemView);
+    }
+
+    protected void bindDivider(ViewGroup list) {
+        LayoutInflater inflater = LayoutInflater.from(list.getContext());
+        DividerBinding.inflate(inflater, list, true);
     }
 
     /**
@@ -367,26 +380,26 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      * @param list  the list.
      * @param label the formatted Hebrew date label.
      */
-    @SuppressLint("InflateParams")
     protected void bindViewGrouping(ViewGroup list, CharSequence label) {
         if (TextUtils.isEmpty(label)) return;
         if (list.getChildCount() > 0) {
-            inflater.inflate(R.layout.divider, list);
+            bindDivider(list);
         }
-        View row = inflater.inflate(preferences.isDarkTheme() ? R.layout.date_group : R.layout.date_group_light, list, false);
-        TextView text = row.findViewById(R.id.title);
-        text.setText(label);
-        list.addView(row);
+        LayoutInflater inflater = LayoutInflater.from(list.getContext());
+        if (preferences.isDarkTheme()) {
+            DateGroupBinding binding = DateGroupBinding.inflate(inflater, list, false);
+            binding.title.setText(label);
+            View row = binding.getRoot();
+            list.addView(row);
+        } else {
+            DateGroupLightBinding binding = DateGroupLightBinding.inflate(inflater, list, false);
+            binding.title.setText(label);
+            View row = binding.getRoot();
+            list.addView(row);
+        }
     }
 
-    protected void setOnClickListener(View view, ZmanimItem item) {
-        final int id = item.titleId;
-        boolean clickable = view.isEnabled() && (id != R.string.molad);
-        view.setOnClickListener(clickable ? onClickListener : null);
-        view.setClickable(clickable);
-    }
-
-    public void setOnClickListener(OnClickListener listener) {
+    public void setOnClickListener(OnZmanItemClickListener listener) {
         this.onClickListener = listener;
     }
 

@@ -25,21 +25,18 @@ import static com.github.util.LocaleUtils.isLocaleRTL;
 import static com.github.util.TimeUtils.roundUp;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.github.times.databinding.TimesItemBinding;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
+import com.github.widget.ArrayAdapter;
 import com.kosherjava.zmanim.ComplexZmanimCalendar;
 import com.kosherjava.zmanim.hebrewcalendar.HebrewDateFormatter;
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
@@ -60,7 +57,7 @@ import java.util.Locale;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
+public class ZmanimAdapter<VH extends ZmanViewHolder> extends ArrayAdapter<ZmanimItem, VH> {
 
     /**
      * No summary.
@@ -92,23 +89,25 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      */
     protected static final int ADAR_I = JewishDate.ADAR_II + 1;
 
+    protected final Context context;
     protected final LayoutInflater inflater;
     protected final ZmanimPreferences settings;
     private ComplexZmanimCalendar calendar;
     private long now = System.currentTimeMillis();
     private boolean inIsrael;
-    private boolean summaries;
-    private boolean showElapsed;
-    private Format timeFormat;
-    private Format timeFormatSeasonalHour;
-    private long timeFormatGranularity;
+    private final boolean summaries;
+    private final boolean showElapsed;
+    private final Format timeFormat;
+    private final Format timeFormatSeasonalHour;
+    private final long timeFormatGranularity;
     private Comparator<ZmanimItem> comparator;
     private HebrewDateFormatter hebrewDateFormatter;
     private String[] monthNames;
     private String monthDayYear;
     private String omerFormat;
-    private float emphasisScale;
+    private final float emphasisScale;
     private CandleData candles;
+    private final OnZmanItemClickListener listener;
 
     /**
      * Compare two time items.
@@ -126,8 +125,20 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @param context  the context.
      * @param settings the application preferences.
      */
-    public ZmanimAdapter(Context context, ZmanimPreferences settings) {
-        super(context, R.layout.times_item);
+    public ZmanimAdapter(@NonNull Context context, @NonNull ZmanimPreferences settings) {
+        this(context, settings, null);
+    }
+
+    /**
+     * Creates a new adapter.
+     *
+     * @param context  the context.
+     * @param settings the application preferences.
+     * @param listener the item click listener.
+     */
+    public ZmanimAdapter(@NonNull Context context, @NonNull ZmanimPreferences settings, @Nullable OnZmanItemClickListener listener) {
+        super(R.layout.times_item);
+        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.settings = settings;
         this.summaries = settings.isSummaries();
@@ -136,6 +147,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         this.calendar = new ComplexZmanimCalendar();
         calendar.setShaahZmanisType(settings.getHourType());
         calendar.setUseElevation(settings.isUseElevation());
+        this.listener = listener;
 
         boolean time24 = DateFormat.is24HourFormat(context);
         String patternSeasonalHour;
@@ -168,50 +180,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder holder = getViewHolder(position, convertView);
-        if (holder == null) {
-            holder = createViewHolder(position, convertView, parent);
-        }
-        bindViewHolder(position, holder);
-        return holder.itemView;
-    }
-
-    /**
-     * Get the view holder.
-     *
-     * @param position    the row index.
-     * @param convertView the view.
-     * @return the view holder.
-     */
-    @Nullable
-    protected ViewHolder getViewHolder(int position, View convertView) {
-        return (convertView != null) ? (ViewHolder) convertView.getTag() : null;
-    }
-
-    /**
-     * Create a view holder.
-     *
-     * @param position    the row index.
-     * @param convertView the view.
-     * @param parent      the parent view.
-     * @return the item view.
-     */
-    protected ViewHolder createViewHolder(int position, View convertView, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.times_item, parent, false);
-        return new ViewHolder(view);
-    }
-
-    /**
-     * Bind the item to the view.
-     *
-     * @param position the row index.
-     * @param holder   the view holder.
-     * @return the item view.
-     */
-    protected void bindViewHolder(int position, ViewHolder holder) {
-        holder.itemView.setTag(holder);
-        holder.bind(getItem(position), summaries, emphasisScale);
+    protected VH createArrayViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, int viewType, int fieldId) {
+        TimesItemBinding binding = TimesItemBinding.inflate(inflater, parent, false);
+        return (VH) new ZmanItemViewHolder(binding, summaries, emphasisScale, listener);
     }
 
     /**
@@ -261,7 +232,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @param remote     hide elapsed times for remote view?
      */
     public void add(int titleId, int summaryId, long time, JewishDate jewishDate, boolean remote) {
-        add(titleId, (summaryId == 0) ? null : getContext().getText(summaryId), time, jewishDate, remote);
+        add(titleId, (summaryId == 0) ? null : context.getText(summaryId), time, jewishDate, remote);
     }
 
     /**
@@ -305,7 +276,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             return;
         }
         final long now = this.now;
-        CharSequence title = getContext().getString(titleId);
+        CharSequence title = context.getString(titleId);
 
         ZmanimItem item = new ZmanimItem(titleId, title, time);
         item.summary = summary;
@@ -336,7 +307,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @param time      the time in milliseconds.
      */
     public void addHour(int titleId, int summaryId, long time, boolean remote) {
-        add(titleId, (summaryId == SUMMARY_NONE) ? null : getContext().getText(summaryId), time + DAY_IN_MILLIS, null, remote, true);
+        add(titleId, (summaryId == SUMMARY_NONE) ? null : context.getText(summaryId), time + DAY_IN_MILLIS, null, remote, true);
     }
 
     /**
@@ -349,54 +320,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             this.comparator = comparator;
         }
         sort(comparator);
-    }
-
-    /**
-     * View holder for zman row item.
-     *
-     * @author Moshe Waisberg
-     */
-    protected static class ViewHolder {
-
-        public final View itemView;
-        public final TextView title;
-        public final TextView summary;
-        public final TextView time;
-
-        public ViewHolder(View view) {
-            this.itemView = view;
-            this.title = view.findViewById(R.id.title);
-            this.summary = view.findViewById(R.id.summary);
-            this.time = view.findViewById(R.id.time);
-        }
-
-        public void bind(ZmanimItem item, boolean summaries, float emphasisScale) {
-            boolean enabled = !item.elapsed;
-
-            itemView.setEnabled(enabled);
-            itemView.setTag(R.id.time, item);
-
-            title.setText(item.title);
-            title.setEnabled(enabled);
-            if (item.emphasis) {
-                title.setTypeface(title.getTypeface(), Typeface.BOLD);
-                title.setTextSize(TypedValue.COMPLEX_UNIT_PX, title.getTextSize() * emphasisScale);
-            }
-
-            if (summary != null) {
-                summary.setText(item.summary);
-                summary.setEnabled(enabled);
-                if (!summaries || (item.summary == null))
-                    summary.setVisibility(View.GONE);
-            }
-
-            time.setText(item.timeLabel);
-            time.setEnabled(enabled);
-            if (item.emphasis) {
-                time.setTypeface(time.getTypeface(), Typeface.BOLD);
-                time.setTextSize(TypedValue.COMPLEX_UNIT_PX, time.getTextSize() * emphasisScale);
-            }
-        }
     }
 
     /**
@@ -430,7 +353,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         String dayStr;
         String dayPadded;
 
-        if (isLocaleRTL(getContext())) {
+        if (isLocaleRTL(context)) {
             HebrewDateFormatter formatter = getHebrewDateFormatter();
 
             yearStr = formatter.formatHebrewNumber(jewishYear);
@@ -519,9 +442,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
         String dayStr;
 
-        if (isLocaleRTL(getContext())) {
+        if (isLocaleRTL(context)) {
             HebrewDateFormatter formatter = getHebrewDateFormatter();
-
             dayStr = formatter.formatHebrewNumber(days);
         } else {
             dayStr = String.valueOf(days);
@@ -549,7 +471,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
     @Nullable
     public ZmanimItem getItemById(int id) {
-        final int count = getCount();
+        final int count = getItemCount();
         ZmanimItem item;
         for (int i = 0; i < count; i++) {
             item = getItem(i);

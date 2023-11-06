@@ -86,7 +86,8 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     View.OnClickListener,
     OnGestureListener,
     GestureDetector.OnDoubleTapListener,
-    Animation.AnimationListener {
+    Animation.AnimationListener,
+    OnZmanItemClickListener {
 
     /**
      * The date parameter.
@@ -145,7 +146,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     /**
      * The master fragment.
      */
-    private ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>> masterFragment;
+    private ZmanimFragment<ZmanItemViewHolder, ZmanimAdapter<ZmanItemViewHolder>, ZmanimPopulater<ZmanItemViewHolder, ZmanimAdapter<ZmanItemViewHolder>>> masterFragment;
     /**
      * The details fragment switcher.
      */
@@ -367,7 +368,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         gestureDetector.setIsLongpressEnabled(false);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        masterFragment = (ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>>) fragmentManager.findFragmentById(R.id.list_fragment);
+        masterFragment = (ZmanimFragment) fragmentManager.findFragmentById(R.id.list_fragment);
         masterFragment.setOnClickListener(this);
         detailsFragmentSwitcher = binding.detailsFragment;
         detailsListFragment = (ZmanimDetailsFragment<ZmanimDetailsAdapter, ZmanimDetailsPopulater<ZmanimDetailsAdapter>>) fragmentManager.findFragmentById(R.id.details_list_fragment);
@@ -391,7 +392,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
 
         TimesHeaderBinding header = binding.header;
         header.getRoot().setOnClickListener(this);
-        headerGregorianDate =  header.dateGregorian;
+        headerGregorianDate = header.dateGregorian;
         headerLocation = header.headerLocation.coordinates;
         headerAddress = header.headerLocation.address;
 
@@ -533,18 +534,17 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         };
     }
 
+    @Override
+    public void onZmanClick(@NonNull ZmanimItem item) {
+        toggleDetails(item);
+    }
+
     /**
      * Show/hide the details list.
      *
-     * @param view the master row view that was clicked.
+     * @param item the master item that was clicked.
      */
-    protected void toggleDetails(View view) {
-        ZmanimItem item = (ZmanimItem) view.getTag(R.id.time);
-        if (item == null) {
-            item = (ZmanimItem) view.getTag();
-            if (item == null)
-                return;
-        }
+    protected void toggleDetails(@NonNull ZmanimItem item) {
         toggleDetails(item.titleId);
     }
 
@@ -614,8 +614,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
             navigateYesterday();
         } else if (id == R.id.nav_tomorrow) {
             navigateTomorrow();
-        } else {
-            toggleDetails(view);
         }
     }
 
@@ -793,8 +791,8 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
 
         if (detailsListFragment.isVisible()) {
             int masterId = detailsListFragment.getMasterId();
-            ZmanimAdapter masterAdapter = masterFragment.getAdapter();
-            int count = masterAdapter.getCount();
+            ZmanimAdapter<ZmanItemViewHolder> masterAdapter = masterFragment.getAdapter();
+            final int count = masterAdapter.getItemCount();
             ZmanimItem item;
             for (int i = 0; i < count; i++) {
                 item = masterAdapter.getItem(i);
@@ -877,7 +875,10 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
      * @return {@code true} if the item has details.
      */
     protected boolean hasDetails(int itemId) {
-        return (itemId != 0) && (itemId != R.string.fast_begins) && (itemId != R.string.fast_ends);
+        return (itemId != 0)
+            && (itemId != R.string.fast_begins)
+            && (itemId != R.string.fast_ends)
+            && (itemId != R.string.molad);
     }
 
     private void updateReminders() {

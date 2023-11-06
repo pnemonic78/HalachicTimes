@@ -29,6 +29,7 @@ import androidx.annotation.StyleRes;
 import androidx.core.content.ContextCompat;
 
 import com.github.times.R;
+import com.github.times.ZmanViewHolder;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimDays;
 import com.github.times.ZmanimItem;
@@ -60,19 +61,19 @@ public class ZmanimWidget extends ZmanimAppWidget {
     private int themeId = com.github.lib.R.style.Theme;
 
     @Override
-    protected void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
+    protected void bindViews(Context context, RemoteViews list, ZmanimAdapter<ZmanViewHolder> adapterToday, ZmanimAdapter<ZmanViewHolder> adapterTomorrow) {
         list.removeAllViews(android.R.id.list);
 
         populateResources(context);
 
         final JewishDate jewishDateToday = adapterToday.getJewishCalendar();
-        final int countToday = adapterToday.getCount();
+        final int countToday = adapterToday.getItemCount();
         final int holidayToday = adapterToday.getHolidayToday();
         final int candlesToday = adapterToday.getCandlesTodayCount();
         final int omerToday = adapterToday.getDayOfOmerToday();
 
         final JewishDate jewishDateTomorrow = adapterTomorrow.getJewishCalendar();
-        final int countTomorrow = adapterTomorrow.getCount();
+        final int countTomorrow = adapterTomorrow.getItemCount();
         final int holidayTomorrow = adapterToday.getHolidayTomorrow();
         final int candlesTomorrow = adapterToday.getCandlesCount();
         final int omerTomorrow = adapterTomorrow.getDayOfOmerToday();
@@ -191,9 +192,9 @@ public class ZmanimWidget extends ZmanimAppWidget {
     }
 
     @Override
-    protected boolean bindView(Context context, RemoteViews list, int position, int positionTotal, @Nullable ZmanimItem item) {
+    protected void bindView(Context context, RemoteViews list, int position, int positionTotal, @Nullable ZmanimItem item) {
         if ((item == null) || item.isEmpty()) {
-            return false;
+            return;
         }
         String pkg = context.getPackageName();
         RemoteViews row = new RemoteViews(pkg, getLayoutItemId(position));
@@ -203,7 +204,6 @@ public class ZmanimWidget extends ZmanimAppWidget {
         row.setTextColor(R.id.time, colorEnabled);
         bindViewRowSpecial(context, row, position, item);
         list.addView(android.R.id.list, row);
-        return true;
     }
 
     @Override
@@ -287,9 +287,5 @@ public class ZmanimWidget extends ZmanimAppWidget {
             }
             this.colorEnabled = light ? colorEnabledLight : colorEnabledDark;
         }
-    }
-
-    private boolean isSunset(ZmanimItem item, JewishDate jewishDate) {
-        return (item.titleId == R.string.sunset) || ((item.jewishDate != null) && !item.jewishDate.equals(jewishDate));
     }
 }

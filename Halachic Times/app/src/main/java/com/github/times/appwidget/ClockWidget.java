@@ -27,6 +27,7 @@ import androidx.annotation.StyleRes;
 
 import com.github.text.style.TypefaceSpan;
 import com.github.times.R;
+import com.github.times.ZmanViewHolder;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimItem;
 import com.github.util.LocaleUtils;
@@ -84,9 +85,9 @@ public class ClockWidget extends ZmanimAppWidget {
     }
 
     @Override
-    protected void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
-        ZmanimAdapter adapter = adapterToday;
-        int count = adapter.getCount();
+    protected void bindViews(Context context, RemoteViews list, ZmanimAdapter<ZmanViewHolder> adapterToday, ZmanimAdapter<ZmanViewHolder> adapterTomorrow) {
+        ZmanimAdapter<ZmanViewHolder> adapter = adapterToday;
+        int count = adapter.getItemCount();
         ZmanimItem item;
         boolean found = false;
         int positionTotal = 0;
@@ -104,7 +105,7 @@ public class ClockWidget extends ZmanimAppWidget {
 
         if (!found && (adapterTomorrow != null)) {
             adapter = adapterTomorrow;
-            count = adapter.getCount();
+            count = adapter.getItemCount();
             for (int position = 0; position < count; position++, positionTotal++) {
                 item = adapter.getItem(position);
                 if ((item == null) || item.isEmptyOrElapsed()) {
@@ -125,7 +126,7 @@ public class ClockWidget extends ZmanimAppWidget {
     }
 
     @Override
-    protected boolean bindView(Context context, RemoteViews list, int position, int positionTotal, ZmanimItem item) {
+    protected void bindView(Context context, RemoteViews list, int position, int positionTotal, ZmanimItem item) {
         CharSequence label = item.time != NEVER ? getTimeFormat().format(roundUp(item.time, MINUTE_IN_MILLIS)) : "";
         SpannableStringBuilder spans = SpannableStringBuilder.valueOf(label);
         int indexMinutes = TextUtils.indexOf(label, ':');
@@ -137,7 +138,6 @@ public class ClockWidget extends ZmanimAppWidget {
         }
         list.setTextViewText(R.id.time, spans);
         list.setTextViewText(R.id.title, item.title);
-        return true;
     }
 
     @Override

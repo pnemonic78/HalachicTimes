@@ -64,7 +64,7 @@ import timber.log.Timber;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimPopulater<A extends ZmanimAdapter> {
+public class ZmanimPopulater<VH extends ZmanViewHolder, A extends ZmanimAdapter<VH>> {
 
     /**
      * 12 hours (half of a full day).

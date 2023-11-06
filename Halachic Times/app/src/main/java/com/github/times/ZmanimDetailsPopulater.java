@@ -15,25 +15,24 @@
  */
 package com.github.times;
 
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static com.github.util.TimeUtils.isSameDay;
+
 import android.content.Context;
 
 import com.github.times.preference.ZmanimPreferences;
-
 import com.kosherjava.zmanim.ComplexZmanimCalendar;
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
 
 import java.util.Calendar;
 
-import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static com.github.util.TimeUtils.isSameDay;
-
 /**
  * Populater for all opinions of a zman.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopulater<A> {
+public class ZmanimDetailsPopulater<A extends ZmanimAdapter<ZmanDetailsViewHolder>> extends ZmanimPopulater<ZmanDetailsViewHolder, A> {
 
     private int itemId;
 

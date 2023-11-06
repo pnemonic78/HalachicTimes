@@ -47,6 +47,7 @@ import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.appwidget.AppWidgetUtils;
 import com.github.preference.LocalePreferences;
+import com.github.times.ZmanViewHolder;
 import com.github.times.ZmanimActivity;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimApplication;
@@ -205,12 +206,12 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param appWidgetIds the widget ids for which an update is needed.
      * @param adapter      the adapter with zmanim.
      */
-    private void scheduleNext(Context context, int[] appWidgetIds, ZmanimAdapter adapter) {
+    private void scheduleNext(Context context, int[] appWidgetIds, ZmanimAdapter<ZmanViewHolder> adapter) {
         if (adapter == null) {
             return;
         }
 
-        int count = adapter.getCount();
+        int count = adapter.getItemCount();
         if (count == 0) {
             return;
         }
@@ -274,7 +275,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param adapterToday    the list adapter for today.
      * @param adapterTomorrow the list adapter for tomorrow.
      */
-    protected abstract void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow);
+    protected abstract void bindViews(Context context, RemoteViews list, ZmanimAdapter<ZmanViewHolder> adapterToday, ZmanimAdapter<ZmanViewHolder> adapterTomorrow);
 
     /**
      * Bind the times to remote views.
@@ -293,9 +294,8 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param position      the position index.
      * @param positionTotal the position index relative to all rows.
      * @param item          the zmanim item.
-     * @return {@code true} if item was bound to view.
      */
-    protected abstract boolean bindView(Context context, RemoteViews list, int position, int positionTotal, @Nullable ZmanimItem item);
+    protected abstract void bindView(Context context, RemoteViews list, int position, int positionTotal, @Nullable ZmanimItem item);
 
     /**
      * Get the layout for the container.
@@ -344,10 +344,10 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
         populater.setGeoLocation(gloc);
         populater.setInIsrael(locations.isInIsrael());
 
-        ZmanimAdapter adapter = new ZmanimAdapter(context, preferences);
+        ZmanimAdapter<ZmanViewHolder> adapter = new ZmanimAdapter(context, preferences);
         populater.populate(adapter, true);
 
-        ZmanimAdapter adapterTomorrow = new ZmanimAdapter(context, preferences);
+        ZmanimAdapter<ZmanViewHolder> adapterTomorrow = new ZmanimAdapter(context, preferences);
         populater.setCalendar(day + DAY_IN_MILLIS);
         populater.populate(adapterTomorrow, true);
 
