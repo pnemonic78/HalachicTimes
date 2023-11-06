@@ -28,7 +28,6 @@ class LocationsProviderFactoryImpl(context: Context) :
 
     private val context: Context = context.applicationContext
 
-
     override fun createAddressProvider(): AddressProvider {
         return AddressProvider(context)
     }

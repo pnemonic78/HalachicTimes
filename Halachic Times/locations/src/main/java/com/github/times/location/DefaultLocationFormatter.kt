@@ -13,174 +13,176 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import static com.github.times.location.LocationPreferences.Values.FORMAT_SEXAGESIMAL;
-import static com.github.times.location.LocationsProvider.LATITUDE_MAX;
-import static com.github.times.location.LocationsProvider.LATITUDE_MIN;
-import static com.github.times.location.LocationsProvider.LONGITUDE_MAX;
-import static com.github.times.location.LocationsProvider.LONGITUDE_MIN;
-
-import android.content.Context;
-import android.location.Address;
-import android.location.Location;
-
-import com.github.util.LocaleUtils;
-
-import java.text.DecimalFormat;
-import java.util.Locale;
+import android.content.Context
+import android.location.Address
+import android.location.Location
+import com.github.times.location.LocationPreferences.Values.Companion.FORMAT_SEXAGESIMAL
+import com.github.util.LocaleUtils.getDefaultLocale
+import java.text.DecimalFormat
+import java.util.Locale
+import kotlin.math.abs
 
 /**
  * Default location formatter.
  *
  * @author Moshe Waisberg
  */
-public class DefaultLocationFormatter implements LocationFormatter {
-
+open class DefaultLocationFormatter(
     /**
      * The context.
      */
-    private final Context context;
+    context: Context,
     /**
      * The format notation.
      *
-     * @see com.github.times.location.LocationPreferences.Values#FORMAT_DECIMAL
-     * @see com.github.times.location.LocationPreferences.Values#FORMAT_SEXAGESIMAL
+     * @see com.github.times.location.LocationPreferences.Values.FORMAT_DECIMAL
+     * @see com.github.times.location.LocationPreferences.Values.FORMAT_SEXAGESIMAL
      */
-    protected final String notation;
-    protected final boolean isElevationVisible;
+    @JvmField
+    protected val notation: String,
+    @JvmField
+    protected val isElevationVisible: Boolean
+) : LocationFormatter {
     /**
      * The coordinates format for decimal format.
      */
-    private final String formatDecimal;
+    private val formatDecimal: String = context.getString(R.string.location_decimal)
+
     /**
      * The coordinates format for decimal format with elevation.
      */
-    private final String formatDecimalElevation;
+    private val formatDecimalElevation: String =
+        context.getString(R.string.location_decimal_with_elevation)
+
     /**
      * The coordinates format for sexagesimal format.
      */
-    private final String formatSexagesimal;
+    private val formatSexagesimal: String = context.getString(R.string.location_sexagesimal)
+
     /**
      * The coordinates format for sexagesimal format with elevation.
      */
-    private final String formatSexagesimalElevation;
+    private val formatSexagesimalElevation: String =
+        context.getString(R.string.location_sexagesimal_with_elevation)
+
     /**
      * The elevation format.
      */
-    private final String formatElevation;
+    private val formatElevation: String = context.getString(R.string.location_elevation)
+
     /**
      * The bearing/yaw format for decimal format.
      */
-    private final DecimalFormat formatBearingDecimal;
+    private val formatBearingDecimal: DecimalFormat = DecimalFormat("###.#\u00B0")
 
-    public DefaultLocationFormatter(Context context, String notation, boolean isElevationVisible) {
-        this.context = context;
-        this.notation = notation;
-        this.isElevationVisible = isElevationVisible;
-
-        formatDecimal = context.getString(R.string.location_decimal);
-        formatDecimalElevation = context.getString(R.string.location_decimal_with_elevation);
-        formatElevation = context.getString(R.string.location_elevation);
-
-        formatSexagesimal = context.getString(R.string.location_sexagesimal);
-        formatSexagesimalElevation = context.getString(R.string.location_sexagesimal_with_elevation);
-
-        formatBearingDecimal = new DecimalFormat("###.#\u00B0");
+    override fun formatCoordinates(location: Location): String {
+        val latitude = location.latitude
+        val longitude = location.longitude
+        val elevation = location.altitude
+        return formatCoordinates(latitude, longitude, elevation)
     }
 
-    @Override
-    public String formatCoordinates(Location location) {
-        final double latitude = location.getLatitude();
-        final double longitude = location.getLongitude();
-        final double altitude = location.getAltitude();
-        return formatCoordinates(latitude, longitude, altitude);
-    }
-
-    @Override
-    public String formatCoordinates(Address address) {
-        final double latitude = address.getLatitude();
-        final double longitude = address.getLongitude();
-        double altitude = 0;
-        if (address instanceof ZmanimAddress) {
-            ZmanimAddress zaddress = (ZmanimAddress) address;
-            if (zaddress.hasElevation()) {
-                altitude = zaddress.getElevation();
+    override fun formatCoordinates(address: Address): String {
+        val latitude = address.latitude
+        val longitude = address.longitude
+        var elevation = 0.0
+        if (address is ZmanimAddress) {
+            if (address.hasElevation()) {
+                elevation = address.elevation
             }
         }
-        return formatCoordinates(latitude, longitude, altitude);
+        return formatCoordinates(latitude, longitude, elevation)
     }
 
-    @Override
-    public String formatCoordinates(double latitude, double longitude, double elevation) {
-        final boolean elevated = isElevationVisible && !Double.isNaN(elevation);
-        if (FORMAT_SEXAGESIMAL.equals(notation)) {
-            return formatCoordinatesSexagesimal(latitude, longitude, elevation, elevated);
+    override fun formatCoordinates(latitude: Double, longitude: Double, elevation: Double): String {
+        val elevated = isElevationVisible && !elevation.isNaN()
+        return if (FORMAT_SEXAGESIMAL == notation) {
+            formatCoordinatesSexagesimal(latitude, longitude, elevation, elevated)
+        } else {
+            formatCoordinatesDecimal(latitude, longitude, elevation, elevated)
         }
-        return formatCoordinatesDecimal(latitude, longitude, elevation, elevated);
     }
 
-    protected String formatCoordinatesDecimal(double latitude, double longitude, double elevation, boolean withElevation) {
-        final CharSequence latitudeText = formatLatitudeDecimal(latitude);
-        final CharSequence longitudeText = formatLongitudeDecimal(longitude);
+    protected fun formatCoordinatesDecimal(
+        latitude: Double,
+        longitude: Double,
+        elevation: Double,
+        withElevation: Boolean
+    ): String {
+        val latitudeText: CharSequence = formatLatitudeDecimal(latitude)
+        val longitudeText: CharSequence = formatLongitudeDecimal(longitude)
 
         if (withElevation) {
-            final CharSequence elevationText = formatElevation(elevation);
-            return String.format(Locale.US, formatDecimalElevation, latitudeText, longitudeText, elevationText);
+            val elevationText: CharSequence = formatElevation(elevation)
+            return String.format(
+                Locale.US,
+                formatDecimalElevation,
+                latitudeText,
+                longitudeText,
+                elevationText
+            )
         }
-        return String.format(Locale.US, formatDecimal, latitudeText, longitudeText);
+        return String.format(Locale.US, formatDecimal, latitudeText, longitudeText)
     }
 
-    protected String formatCoordinatesSexagesimal(double latitude, double longitude, double elevation, boolean withElevation) {
-        final CharSequence latitudeText = formatLatitudeSexagesimal(latitude);
-        final CharSequence longitudeText = formatLongitudeSexagesimal(longitude);
-        final CharSequence elevationText = formatElevation(elevation);
+    protected fun formatCoordinatesSexagesimal(
+        latitude: Double,
+        longitude: Double,
+        elevation: Double,
+        withElevation: Boolean
+    ): String {
+        val latitudeText: CharSequence = formatLatitudeSexagesimal(latitude)
+        val longitudeText: CharSequence = formatLongitudeSexagesimal(longitude)
+        val elevationText: CharSequence = formatElevation(elevation)
 
         if (withElevation) {
-            return String.format(Locale.US, formatSexagesimalElevation, latitudeText, longitudeText, elevationText);
+            return String.format(
+                Locale.US,
+                formatSexagesimalElevation,
+                latitudeText,
+                longitudeText,
+                elevationText
+            )
         }
-        return String.format(Locale.US, formatSexagesimal, latitudeText, longitudeText);
+        return String.format(Locale.US, formatSexagesimal, latitudeText, longitudeText)
     }
 
-    @Override
-    public String formatLatitude(double latitude) {
-        if (FORMAT_SEXAGESIMAL.equals(notation)) {
-            return formatLatitudeSexagesimal(latitude);
+    override fun formatLatitude(latitude: Double): String {
+        return if (FORMAT_SEXAGESIMAL == notation) {
+            formatLatitudeSexagesimal(latitude)
+        } else {
+            formatLatitudeDecimal(latitude)
         }
-        return formatLatitudeDecimal(latitude);
     }
 
-    @Override
-    public String formatLatitudeDecimal(double coordinate) {
-        return Location.convert(coordinate, Location.FORMAT_DEGREES);
+    override fun formatLatitudeDecimal(latitude: Double): String {
+        return Location.convert(latitude, Location.FORMAT_DEGREES)
     }
 
-    @Override
-    public String formatLatitudeSexagesimal(double coordinate) {
-        return Location.convert(Math.abs(coordinate), Location.FORMAT_SECONDS);
+    override fun formatLatitudeSexagesimal(latitude: Double): String {
+        return Location.convert(abs(latitude), Location.FORMAT_SECONDS)
     }
 
-    @Override
-    public String formatLongitude(double coordinate) {
-        if (FORMAT_SEXAGESIMAL.equals(notation)) {
-            return formatLongitudeSexagesimal(coordinate);
+    override fun formatLongitude(longitude: Double): String {
+        return if (FORMAT_SEXAGESIMAL == notation) {
+            formatLongitudeSexagesimal(longitude)
+        } else {
+            formatLongitudeDecimal(longitude)
         }
-        return formatLongitudeDecimal(coordinate);
     }
 
-    @Override
-    public String formatLongitudeDecimal(double coordinate) {
-        return Location.convert(coordinate, Location.FORMAT_DEGREES);
+    override fun formatLongitudeDecimal(longitude: Double): String {
+        return Location.convert(longitude, Location.FORMAT_DEGREES)
     }
 
-    @Override
-    public String formatLongitudeSexagesimal(double coordinate) {
-        return Location.convert(Math.abs(coordinate), Location.FORMAT_SECONDS);
+    override fun formatLongitudeSexagesimal(longitude: Double): String {
+        return Location.convert(abs(longitude), Location.FORMAT_SECONDS)
     }
 
-    @Override
-    public String formatElevation(double elevation) {
-        return String.format(Locale.US, formatElevation, elevation);
+    override fun formatElevation(elevation: Double): String {
+        return String.format(Locale.US, formatElevation, elevation)
     }
 
     /**
@@ -188,51 +190,45 @@ public class DefaultLocationFormatter implements LocationFormatter {
      *
      * @return the context's locale.
      */
-    protected Locale getLocale() {
-        return LocaleUtils.getDefaultLocale(context);
-    }
+    protected val locale: Locale = getDefaultLocale(context)
 
-    @Override
-    public String formatBearing(double azimuth) {
-        if (FORMAT_SEXAGESIMAL.equals(notation)) {
-            return formatBearingSexagesimal(azimuth);
+    override fun formatBearing(azimuth: Double): String {
+        return if (FORMAT_SEXAGESIMAL == notation) {
+            formatBearingSexagesimal(azimuth)
+        } else {
+            formatBearingDecimal(azimuth)
         }
-        return formatBearingDecimal(azimuth);
     }
 
-    @Override
-    public String formatBearingDecimal(double azimuth) {
-        return formatBearingDecimal.format((azimuth + 360) % 360);
+    override fun formatBearingDecimal(azimuth: Double): String {
+        return formatBearingDecimal.format((azimuth + 360) % 360)
     }
 
-    @Override
-    public String formatBearingSexagesimal(double azimuth) {
-        return formatBearingDecimal.format((azimuth + 360) % 360);
+    override fun formatBearingSexagesimal(azimuth: Double): String {
+        return formatBearingDecimal.format((azimuth + 360) % 360)
     }
 
-    @Override
-    public double parseLatitude(String coordinate) {
-        if (coordinate.isEmpty()) return Double.NaN;
+    override fun parseLatitude(coordinate: String): Double {
+        if (coordinate.isEmpty()) return Double.NaN
         try {
-            double value = Location.convert(coordinate);
-            if (value < LATITUDE_MIN) return Double.NaN;
-            if (value > LATITUDE_MAX) return Double.NaN;
-            return value;
-        } catch (IllegalArgumentException ignored) {
+            val value = Location.convert(coordinate)
+            if (value < LocationsProvider.LATITUDE_MIN) return Double.NaN
+            if (value > LocationsProvider.LATITUDE_MAX) return Double.NaN
+            return value
+        } catch (ignored: IllegalArgumentException) {
         }
-        return Double.NaN;
+        return Double.NaN
     }
 
-    @Override
-    public double parseLongitude(String coordinate) {
-        if (coordinate.isEmpty()) return Double.NaN;
+    override fun parseLongitude(coordinate: String): Double {
+        if (coordinate.isEmpty()) return Double.NaN
         try {
-            double value = Location.convert(coordinate);
-            if (value < LONGITUDE_MIN) return Double.NaN;
-            if (value > LONGITUDE_MAX) return Double.NaN;
-            return value;
-        } catch (IllegalArgumentException ignored) {
+            val value = Location.convert(coordinate)
+            if (value < LocationsProvider.LONGITUDE_MIN) return Double.NaN
+            if (value > LocationsProvider.LONGITUDE_MAX) return Double.NaN
+            return value
+        } catch (ignored: IllegalArgumentException) {
         }
-        return Double.NaN;
+        return Double.NaN
     }
 }

@@ -13,145 +13,136 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.appwidget;
+package com.github.times.appwidget
 
-import android.content.Context;
-import android.graphics.Typeface;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.TextUtils;
-import android.text.style.StyleSpan;
-import android.widget.RemoteViews;
-
-import androidx.annotation.StyleRes;
-
-import com.github.text.style.TypefaceSpan;
-import com.github.times.R;
-import com.github.times.ZmanViewHolder;
-import com.github.times.ZmanimAdapter;
-import com.github.times.ZmanimItem;
-import com.github.util.LocaleUtils;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static com.github.graphics.BitmapUtils.isBrightWallpaper;
-import static com.github.times.ZmanimItem.NEVER;
-import static com.github.util.TimeUtils.roundUp;
+import android.content.Context
+import android.graphics.Typeface
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.format.DateUtils
+import android.text.style.StyleSpan
+import android.widget.RemoteViews
+import androidx.annotation.StringRes
+import androidx.annotation.StyleRes
+import com.github.app.isBrightWallpaper
+import com.github.text.style.TypefaceSpan
+import com.github.times.R
+import com.github.times.ZmanViewHolder
+import com.github.times.ZmanimAdapter
+import com.github.times.ZmanimItem
+import com.github.util.LocaleUtils.getDefaultLocale
+import com.github.util.TimeUtils.roundUp
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 /**
- * Clock widget with hour and title underneath.<br>
+ * Clock widget with hour and title underneath.<br></br>
  * Based on the default Android digital clock widget.
  *
  * @author Moshe Waisberg
  */
-public class ClockWidget extends ZmanimAppWidget {
-
-    @StyleRes
-    private static final int THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark;
-    @StyleRes
-    private static final int THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light;
-
-    private final ThreadLocal<DateFormat> formatter = new ThreadLocal<DateFormat>() {
-        @Override
-        protected DateFormat initialValue() {
-            final Context context = getContext();
-            boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
-            String pattern = context.getString(time24 ? R.string.clock_24_hours_format : R.string.clock_12_hours_format);
-            return new SimpleDateFormat(pattern, LocaleUtils.getDefaultLocale(context));
-        }
-    };
-
-    @Override
-    protected int getLayoutId() {
-        int theme = getTheme();
-        if (theme == THEME_APPWIDGET_DARK) {
-            return R.layout.clock_widget;
-        } else if (theme == THEME_APPWIDGET_LIGHT) {
-            return R.layout.clock_widget_light;
-        }
-        if (isBrightWallpaper(getContext())) {
-            return R.layout.clock_widget_light;
-        }
-        return R.layout.clock_widget;
+class ClockWidget : ZmanimAppWidget() {
+    private val timeFormat: DateFormat by lazy {
+        val time24 = android.text.format.DateFormat.is24HourFormat(context)
+        @StringRes val time24Id =
+            if (time24) R.string.clock_24_hours_format else R.string.clock_12_hours_format
+        val pattern = context.getString(time24Id)
+        SimpleDateFormat(pattern, getDefaultLocale(context))
     }
 
-    @Override
-    protected int getIntentViewId() {
-        return R.id.date_gregorian;
+    override fun getLayoutId(): Int {
+        val theme = this.theme
+        return when {
+            theme == THEME_APPWIDGET_DARK -> R.layout.clock_widget
+            theme == THEME_APPWIDGET_LIGHT -> R.layout.clock_widget_light
+            isBrightWallpaper(context) -> R.layout.clock_widget_light
+            else -> R.layout.clock_widget
+        }
     }
 
-    @Override
-    protected void bindViews(Context context, RemoteViews list, ZmanimAdapter<ZmanViewHolder> adapterToday, ZmanimAdapter<ZmanViewHolder> adapterTomorrow) {
-        ZmanimAdapter<ZmanViewHolder> adapter = adapterToday;
-        int count = adapter.getItemCount();
-        ZmanimItem item;
-        boolean found = false;
-        int positionTotal = 0;
-        List<ZmanimItem> items = new ArrayList<>(1);
+    override fun getIntentViewId(): Int {
+        return R.id.date_gregorian
+    }
 
-        for (int position = 0; position < count; position++, positionTotal++) {
-            item = adapter.getItem(position);
-            if ((item == null) || item.isEmptyOrElapsed()) {
-                continue;
+    override fun bindViews(
+        context: Context,
+        list: RemoteViews,
+        adapterToday: ZmanimAdapter<ZmanViewHolder>,
+        adapterTomorrow: ZmanimAdapter<ZmanViewHolder>
+    ) {
+        var adapter = adapterToday
+        var count = adapter.itemCount
+        var item: ZmanimItem?
+        val items = mutableListOf<ZmanimItem>()
+        var position = 0
+        while (position < count) {
+            item = adapter.getItem(position)
+            if (item == null || item.isEmptyOrElapsed) {
+                position++
+                continue
             }
-            items.add(item);
-            found = true;
-            break;
+            items.add(item)
+            break
         }
-
-        if (!found && (adapterTomorrow != null)) {
-            adapter = adapterTomorrow;
-            count = adapter.getItemCount();
-            for (int position = 0; position < count; position++, positionTotal++) {
-                item = adapter.getItem(position);
-                if ((item == null) || item.isEmptyOrElapsed()) {
-                    continue;
+        if (items.isEmpty()) {
+            adapter = adapterTomorrow
+            count = adapter.itemCount
+            position = 0
+            while (position < count) {
+                item = adapter.getItem(position)
+                if (item == null || item.isEmptyOrElapsed) {
+                    position++
+                    continue
                 }
-                items.add(item);
-                break;
+                items.add(item)
+                break
             }
         }
-
-        bindViews(context, list, items);
+        bindViews(context, list, items)
     }
 
-    @Override
-    protected void bindViews(Context context, RemoteViews list, List<ZmanimItem> items) {
-        ZmanimItem item = items.get(0);
-        bindView(context, list, 0, 0, item);
+    override fun bindViews(context: Context, list: RemoteViews, items: List<ZmanimItem>) {
+        if (items.isEmpty()) return
+        val item = items[0]
+        bindView(context, list, 0, 0, item)
     }
 
-    @Override
-    protected void bindView(Context context, RemoteViews list, int position, int positionTotal, ZmanimItem item) {
-        CharSequence label = item.time != NEVER ? getTimeFormat().format(roundUp(item.time, MINUTE_IN_MILLIS)) : "";
-        SpannableStringBuilder spans = SpannableStringBuilder.valueOf(label);
-        int indexMinutes = TextUtils.indexOf(label, ':');
+    override fun bindView(
+        context: Context,
+        list: RemoteViews,
+        position: Int,
+        positionTotal: Int,
+        item: ZmanimItem
+    ) {
+        val label: CharSequence = if (item.time != ZmanimItem.NEVER)
+            timeFormat.format(roundUp(item.time, DateUtils.MINUTE_IN_MILLIS)) else ""
+        val spans = SpannableStringBuilder.valueOf(label)
+        val indexMinutes = label.indexOf(':')
         if (indexMinutes >= 0) {
-            int spanStart = indexMinutes + 1;
-            int spanEnd = label.length();
-            spans.setSpan(new TypefaceSpan(Typeface.SANS_SERIF), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-            spans.setSpan(new StyleSpan(Typeface.BOLD), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            val spanStart = indexMinutes + 1
+            val spanEnd = label.length
+            spans.setSpan(
+                TypefaceSpan(Typeface.SANS_SERIF),
+                spanStart,
+                spanEnd,
+                Spanned.SPAN_INCLUSIVE_INCLUSIVE
+            )
+            spans.setSpan(
+                StyleSpan(Typeface.BOLD),
+                spanStart,
+                spanEnd,
+                Spanned.SPAN_INCLUSIVE_INCLUSIVE
+            )
         }
-        list.setTextViewText(R.id.time, spans);
-        list.setTextViewText(R.id.title, item.title);
+        list.setTextViewText(R.id.time, spans)
+        list.setTextViewText(R.id.title, item.title)
     }
 
-    @Override
-    protected void notifyAppWidgetViewDataChanged(Context context) {
-        formatter.remove();
-        super.notifyAppWidgetViewDataChanged(context);
-    }
+    companion object {
+        @StyleRes
+        private val THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark
 
-    /**
-     * Get the time formatter.
-     *
-     * @return the formatter.
-     */
-    protected DateFormat getTimeFormat() {
-        return formatter.get();
+        @StyleRes
+        private val THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light
     }
 }

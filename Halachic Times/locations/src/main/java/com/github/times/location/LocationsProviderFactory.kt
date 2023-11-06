@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
 /**
  * Factory methods for creating location providers.
  */
-public interface LocationsProviderFactory<A extends AddressProvider, L extends LocationsProvider> {
-    A createAddressProvider();
-
-    L createLocationsProvider();
+interface LocationsProviderFactory<A : AddressProvider, L : LocationsProvider> {
+    fun createAddressProvider(): A
+    fun createLocationsProvider(): L
 }

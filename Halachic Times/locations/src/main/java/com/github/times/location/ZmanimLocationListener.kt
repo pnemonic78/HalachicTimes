@@ -13,54 +13,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 
-import androidx.annotation.NonNull;
-
-public interface ZmanimLocationListener extends LocationListener {
-
-    /**
-     * The intent action for an address that was found.
-     */
-    String ACTION_ADDRESS = "com.github.times.location.ADDRESS";
-    /**
-     * The intent action for a location with elevation that was found.
-     */
-    String ACTION_ELEVATION = "com.github.times.location.ELEVATION";
-    /**
-     * The intent action for when a location changed.
-     */
-    String ACTION_LOCATION_CHANGED = "com.github.times.location.LOCATION_CHANGED";
-
-    /**
-     * The location parameter.
-     */
-    String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
-    /**
-     * The address parameter.
-     */
-    String EXTRA_ADDRESS = "address";
-    /**
-     * Whether to persist the address?
-     */
-    String EXTRA_PERSIST = "persist_address";
-
+interface ZmanimLocationListener : LocationListener {
     /**
      * Called when an address is found.
      *
      * @param location the requested location.
      * @param address  the address for the location.
      */
-    void onAddressChanged(@NonNull Location location, @NonNull ZmanimAddress address);
+    fun onAddressChanged(location: Location, address: ZmanimAddress)
 
     /**
      * Called when an address is found.
      *
      * @param location the location with elevation.
      */
-    void onElevationChanged(@NonNull Location location);
+    fun onElevationChanged(location: Location)
+
+    companion object {
+        /**
+         * The intent action for an address that was found.
+         */
+        const val ACTION_ADDRESS = "com.github.times.location.ADDRESS"
+
+        /**
+         * The intent action for a location with elevation that was found.
+         */
+        const val ACTION_ELEVATION = "com.github.times.location.ELEVATION"
+
+        /**
+         * The intent action for when a location changed.
+         */
+        const val ACTION_LOCATION_CHANGED = "com.github.times.location.LOCATION_CHANGED"
+
+        /**
+         * The location parameter.
+         */
+        const val EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED
+
+        /**
+         * The address parameter.
+         */
+        const val EXTRA_ADDRESS = "address"
+
+        /**
+         * Whether to persist the address?
+         */
+        const val EXTRA_PERSIST = "persist_address"
+    }
 }

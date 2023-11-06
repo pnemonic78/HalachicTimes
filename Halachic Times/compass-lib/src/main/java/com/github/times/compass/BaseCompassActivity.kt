@@ -42,7 +42,7 @@ abstract class BaseCompassActivity : LocatedActivity<ThemePreferences>() {
     private var fragment: CompassFragment? = null
 
     /** The preferences.  */
-    private lateinit var preferences: ThemeCompassPreferences
+    private val preferences: ThemeCompassPreferences by lazy { createCompassPreferences(this) }
 
     private lateinit var binding: CompassActivityBinding
 
@@ -50,10 +50,8 @@ abstract class BaseCompassActivity : LocatedActivity<ThemePreferences>() {
         get() = preferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val context: Context = this
-        preferences = createCompassPreferences(context)
-
         super.onCreate(savedInstanceState)
+        val context: Context = this
 
         val binding = CompassActivityBinding.inflate(layoutInflater)
         this.binding = binding
@@ -94,7 +92,7 @@ abstract class BaseCompassActivity : LocatedActivity<ThemePreferences>() {
         return true
     }
 
-    protected open fun createCompassPreferences(context: Context?): ThemeCompassPreferences {
+    protected open fun createCompassPreferences(context: Context): ThemeCompassPreferences {
         return SimpleCompassPreferences(context)
     }
 

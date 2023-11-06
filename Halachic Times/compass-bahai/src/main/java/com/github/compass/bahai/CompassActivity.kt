@@ -22,7 +22,6 @@ import android.view.Menu
 import android.view.MenuItem
 import com.github.times.compass.BaseCompassActivity
 import com.github.times.compass.CompassFragment
-import com.github.times.compass.HolyCompassView
 import com.github.times.compass.preference.CompassPreferenceActivity
 
 /**
@@ -53,9 +52,7 @@ class CompassActivity : BaseCompassActivity() {
         }
     }
 
-    override fun getLocationActivityClass(): Class<out Activity> {
-        return LocationActivity::class.java
-    }
+    override val locationActivityClass: Class<out Activity> = LocationActivity::class.java
 
     private fun startSettings() {
         val context: Context = this

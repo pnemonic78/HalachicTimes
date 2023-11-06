@@ -13,56 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.preference;
+package com.github.times.preference
 
-import static com.github.preference.LocalePreferences.KEY_LOCALE;
-import static com.github.preference.ThemePreferences.KEY_THEME;
-import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
-
-import android.content.Context;
-import android.os.Bundle;
-
-import androidx.preference.PreferenceFragmentCompat;
-
-import com.github.app.LocaleCallbacks;
-import com.github.app.LocaleHelper;
-import com.github.preference.LocalePreferences;
-import com.github.preference.PreferenceActivity;
-import com.github.times.compass.preference.MainPreferencesFragment;
+import android.content.Context
+import android.os.Bundle
+import androidx.preference.PreferenceFragmentCompat
+import com.github.app.LocaleCallbacks
+import com.github.app.LocaleHelper
+import com.github.preference.LocalePreferences
+import com.github.preference.PreferenceActivity
+import com.github.preference.ThemePreferences
+import com.github.times.compass.preference.CompassPreferences
+import com.github.times.compass.preference.MainPreferencesFragment
 
 /**
  * Application preferences that populate the settings.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimPreferenceActivity extends PreferenceActivity {
+open class ZmanimPreferenceActivity : PreferenceActivity() {
+    private lateinit var localeCallbacks: LocaleCallbacks<LocalePreferences>
 
-    private LocaleCallbacks<LocalePreferences> localeCallbacks;
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleHelper<>(newBase);
-        Context context = localeCallbacks.attachBaseContext(newBase);
-        super.attachBaseContext(context);
-
-        applyOverrideConfiguration(context.getResources().getConfiguration());
+    override fun attachBaseContext(newBase: Context) {
+        localeCallbacks = LocaleHelper(newBase)
+        val context = localeCallbacks.attachBaseContext(newBase)
+        super.attachBaseContext(context)
+        applyOverrideConfiguration(context.resources.configuration)
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        localeCallbacks.onPreCreate(this);
-        super.onCreate(savedInstanceState);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        localeCallbacks.onPreCreate(this)
+        super.onCreate(savedInstanceState)
     }
 
-    @Override
-    protected PreferenceFragmentCompat createMainFragment() {
-        return new MainPreferencesFragment();
+    override fun createMainFragment(): PreferenceFragmentCompat {
+        return MainPreferencesFragment()
     }
 
-    @Override
-    protected boolean shouldRestartParentActivityForUi(String key) {
-        return KEY_THEME.equals(key)
-                || KEY_THEME_COMPASS.equals(key)
-                || KEY_LOCALE.equals(key);
+    override fun shouldRestartParentActivityForUi(key: String?): Boolean {
+        return ThemePreferences.KEY_THEME == key
+            || CompassPreferences.KEY_THEME_COMPASS == key
+            || LocalePreferences.KEY_LOCALE == key
     }
 }

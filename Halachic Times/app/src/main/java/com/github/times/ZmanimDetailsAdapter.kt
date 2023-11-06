@@ -13,32 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times;
+package com.github.times
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-
-import com.github.times.databinding.TimesDetailBinding;
-import com.github.times.preference.ZmanimPreferences;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.github.times.databinding.TimesDetailBinding
+import com.github.times.preference.ZmanimPreferences
 
 /**
  * Adapter for all opinions of an halachic time.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimDetailsAdapter extends ZmanimAdapter<ZmanDetailsViewHolder> {
+class ZmanimDetailsAdapter(context: Context, settings: ZmanimPreferences) :
+    ZmanimAdapter<ZmanDetailsViewHolder>(context, settings, null) {
 
-    public ZmanimDetailsAdapter(Context context, ZmanimPreferences settings) {
-        super(context, settings, null);
-    }
-
-    @NonNull
-    @Override
-    protected ZmanDetailsViewHolder createArrayViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, int viewType, int fieldId) {
-        TimesDetailBinding binding = TimesDetailBinding.inflate(inflater, parent, false);
-        return new ZmanDetailsViewHolder(binding);
+    override fun createArrayViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        viewType: Int,
+        fieldId: Int
+    ): ZmanDetailsViewHolder {
+        val binding = TimesDetailBinding.inflate(inflater, parent, false)
+        return ZmanDetailsViewHolder(binding)
     }
 }

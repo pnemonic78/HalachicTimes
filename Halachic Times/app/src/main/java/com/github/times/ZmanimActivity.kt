@@ -13,401 +13,343 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times;
+package com.github.times
 
-import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
-import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
-import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
-import static android.text.format.DateUtils.SECOND_IN_MILLIS;
-import static android.text.format.DateUtils.formatDateTime;
-import static com.github.times.ZmanimItem.NEVER;
-import static com.github.util.LocaleUtils.isLocaleRTL;
-import static java.lang.System.currentTimeMillis;
-
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.location.Location;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.DatePicker;
-import android.widget.TextView;
-import android.widget.ViewSwitcher;
-
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentManager;
-
-import com.github.app.LocaleCallbacks;
-import com.github.app.LocaleHelper;
-import com.github.app.SimpleThemeCallbacks;
-import com.github.app.ThemeCallbacks;
-import com.github.app.TodayDatePickerDialog;
-import com.github.times.compass.CompassActivity;
-import com.github.times.databinding.TimesBinding;
-import com.github.times.databinding.TimesHeaderBinding;
-import com.github.times.location.LocatedActivity;
-import com.github.times.location.LocationActivity;
-import com.github.times.preference.SimpleZmanimPreferences;
-import com.github.times.preference.ZmanimPreferenceActivity;
-import com.github.times.preference.ZmanimPreferences;
-import com.github.times.remind.ZmanimReminder;
-import com.github.times.remind.ZmanimReminderService;
-import com.github.view.animation.ConstraintLayoutWeightAnimation;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.lang.ref.WeakReference;
-import java.util.Calendar;
+import android.annotation.TargetApi
+import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.location.Location
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
+import android.text.format.DateUtils
+import android.view.GestureDetector
+import android.view.GestureDetector.OnDoubleTapListener
+import android.view.Menu
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
+import android.view.animation.AnimationUtils
+import android.widget.DatePicker
+import android.widget.TextView
+import android.widget.ViewSwitcher
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.github.app.LocaleCallbacks
+import com.github.app.LocaleHelper
+import com.github.app.SimpleThemeCallbacks
+import com.github.app.ThemeCallbacks
+import com.github.app.TodayDatePickerDialog
+import com.github.times.compass.CompassActivity
+import com.github.times.databinding.TimesBinding
+import com.github.times.location.LocatedActivity
+import com.github.times.location.LocationActivity
+import com.github.times.preference.SimpleZmanimPreferences
+import com.github.times.preference.ZmanimPreferenceActivity
+import com.github.times.preference.ZmanimPreferences
+import com.github.times.remind.ZmanimReminder
+import com.github.times.remind.ZmanimReminder.Companion.checkPermissions
+import com.github.times.remind.ZmanimReminderService.Companion.enqueueWork
+import com.github.util.LocaleUtils.isLocaleRTL
+import com.github.view.animation.ConstraintLayoutWeightAnimation
+import java.lang.ref.WeakReference
+import java.util.Calendar
+import kotlin.math.abs
 
 /**
- * Shows a list of halachic times (<em>zmanim</em>) for prayers.
+ * Shows a list of halachic times (*zmanim*) for prayers.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implements
+class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
     OnDateSetListener,
     View.OnClickListener,
-    OnGestureListener,
-    GestureDetector.OnDoubleTapListener,
-    Animation.AnimationListener,
+    GestureDetector.OnGestureListener,
+    OnDoubleTapListener,
+    AnimationListener,
     OnZmanItemClickListener {
-
-    /**
-     * The date parameter.
-     */
-    public static final String EXTRA_DATE = "date";
-    /**
-     * The time parameter.
-     */
-    public static final String EXTRA_TIME = "time";
-    /**
-     * The details list parameter.
-     */
-    private static final String PARAMETER_DETAILS = "details";
-
-    private static final int WHAT_TOGGLE_DETAILS = 0;
-    private static final int WHAT_COMPASS = 1;
-    private static final int WHAT_DATE = 2;
-    private static final int WHAT_LOCATION = 3;
-    private static final int WHAT_SETTINGS = 4;
-    private static final int WHAT_TODAY = 5;
-    private static final int WHAT_CANCEL_REMINDERS = 6;
-    private static final int WHAT_UPDATE_REMINDERS = 7;
-
-    private static final int CHILD_MAIN = 0;
-    private static final int CHILD_DETAILS = 1;
-
-    private static final int CHILD_DETAILS_LIST = 0;
-    private static final int CHILD_DETAILS_CANDLES = 1;
-
-    private static final long DATE_MIN = -62167359300528L;// (-1970 + 1) * DAY_IN_MILLIS * 365.25
-
     /**
      * The date.
      */
-    private final Calendar calendar = Calendar.getInstance();
+    private val calendar = Calendar.getInstance()
+
     /**
      * The location header Gregorian date.
      */
-    private TextView headerGregorianDate;
+    private lateinit var headerGregorianDate: TextView
+
     /**
      * The button to navigate to yesterday.
      */
-    private View buttonYesterday;
+    private lateinit var buttonYesterday: View
+
     /**
      * The button to navigate to tomorrow.
      */
-    private View buttonTomorrow;
-    /**
-     * The preferences.
-     */
-    private ZmanimPreferences preferences;
+    private lateinit var buttonTomorrow: View
+
     /**
      * The date picker.
      */
-    private DatePickerDialog datePicker;
+    private var datePicker: DatePickerDialog? = null
+
     /**
      * The master fragment.
      */
-    private ZmanimFragment<ZmanItemViewHolder, ZmanimAdapter<ZmanItemViewHolder>, ZmanimPopulater<ZmanItemViewHolder, ZmanimAdapter<ZmanItemViewHolder>>> masterFragment;
+    private lateinit var masterFragment: ZmanimFragment<ZmanItemViewHolder, ZmanimAdapter<ZmanItemViewHolder>, ZmanimPopulater<ZmanimAdapter<ZmanItemViewHolder>>>
+
     /**
      * The details fragment switcher.
      */
-    private ViewSwitcher detailsFragmentSwitcher;
+    private lateinit var detailsFragmentSwitcher: ViewSwitcher
+
     /**
      * The details fragment.
      */
-    private ZmanimDetailsFragment<ZmanimDetailsAdapter, ZmanimDetailsPopulater<ZmanimDetailsAdapter>> detailsListFragment;
+    private lateinit var detailsListFragment: ZmanimDetailsFragment<ZmanimDetailsAdapter, ZmanimDetailsPopulater<ZmanimDetailsAdapter>>
+
     /**
      * The candles fragment.
      */
-    private CandlesFragment candlesFragment;
+    private lateinit var candlesFragment: CandlesFragment
+
     /**
      * Is master fragment switched with details fragment?
      */
-    private ViewSwitcher viewSwitcher;
+    private var viewSwitcher: ViewSwitcher? = null
+
     /**
      * The master item selected id.
      */
-    private int selectedId;
+    private var selectedId = 0
+
     /**
      * The gesture detector.
      */
-    private GestureDetector gestureDetector;
+    private lateinit var gestureDetector: GestureDetector
+
     /**
      * Is locale RTL?
      */
-    private boolean localeRTL;
+    private var localeRTL = false
+
     /**
      * Slide left-to-right animation.
      */
-    private Animation slideLeftToRight;
+    private var slideLeftToRight: Animation? = null
+
     /**
      * Slide right-to-left animation.
      */
-    private Animation slideRightToLeft;
+    private var slideRightToLeft: Animation? = null
+
     /**
      * Grow details animation.
      */
-    private Animation detailsGrow;
+    private var detailsGrow: Animation? = null
+
     /**
      * Shrink details animation.
      */
-    private Animation detailsShrink;
+    private var detailsShrink: Animation? = null
+
     /**
      * Hide navigation bar animation.
      */
-    private Animation hideNavigation;
+    private var hideNavigation: Animation? = null
+
     /**
      * Show navigation bar animation.
      */
-    private Animation showNavigation;
-    private final ActivityHandler handler = new ActivityHandler(this);
-    private LocaleCallbacks<ZmanimPreferences> localeCallbacks;
+    private var showNavigation: Animation? = null
+    private val handler = ActivityHandler(this)
+    private lateinit var localeCallbacks: LocaleCallbacks<ZmanimPreferences>
 
     /**
      * The handler.
      */
-    private static class ActivityHandler extends Handler {
+    private class ActivityHandler(activity: ZmanimActivity) : Handler(Looper.getMainLooper()) {
+        private val activityWeakReference = WeakReference(activity)
 
-        private final WeakReference<ZmanimActivity> activityWeakReference;
+        override fun handleMessage(msg: Message) {
+            val activity = activityWeakReference.get() ?: return
+            val context: Context = activity
+            when (msg.what) {
+                WHAT_TOGGLE_DETAILS -> activity.toggleDetails(msg.arg1)
+                WHAT_COMPASS -> activity.startActivity(Intent(context, CompassActivity::class.java))
+                WHAT_DATE -> activity.chooseDate()
+                WHAT_LOCATION -> activity.startLocations()
+                WHAT_SETTINGS -> activity.startActivity(
+                    Intent(context, ZmanimPreferenceActivity::class.java)
+                )
 
-        public ActivityHandler(ZmanimActivity activity) {
-            super(Looper.getMainLooper());
-            this.activityWeakReference = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void handleMessage(@NotNull Message msg) {
-            final ZmanimActivity activity = activityWeakReference.get();
-            if (activity == null) {
-                return;
-            }
-            Context context = activity;
-
-            switch (msg.what) {
-                case WHAT_TOGGLE_DETAILS:
-                    activity.toggleDetails(msg.arg1);
-                    break;
-                case WHAT_COMPASS:
-                    activity.startActivity(new Intent(context, CompassActivity.class));
-                    break;
-                case WHAT_DATE:
-                    activity.chooseDate();
-                    break;
-                case WHAT_LOCATION:
-                    activity.startLocations();
-                    break;
-                case WHAT_SETTINGS:
-                    activity.startActivity(new Intent(context, ZmanimPreferenceActivity.class));
-                    break;
-                case WHAT_TODAY:
-                    activity.setDate(currentTimeMillis());
-                    break;
-                case WHAT_CANCEL_REMINDERS:
-                    activity.cancelReminders();
-                    break;
-                case WHAT_UPDATE_REMINDERS:
-                    activity.updateReminders();
-                    break;
+                WHAT_TODAY -> activity.setDate(System.currentTimeMillis())
+                WHAT_CANCEL_REMINDERS -> activity.cancelReminders()
+                WHAT_UPDATE_REMINDERS -> activity.updateReminders()
             }
         }
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleHelper<>(newBase);
-        Context context = localeCallbacks.attachBaseContext(newBase);
-        super.attachBaseContext(context);
-        applyOverrideConfiguration(context.getResources().getConfiguration());
+    override fun attachBaseContext(newBase: Context) {
+        localeCallbacks = LocaleHelper(newBase)
+        val context = localeCallbacks.attachBaseContext(newBase)
+        super.attachBaseContext(context)
+        applyOverrideConfiguration(context.resources.configuration)
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        init();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        init()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            initPermissions();
+            initPermissions()
         }
     }
 
-    @Override
-    public void onPreCreate() {
-        super.onPreCreate();
-        localeCallbacks.onPreCreate(this);
+    override fun onPreCreate() {
+        super.onPreCreate()
+        localeCallbacks.onPreCreate(this)
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        handleIntent(intent);
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
     }
 
-    protected void handleIntent(Intent intent) {
-        long date = intent.getLongExtra(EXTRA_DATE, NEVER);
-        if (date == NEVER) {
-            date = intent.getLongExtra(EXTRA_TIME, NEVER);
-            if (date == NEVER) {
-                date = currentTimeMillis();
+    private fun handleIntent(intent: Intent) {
+        var date = intent.getLongExtra(EXTRA_DATE, ZmanimItem.NEVER)
+        if (date == ZmanimItem.NEVER) {
+            date = intent.getLongExtra(EXTRA_TIME, ZmanimItem.NEVER)
+            if (date == ZmanimItem.NEVER) {
+                date = System.currentTimeMillis()
             }
         }
-        setDate(date);
+        setDate(date)
     }
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putLong(EXTRA_DATE, calendar.getTimeInMillis());
-        outState.putInt(PARAMETER_DETAILS, selectedId);
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putLong(EXTRA_DATE, calendar.timeInMillis)
+        outState.putInt(PARAMETER_DETAILS, selectedId)
     }
 
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        setDate(savedInstanceState.getLong(EXTRA_DATE));
-        selectedId = savedInstanceState.getInt(PARAMETER_DETAILS, selectedId);
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        setDate(savedInstanceState.getLong(EXTRA_DATE))
+        selectedId = savedInstanceState.getInt(PARAMETER_DETAILS, selectedId)
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        handler.sendEmptyMessage(WHAT_CANCEL_REMINDERS);
-        int itemId = selectedId;
+    override fun onResume() {
+        super.onResume()
+        handler.sendEmptyMessage(WHAT_CANCEL_REMINDERS)
+        val itemId = selectedId
         if (itemId != 0) {
             // We need to wait for the list rows to get their default
             // backgrounds before we can highlight any row.
-            Message msg = handler.obtainMessage(WHAT_TOGGLE_DETAILS, itemId, 0);
-            handler.sendMessageDelayed(msg, SECOND_IN_MILLIS);
+            val msg = handler.obtainMessage(WHAT_TOGGLE_DETAILS, itemId, 0)
+            handler.sendMessageDelayed(msg, DateUtils.SECOND_IN_MILLIS)
         }
     }
 
-    @Override
-    protected void onPause() {
-        int itemId = selectedId;
+    override fun onPause() {
+        val itemId = selectedId
         if (itemId != 0) {
-            hideDetails();
-            selectedId = itemId;
+            hideDetails()
+            selectedId = itemId
         }
-        super.onPause();
+        super.onPause()
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        handleIntent(getIntent());
+    override fun onStart() {
+        super.onStart()
+        handleIntent(intent)
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        handler.sendEmptyMessage(WHAT_UPDATE_REMINDERS);
+    override fun onStop() {
+        super.onStop()
+        handler.sendEmptyMessage(WHAT_UPDATE_REMINDERS)
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        handler.removeMessages(WHAT_TOGGLE_DETAILS);
-        handler.removeMessages(WHAT_COMPASS);
-        handler.removeMessages(WHAT_DATE);
-        handler.removeMessages(WHAT_LOCATION);
-        handler.removeMessages(WHAT_SETTINGS);
-        handler.removeMessages(WHAT_TODAY);
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeMessages(WHAT_TOGGLE_DETAILS)
+        handler.removeMessages(WHAT_COMPASS)
+        handler.removeMessages(WHAT_DATE)
+        handler.removeMessages(WHAT_LOCATION)
+        handler.removeMessages(WHAT_SETTINGS)
+        handler.removeMessages(WHAT_TODAY)
     }
 
     /**
      * Initialise.
      */
-    @SuppressWarnings({"unchecked", "InflateParams"})
-    private void init() {
-        final Context context = this;
-
-        TimesBinding binding = TimesBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        localeRTL = isLocaleRTL(context);
-
-        gestureDetector = new GestureDetector(context, this, handler);
-        gestureDetector.setIsLongpressEnabled(false);
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        masterFragment = (ZmanimFragment) fragmentManager.findFragmentById(R.id.list_fragment);
-        masterFragment.setOnClickListener(this);
-        detailsFragmentSwitcher = binding.detailsFragment;
-        detailsListFragment = (ZmanimDetailsFragment<ZmanimDetailsAdapter, ZmanimDetailsPopulater<ZmanimDetailsAdapter>>) fragmentManager.findFragmentById(R.id.details_list_fragment);
-        candlesFragment = (CandlesFragment) fragmentManager.findFragmentById(R.id.candles_fragment);
-
-        viewSwitcher = binding.frameFragments;
-        if (viewSwitcher != null) {
-            Animation inAnim = AnimationUtils.makeInAnimation(context, false);
-            viewSwitcher.setInAnimation(inAnim);
-            Animation outAnim = AnimationUtils.makeOutAnimation(context, true);
-            viewSwitcher.setOutAnimation(outAnim);
-        } else {
-            ConstraintLayout.LayoutParams detailsFragmentSwitcherLayoutParams = (ConstraintLayout.LayoutParams) detailsFragmentSwitcher.getLayoutParams();
-            float detailsWeight = detailsFragmentSwitcherLayoutParams.horizontalWeight;
-            long detailsAnimTime = context.getResources().getInteger(android.R.integer.config_mediumAnimTime);
-            detailsGrow = new ConstraintLayoutWeightAnimation(detailsFragmentSwitcher, 0f, detailsWeight);
-            detailsGrow.setDuration(detailsAnimTime);
-            detailsShrink = new ConstraintLayoutWeightAnimation(detailsFragmentSwitcher, detailsWeight, 0f);
-            detailsShrink.setDuration(detailsAnimTime);
+    private fun init() {
+        val context: Context = this
+        val binding = TimesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        localeRTL = isLocaleRTL(context)
+        gestureDetector = GestureDetector(context, this, handler).apply {
+            setIsLongpressEnabled(false)
         }
-
-        TimesHeaderBinding header = binding.header;
-        header.getRoot().setOnClickListener(this);
-        headerGregorianDate = header.dateGregorian;
-        headerLocation = header.headerLocation.coordinates;
-        headerAddress = header.headerLocation.address;
-
-        buttonYesterday = header.navYesterday;
-        buttonYesterday.setOnClickListener(this);
-        buttonTomorrow = header.navTomorrow;
-        buttonTomorrow.setOnClickListener(this);
-
-        slideRightToLeft = AnimationUtils.loadAnimation(context, com.github.times.common.R.anim.slide_right_to_left);
-        slideLeftToRight = AnimationUtils.loadAnimation(context, com.github.times.common.R.anim.slide_left_to_right);
-
-        hideNavigation = AnimationUtils.loadAnimation(context, R.anim.hide_nav);
-        hideNavigation.setAnimationListener(this);
-        showNavigation = AnimationUtils.loadAnimation(context, R.anim.show_nav);
-        showNavigation.setAnimationListener(this);
+        val fragmentManager = supportFragmentManager
+        masterFragment =
+            fragmentManager.findFragmentById(R.id.list_fragment) as ZmanimFragment<ZmanItemViewHolder, ZmanimAdapter<ZmanItemViewHolder>, ZmanimPopulater<ZmanimAdapter<ZmanItemViewHolder>>>
+        masterFragment.setOnClickListener(this)
+        detailsFragmentSwitcher = binding.detailsFragment
+        detailsListFragment =
+            fragmentManager.findFragmentById(R.id.details_list_fragment) as ZmanimDetailsFragment<ZmanimDetailsAdapter, ZmanimDetailsPopulater<ZmanimDetailsAdapter>>
+        candlesFragment = fragmentManager.findFragmentById(R.id.candles_fragment) as CandlesFragment
+        viewSwitcher = binding.frameFragments
+        if (viewSwitcher != null) {
+            val inAnim = AnimationUtils.makeInAnimation(context, false)
+            viewSwitcher!!.inAnimation = inAnim
+            val outAnim = AnimationUtils.makeOutAnimation(context, true)
+            viewSwitcher!!.outAnimation = outAnim
+        } else {
+            val detailsFragmentSwitcherLayoutParams =
+                detailsFragmentSwitcher.layoutParams as ConstraintLayout.LayoutParams
+            val detailsWeight = detailsFragmentSwitcherLayoutParams.horizontalWeight
+            val detailsAnimTime =
+                context.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+            detailsGrow =
+                ConstraintLayoutWeightAnimation(detailsFragmentSwitcher, 0f, detailsWeight).apply {
+                    duration = detailsAnimTime
+                }
+            detailsShrink =
+                ConstraintLayoutWeightAnimation(detailsFragmentSwitcher, detailsWeight, 0f).apply {
+                    duration = detailsAnimTime
+                }
+        }
+        val header = binding.header
+        header.root.setOnClickListener(this)
+        headerGregorianDate = header.dateGregorian
+        headerLocation = header.headerLocation.coordinates
+        headerAddress = header.headerLocation.address
+        buttonYesterday = header.navYesterday
+        buttonYesterday.setOnClickListener(this)
+        buttonTomorrow = header.navTomorrow
+        buttonTomorrow.setOnClickListener(this)
+        slideRightToLeft = AnimationUtils.loadAnimation(
+            context,
+            com.github.times.common.R.anim.slide_right_to_left
+        )
+        slideLeftToRight = AnimationUtils.loadAnimation(
+            context,
+            com.github.times.common.R.anim.slide_left_to_right
+        )
+        hideNavigation = AnimationUtils.loadAnimation(context, R.anim.hide_nav).apply {
+            setAnimationListener(this@ZmanimActivity)
+        }
+        showNavigation = AnimationUtils.loadAnimation(context, R.anim.show_nav).apply {
+            setAnimationListener(this@ZmanimActivity)
+        }
     }
 
     /**
@@ -415,17 +357,16 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
      *
      * @param date the date, in milliseconds.
      */
-    private void setDate(long date) {
+    private fun setDate(date: Long) {
         if (date <= DATE_MIN) {
             // Bad Gregorian dates cause problems for the Jewish dates.
-            return;
+            return
         }
-        calendar.setTimeZone(getTimeZone());
-        calendar.setTimeInMillis(date);
-
-        showDate();
-        scheduleNextDay();
-        populateFragments(calendar);
+        calendar.timeZone = timeZone
+        calendar.timeInMillis = date
+        showDate()
+        scheduleNextDay()
+        populateFragments(calendar)
     }
 
     /**
@@ -435,108 +376,103 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
      * @param monthOfYear the month of the year.
      * @param dayOfMonth  the day of the month.
      */
-    private void setDate(int year, int monthOfYear, int dayOfMonth) {
-        if ((year <= 1) || (monthOfYear < 0) || (dayOfMonth <= 0)) {
+    private fun setDate(year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        if (year <= 1 || monthOfYear < 0 || dayOfMonth <= 0) {
             // Bad Gregorian dates cause problems for the Jewish dates.
-            return;
+            return
         }
-        calendar.setTimeZone(getTimeZone());
-        calendar.setTimeInMillis(currentTimeMillis());
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, monthOfYear);
-        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-        showDate();
-        scheduleNextDay();
-        populateFragments(calendar);
+        calendar.timeZone = timeZone
+        calendar.timeInMillis = System.currentTimeMillis()
+        calendar[Calendar.YEAR] = year
+        calendar[Calendar.MONTH] = monthOfYear
+        calendar[Calendar.DAY_OF_MONTH] = dayOfMonth
+        showDate()
+        scheduleNextDay()
+        populateFragments(calendar)
     }
 
-    private void showDate() {
-        TextView textGregorian = this.headerGregorianDate;
+    private fun showDate() {
+        val textGregorian = headerGregorianDate
         // Have we been destroyed?
-        if (textGregorian == null)
-            return;
-        CharSequence dateGregorian = formatDateTime(this, calendar.getTimeInMillis(), FORMAT_SHOW_DATE | FORMAT_SHOW_YEAR | FORMAT_SHOW_WEEKDAY);
-        textGregorian.setText(dateGregorian);
+        val dateGregorian: CharSequence = DateUtils.formatDateTime(
+            this,
+            calendar.timeInMillis,
+            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR or DateUtils.FORMAT_SHOW_WEEKDAY
+        )
+        textGregorian.text = dateGregorian
     }
 
-    @Override
-    protected Runnable createUpdateLocationRunnable(Location location) {
-        return new Runnable() {
-            @Override
-            public void run() {
-                bindHeader(location);
-                populateFragments(calendar);
-            }
-        };
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.zmanim, menu);
-
-        PackageManager pm = getPackageManager();
-        if (!pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS))
-            menu.removeItem(R.id.menu_compass);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        final int itemId = item.getItemId();
-        if (itemId == R.id.menu_compass) {
-            handler.sendEmptyMessage(WHAT_COMPASS);
-            return true;
-        } else if (itemId == R.id.menu_date) {
-            handler.sendEmptyMessage(WHAT_DATE);
-            return true;
-        } else if (itemId == R.id.menu_location) {
-            handler.sendEmptyMessage(WHAT_LOCATION);
-            return true;
-        } else if (itemId == R.id.menu_settings) {
-            handler.sendEmptyMessage(WHAT_SETTINGS);
-            return true;
-        } else if (itemId == R.id.menu_today) {
-            handler.sendEmptyMessage(WHAT_TODAY);
-            return true;
+    override fun createUpdateLocationRunnable(location: Location): Runnable {
+        return Runnable {
+            bindHeader(location)
+            populateFragments(calendar)
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    private void chooseDate() {
-        Context context = this;
-        final Calendar calendar = this.calendar;
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
-        if (this.datePicker == null) {
-            this.datePicker = new TodayDatePickerDialog(context, this, year, month, day);
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.zmanim, menu)
+        val pm = packageManager
+        if (!pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS)) menu.removeItem(R.id.menu_compass)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_compass -> {
+                handler.sendEmptyMessage(WHAT_COMPASS)
+                true
+            }
+
+            R.id.menu_date -> {
+                handler.sendEmptyMessage(WHAT_DATE)
+                true
+            }
+
+            R.id.menu_location -> {
+                handler.sendEmptyMessage(WHAT_LOCATION)
+                true
+            }
+
+            R.id.menu_settings -> {
+                handler.sendEmptyMessage(WHAT_SETTINGS)
+                true
+            }
+
+            R.id.menu_today -> {
+                handler.sendEmptyMessage(WHAT_TODAY)
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun chooseDate() {
+        val context: Context = this
+        val calendar = calendar
+        val year = calendar[Calendar.YEAR]
+        val month = calendar[Calendar.MONTH]
+        val day = calendar[Calendar.DAY_OF_MONTH]
+        var datePicker = datePicker
+        if (datePicker == null) {
+            datePicker = TodayDatePickerDialog(context, this, year, month, day)
+            this.datePicker = datePicker
         } else {
-            this.datePicker.updateDate(year, month, day);
+            datePicker.updateDate(year, month, day)
         }
-        this.datePicker.show();
+        datePicker.show()
     }
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        setDate(year, monthOfYear, dayOfMonth);
+    override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        setDate(year, monthOfYear, dayOfMonth)
     }
 
-    @NonNull
-    @Override
-    protected Runnable createBindHeaderRunnable() {
-        return new Runnable() {
-            @Override
-            public void run() {
-                bindHeader();
-            }
-        };
+    override fun createBindHeaderRunnable(): Runnable {
+        return Runnable { bindHeader() }
     }
 
-    @Override
-    public void onZmanClick(@NonNull ZmanimItem item) {
-        toggleDetails(item);
+    override fun onZmanClick(item: ZmanimItem) {
+        toggleDetails(item)
     }
 
     /**
@@ -544,8 +480,8 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
      *
      * @param item the master item that was clicked.
      */
-    protected void toggleDetails(@NonNull ZmanimItem item) {
-        toggleDetails(item.titleId);
+    private fun toggleDetails(item: ZmanimItem) {
+        toggleDetails(item.titleId)
     }
 
     /**
@@ -553,197 +489,170 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
      *
      * @param itemId the master item id.
      */
-    protected void toggleDetails(int itemId) {
-        if (!hasDetails(itemId))
-            return;
-
+    private fun toggleDetails(itemId: Int) {
+        if (!hasDetails(itemId)) return
         if (viewSwitcher != null) {
-            masterFragment.unhighlight();
+            masterFragment.unhighlight()
             if (itemId == R.string.candles) {
-                candlesFragment.populateTimes(calendar);
-                detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_CANDLES);
+                candlesFragment.populateTimes(calendar)
+                detailsFragmentSwitcher.displayedChild = CHILD_DETAILS_CANDLES
             } else {
-                detailsListFragment.populateTimes(calendar, itemId);
-                detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_LIST);
+                detailsListFragment.populateTimes(calendar, itemId)
+                detailsFragmentSwitcher.displayedChild = CHILD_DETAILS_LIST
             }
-            masterFragment.highlight(itemId);
-            if (isDetailsShowing())
-                hideDetails();
-            else
-                showDetails();
-            selectedId = itemId;
-        } else if ((selectedId == itemId) && isDetailsShowing()) {
-            hideDetails();
-            masterFragment.unhighlight();
+            masterFragment.highlight(itemId)
+            if (isDetailsShowing) hideDetails() else showDetails()
+            selectedId = itemId
+        } else if (selectedId == itemId && isDetailsShowing) {
+            hideDetails()
+            masterFragment.unhighlight()
         } else {
-            masterFragment.unhighlight();
+            masterFragment.unhighlight()
             if (itemId == R.string.candles) {
-                candlesFragment.populateTimes(calendar);
-                detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_CANDLES);
+                candlesFragment.populateTimes(calendar)
+                detailsFragmentSwitcher.displayedChild = CHILD_DETAILS_CANDLES
             } else {
-                detailsListFragment.populateTimes(calendar, itemId);
-                detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_LIST);
+                detailsListFragment.populateTimes(calendar, itemId)
+                detailsFragmentSwitcher.displayedChild = CHILD_DETAILS_LIST
             }
-            masterFragment.highlight(itemId);
-            if (!isDetailsShowing())
-                showDetails();
-            selectedId = itemId;
+            masterFragment.highlight(itemId)
+            if (!isDetailsShowing) showDetails()
+            selectedId = itemId
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (masterFragment != null) {
-            masterFragment.unhighlight();
-
-            if (isDetailsShowing()) {
-                hideDetails();
-                return;
-            }
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        masterFragment.unhighlight()
+        if (isDetailsShowing) {
+            hideDetails()
+            return
         }
-
-        finishAfterTransition();
+        finishAfterTransition()
     }
 
-    @Override
-    public void onClick(View view) {
-        final int id = view.getId();
+    override fun onClick(view: View) {
+        val id = view.id
         if (id == R.id.header) {
-            toggleNavigationView();
+            toggleNavigationView()
         } else if (id == R.id.nav_yesterday) {
-            navigateYesterday();
+            navigateYesterday()
         } else if (id == R.id.nav_tomorrow) {
-            navigateTomorrow();
+            navigateTomorrow()
         }
     }
 
-    private void toggleNavigationView() {
-        Animation anim = buttonYesterday.getAnimation();
-        if ((anim == null) || anim.hasEnded()) {
-            if (buttonYesterday.getVisibility() == View.VISIBLE) {
-                buttonYesterday.startAnimation(hideNavigation);
+    private fun toggleNavigationView() {
+        var anim = buttonYesterday.animation
+        if (anim == null || anim.hasEnded()) {
+            if (buttonYesterday.visibility == View.VISIBLE) {
+                buttonYesterday.startAnimation(hideNavigation)
             } else {
-                buttonYesterday.startAnimation(showNavigation);
+                buttonYesterday.startAnimation(showNavigation)
             }
         }
-        anim = buttonTomorrow.getAnimation();
-        if ((anim == null) || anim.hasEnded()) {
-            if (buttonTomorrow.getVisibility() == View.VISIBLE) {
-                buttonTomorrow.startAnimation(hideNavigation);
+        anim = buttonTomorrow.animation
+        if (anim == null || anim.hasEnded()) {
+            if (buttonTomorrow.visibility == View.VISIBLE) {
+                buttonTomorrow.startAnimation(hideNavigation)
             } else {
-                buttonTomorrow.startAnimation(showNavigation);
+                buttonTomorrow.startAnimation(showNavigation)
             }
         }
     }
 
-    protected void hideDetails() {
+    protected fun hideDetails() {
+        val viewSwitcher = viewSwitcher
         if (viewSwitcher != null) {
-            viewSwitcher.setDisplayedChild(CHILD_MAIN);
+            viewSwitcher.displayedChild = CHILD_MAIN
 
             // Not enough to hide the details switcher = must also hide its
             // children otherwise visible when sliding dates.
-            if (detailsListFragment != null)
-                detailsListFragment.setVisibility(View.INVISIBLE);
-            if (candlesFragment != null)
-                candlesFragment.setVisibility(View.INVISIBLE);
+            detailsListFragment.setVisibility(View.INVISIBLE)
+            candlesFragment.setVisibility(false)
         } else if (detailsShrink != null) {
-            detailsFragmentSwitcher.startAnimation(detailsShrink);
+            detailsFragmentSwitcher.startAnimation(detailsShrink)
         }
-        selectedId = 0;
+        selectedId = 0
     }
 
-    protected void showDetails() {
+    protected fun showDetails() {
+        val viewSwitcher = viewSwitcher
         if (viewSwitcher != null) {
-            viewSwitcher.setDisplayedChild(CHILD_DETAILS);
-
-            if (detailsListFragment != null)
-                detailsListFragment.setVisibility(View.VISIBLE);
-            if (candlesFragment != null)
-                candlesFragment.setVisibility(View.VISIBLE);
+            viewSwitcher.displayedChild = CHILD_DETAILS
+            detailsListFragment.setVisibility(View.VISIBLE)
+            candlesFragment.setVisibility(true)
         } else if (detailsGrow != null) {
-            detailsFragmentSwitcher.startAnimation(detailsGrow);
+            detailsFragmentSwitcher.startAnimation(detailsGrow)
         }
     }
 
-    protected boolean isDetailsShowing() {
-        if ((detailsFragmentSwitcher == null) || (detailsFragmentSwitcher.getVisibility() != View.VISIBLE))
-            return false;
-        if (viewSwitcher == null) {
-            ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) detailsFragmentSwitcher.getLayoutParams();
-            return (lp.horizontalWeight > 0);
+    private val isDetailsShowing: Boolean
+        get() {
+            if (detailsFragmentSwitcher.visibility != View.VISIBLE) return false
+            val viewSwitcher = viewSwitcher
+            if (viewSwitcher == null) {
+                val lp = detailsFragmentSwitcher.layoutParams as ConstraintLayout.LayoutParams
+                return lp.horizontalWeight > 0
+            }
+            return viewSwitcher.displayedChild == CHILD_DETAILS
         }
-        return (viewSwitcher.getDisplayedChild() == CHILD_DETAILS);
-    }
 
-    @Override
-    public boolean onDown(MotionEvent event) {
-        return false;
-    }
+    override fun onDown(event: MotionEvent): Boolean = false
 
-    @Override
-    public void onShowPress(@NonNull MotionEvent event) {
-    }
+    override fun onShowPress(event: MotionEvent) = Unit
 
-    @Override
-    public boolean onSingleTapUp(@NonNull MotionEvent event) {
-        return false;
-    }
+    override fun onSingleTapUp(event: MotionEvent): Boolean = false
 
-    @Override
-    public boolean onScroll(MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
+    override fun onScroll(
+        e1: MotionEvent?,
+        e2: MotionEvent,
+        distanceX: Float,
+        distanceY: Float
+    ): Boolean = false
 
-    @Override
-    public void onLongPress(@NonNull MotionEvent event) {
-    }
+    override fun onLongPress(event: MotionEvent) = Unit
 
-    @Override
-    public boolean onFling(MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
+    override fun onFling(
+        e1: MotionEvent?,
+        e2: MotionEvent,
+        velocityX: Float,
+        velocityY: Float
+    ): Boolean {
         // Go to date? Also don't go to date accidentally while scrolling vertically.
-        if (Math.abs(velocityX) > Math.abs(velocityY) * 2) {
+        if (abs(velocityX) > abs(velocityY) * 2) {
             if (velocityX < 0) {
                 if (localeRTL) {
-                    navigateYesterday();
+                    navigateYesterday()
                 } else {
-                    navigateTomorrow();
+                    navigateTomorrow()
                 }
             } else if (localeRTL) {
-                navigateTomorrow();
+                navigateTomorrow()
             } else {
-                navigateYesterday();
+                navigateYesterday()
             }
-            return true;
+            return true
         }
-        return false;
+        return false
     }
 
-    @Override
-    public boolean onSingleTapConfirmed(@NonNull MotionEvent event) {
-        return false;
+    override fun onSingleTapConfirmed(event: MotionEvent): Boolean = false
+
+    override fun onDoubleTap(event: MotionEvent): Boolean = false
+
+    override fun onDoubleTapEvent(event: MotionEvent): Boolean = false
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (gestureDetector.onTouchEvent(event)) {
+            return true
+        }
+        return super.dispatchTouchEvent(event)
     }
 
-    @Override
-    public boolean onDoubleTap(@NonNull MotionEvent event) {
-        return false;
-    }
-
-    @Override
-    public boolean onDoubleTapEvent(@NonNull MotionEvent event) {
-        return false;
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (gestureDetector.onTouchEvent(event))
-            return true;
-        return super.onTouchEvent(event);
-    }
-
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        localeRTL = isLocaleRTL(newConfig);
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        localeRTL = isLocaleRTL(newConfig)
     }
 
     /**
@@ -751,8 +660,8 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
      *
      * @param view the view to animate.
      */
-    protected void slideLeft(View view) {
-        view.startAnimation(slideRightToLeft);
+    private fun slideLeft(view: View) {
+        view.startAnimation(slideRightToLeft)
     }
 
     /**
@@ -760,201 +669,202 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
      *
      * @param view the view to animate.
      */
-    protected void slideRight(View view) {
-        view.startAnimation(slideLeftToRight);
+    private fun slideRight(view: View) {
+        view.startAnimation(slideLeftToRight)
     }
 
-    private void populateFragments(@NonNull Calendar date) {
-        masterFragment.populateTimes(date);
-        detailsListFragment.populateTimes(date);
-        candlesFragment.populateTimes(date);
-
-        if (!isValidDetailsShowing()) {
-            masterFragment.unhighlight();
-            hideDetails();
+    private fun populateFragments(date: Calendar) {
+        masterFragment.populateTimes(date)
+        detailsListFragment.populateTimes(date)
+        candlesFragment.populateTimes(date)
+        if (!isValidDetailsShowing) {
+            masterFragment.unhighlight()
+            hideDetails()
         }
     }
 
     /**
-     * Is the details list populated for a valid date?<br>
+     * Is the details list populated for a valid date?<br></br>
      * For example, candle lighting for a Friday or Erev Chag.
      *
-     * @return {@code true} if valid.
+     * @return `true` if valid.
      */
-    private boolean isValidDetailsShowing() {
-        if (!isDetailsShowing())
-            return true;
-
-        if (candlesFragment.isVisible()) {
-            return candlesFragment.getCandlesCount() != 0;
-        }
-
-        if (detailsListFragment.isVisible()) {
-            int masterId = detailsListFragment.getMasterId();
-            ZmanimAdapter<ZmanItemViewHolder> masterAdapter = masterFragment.getAdapter();
-            final int count = masterAdapter.getItemCount();
-            ZmanimItem item;
-            for (int i = 0; i < count; i++) {
-                item = masterAdapter.getItem(i);
-                if ((item != null) && (item.titleId == masterId)) {
-                    return true;
+    private val isValidDetailsShowing: Boolean
+        get() {
+            if (!isDetailsShowing) return true
+            if (candlesFragment.isVisible) {
+                return candlesFragment.candlesCount != 0
+            }
+            if (detailsListFragment.isVisible) {
+                val masterId = detailsListFragment.masterId
+                val masterAdapter = masterFragment.adapter
+                if (masterAdapter != null) {
+                    val count = masterAdapter.itemCount
+                    var item: ZmanimItem?
+                    for (i in 0 until count) {
+                        item = masterAdapter.getItem(i)
+                        if (item != null && item.titleId == masterId) {
+                            return true
+                        }
+                    }
                 }
+                return false
             }
-            return false;
+            return false
         }
 
-        return false;
-    }
-
-    private void navigateYesterday() {
-        Calendar calendar = this.calendar;
-        calendar.add(Calendar.DAY_OF_MONTH, -1);
-
+    private fun navigateYesterday() {
+        val masterView = masterFragment.view ?: return
         if (localeRTL) {
-            slideLeft(masterFragment.getView());
-            slideLeft(detailsFragmentSwitcher);
+            slideLeft(masterView)
+            slideLeft(detailsFragmentSwitcher)
         } else {
-            slideRight(masterFragment.getView());
-            slideRight(detailsFragmentSwitcher);
+            slideRight(masterView)
+            slideRight(detailsFragmentSwitcher)
         }
-
-        setDate(calendar.getTimeInMillis());
+        val calendar = calendar
+        calendar.add(Calendar.DAY_OF_MONTH, -1)
+        setDate(calendar.timeInMillis)
     }
 
-    private void navigateTomorrow() {
-        Calendar calendar = this.calendar;
-        calendar.add(Calendar.DAY_OF_MONTH, +1);
-
+    private fun navigateTomorrow() {
+        val masterView = masterFragment.view ?: return
         if (localeRTL) {
-            slideRight(masterFragment.getView());
-            slideRight(detailsFragmentSwitcher);
+            slideRight(masterView)
+            slideRight(detailsFragmentSwitcher)
         } else {
-            slideLeft(masterFragment.getView());
-            slideLeft(detailsFragmentSwitcher);
+            slideLeft(masterView)
+            slideLeft(detailsFragmentSwitcher)
         }
-
-        setDate(calendar.getTimeInMillis());
+        val calendar = calendar
+        calendar.add(Calendar.DAY_OF_MONTH, +1)
+        setDate(calendar.timeInMillis)
     }
 
-    @Override
-    public void onAnimationStart(Animation animation) {
-    }
+    override fun onAnimationStart(animation: Animation) = Unit
 
-    @Override
-    public void onAnimationEnd(Animation animation) {
-        final View buttonYesterday = this.buttonYesterday;
-        if (buttonYesterday != null) {
-            if (animation == hideNavigation) {
-                buttonYesterday.setVisibility(View.INVISIBLE);
-                buttonYesterday.setEnabled(false);
-            } else if (animation == showNavigation) {
-                buttonYesterday.setVisibility(View.VISIBLE);
-                buttonYesterday.setEnabled(true);
-            }
+    override fun onAnimationEnd(animation: Animation) {
+        if (animation === hideNavigation) {
+            buttonYesterday.visibility = View.INVISIBLE
+            buttonYesterday.isEnabled = false
+        } else if (animation === showNavigation) {
+            buttonYesterday.visibility = View.VISIBLE
+            buttonYesterday.isEnabled = true
         }
-        final View buttonTomorrow = this.buttonTomorrow;
-        if (buttonTomorrow != null) {
-            if (animation == hideNavigation) {
-                buttonTomorrow.setVisibility(View.INVISIBLE);
-                buttonTomorrow.setEnabled(false);
-            } else if (animation == showNavigation) {
-                buttonTomorrow.setVisibility(View.VISIBLE);
-                buttonTomorrow.setEnabled(true);
-            }
+        if (animation === hideNavigation) {
+            buttonTomorrow.visibility = View.INVISIBLE
+            buttonTomorrow.isEnabled = false
+        } else if (animation === showNavigation) {
+            buttonTomorrow.visibility = View.VISIBLE
+            buttonTomorrow.isEnabled = true
         }
     }
 
-    @Override
-    public void onAnimationRepeat(Animation animation) {
-    }
+    override fun onAnimationRepeat(animation: Animation) = Unit
 
     /**
      * Is the item a master with detail times?
      *
      * @param itemId the item id.
-     * @return {@code true} if the item has details.
+     * @return `true` if the item has details.
      */
-    protected boolean hasDetails(int itemId) {
-        return (itemId != 0)
-            && (itemId != R.string.fast_begins)
-            && (itemId != R.string.fast_ends)
-            && (itemId != R.string.molad);
+    private fun hasDetails(itemId: Int): Boolean {
+        return itemId != 0
+            && itemId != R.string.fast_begins
+            && itemId != R.string.fast_ends
+            && itemId != R.string.molad
     }
 
-    private void updateReminders() {
-        final Context context = this;
-        Intent intent = new Intent(ZmanimReminder.ACTION_UPDATE);
-        ZmanimReminderService.enqueueWork(context, intent);
+    private fun updateReminders() {
+        val context: Context = this
+        val intent = Intent(ZmanimReminder.ACTION_UPDATE)
+        enqueueWork(context, intent)
     }
 
-    private void cancelReminders() {
-        final Context context = this;
-        Intent intent = new Intent(ZmanimReminder.ACTION_CANCEL);
-        ZmanimReminderService.enqueueWork(context, intent);
+    private fun cancelReminders() {
+        val context: Context = this
+        val intent = Intent(ZmanimReminder.ACTION_CANCEL)
+        enqueueWork(context, intent)
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (gestureDetector.onTouchEvent(event)) {
-            return true;
+            return true
         }
-        return super.dispatchTouchEvent(event);
+        return super.dispatchTouchEvent(event)
     }
 
-    @Override
-    protected Class<? extends Activity> getLocationActivityClass() {
-        return LocationActivity.class;
-    }
+    override val locationActivityClass: Class<out Activity>
+        get() = LocationActivity::class.java
 
     /**
      * Refresh the list at midnight for the next civil day.
      */
-    private void scheduleNextDay() {
-        Calendar today = Calendar.getInstance();
-        if (!isToday(calendar, today)) {
-            return;
+    private fun scheduleNextDay() {
+        val tomorrow = Calendar.getInstance()
+        if (!isToday(calendar, tomorrow)) {
+            return
         }
-        long now = today.getTimeInMillis();
-
-        Calendar tomorrow = today;
-        tomorrow.add(Calendar.DAY_OF_MONTH, 1);
-        tomorrow.set(Calendar.HOUR_OF_DAY, 0);
-        tomorrow.set(Calendar.MINUTE, 0);
-        tomorrow.set(Calendar.SECOND, 0);
-        tomorrow.set(Calendar.MILLISECOND, 0);
-
-        handler.sendEmptyMessageDelayed(WHAT_TODAY, tomorrow.getTimeInMillis() - now);
+        val now = tomorrow.timeInMillis
+        tomorrow.add(Calendar.DAY_OF_MONTH, 1)
+        tomorrow[Calendar.HOUR_OF_DAY] = 0
+        tomorrow[Calendar.MINUTE] = 0
+        tomorrow[Calendar.SECOND] = 0
+        tomorrow[Calendar.MILLISECOND] = 0
+        handler.sendEmptyMessageDelayed(WHAT_TODAY, tomorrow.timeInMillis - now)
     }
 
-    private boolean isToday(Calendar when, Calendar today) {
-        int whenYear = when.get(Calendar.YEAR);
-        int whenMonth = when.get(Calendar.MONTH);
-        int whenDay = when.get(Calendar.DAY_OF_MONTH);
-
-        int todayYear = today.get(Calendar.YEAR);
-        int todayMonth = today.get(Calendar.MONTH);
-        int todayDay = today.get(Calendar.DAY_OF_MONTH);
-
-        return (whenYear == todayYear) && (whenMonth == todayMonth) && (whenDay == todayDay);
+    private fun isToday(time: Calendar, today: Calendar): Boolean {
+        val whenYear = time[Calendar.YEAR]
+        val whenMonth = time[Calendar.MONTH]
+        val whenDay = time[Calendar.DAY_OF_MONTH]
+        val todayYear = today[Calendar.YEAR]
+        val todayMonth = today[Calendar.MONTH]
+        val todayDay = today[Calendar.DAY_OF_MONTH]
+        return whenYear == todayYear && whenMonth == todayMonth && whenDay == todayDay
     }
 
-    public ZmanimPreferences getZmanimPreferences() {
-        ZmanimPreferences preferences = this.preferences;
-        if (preferences == null) {
-            preferences = new SimpleZmanimPreferences(this);
-            this.preferences = preferences;
-        }
-        return preferences;
-    }
+    val preferences: ZmanimPreferences by lazy { SimpleZmanimPreferences(this) }
 
-    @NonNull
-    @Override
-    protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks(Context context) {
-        return new SimpleThemeCallbacks<>(context, getZmanimPreferences());
+    override fun createThemeCallbacks(context: Context): ThemeCallbacks<ZmanimPreferences> {
+        return SimpleThemeCallbacks(context, preferences)
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    private void initPermissions() {
-        ZmanimReminder.checkPermissions(this);
+    private fun initPermissions() {
+        checkPermissions(this)
+    }
+
+    companion object {
+        /**
+         * The date parameter.
+         */
+        const val EXTRA_DATE = "date"
+
+        /**
+         * The time parameter.
+         */
+        const val EXTRA_TIME = "time"
+
+        /**
+         * The details list parameter.
+         */
+        private const val PARAMETER_DETAILS = "details"
+
+        private const val WHAT_TOGGLE_DETAILS = 0
+        private const val WHAT_COMPASS = 1
+        private const val WHAT_DATE = 2
+        private const val WHAT_LOCATION = 3
+        private const val WHAT_SETTINGS = 4
+        private const val WHAT_TODAY = 5
+        private const val WHAT_CANCEL_REMINDERS = 6
+        private const val WHAT_UPDATE_REMINDERS = 7
+
+        private const val CHILD_MAIN = 0
+        private const val CHILD_DETAILS = 1
+        private const val CHILD_DETAILS_LIST = 0
+        private const val CHILD_DETAILS_CANDLES = 1
+
+        private const val DATE_MIN = -62167359300528L // (-1970 + 1) * DAY_IN_MILLIS * 365.25
     }
 }

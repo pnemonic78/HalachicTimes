@@ -13,31 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.preference;
+package com.github.times.preference
 
-import android.os.Bundle;
-
-import androidx.annotation.Keep;
-
-import com.github.times.R;
-
-import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_OMER;
+import android.os.Bundle
+import androidx.annotation.Keep
+import com.github.preference.AbstractPreferenceFragment
+import com.github.times.R
 
 /**
  * This fragment shows the preferences for the Zmanim header.
  */
 @Keep
-public class ZmanimPreferenceFragment extends com.github.preference.AbstractPreferenceFragment {
+class ZmanimPreferenceFragment : AbstractPreferenceFragment() {
+    override val preferencesXml: Int = R.xml.zmanim_preferences
 
-    @Override
-    protected int getPreferencesXml() {
-        return R.xml.zmanim_preferences;
-    }
-
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        super.onCreatePreferences(savedInstanceState, rootKey);
-
-        initList(KEY_OPINION_OMER);
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
+        initList(ZmanimPreferences.KEY_OPINION_OMER)
     }
 }

@@ -13,106 +13,83 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass.preference;
+package com.github.times.compass.preference
 
-import android.content.Context;
-import android.content.res.Resources;
-
-import com.github.preference.SimpleThemePreferences;
-import com.github.times.compass.lib.R;
-
-import static com.github.preference.ThemePreferences.Values.THEME_DARK;
-import static com.github.preference.ThemePreferences.Values.THEME_LIGHT;
-import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_DEFAULT;
-import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE;
-import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_RHUMB_LINE;
-import static com.github.times.compass.preference.CompassPreferences.Values.SUMMARIES_DEFAULT;
-import static com.github.times.compass.preference.CompassPreferences.Values.THEME_CLASSIC;
-import static com.github.times.compass.preference.CompassPreferences.Values.THEME_COMPASS_DEFAULT;
-import static com.github.times.compass.preference.CompassPreferences.Values.THEME_GOLD;
-import static com.github.times.compass.preference.CompassPreferences.Values.THEME_ORIGINAL;
-import static com.github.times.compass.preference.CompassPreferences.Values.THEME_SILVER;
+import android.content.Context
+import com.github.preference.SimpleThemePreferences
+import com.github.preference.ThemePreferences.Values.THEME_DARK
+import com.github.preference.ThemePreferences.Values.THEME_LIGHT
+import com.github.times.compass.lib.R
+import com.github.times.compass.preference.CompassPreferences.Values.BEARING_DEFAULT
+import com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE
+import com.github.times.compass.preference.CompassPreferences.Values.BEARING_RHUMB_LINE
+import com.github.times.compass.preference.CompassPreferences.Values.SUMMARIES_DEFAULT
+import com.github.times.compass.preference.CompassPreferences.Values.THEME_CLASSIC
+import com.github.times.compass.preference.CompassPreferences.Values.THEME_COMPASS_DEFAULT
+import com.github.times.compass.preference.CompassPreferences.Values.THEME_GOLD
+import com.github.times.compass.preference.CompassPreferences.Values.THEME_ORIGINAL
+import com.github.times.compass.preference.CompassPreferences.Values.THEME_SILVER
 
 /**
  * Simple compass preferences implementation.
  *
  * @author Moshe Waisberg
  */
-public class SimpleCompassPreferences extends SimpleThemePreferences implements ThemeCompassPreferences {
+open class SimpleCompassPreferences(context: Context) : SimpleThemePreferences(context),
+    ThemeCompassPreferences {
 
-    /**
-     * Constructs a new settings.
-     *
-     * @param context the context.
-     */
-    public SimpleCompassPreferences(Context context) {
-        super(context);
-        init(context);
+    init {
+        init(context)
     }
 
-    @Override
-    public String getCompassThemeValue() {
-        return preferences.getString(KEY_THEME_COMPASS, THEME_COMPASS_DEFAULT);
-    }
+    override val compassThemeValue: String?
+        get() = preferences.getString(CompassPreferences.KEY_THEME_COMPASS, THEME_COMPASS_DEFAULT)
 
-    @Override
-    public int getCompassTheme(String value) {
-        if (THEME_GOLD.equals(value)) {
-            return R.style.Theme_Compass_Gold;
+    override fun getCompassTheme(value: String?): Int {
+        return when (value) {
+            THEME_GOLD -> R.style.Theme_Compass_Gold
+            THEME_SILVER -> R.style.Theme_Compass_Silver
+            THEME_CLASSIC -> R.style.Theme_Compass_Classic
+            else -> R.style.Theme_Compass_Original
         }
-        if (THEME_SILVER.equals(value)) {
-            return R.style.Theme_Compass_Silver;
+    }
+
+    override val compassTheme: Int
+        get() = getCompassTheme(compassThemeValue)
+
+    override val bearing: String
+        get() = preferences.getString(CompassPreferences.KEY_COMPASS_BEARING, BEARING_DEFAULT)
+            .orEmpty()
+
+    override val isSummariesVisible: Boolean
+        get() = preferences.getBoolean(CompassPreferences.KEY_SUMMARIES, SUMMARIES_DEFAULT)
+
+    override fun getTheme(value: String?): Int {
+        return when (value) {
+            THEME_DARK -> R.style.Theme_CompassApp_Dark
+            THEME_LIGHT -> R.style.Theme_CompassApp_Light
+            else -> R.style.Theme_CompassApp_DayNight
         }
-        if (THEME_CLASSIC.equals(value)) {
-            return R.style.Theme_Compass_Classic;
+    }
+
+    companion object {
+        /**
+         * Initialize. Should be called only once when application created.
+         *
+         * @param context the context.
+         */
+        fun init(context: Context) {
+            val res = context.resources
+            SUMMARIES_DEFAULT =
+                res.getBoolean(com.github.times.common.R.bool.summaries_visible_defaultValue)
+            BEARING_DEFAULT = res.getString(R.string.compass_bearing_defaultValue)
+            BEARING_GREAT_CIRCLE = res.getString(R.string.compass_bearing_value_circle)
+            BEARING_RHUMB_LINE = res.getString(R.string.compass_bearing_value_rhumb)
+            THEME_COMPASS_DEFAULT = res.getString(R.string.compass_theme_defaultValue)
+            THEME_CLASSIC = res.getString(R.string.compass_theme_value_classic)
+            THEME_GOLD = res.getString(R.string.compass_theme_value_gold)
+            THEME_ORIGINAL = res.getString(R.string.compass_theme_value_original)
+            THEME_SILVER = res.getString(R.string.compass_theme_value_silver)
         }
-        return R.style.Theme_Compass_Original;
-    }
-
-    @Override
-    public int getCompassTheme() {
-        return getCompassTheme(getCompassThemeValue());
-    }
-
-    @Override
-    public String getBearing() {
-        return preferences.getString(KEY_COMPASS_BEARING, BEARING_DEFAULT);
-    }
-
-    @Override
-    public boolean isSummariesVisible() {
-        return preferences.getBoolean(KEY_SUMMARIES, SUMMARIES_DEFAULT);
-    }
-
-    @Override
-    public int getTheme(String value) {
-        if (THEME_DARK.equals(value)) {
-            return R.style.Theme_CompassApp_Dark;
-        }
-        if (THEME_LIGHT.equals(value)) {
-            return R.style.Theme_CompassApp_Light;
-        }
-        return R.style.Theme_CompassApp_DayNight;
-    }
-
-    /**
-     * Initialize. Should be called only once when application created.
-     *
-     * @param context the context.
-     */
-    public static void init(Context context) {
-        final Resources res = context.getResources();
-
-        SUMMARIES_DEFAULT = res.getBoolean(com.github.times.common.R.bool.summaries_visible_defaultValue);
-
-        BEARING_DEFAULT = res.getString(R.string.compass_bearing_defaultValue);
-        BEARING_GREAT_CIRCLE = res.getString(R.string.compass_bearing_value_circle);
-        BEARING_RHUMB_LINE = res.getString(R.string.compass_bearing_value_rhumb);
-
-        THEME_COMPASS_DEFAULT = res.getString(R.string.compass_theme_defaultValue);;
-        THEME_CLASSIC = res.getString(R.string.compass_theme_value_classic);
-        THEME_GOLD = res.getString(R.string.compass_theme_value_gold);
-        THEME_ORIGINAL = res.getString(R.string.compass_theme_value_original);
-        THEME_SILVER = res.getString(R.string.compass_theme_value_silver);
     }
 }

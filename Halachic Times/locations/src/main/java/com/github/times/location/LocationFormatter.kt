@@ -13,140 +13,147 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.location.Address;
-import android.location.Location;
+import android.location.Address
+import android.location.Location
 
 /**
  * Location formatter.
  *
  * @author Moshe Waisberg
  */
-public interface LocationFormatter {
-
+interface LocationFormatter {
     /**
      * Format the coordinates.
      *
      * @param location
-     *         the location.
+     * the location.
      * @return the coordinates text.
      */
-    String formatCoordinates(Location location);
+    fun formatCoordinates(location: Location): String
 
     /**
      * Format the coordinates.
      *
      * @param address
-     *         the address.
+     * the address.
      * @return the coordinates text.
      */
-    String formatCoordinates(Address address);
+    fun formatCoordinates(address: Address): String
 
     /**
      * Format the coordinates.
      *
      * @param latitude
-     *         the latitude.
+     * the latitude.
      * @param longitude
-     *         the longitude.
+     * the longitude.
      * @param elevation
-     *         the elevation or altitude.
+     * the elevation or altitude.
      * @return the coordinates text.
      */
-    String formatCoordinates(double latitude, double longitude, double elevation);
+    fun formatCoordinates(latitude: Double, longitude: Double, elevation: Double): String
 
     /**
      * Format a latitude coordinate.
      *
      * @param latitude
-     *         the coordinate.
+     * the coordinate.
      * @return the coordinate text.
      */
-    String formatLatitude(double latitude);
+    fun formatLatitude(latitude: Double): String
 
     /**
      * Format a latitude coordinate using the decimal notation.
      *
      * @param latitude
-     *         the coordinate.
+     * the coordinate.
      * @return the coordinate text.
      */
-    String formatLatitudeDecimal(double latitude);
+    fun formatLatitudeDecimal(latitude: Double): String
 
     /**
      * Format a latitude coordinate using the sexagesimal notation.
      *
      * @param latitude
-     *         the coordinate.
+     * the coordinate.
      * @return the coordinate text.
      */
-    String formatLatitudeSexagesimal(double latitude);
+    fun formatLatitudeSexagesimal(latitude: Double): String
 
     /**
      * Format a longitude coordinate.
      *
      * @param longitude
-     *         the coordinate.
+     * the coordinate.
      * @return the coordinate text.
      */
-    String formatLongitude(double longitude);
+    fun formatLongitude(longitude: Double): String
 
     /**
      * Format a longitude coordinate using the decimal notation.
      *
      * @param longitude
-     *         the coordinate.
+     * the coordinate.
      * @return the coordinate text.
      */
-    String formatLongitudeDecimal(double longitude);
+    fun formatLongitudeDecimal(longitude: Double): String
 
     /**
      * Format a longitude coordinate using the sexagesimal notation.
      *
      * @param longitude
-     *         the coordinate.
+     * the coordinate.
      * @return the coordinate text.
      */
-    String formatLongitudeSexagesimal(double longitude);
+    fun formatLongitudeSexagesimal(longitude: Double): String
 
     /**
      * Format an elevation.
      *
      * @param elevation
-     *         the elevation.
+     * the elevation.
      * @return the elevation text.
      */
-    String formatElevation(double elevation);
+    fun formatElevation(elevation: Double): String
 
     /**
      * Format a azimuth (bearing or yaw or compass angle).
      *
      * @param azimuth
-     *         the azimuth, in degrees.
+     * the azimuth, in degrees.
      * @return the azimuth text.
      */
-    String formatBearing(double azimuth);
+    fun formatBearing(azimuth: Double): String
 
     /**
      * Format a azimuth (bearing or yaw or compass angle) using the decimal notation.
      *
      * @param azimuth
-     *         the azimuth, in degrees.
+     * the azimuth, in degrees.
      * @return the azimuth text.
      */
-    String formatBearingDecimal(double azimuth);
+    fun formatBearingDecimal(azimuth: Double): String
 
     /**
      * Format a azimuth (bearing or yaw or compass angle) using the sexagesimal notation.
      *
      * @param azimuth
-     *         the azimuth, in degrees.
+     * the azimuth, in degrees.
      * @return the azimuth text.
      */
-    String formatBearingSexagesimal(double azimuth);
+    fun formatBearingSexagesimal(azimuth: Double): String
 
-    double parseLatitude(String coordinate);
+    /**
+     * Parse a latitude.
+     * @return the latitude, in degrees - `Double.NaN` otherwise.
+     */
+    fun parseLatitude(coordinate: String): Double
 
-    double parseLongitude(String coordinate);
+    /**
+     * Parse a longitude.
+     * @return the longitude, in degrees - `Double.NaN` otherwise.
+     */
+    fun parseLongitude(coordinate: String): Double
 }

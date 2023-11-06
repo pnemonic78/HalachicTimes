@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.preference;
+package com.github.times.preference
 
 /**
  * Application preferences that populate the settings.
  *
  * @author Moshe Waisberg
  */
-public class CompassPreferenceActivity extends ZmanimPreferenceActivity {
-}
+class CompassPreferenceActivity : ZmanimPreferenceActivity()

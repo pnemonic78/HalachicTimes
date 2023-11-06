@@ -42,6 +42,7 @@
             android:title="@string/nightfall" />
         <com.github.preference.NumberPickerPreference
             android:defaultValue="@integer/shabbath_ends_defaultValue"
+            android:dependency="shabbath_ends.after"
             android:dialogIcon="@drawable/ic_settings_opinion"
             android:dialogTitle="@string/opinion"
             android:icon="@drawable/ic_settings_opinion"

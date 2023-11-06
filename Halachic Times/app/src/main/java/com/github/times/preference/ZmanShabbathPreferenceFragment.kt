@@ -13,155 +13,143 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.preference;
+package com.github.times.preference
 
-import android.content.Context;
-import android.os.Bundle;
-
-import androidx.annotation.Keep;
-import androidx.preference.ListPreference;
-
-import com.github.preference.NumberPickerPreference;
-import com.github.times.R;
-
-import static android.text.TextUtils.isEmpty;
-import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER;
-import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES;
-import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL;
-import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_SUNSET;
-import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_TWILIGHT;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NONE;
+import android.os.Bundle
+import androidx.annotation.Keep
+import androidx.preference.ListPreference
+import com.github.preference.NumberPickerPreference
+import com.github.times.R
 
 /**
  * This fragment shows the preferences for the Shabbath Ends screen.
  */
 @Keep
-public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
+class ZmanShabbathPreferenceFragment : ZmanPreferenceFragment() {
+    private lateinit var afterPreference: ListPreference
+    private lateinit var sunsetPreference: ListPreference
+    private lateinit var twilightPreference: ListPreference
+    private lateinit var nightfallPreference: ListPreference
+    private lateinit var minutesPreference: NumberPickerPreference
 
-    private ListPreference afterPreference;
-    private ListPreference sunsetPreference;
-    private ListPreference twilightPreference;
-    private ListPreference nightfallPreference;
-    private NumberPickerPreference minutesPreference;
-
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        super.onCreatePreferences(savedInstanceState, rootKey);
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
 
         // Must be in reverse order for non-null dependencies.
-        minutesPreference = findPreference(KEY_OPINION_SHABBATH_ENDS_MINUTES);
-        minutesPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            int shabbathAfterId = getPreferences().toId(afterPreference.getValue());
-            int minutes = (int) newValue;
-            updateMinutesSummary(shabbathAfterId, null, minutes);
-            return true;
-        });
-        sunsetPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_SUNSET);
-        sunsetPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            updateMinutesSummary(R.string.sunset, newValue.toString());
-            return true;
-        });
-        twilightPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_TWILIGHT);
-        twilightPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            updateMinutesSummary(R.string.twilight, newValue.toString());
-            return true;
-        });
-        nightfallPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_NIGHTFALL);
-        nightfallPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            updateMinutesSummary(R.string.nightfall, newValue.toString());
-            return true;
-        });
-        afterPreference = initList(KEY_OPINION_SHABBATH_ENDS_AFTER);
-        afterPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            int shabbathAfterId = getPreferences().toId(newValue.toString());
-            updateMinutesSummary(shabbathAfterId, null);
-            return true;
-        });
-
-        int shabbathAfterId = getPreferences().toId(afterPreference.getValue());
-        updateMinutesSummary(shabbathAfterId, null);
-    }
-
-    private ListPreference addDefaultOption(String key) {
-        ListPreference preference = findPreference(key);
-        return addDefaultOption(preference);
-    }
-
-    private ListPreference addDefaultOption(ListPreference preference) {
-        final Context context = preference.getContext();
-
-        CharSequence[] oldValues = preference.getEntryValues();
-        final int oldSize = oldValues.length;
-        final int newSize = oldSize + 1;
-        CharSequence[] newValues = new CharSequence[newSize];
-        System.arraycopy(oldValues, 0, newValues, 1, oldSize);
-        CharSequence defaultValue = context.getText(R.string.opinion_value_none);
-        newValues[0] = defaultValue;
-        preference.setEntryValues(newValues);
-
-        CharSequence[] oldEntries = preference.getEntries();
-        CharSequence[] newEntries = new CharSequence[newSize];
-        System.arraycopy(oldEntries, 0, newEntries, 1, oldSize);
-        CharSequence defaultEntry = context.getText(R.string.none);
-        newEntries[0] = defaultEntry;
-        preference.setEntries(newEntries);
-
-        return preference;
-    }
-
-    private void updateMinutesSummary(final int shabbathAfterId, final String specificOpinionValue) {
-        NumberPickerPreference minutesPreference = this.minutesPreference;
-        if (minutesPreference == null) {
-            return;
+        minutesPreference =
+            findPreference<NumberPickerPreference>(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES)!!.apply {
+                setOnPreferenceChangeListener { _, newValue: Any? ->
+                    val shabbathAfterId = preferences.toId(afterPreference.value)
+                    onMinutesChanged(shabbathAfterId, newValue as Int)
+                    true
+                }
+            }
+        sunsetPreference =
+            addDefaultOption(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_SUNSET).apply {
+                setOnPreferenceChangeListener { _, newValue: Any? ->
+                    onMinutesChanged(R.string.sunset)
+                    true
+                }
+            }
+        twilightPreference =
+            addDefaultOption(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_TWILIGHT).apply {
+                setOnPreferenceChangeListener { _, newValue: Any? ->
+                    onMinutesChanged(R.string.twilight)
+                    true
+                }
+            }
+        nightfallPreference =
+            addDefaultOption(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL).apply {
+                setOnPreferenceChangeListener { _, newValue: Any? ->
+                    onMinutesChanged(R.string.nightfall)
+                    true
+                }
+            }
+        afterPreference = initList(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER)!!.apply {
+            setOnPreferenceChangeListener { _, newValue: Any? ->
+                val shabbathAfterId = preferences.toId(newValue?.toString())
+                onMinutesChanged(shabbathAfterId)
+                true
+            }
+            val shabbathAfterId = preferences.toId(this.value)
+            onMinutesChanged(shabbathAfterId)
         }
-        int minutes = minutesPreference.getValue();
-        updateMinutesSummary(shabbathAfterId, specificOpinionValue, minutes);
     }
 
-    private void updateMinutesSummary(final int shabbathAfterId, String specificOpinionValue, final int minutes) {
-        String shabbathAfterName = getString(shabbathAfterId);
-        CharSequence specificOpinionLabel = null;
+    private fun addDefaultOption(key: String): ListPreference {
+        val preference = findPreference<ListPreference>(key)!!
+        return addDefaultOption(preference)
+    }
 
+    private fun addDefaultOption(preference: ListPreference): ListPreference {
+        val context = preference.context
+        val oldValues = preference.entryValues
+        val oldSize = oldValues.size
+        val newSize = oldSize + 1
+        val newValues = arrayOfNulls<CharSequence>(newSize)
+        System.arraycopy(oldValues, 0, newValues, 1, oldSize)
+        val defaultValue = context.getText(R.string.opinion_value_none)
+        newValues[0] = defaultValue
+        preference.entryValues = newValues
+        val oldEntries = preference.entries
+        val newEntries = arrayOfNulls<CharSequence>(newSize)
+        System.arraycopy(oldEntries, 0, newEntries, 1, oldSize)
+        val defaultEntry = context.getText(R.string.none)
+        newEntries[0] = defaultEntry
+        preference.entries = newEntries
+        return preference
+    }
+
+    private fun getMinutesSummary(shabbathAfterId: Int, minutes: Int): String {
+        val shabbathAfterName = getString(shabbathAfterId)
+        var opinionValue: String? = null
+        var opinionLabel: CharSequence? = null
         if (shabbathAfterId == R.string.sunset) {
-            sunsetPreference.setEnabled(true);
-            twilightPreference.setEnabled(false);
-            nightfallPreference.setEnabled(false);
-            if (specificOpinionValue == null) {
-                specificOpinionValue = sunsetPreference.getValue();
-                specificOpinionLabel = sunsetPreference.getEntry();
-            } else {
-                specificOpinionLabel = findEntry(sunsetPreference, specificOpinionValue);
-            }
+            opinionValue = sunsetPreference.value
+            opinionLabel = sunsetPreference.entry
         } else if (shabbathAfterId == R.string.twilight) {
-            sunsetPreference.setEnabled(false);
-            twilightPreference.setEnabled(true);
-            nightfallPreference.setEnabled(false);
-            if (specificOpinionValue == null) {
-                specificOpinionValue = twilightPreference.getValue();
-                specificOpinionLabel = twilightPreference.getEntry();
-            } else {
-                specificOpinionLabel = findEntry(twilightPreference, specificOpinionValue);
-            }
+            opinionValue = twilightPreference.value
+            opinionLabel = twilightPreference.entry
         } else if (shabbathAfterId == R.string.nightfall) {
-            sunsetPreference.setEnabled(false);
-            twilightPreference.setEnabled(false);
-            nightfallPreference.setEnabled(true);
-            if (specificOpinionValue == null) {
-                specificOpinionValue = nightfallPreference.getValue();
-                specificOpinionLabel = nightfallPreference.getEntry();
-            } else {
-                specificOpinionLabel = findEntry(nightfallPreference, specificOpinionValue);
-            }
-        } else {
-            sunsetPreference.setEnabled(false);
-            twilightPreference.setEnabled(false);
-            nightfallPreference.setEnabled(false);
+            opinionValue = nightfallPreference.value
+            opinionLabel = nightfallPreference.entry
         }
+        return if (opinionLabel.isNullOrEmpty() || ZmanimPreferences.Values.OPINION_NONE == opinionValue) {
+            resources.getQuantityString(
+                R.plurals.shabbath_ends_summary,
+                minutes,
+                minutes,
+                shabbathAfterName
+            )
+        } else {
+            resources.getQuantityString(
+                R.plurals.shabbath_ends_specific_summary,
+                minutes,
+                minutes,
+                shabbathAfterName,
+                opinionLabel
+            )
+        }
+    }
 
-        if (isEmpty(specificOpinionLabel) || OPINION_NONE.equals(specificOpinionValue)) {
-            minutesPreference.setSummary(getResources().getQuantityString(R.plurals.shabbath_ends_summary, minutes, minutes, shabbathAfterName));
+    private fun onMinutesChanged(shabbathAfterId: Int, minutes: Int = minutesPreference.value) {
+        if (shabbathAfterId == R.string.sunset) {
+            sunsetPreference.isEnabled = true
+            twilightPreference.isEnabled = false
+            nightfallPreference.isEnabled = false
+        } else if (shabbathAfterId == R.string.twilight) {
+            sunsetPreference.isEnabled = false
+            twilightPreference.isEnabled = true
+            nightfallPreference.isEnabled = false
+        } else if (shabbathAfterId == R.string.nightfall) {
+            sunsetPreference.isEnabled = false
+            twilightPreference.isEnabled = false
+            nightfallPreference.isEnabled = true
         } else {
-            minutesPreference.setSummary(getResources().getQuantityString(R.plurals.shabbath_ends_specific_summary, minutes, minutes, shabbathAfterName, specificOpinionLabel));
+            sunsetPreference.isEnabled = false
+            twilightPreference.isEnabled = false
+            nightfallPreference.isEnabled = false
         }
+        minutesPreference.summary = getMinutesSummary(shabbathAfterId, minutes)
     }
 }

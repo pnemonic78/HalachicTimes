@@ -53,9 +53,7 @@ class CompassActivity : BaseCompassActivity() {
         }
     }
 
-    override fun getLocationActivityClass(): Class<out Activity> {
-        return LocationActivity::class.java
-    }
+    override val locationActivityClass: Class<out Activity> = LocationActivity::class.java
 
     private fun startSettings() {
         val context: Context = this

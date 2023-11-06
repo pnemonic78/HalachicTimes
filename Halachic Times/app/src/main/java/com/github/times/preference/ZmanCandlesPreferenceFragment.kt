@@ -13,28 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.preference;
+package com.github.times.preference
 
-import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_CANDLES;
-
-import android.os.Bundle;
-
-import androidx.annotation.Keep;
-
-import com.github.preference.NumberPickerPreference;
+import android.os.Bundle
+import androidx.annotation.Keep
+import com.github.preference.NumberPickerPreference
+import com.github.times.preference.ZmanCandlesSummaryProvider.Companion.getInstance
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_CANDLES
 
 /**
  * This fragment shows the preferences for the Candles zman screen.
  */
 @Keep
-public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
-
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        super.onCreatePreferences(savedInstanceState, rootKey);
-
-        NumberPickerPreference candles = findPreference(KEY_OPINION_CANDLES);
-        candles.setSummaryProvider(ZmanCandlesSummaryProvider.getInstance());
-        onPreferenceChange(candles, candles.getValue());
+class ZmanCandlesPreferenceFragment : ZmanPreferenceFragment() {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
+        findPreference<NumberPickerPreference>(KEY_OPINION_CANDLES)!!.apply {
+            summaryProvider = getInstance()
+            onPreferenceChange(this, value)
+        }
     }
 }

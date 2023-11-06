@@ -21,10 +21,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.RemoteViews
-import androidx.annotation.StyleRes
-import com.github.graphics.BitmapUtils.isBrightWallpaper
+import com.github.app.isBrightWallpaper
 import com.github.times.R
+import com.github.times.ZmanViewHolder
 import com.github.times.ZmanimAdapter
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Shows a scrollable list of halachic times (*zmanim*) for prayers in a widget.
@@ -33,11 +36,11 @@ import com.github.times.ZmanimAdapter
  */
 class ZmanimListWidget : ZmanimWidget() {
     override fun getLayoutId(): Int {
-        val theme = this.theme
+        val themeId = this.theme
         return when {
-            theme == THEME_APPWIDGET_DARK -> R.layout.widget_list
-            theme == THEME_APPWIDGET_LIGHT -> R.layout.widget_list_light
-            isBrightWallpaper(getContext()) -> R.layout.widget_list_light
+            themeId == THEME_APPWIDGET_DARK -> R.layout.widget_list
+            themeId == THEME_APPWIDGET_LIGHT -> R.layout.widget_list_light
+            isBrightWallpaper(context) -> R.layout.widget_list_light
             else -> R.layout.widget_list
         }
     }
@@ -48,7 +51,10 @@ class ZmanimListWidget : ZmanimWidget() {
         appWidgetIds: IntArray
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        notifyAppWidgetViewDataChanged(context)
+        GlobalScope.launch {
+            delay(1000)
+            notifyAppWidgetViewDataChanged(context)
+        }
     }
 
     override fun populateWidgetTimes(
@@ -58,7 +64,7 @@ class ZmanimListWidget : ZmanimWidget() {
         activityPendingIntent: PendingIntent,
         viewId: Int,
         day: Long
-    ): ZmanimAdapter<*>? {
+    ): ZmanimAdapter<ZmanViewHolder>? {
         populateScrollableTimes(context, appWidgetId, views, activityPendingIntent)
         return null
     }
@@ -67,9 +73,9 @@ class ZmanimListWidget : ZmanimWidget() {
         context: Context,
         appWidgetId: Int,
         views: RemoteViews,
-        activityPendingIntent: PendingIntent?
+        activityPendingIntent: PendingIntent
     ) {
-        views.setPendingIntentTemplate(android.R.id.list, activityPendingIntent)
+        views.setPendingIntentTemplate(ID_LIST, activityPendingIntent)
         bindListView(context, appWidgetId, views)
     }
 
@@ -84,14 +90,6 @@ class ZmanimListWidget : ZmanimWidget() {
         val adapter = Intent(context, ZmanimWidgetService::class.java)
             .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
         adapter.data = Uri.parse(adapter.toUri(Intent.URI_INTENT_SCHEME))
-        list.setRemoteAdapter(android.R.id.list, adapter)
-    }
-
-    companion object {
-        @StyleRes
-        private val THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark
-
-        @StyleRes
-        private val THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light
+        list.setRemoteAdapter(ID_LIST, adapter)
     }
 }

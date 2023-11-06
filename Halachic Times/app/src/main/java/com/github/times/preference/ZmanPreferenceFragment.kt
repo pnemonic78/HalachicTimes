@@ -13,245 +13,210 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.preference;
+package com.github.times.preference
 
-import static com.github.times.preference.RingtonePreference.PERMISSION_RINGTONE;
-
-import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.os.Build;
-import android.os.Bundle;
-import android.text.TextUtils;
-
-import androidx.annotation.Keep;
-import androidx.annotation.Nullable;
-import androidx.annotation.XmlRes;
-import androidx.core.content.PermissionChecker;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceManager;
-import androidx.preference.TwoStatePreference;
-
-import com.github.preference.SimplePreferences;
-import com.github.times.R;
-import com.github.times.remind.ZmanimReminder;
-import com.github.times.remind.ZmanimReminderService;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.app.AlertDialog
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.os.Build
+import android.os.Bundle
+import androidx.annotation.Keep
+import androidx.annotation.XmlRes
+import androidx.core.content.PermissionChecker
+import androidx.preference.Preference
+import androidx.preference.PreferenceManager
+import androidx.preference.TwoStatePreference
+import com.github.lang.isTrue
+import com.github.preference.AbstractPreferenceFragment
+import com.github.preference.SimplePreferences
+import com.github.times.R
+import com.github.times.remind.ZmanimReminder
+import com.github.times.remind.ZmanimReminderService.Companion.enqueueWork
 
 /**
  * This fragment shows the preferences for a zman screen.
  */
 @Keep
-public class ZmanPreferenceFragment extends com.github.preference.AbstractPreferenceFragment {
-
-    public static final String EXTRA_XML = "xml";
-    public static final String EXTRA_OPINION = "opinion";
-    public static final String EXTRA_REMINDER = "reminder";
-
-    private static final int REQUEST_PERMISSIONS = 0x702E; // TONE
-
+open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
     @XmlRes
-    private int xmlId = 0;
-    private Preference preferenceReminderSunday;
-    private Preference preferenceReminderMonday;
-    private Preference preferenceReminderTuesday;
-    private Preference preferenceReminderWednesday;
-    private Preference preferenceReminderThursday;
-    private Preference preferenceReminderFriday;
-    private Preference preferenceReminderSaturday;
-    private ZmanimPreferences preferences;
+    private var xmlId = 0
+    private var preferenceReminderSunday: Preference? = null
+    private var preferenceReminderMonday: Preference? = null
+    private var preferenceReminderTuesday: Preference? = null
+    private var preferenceReminderWednesday: Preference? = null
+    private var preferenceReminderThursday: Preference? = null
+    private var preferenceReminderFriday: Preference? = null
+    private var preferenceReminderSaturday: Preference? = null
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        SimpleZmanimPreferences.init(requireContext());
+    protected val preferences: ZmanimPreferences by lazy { SimpleZmanimPreferences(requireContext()) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        SimpleZmanimPreferences.init(requireContext())
     }
 
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        super.onCreatePreferences(savedInstanceState, rootKey);
-
-        Bundle args = requireArguments();
-        String opinionKey = args.getString(EXTRA_OPINION);
-        String reminderKey = args.getString(EXTRA_REMINDER);
-
-        initOpinion(opinionKey);
-        initReminder(reminderKey);
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
+        val args = requireArguments()
+        val opinionKey = args.getString(EXTRA_OPINION)
+        val reminderKey = args.getString(EXTRA_REMINDER)
+        initOpinion(opinionKey)
+        initReminder(reminderKey)
     }
 
-    @Override
-    protected int getPreferencesXml() {
-        if (xmlId == 0) {
-            Bundle args = requireArguments();
-            String xmlName = args.getString(EXTRA_XML);
-
-            final Context context = requireContext();
-            String pkgName = context.getPackageName();
-            Resources res = context.getResources();
-            this.xmlId = res.getIdentifier(xmlName, "xml", pkgName);
+    override val preferencesXml: Int
+        get() {
+            if (xmlId == 0) {
+                val args = requireArguments()
+                val xmlName = args.getString(EXTRA_XML)
+                val context = requireContext()
+                val pkgName = context.packageName
+                val res = context.resources
+                xmlId = res.getIdentifier(xmlName, "xml", pkgName)
+            }
+            return xmlId
         }
-        return xmlId;
-    }
 
-    protected ZmanimPreferences getPreferences() {
-        ZmanimPreferences preferences = this.preferences;
-        if (preferences == null) {
-            final Context context = getContext();
-            preferences = new SimpleZmanimPreferences(context);
-            this.preferences = preferences;
-        }
-        return preferences;
-    }
-
-    private void initOpinion(String opinionKey) {
-        if (!TextUtils.isEmpty(opinionKey)) {
+    private fun initOpinion(opinionKey: String?) {
+        if (!opinionKey.isNullOrEmpty()) {
             if (opinionKey.indexOf(';') > 0) {
-                String[] tokens = opinionKey.split(";");
-                for (String token : tokens) {
-                    initOpinionPreference(token);
+                val tokens =
+                    opinionKey.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                for (token in tokens) {
+                    initOpinionPreference(token)
                 }
             } else {
-                initOpinionPreference(opinionKey);
+                initOpinionPreference(opinionKey)
             }
         }
     }
 
-    private void initReminder(String reminderKey) {
-        Preference preferenceReminder = initList(reminderKey);
-        if (preferenceReminder == null) {
-            preferenceReminder = initTime(reminderKey);
+    private fun initReminder(reminderKey: String?) {
+        var preference: Preference? = initList(reminderKey)
+        if (preference == null) {
+            preference = initTime(reminderKey)
         }
-        if (preferenceReminder != null) {
-            final Preference.OnPreferenceChangeListener listener = preferenceReminder.getOnPreferenceChangeListener();
-            preferenceReminder.setOnPreferenceChangeListener((preference, newValue) -> {
-                final Context context = preference.getContext();
-                requestReminderPermissions(context);
-                remind(context);
-                if (listener != null) return listener.onPreferenceChange(preference, newValue);
-                return true;
-            });
-            initReminderDays(preferenceReminder);
+        if (preference != null) {
+            val context = preference.context
+            val listener = preference.onPreferenceChangeListener
+            preference.setOnPreferenceChangeListener { _: Preference, newValue: Any? ->
+                requestReminderPermissions(context)
+                remind(context)
+                listener?.onPreferenceChange(preference, newValue).isTrue
+            }
+            initReminderDays(preference)
         }
     }
 
-    @Nullable
-    private Preference initOpinionPreference(String key) {
-        Preference preference;
-
-        preference = initList(key);
+    private fun initOpinionPreference(key: String?): Preference? {
+        var preference: Preference?
+        preference = initList(key)
         if (preference != null) {
-            preference.setOnPreferenceChangeListener((pref, newValue) -> {
-                maybeChooseMultipleOpinions(newValue);
-                return true;
-            });
-            return preference;
+            val context = preference.context
+            preference.setOnPreferenceChangeListener { _: Preference, newValue: Any? ->
+                maybeChooseMultipleOpinions(context, newValue)
+                true
+            }
+            return preference
         }
 
-        preference = initRingtone(key);
+        preference = initRingtone(key)
         if (preference != null) {
-            return preference;
+            return preference
         }
 
-        preference = initTime(key);
-        if (preference != null) {
-            return preference;
-        }
-
-        return null;
+        preference = initTime(key)
+        return preference
     }
 
-    protected void initReminderDays(Preference reminderTime) {
-        String namePrefix = reminderTime.getKey();
-        this.preferenceReminderSunday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_SUNDAY_SUFFIX);
-        this.preferenceReminderMonday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_MONDAY_SUFFIX);
-        this.preferenceReminderTuesday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_TUESDAY_SUFFIX);
-        this.preferenceReminderWednesday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_WEDNESDAY_SUFFIX);
-        this.preferenceReminderThursday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_THURSDAY_SUFFIX);
-        this.preferenceReminderFriday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_FRIDAY_SUFFIX);
-        this.preferenceReminderSaturday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_SATURDAY_SUFFIX);
+    private fun initReminderDays(reminderTime: Preference) {
+        val namePrefix = reminderTime.key
+        preferenceReminderSunday =
+            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_SUNDAY_SUFFIX)
+        preferenceReminderMonday =
+            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_MONDAY_SUFFIX)
+        preferenceReminderTuesday =
+            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_TUESDAY_SUFFIX)
+        preferenceReminderWednesday =
+            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_WEDNESDAY_SUFFIX)
+        preferenceReminderThursday =
+            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_THURSDAY_SUFFIX)
+        preferenceReminderFriday =
+            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_FRIDAY_SUFFIX)
+        preferenceReminderSaturday =
+            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_SATURDAY_SUFFIX)
     }
 
-    @Nullable
-    protected Preference initReminderDay(String key) {
-        if (TextUtils.isEmpty(key)) {
-            return null;
-        }
-
-        Preference preference = findPreference(key);
+    private fun initReminderDay(key: String?): Preference? {
+        if (key.isNullOrEmpty()) return null
+        val preference = findPreference<Preference>(key)
         if (preference != null) {
-            preference.setOnPreferenceChangeListener(this);
-            return preference;
+            preference.onPreferenceChangeListener = this
+            return preference
         }
-        return null;
+        return null
     }
 
-    @Override
-    protected boolean onCheckBoxPreferenceChange(TwoStatePreference preference, Object newValue) {
-        if (preference.equals(preferenceReminderSunday)
-            || preference.equals(preferenceReminderMonday)
-            || preference.equals(preferenceReminderTuesday)
-            || preference.equals(preferenceReminderWednesday)
-            || preference.equals(preferenceReminderThursday)
-            || preference.equals(preferenceReminderFriday)
-            || preference.equals(preferenceReminderSaturday)) {
-            remind(preference.getContext());
+    override fun onCheckBoxPreferenceChange(
+        preference: TwoStatePreference,
+        newValue: Any?
+    ): Boolean {
+        if (preference === preferenceReminderSunday
+            || preference === preferenceReminderMonday
+            || preference === preferenceReminderTuesday
+            || preference === preferenceReminderWednesday
+            || preference === preferenceReminderThursday
+            || preference === preferenceReminderFriday
+            || preference === preferenceReminderSaturday
+        ) {
+            remind(preference.context)
         }
-
-        return super.onCheckBoxPreferenceChange(preference, newValue);
+        return super.onCheckBoxPreferenceChange(preference, newValue)
     }
 
     /**
      * Run the reminder service.
      * Tries to postpone the reminder until after any preferences have changed.
      */
-    private void remind(Context context) {
-        Intent intent = new Intent(ZmanimReminder.ACTION_UPDATE);
-        ZmanimReminderService.enqueueWork(context, intent);
+    private fun remind(context: Context) {
+        val intent = Intent(ZmanimReminder.ACTION_UPDATE)
+        enqueueWork(context, intent)
     }
 
-    private SharedPreferences getSharedPreferences(Context context) {
-        if (this.preferences instanceof SimplePreferences) {
-            return ((SimplePreferences) this.preferences).preferences;
-        }
-        return PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    private void maybeChooseMultipleOpinions(Object newValue) {
-        final String opinionBaalHatanya = ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
-        if (opinionBaalHatanya.equals(newValue)) {
-            maybeChooseOpinionsBaalHatanya();
+    private fun getSharedPreferences(context: Context): SharedPreferences {
+        val preferences = this.preferences
+        return if (preferences is SimplePreferences) {
+            preferences.preferences
+        } else {
+            PreferenceManager.getDefaultSharedPreferences(context)
         }
     }
 
-    private void maybeChooseOpinionsBaalHatanya() {
-        final Context context = getContext();
-        new AlertDialog.Builder(context)
+    private fun maybeChooseMultipleOpinions(context: Context, newValue: Any?) {
+        val opinionBaalHatanya = ZmanimPreferences.Values.OPINION_BAAL_HATANYA
+        if (opinionBaalHatanya == newValue) {
+            maybeChooseOpinionsBaalHatanya(context)
+        }
+    }
+
+    private fun maybeChooseOpinionsBaalHatanya(context: Context) {
+        AlertDialog.Builder(context)
             .setTitle(R.string.opinion_baal_hatanya)
             .setMessage(R.string.opinion_baal_hatanya_all)
             .setCancelable(true)
             .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    chooseBaalHatanyaOpinions();
-                }
-            })
-            .show();
+            .setPositiveButton(android.R.string.ok) { _, _ -> chooseBaalHatanyaOpinions(context) }
+            .show()
     }
 
     /**
      * Select all relevant preferences to use Baal HaTanya's opinion.
      */
-    private void chooseBaalHatanyaOpinions() {
-        final Context context = getContext();
-        final String opinion = ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
-        SharedPreferences preferences = getSharedPreferences(context);
+    private fun chooseBaalHatanyaOpinions(context: Context) {
+        val opinion = ZmanimPreferences.Values.OPINION_BAAL_HATANYA
+        val preferences = getSharedPreferences(context)
         preferences.edit()
             .putString(ZmanimPreferences.KEY_OPINION_HOUR, opinion)
             .putString(ZmanimPreferences.KEY_OPINION_DAWN, opinion)
@@ -267,27 +232,44 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
             .putString(ZmanimPreferences.KEY_OPINION_PLUG_MINCHA, opinion)
             .putString(ZmanimPreferences.KEY_OPINION_SUNSET, ZmanimPreferences.Values.OPINION_SEA)
             .putString(ZmanimPreferences.KEY_OPINION_NIGHTFALL, opinion)
-            .putString(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER, ZmanimPreferences.Values.OPINION_NIGHT)
-            .putString(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL, ZmanimPreferences.Values.OPINION_8_5)
+            .putString(
+                ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER,
+                ZmanimPreferences.Values.OPINION_NIGHT
+            )
+            .putString(
+                ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL,
+                ZmanimPreferences.Values.OPINION_8_5
+            )
             .putString(ZmanimPreferences.KEY_OPINION_GUARDS, ZmanimPreferences.Values.OPINION_3)
             .putInt(ZmanimPreferences.KEY_OPINION_CANDLES, 30)
             .putInt(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES, 0)
-            .apply();
+            .apply()
     }
 
-    private void requestReminderPermissions(Context context) {
-        List<String> permissions = new ArrayList<>();
-        if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_RINGTONE) != PermissionChecker.PERMISSION_GRANTED) {
-            permissions.add(PERMISSION_RINGTONE);
+    private fun requestReminderPermissions(context: Context) {
+        val permissions = mutableListOf<String>()
+        if (PermissionChecker.checkCallingOrSelfPermission(
+                context,
+                RingtonePreference.PERMISSION_RINGTONE
+            ) != PermissionChecker.PERMISSION_GRANTED
+        ) {
+            permissions.add(RingtonePreference.PERMISSION_RINGTONE)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             if (!nm.areNotificationsEnabled()) {
-                permissions.add(ZmanimReminder.PERMISSION_NOTIFICATIONS);
+                permissions.add(ZmanimReminder.PERMISSION_NOTIFICATIONS)
             }
         }
-        if (permissions.size() > 0) {
-            requestPermissions(permissions.toArray(new String[0]), REQUEST_PERMISSIONS);
+        if (permissions.size > 0) {
+            requestPermissions(permissions.toTypedArray(), REQUEST_PERMISSIONS)
         }
+    }
+
+    companion object {
+        const val EXTRA_XML = "xml"
+        const val EXTRA_OPINION = "opinion"
+        const val EXTRA_REMINDER = "reminder"
+        private const val REQUEST_PERMISSIONS = 0x702E // TONE
     }
 }

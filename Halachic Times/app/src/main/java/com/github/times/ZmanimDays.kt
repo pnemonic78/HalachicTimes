@@ -1,86 +1,67 @@
-package com.github.times;
+package com.github.times
 
-import android.content.Context;
+import android.content.Context
+import androidx.annotation.StringRes
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
 
-import androidx.annotation.StringRes;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHOL_HAMOED_PESACH;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHOL_HAMOED_SUCCOS;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.FAST_OF_ESTHER;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.FAST_OF_GEDALYAH;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.HOSHANA_RABBA;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.PESACH;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.PESACH_SHENI;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.PURIM;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.PURIM_KATAN;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.ROSH_CHODESH;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SHAVUOS;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SHEMINI_ATZERES;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SHUSHAN_PURIM;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SIMCHAS_TORAH;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SUCCOS;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_HAATZMAUT;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_HASHOAH;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_HAZIKARON;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_YERUSHALAYIM;
-
-public class ZmanimDays {
-
+object ZmanimDays {
+    /**
+     * Holiday none.
+     */
+    const val NO_HOLIDAY = -1
     /**
      * Holiday id for Shabbath.
      */
-    public static final int SHABBATH = 100;
+    const val SHABBATH = 100
 
     @StringRes
-    public static final int ID_NONE = 0;
+    val ID_NONE = 0
 
-    private static final Map<Integer, Integer> NAMES = new HashMap();
+    private val names = mutableMapOf<Int, Int>()
 
-    static {
-        NAMES.put(PESACH, R.string.day_pesach);
-        NAMES.put(CHOL_HAMOED_PESACH, R.string.day_chol_hamoed_pesach);
-        NAMES.put(PESACH_SHENI, R.string.day_pesach_sheni);
-        NAMES.put(SHAVUOS, R.string.day_shavuos);
-        NAMES.put(ROSH_HASHANA, R.string.day_rosh_hashana);
-        NAMES.put(FAST_OF_GEDALYAH, R.string.day_fast_of_gedalyah);
-        NAMES.put(YOM_KIPPUR, R.string.day_yom_kippur);
-        NAMES.put(SUCCOS, R.string.day_succos);
-        NAMES.put(CHOL_HAMOED_SUCCOS, R.string.day_chol_hamoed_succos);
-        NAMES.put(HOSHANA_RABBA, R.string.day_hoshana_rabba);
-        NAMES.put(SHEMINI_ATZERES, R.string.day_shemini_atzeres);
-        NAMES.put(SIMCHAS_TORAH, R.string.day_simchas_torah);
-        NAMES.put(CHANUKAH, R.string.day_chanukka);
-        NAMES.put(FAST_OF_ESTHER, R.string.day_fast_of_esther);
-        NAMES.put(PURIM, R.string.day_purim);
-        NAMES.put(SHUSHAN_PURIM, R.string.day_shushan_purim);
-        NAMES.put(PURIM_KATAN, R.string.day_purim_katan);
-        NAMES.put(ROSH_CHODESH, R.string.day_rosh_chodesh);
-        NAMES.put(YOM_HASHOAH, R.string.day_yom_hashoah);
-        NAMES.put(YOM_HAZIKARON, R.string.day_yom_hazikaron);
-        NAMES.put(YOM_HAATZMAUT, R.string.day_yom_haatzmaut);
-        NAMES.put(YOM_YERUSHALAYIM, R.string.day_yom_yerushalayim);
-        NAMES.put(SHABBATH, R.string.day_shabbath);
+    init {
+        names[JewishCalendar.PESACH] = R.string.day_pesach
+        names[JewishCalendar.CHOL_HAMOED_PESACH] = R.string.day_chol_hamoed_pesach
+        names[JewishCalendar.PESACH_SHENI] = R.string.day_pesach_sheni
+        names[JewishCalendar.SHAVUOS] = R.string.day_shavuos
+        names[JewishCalendar.ROSH_HASHANA] = R.string.day_rosh_hashana
+        names[JewishCalendar.FAST_OF_GEDALYAH] = R.string.day_fast_of_gedalyah
+        names[JewishCalendar.YOM_KIPPUR] = R.string.day_yom_kippur
+        names[JewishCalendar.SUCCOS] = R.string.day_succos
+        names[JewishCalendar.CHOL_HAMOED_SUCCOS] = R.string.day_chol_hamoed_succos
+        names[JewishCalendar.HOSHANA_RABBA] = R.string.day_hoshana_rabba
+        names[JewishCalendar.SHEMINI_ATZERES] = R.string.day_shemini_atzeres
+        names[JewishCalendar.SIMCHAS_TORAH] = R.string.day_simchas_torah
+        names[JewishCalendar.CHANUKAH] = R.string.day_chanukka
+        names[JewishCalendar.FAST_OF_ESTHER] = R.string.day_fast_of_esther
+        names[JewishCalendar.PURIM] = R.string.day_purim
+        names[JewishCalendar.SHUSHAN_PURIM] = R.string.day_shushan_purim
+        names[JewishCalendar.PURIM_KATAN] = R.string.day_purim_katan
+        names[JewishCalendar.ROSH_CHODESH] = R.string.day_rosh_chodesh
+        names[JewishCalendar.YOM_HASHOAH] = R.string.day_yom_hashoah
+        names[JewishCalendar.YOM_HAZIKARON] = R.string.day_yom_hazikaron
+        names[JewishCalendar.YOM_HAATZMAUT] = R.string.day_yom_haatzmaut
+        names[JewishCalendar.YOM_YERUSHALAYIM] = R.string.day_yom_yerushalayim
+        names[SHABBATH] = R.string.day_shabbath
     }
 
     @StringRes
-    public static int getNameId(int day) {
-        if (day < 0) return ID_NONE;
-        Integer nameId = NAMES.get(day);
-        return (nameId == null) ? ID_NONE : nameId;
+    @JvmStatic
+    fun getNameId(day: Int): Int {
+        if (day < 0) return ID_NONE
+        return names[day] ?: ID_NONE
     }
 
-    public static CharSequence getName(Context context, int day) {
-        return getName(context, day, 0);
+    @JvmStatic
+    fun getName(context: Context, day: Int): CharSequence? {
+        return getName(context, day, 0)
     }
 
-    public static CharSequence getName(Context context, int day, int count) {
-        int nameId = getNameId(day);
-        return (nameId == ID_NONE) ? null : ((count <= 0) ? context.getText(nameId) : context.getString(nameId, count));
+    @JvmStatic
+    fun getName(context: Context, day: Int, count: Int): CharSequence? {
+        val nameId = getNameId(day)
+        if (nameId == ID_NONE) return null
+        if (count <= 0) return context.getText(nameId)
+        return context.getString(nameId, count)
     }
 }

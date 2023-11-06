@@ -13,51 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times;
+package com.github.times
 
-import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-
-import java.util.Calendar;
+import android.content.Context
+import android.content.res.Configuration
+import android.graphics.Color
+import android.view.ViewGroup
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import java.util.Calendar
 
 /**
- * Shows a list of all opinions for a halachic time (<em>zman</em>).
+ * Shows a list of all opinions for a halachic time (*zman*).
  *
  * @author Moshe Waisberg
  */
-public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends ZmanimDetailsPopulater<A>> extends ZmanimFragment<ZmanDetailsViewHolder, A, P> {
+class ZmanimDetailsFragment<A : ZmanimDetailsAdapter, P : ZmanimDetailsPopulater<A>> :
+    ZmanimFragment<ZmanDetailsViewHolder, A, P>() {
 
     /**
-     * The master id.
+     * The master id for populating the details.
      */
-    private int masterId;
+    var masterId = 0
+        private set
 
-    /**
-     * Get the master id for populating the details.
-     *
-     * @return the master id.
-     */
-    public int getMasterId() {
-        return masterId;
+    @Suppress("UNCHECKED_CAST")
+    override fun createAdapter(context: Context): A? {
+        return if (masterId == 0) null else ZmanimDetailsAdapter(context, preferences) as A
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    protected A createAdapter(@NonNull Context context) {
-        if (masterId == 0) {
-            return null;
-        }
-        return (A) new ZmanimDetailsAdapter(context, preferences);
-    }
-
-    @Override
-    public A populateTimes(@NonNull Calendar date) {
-        return populateTimes(date, masterId);
+    override fun populateTimes(date: Calendar): A? {
+        return populateTimes(date, masterId)
     }
 
     /**
@@ -66,118 +52,150 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
      * @param date the date.
      * @param id   the time id.
      */
-    public A populateTimes(@NonNull Calendar date, int id) {
-        masterId = id;
-        if (!isAdded()) {
-            return null;
-        }
+    fun populateTimes(date: Calendar, id: Int): A? {
+        masterId = id
+        if (!isAdded) return null
+        applyBackground(id)
 
-        P populater = getPopulater();
-        A adapter = null;
+        val populater = populater ?: return null
+        populater.itemId = id
+        return super.populateTimes(date)
+    }
 
-        if (populater != null) {
-            populater.setItemId(id);
-            adapter = super.populateTimes(date);
-        }
-
-        final int theme = preferences.getTheme();
-        if (theme == R.style.Theme_Zmanim_Dark) {
-            setBackgroundColorDark(id, list);
-        } else if (theme == R.style.Theme_Zmanim_Light) {
-            setBackgroundColorLight(id, list);
-        } else if (theme == R.style.Theme_Zmanim_DayNight) {
-            final Context context = list.getContext();
-            final int nightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            switch (nightMode) {
-                case Configuration.UI_MODE_NIGHT_NO:
-                    setBackgroundColorLight(id, list);
-                    break;
-                case Configuration.UI_MODE_NIGHT_YES:
-                    setBackgroundColorDark(id, list);
-                    break;
+    private fun applyBackground(id: Int) {
+        when (preferences.theme) {
+            R.style.Theme_Zmanim_Dark -> setBackgroundColorDark(id, list)
+            R.style.Theme_Zmanim_Light -> setBackgroundColorLight(id, list)
+            R.style.Theme_Zmanim_DayNight -> {
+                val context = list.context
+                val nightMode =
+                    context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                when (nightMode) {
+                    Configuration.UI_MODE_NIGHT_NO -> setBackgroundColorLight(id, list)
+                    Configuration.UI_MODE_NIGHT_YES -> setBackgroundColorDark(id, list)
+                }
             }
-        } else {
-            list.setBackgroundColor(Color.TRANSPARENT);
-        }
 
-        return adapter;
-    }
-
-    private void setBackgroundColorDark(int id, ViewGroup list) {
-        final Context context = getContextImpl();
-        Resources res = context.getResources();
-
-        if (id == R.string.dawn) {
-            list.setBackgroundColor(res.getColor(R.color.dawn));
-        } else if (id == R.string.tallis || id == R.string.tallis_only) {
-            list.setBackgroundColor(res.getColor(R.color.tallis));
-        } else if (id == R.string.sunrise) {
-            list.setBackgroundColor(res.getColor(R.color.sunrise));
-        } else if (id == R.string.shema) {
-            list.setBackgroundColor(res.getColor(R.color.shema));
-        } else if (id == R.string.prayers || id == R.string.eat_chametz || id == R.string.burn_chametz) {
-            list.setBackgroundColor(res.getColor(R.color.prayers));
-        } else if (id == R.string.midday) {
-            list.setBackgroundColor(res.getColor(R.color.midday));
-        } else if (id == R.string.earliest_mincha) {
-            list.setBackgroundColor(res.getColor(R.color.earliest_mincha));
-        } else if (id == R.string.mincha) {
-            list.setBackgroundColor(res.getColor(R.color.mincha));
-        } else if (id == R.string.plug_hamincha) {
-            list.setBackgroundColor(res.getColor(R.color.plug_hamincha));
-        } else if (id == R.string.sunset) {
-            list.setBackgroundColor(res.getColor(R.color.sunset));
-        } else if (id == R.string.twilight) {
-            list.setBackgroundColor(res.getColor(R.color.twilight));
-        } else if (id == R.string.nightfall || id == R.string.shabbath_ends || id == R.string.festival_ends) {
-            list.setBackgroundColor(res.getColor(R.color.nightfall));
-        } else if (id == R.string.midnight_guard || id == R.string.midnight || id == R.string.morning_guard) {
-            list.setBackgroundColor(res.getColor(R.color.midnight));
-
-            list.setBackgroundColor(Color.TRANSPARENT);
-        } else {
-            list.setBackgroundColor(Color.TRANSPARENT);
+            else -> list.setBackgroundColor(Color.TRANSPARENT)
         }
     }
 
-    private void setBackgroundColorLight(int id, ViewGroup list) {
-        final Context context = getContextImpl();
-        Resources res = context.getResources();
+    private fun setBackgroundColorDark(@StringRes id: Int, list: ViewGroup) {
+        val context = list.context
+        when (id) {
+            R.string.dawn ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.dawn))
 
-        if (id == R.string.dawn) {
-            list.setBackgroundColor(res.getColor(R.color.dawn_light));
-        } else if (id == R.string.tallis || id == R.string.tallis_only) {
-            list.setBackgroundColor(res.getColor(R.color.tallis_light));
-        } else if (id == R.string.sunrise) {
-            list.setBackgroundColor(res.getColor(R.color.sunrise_light));
-        } else if (id == R.string.shema) {
-            list.setBackgroundColor(res.getColor(R.color.shema_light));
-        } else if (id == R.string.prayers || id == R.string.eat_chametz || id == R.string.burn_chametz) {
-            list.setBackgroundColor(res.getColor(R.color.prayers_light));
-        } else if (id == R.string.midday) {
-            list.setBackgroundColor(res.getColor(R.color.midday_light));
-        } else if (id == R.string.earliest_mincha) {
-            list.setBackgroundColor(res.getColor(R.color.earliest_mincha_light));
-        } else if (id == R.string.mincha) {
-            list.setBackgroundColor(res.getColor(R.color.mincha_light));
-        } else if (id == R.string.plug_hamincha) {
-            list.setBackgroundColor(res.getColor(R.color.plug_hamincha_light));
-        } else if (id == R.string.sunset) {
-            list.setBackgroundColor(res.getColor(R.color.sunset_light));
-        } else if (id == R.string.twilight) {
-            list.setBackgroundColor(res.getColor(R.color.twilight_light));
-        } else if (id == R.string.nightfall || id == R.string.shabbath_ends || id == R.string.festival_ends) {
-            list.setBackgroundColor(res.getColor(R.color.nightfall_light));
-        } else if (id == R.string.midnight_guard || id == R.string.midnight || id == R.string.morning_guard) {
-            list.setBackgroundColor(res.getColor(R.color.midnight_light));
-        } else {
-            list.setBackgroundColor(Color.TRANSPARENT);
+            R.string.tallis,
+            R.string.tallis_only ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.tallis))
+
+            R.string.sunrise ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.sunrise))
+
+            R.string.shema ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.shema))
+
+            R.string.prayers, R.string.eat_chametz, R.string.burn_chametz ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.prayers))
+
+            R.string.midday ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.midday))
+
+            R.string.earliest_mincha ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.earliest_mincha))
+
+            R.string.mincha ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.mincha))
+
+            R.string.plug_hamincha ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.plug_hamincha))
+
+            R.string.sunset ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.sunset))
+
+            R.string.twilight ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.twilight))
+
+            R.string.nightfall,
+            R.string.shabbath_ends,
+            R.string.festival_ends ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.nightfall))
+
+            R.string.midnight_guard,
+            R.string.midnight,
+            R.string.morning_guard ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.midnight))
+
+            else -> list.setBackgroundColor(Color.TRANSPARENT)
         }
     }
 
-    @Override
-    @NonNull
-    protected P createPopulater(@NonNull Context context) {
-        return (P) new ZmanimDetailsPopulater<A>(context, preferences);
+    private fun setBackgroundColorLight(@StringRes id: Int, list: ViewGroup) {
+        val context = list.context
+        when (id) {
+            R.string.dawn ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.dawn_light))
+
+            R.string.tallis,
+            R.string.tallis_only ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.tallis_light))
+
+            R.string.sunrise ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.sunrise_light))
+
+            R.string.shema ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.shema_light))
+
+            R.string.prayers,
+            R.string.eat_chametz,
+            R.string.burn_chametz ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.prayers_light))
+
+            R.string.midday ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.midday_light))
+
+            R.string.earliest_mincha ->
+                list.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.earliest_mincha_light
+                    )
+                )
+
+            R.string.mincha ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.mincha_light))
+
+            R.string.plug_hamincha ->
+                list.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.plug_hamincha_light
+                    )
+                )
+
+            R.string.sunset ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.sunset_light))
+
+            R.string.twilight ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.twilight_light))
+
+            R.string.nightfall,
+            R.string.shabbath_ends,
+            R.string.festival_ends ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.nightfall_light))
+
+            R.string.midnight_guard,
+            R.string.midnight,
+            R.string.morning_guard ->
+                list.setBackgroundColor(ContextCompat.getColor(context, R.color.midnight_light))
+
+            else -> list.setBackgroundColor(Color.TRANSPARENT)
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    override fun createPopulater(context: Context): P {
+        return ZmanimDetailsPopulater<A>(context, preferences) as P
     }
 }

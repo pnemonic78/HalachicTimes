@@ -13,265 +13,205 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import static android.os.Build.VERSION;
-
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.github.app.SimpleThemeCallbacks;
-import com.github.app.ThemeCallbacks;
-import com.github.preference.ThemePreferences;
-
-import java.util.TimeZone;
-
-import timber.log.Timber;
+import android.annotation.TargetApi
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.location.Location
+import android.location.LocationManager
+import android.os.Build
+import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import com.github.app.SimpleThemeCallbacks
+import com.github.app.ThemeCallbacks
+import com.github.os.getParcelableCompat
+import com.github.preference.ThemePreferences
+import com.github.times.location.LocationsProvider.Companion.hasNoLocationPermission
+import com.github.times.location.ZmanimLocation.Companion.compare
+import java.util.TimeZone
+import timber.log.Timber
 
 /**
  * Activity that needs locations.
  *
  * @author Moshe Waisberg
  */
-public abstract class LocatedActivity<P extends ThemePreferences> extends AppCompatActivity implements
+abstract class LocatedActivity<P : ThemePreferences> : AppCompatActivity(),
     ThemeCallbacks<P>,
     ZmanimLocationListener {
 
-    /**
-     * The location parameter.
-     */
-    public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
+    private val themeCallbacks: ThemeCallbacks<P> by lazy { createThemeCallbacks(this) }
 
-    /**
-     * Activity id for searching locations.
-     */
-    protected static final int ACTIVITY_LOCATIONS = 0x10C;
-    /**
-     * Activity id for requesting location permissions.
-     */
-    protected static final int ACTIVITY_PERMISSIONS = 0xA110;
+    override val themePreferences: P
+        get() = themeCallbacks.themePreferences
 
-    private ThemeCallbacks<P> themeCallbacks;
     /**
      * The address location.
      */
-    private Location addressLocation;
+    protected var addressLocation: Location? = null
+        private set
+
     /**
      * The address.
      */
-    private ZmanimAddress address;
+    protected var address: ZmanimAddress? = null
+        private set
+
     /**
      * Bind the header in UI thread.
      */
-    private Runnable bindHeader;
+    private val bindHeader: Runnable by lazy { createBindHeaderRunnable() }
+
     /**
      * The location header location.
      */
-    protected TextView headerLocation;
+    @JvmField
+    protected var headerLocation: TextView? = null
+
     /**
      * The location header for formatted address.
      */
-    protected TextView headerAddress;
+    @JvmField
+    protected var headerAddress: TextView? = null
 
     /**
      * Get the locations provider.
      *
-     * @return hte provider.
+     * @return the provider.
      */
-    public LocationsProvider getLocations() {
-        LocationApplication<?, ?, ?> app = (LocationApplication<?, ?, ?>) getApplication();
-        return app.getLocations();
-    }
+    val locations: LocationsProvider
+        get() {
+            val app = application as LocationApplication<*, *, *>
+            return app.locations
+        }
 
     /**
      * Get the location.
      *
      * @return the location.
      */
-    protected Location getLocation() {
-        return getLocations().getLocation();
-    }
+    protected val location: Location?
+        get() = locations.getLocation()
 
     /**
      * Get the time zone.
      *
      * @return the time zone.
      */
-    protected TimeZone getTimeZone() {
-        return getLocations().getTimeZone();
-    }
+    protected val timeZone: TimeZone
+        get() = locations.timeZone
 
-    protected Location getAddressLocation() {
-        return addressLocation;
-    }
+    protected val locationPreferences: LocationPreferences
+        get() = locations.preferences
 
-    protected ZmanimAddress getAddress() {
-        return address;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        onPreCreate();
-        super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
-        Location location = intent.getParcelableExtra(EXTRA_LOCATION);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        onPreCreate()
+        super.onCreate(savedInstanceState)
+        val location = intent.getParcelableCompat<Location>(EXTRA_LOCATION, Location::class.java)
         if (location != null) {
-            getLocations().setLocation(location);
-        } else if (VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            initLocationPermissions();
+            locations.setLocation(location)
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            initLocationPermissions()
         }
     }
 
-    @Override
-    public void onPreCreate() {
-        getThemeCallbacks().onPreCreate();
+    override fun onPreCreate() {
+        themeCallbacks.onPreCreate()
     }
 
-    @Override
-    public P getThemePreferences() {
-        return getThemeCallbacks().getThemePreferences();
+    protected open fun createThemeCallbacks(context: Context): ThemeCallbacks<P> {
+        return SimpleThemeCallbacks(context)
     }
 
-    @NonNull
-    protected ThemeCallbacks<P> getThemeCallbacks() {
-        ThemeCallbacks<P> themeCallbacks = this.themeCallbacks;
-        if (themeCallbacks == null) {
-            themeCallbacks = createThemeCallbacks(this);
-            this.themeCallbacks = themeCallbacks;
+    override fun onStart() {
+        super.onStart()
+        locations.start(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        locations.stop(this)
+    }
+
+    override fun onAddressChanged(location: Location, address: ZmanimAddress) {
+        Timber.v("onAddressChanged %s %s", location, address)
+        addressLocation = location
+        this.address = address
+        runOnUiThread(bindHeader)
+    }
+
+    protected open fun createBindHeaderRunnable(): Runnable {
+        return Runnable { bindHeader() }
+    }
+
+    override fun onElevationChanged(location: Location) {
+        onLocationChanged(location)
+    }
+
+    override fun onLocationChanged(location: Location) {
+        Timber.v("onLocationChanged %s <= %s", location, addressLocation)
+        if (compare(addressLocation, location) != 0) {
+            address = null
         }
-        return themeCallbacks;
+        addressLocation = location
+        val updateLocation = createUpdateLocationRunnable(location)
+        runOnUiThread(updateLocation)
+        locations.findAddress(location)
     }
 
-    @NonNull
-    protected ThemeCallbacks<P> createThemeCallbacks(Context context) {
-        return new SimpleThemeCallbacks<>(context);
-    }
+    protected abstract fun createUpdateLocationRunnable(location: Location): Runnable
 
-    protected LocationPreferences getLocationPreferences() {
-        return getLocations().getLocationPreferences();
-    }
+    override fun onProviderDisabled(provider: String) = Unit
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        getLocations().start(this);
-    }
+    override fun onProviderEnabled(provider: String) = Unit
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        getLocations().stop(this);
-    }
+    @Deprecated("Deprecated in Java")
+    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) = Unit
 
-    @Override
-    public void onAddressChanged(@NonNull Location location, @NonNull ZmanimAddress address) {
-        Timber.v("onAddressChanged %s %s", location, address);
-        addressLocation = location;
-        this.address = address;
-        Runnable populateHeader = this.bindHeader;
-        if (populateHeader == null) {
-            populateHeader = createBindHeaderRunnable();
-            this.bindHeader = populateHeader;
-        }
-        runOnUiThread(populateHeader);
-    }
-
-    @NonNull
-    protected Runnable createBindHeaderRunnable() {
-        return new Runnable() {
-            @Override
-            public void run() {
-                bindHeader();
-            }
-        };
-    }
-
-    @Override
-    public void onElevationChanged(@NonNull Location location) {
-        onLocationChanged(location);
-    }
-
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-        Timber.v("onLocationChanged %s <= %s", location, addressLocation);
-        if (ZmanimLocation.compare(addressLocation, location) != 0) {
-            address = null;
-        }
-        addressLocation = location;
-        Runnable updateLocation = createUpdateLocationRunnable(location);
-        runOnUiThread(updateLocation);
-        getLocations().findAddress(location);
-    }
-
-    protected abstract Runnable createUpdateLocationRunnable(Location location);
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    protected void startLocations() {
-        Location location = getLocations().getLocation();
+    protected fun startLocations() {
+        val location = locations.getLocation() ?: return
         // Have we been destroyed?
-        if (location == null)
-            return;
-
-        final Activity activity = this;
-        Intent intent = new Intent(activity, getLocationActivityClass())
-            .putExtra(LocationManager.KEY_LOCATION_CHANGED, location);
-        activity.startActivityForResult(intent, ACTIVITY_LOCATIONS);
+        val activity: Activity = this
+        val activityClass = locationActivityClass ?: return
+        val intent = Intent(activity, locationActivityClass)
+            .putExtra(LocationManager.KEY_LOCATION_CHANGED, location)
+        activity.startActivityForResult(intent, ACTIVITY_LOCATIONS)
     }
 
-    protected abstract Class<? extends Activity> getLocationActivityClass();
+    protected abstract val locationActivityClass: Class<out Activity>?
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ACTIVITY_LOCATIONS) {
             if (resultCode == RESULT_OK) {
-                Location location = data.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
-                getLocations().setLocation(location);
+                val location = data?.getParcelableCompat(
+                    LocationManager.KEY_LOCATION_CHANGED,
+                    Location::class.java
+                )
+                locations.setLocation(location)
+                return
             }
         }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     /**
      * Search key was pressed.
      */
-    @Override
-    public boolean onSearchRequested() {
-        Location location = getLocation();
+    override fun onSearchRequested(): Boolean {
+        val location = location ?: return super.onSearchRequested()
         // Have we been destroyed?
-        if (location == null)
-            return super.onSearchRequested();
-
-        ZmanimAddress address = this.address;
-        String query = (address != null) ? address.getFormatted() : null;
-
-        Bundle appData = new Bundle();
-        appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, location);
-        startSearch(query, false, appData, false);
-        return true;
+        val address = address ?: return false
+        val query = address.formatted
+        val appData = Bundle()
+        appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, location)
+        startSearch(query, false, appData, false)
+        return true
     }
 
     /**
@@ -280,28 +220,23 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
      * @param address the address.
      * @return the formatted address.
      */
-    protected CharSequence formatAddress(ZmanimAddress address) {
-        if (address != null)
-            return address.getFormatted();
-        return getString(R.string.location_unknown);
+    protected fun formatAddress(address: ZmanimAddress?): CharSequence {
+        return address?.formatted ?: getString(R.string.location_unknown)
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    private void initLocationPermissions() {
-        if (LocationsProvider.hasNoLocationPermission(this)) {
-            requestPermissions(LocationsProvider.PERMISSIONS, ACTIVITY_PERMISSIONS);
+    private fun initLocationPermissions() {
+        if (hasNoLocationPermission(this)) {
+            requestPermissions(LocationsProvider.PERMISSIONS, ACTIVITY_PERMISSIONS)
         }
     }
 
     /**
      * Bind the header.
      */
-    protected void bindHeader() {
-        // Have we been destroyed?
-        LocationsProvider locations = getLocations();
-        Location addressLocation = getAddressLocation();
-        Location location = (addressLocation == null) ? locations.getLocation() : addressLocation;
-        bindHeader(location);
+    protected fun bindHeader() {
+        val location = addressLocation ?: locations.getLocation()
+        bindHeader(location)
     }
 
     /**
@@ -309,24 +244,35 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
      *
      * @param location the location to format.
      */
-    protected void bindHeader(Location location) {
-        if (location == null)
-            return;
-        TextView locationLabel = headerLocation;
-        TextView addressLabel = headerAddress;
-        // Have we been destroyed?
-        if ((locationLabel == null) || (addressLabel == null))
-            return;
-        final ZmanimAddress address = getAddress();
-
-        LocationFormatter formatter = getLocations();
-        final CharSequence locationText = formatter.formatCoordinates(location);
-        final CharSequence locationName = formatAddress(address);
-        Timber.d("header [" + locationText + "] => [" + locationName + "]");
+    protected fun bindHeader(location: Location?) {
+        if (location == null) return
+        val locationLabel = headerLocation ?: return
+        val addressLabel = headerAddress ?: return
+        val formatter: LocationFormatter = locations
+        val locationText: CharSequence = formatter.formatCoordinates(location)
+        val locationName = formatAddress(address)
+        Timber.d("header [$locationText] => [$locationName]")
 
         // Update the location.
-        locationLabel.setText(locationText);
-        locationLabel.setVisibility(getLocationPreferences().isCoordinatesVisible() ? View.VISIBLE : View.GONE);
-        addressLabel.setText(locationName);
+        locationLabel.text = locationText
+        locationLabel.isVisible = locationPreferences.isCoordinatesVisible
+        addressLabel.text = locationName
+    }
+
+    companion object {
+        /**
+         * The location parameter.
+         */
+        const val EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED
+
+        /**
+         * Activity id for searching locations.
+         */
+        protected const val ACTIVITY_LOCATIONS = 0x10C
+
+        /**
+         * Activity id for requesting location permissions.
+         */
+        protected const val ACTIVITY_PERMISSIONS = 0xA110
     }
 }

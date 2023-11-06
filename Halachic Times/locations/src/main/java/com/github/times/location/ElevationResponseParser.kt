@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.location.Location;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
+import android.location.Location
+import java.io.IOException
+import java.io.InputStream
 
 /**
  * Handler for parsing elevations.
  *
  * @author Moshe Waisberg
  */
-public abstract class ElevationResponseParser {
-
+abstract class ElevationResponseParser {
     /**
      * Parse the data to extract elevations.
      *
@@ -39,5 +36,11 @@ public abstract class ElevationResponseParser {
      * @throws LocationException if a location error occurs.
      * @throws IOException       if an I/O error occurs.
      */
-    public abstract List<Location> parse(InputStream data, double latitude, double longitude, int maxResults) throws LocationException, IOException;
+    @Throws(LocationException::class, IOException::class)
+    abstract fun parse(
+        data: InputStream,
+        latitude: Double,
+        longitude: Double,
+        maxResults: Int
+    ): List<Location>
 }

@@ -13,45 +13,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass.preference;
+package com.github.times.compass.preference
 
-import androidx.annotation.StyleRes;
+import androidx.annotation.StyleRes
 
 /**
  * Compass preferences.
  *
  * @author Moshe Waisberg
  */
-public interface CompassPreferences {
+interface CompassPreferences {
+    object Values {
+        /** Default summaries hidden.  */
+        @JvmField
+        var SUMMARIES_DEFAULT = false
 
-    /** Preference name for the compass bearing type. */
-    String KEY_COMPASS_BEARING = "compass.bearing";
-    /** Preference name for showing summaries. */
-    String KEY_SUMMARIES = "summaries.visible";
-    /** Preference name for the compass theme. */
-    String KEY_THEME_COMPASS = "theme.compass";
+        /** The default bearing.  */
+        @JvmField
+        var BEARING_DEFAULT: String? = null
 
-    class Values {
-        /** Default summaries hidden. */
-        public static boolean SUMMARIES_DEFAULT = false;
+        /** Calculates the bearing for a Great Circle (shortest distance).  */
+        @JvmField
+        var BEARING_GREAT_CIRCLE: String? = null
 
-        /** The default bearing. */
-        public static String BEARING_DEFAULT;
-        /** Calculates the bearing for a Great Circle (shortest distance). */
-        public static String BEARING_GREAT_CIRCLE;
-        /** Calculates the bearing for a Rhumb Line (constant angle). */
-        public static String BEARING_RHUMB_LINE;
+        /** Calculates the bearing for a Rhumb Line (constant angle).  */
+        @JvmField
+        var BEARING_RHUMB_LINE: String? = null
 
-        /** Original theme. */
-        public static String THEME_ORIGINAL;
-        /** Gold theme. */
-        public static String THEME_GOLD;
-        /** Silver theme. */
-        public static String THEME_SILVER;
-        /** Classic theme. */
-        public static String THEME_CLASSIC;
-        /** Default theme. */
-        public static String THEME_COMPASS_DEFAULT;
+        /** Original theme.  */
+        @JvmField
+        var THEME_ORIGINAL: String? = null
+
+        /** Gold theme.  */
+        @JvmField
+        var THEME_GOLD: String? = null
+
+        /** Silver theme.  */
+        @JvmField
+        var THEME_SILVER: String? = null
+
+        /** Classic theme.  */
+        @JvmField
+        var THEME_CLASSIC: String? = null
+
+        /** Default theme.  */
+        @JvmField
+        var THEME_COMPASS_DEFAULT: String? = null
     }
 
     /**
@@ -59,37 +66,43 @@ public interface CompassPreferences {
      *
      * @return the theme value.
      */
-    String getCompassThemeValue();
+    val compassThemeValue: String?
 
     /**
      * Get the theme.
      *
      * @param value the theme value.
      * @return the theme resource id.
-     * @see #getCompassThemeValue()
+     * @see .getCompassThemeValue
      */
     @StyleRes
-    int getCompassTheme(String value);
+    fun getCompassTheme(value: String?): Int
 
-    /**
-     * Get the theme.
-     *
-     * @return the theme resource id.
-     */
-    @StyleRes
-    int getCompassTheme();
+    @get:StyleRes
+    val compassTheme: Int
 
     /**
      * Get the type of bearing for calculating compass direction.
      *
-     * @return the bearing type - either {@link Values#BEARING_GREAT_CIRCLE} or {@link Values#BEARING_RHUMB_LINE}.
+     * @return the bearing type - either [Values.BEARING_GREAT_CIRCLE] or [Values.BEARING_RHUMB_LINE].
      */
-    String getBearing();
+    val bearing: String
 
     /**
      * Are summaries visible?
      *
-     * @return {@code true} to show summaries.
+     * @return `true` to show summaries.
      */
-    boolean isSummariesVisible();
+    val isSummariesVisible: Boolean
+
+    companion object {
+        /** Preference name for the compass bearing type.  */
+        const val KEY_COMPASS_BEARING = "compass.bearing"
+
+        /** Preference name for showing summaries.  */
+        const val KEY_SUMMARIES = "summaries.visible"
+
+        /** Preference name for the compass theme.  */
+        const val KEY_THEME_COMPASS = "theme.compass"
+    }
 }

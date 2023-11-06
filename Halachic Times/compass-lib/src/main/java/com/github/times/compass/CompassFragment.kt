@@ -31,6 +31,7 @@ import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.github.math.toDegrees
 import com.github.times.compass.lib.databinding.CompassFragmentBinding
 import com.github.times.compass.preference.CompassPreferences
 import com.github.times.compass.preference.SimpleCompassPreferences
@@ -155,6 +156,7 @@ open class CompassFragment : Fragment(), SensorEventListener {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
         updateRotation(activity, view)
@@ -228,7 +230,7 @@ open class CompassFragment : Fragment(), SensorEventListener {
                 )
             }
             SensorManager.getOrientation(mapR, orientation)
-            var azimuth = Math.toDegrees(orientation[0].toDouble()).toFloat()
+            var azimuth = orientation[0].toDegrees()
             val geomagneticField = this.geomagneticField
             if (geomagneticField != null) {
                 // converts magnetic north to true north

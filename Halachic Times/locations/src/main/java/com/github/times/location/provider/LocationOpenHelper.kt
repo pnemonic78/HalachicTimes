@@ -88,7 +88,8 @@ class LocationOpenHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, 
         super.onOpen(db)
 
         // Delete stale records older than 1 year.
-        val olderThanYear = (System.currentTimeMillis() - DateUtils.YEAR_IN_MILLIS).toString()
+        val olderThanYear =
+            (System.currentTimeMillis() - (DateUtils.DAY_IN_MILLIS * 365)).toString()
         db.delete(TABLE_ADDRESSES, "${AddressColumns.TIMESTAMP} < $olderThanYear", null)
         db.delete(TABLE_ELEVATIONS, "${ElevationColumns.TIMESTAMP} < $olderThanYear", null)
     }

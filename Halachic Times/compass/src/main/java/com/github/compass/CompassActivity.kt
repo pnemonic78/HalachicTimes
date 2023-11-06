@@ -43,9 +43,7 @@ class CompassActivity : BaseCompassActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun getLocationActivityClass(): Class<out Activity>? {
-        return null
-    }
+    override val locationActivityClass: Class<out Activity>? = null
 
     override fun getCompassFragment(): com.github.times.compass.CompassFragment = CompassFragment()
 

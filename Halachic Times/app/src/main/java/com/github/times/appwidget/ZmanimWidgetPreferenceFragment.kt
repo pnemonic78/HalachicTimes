@@ -13,91 +13,82 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.appwidget;
+package com.github.times.appwidget
 
-import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET;
-import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE;
-
-import android.Manifest;
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Keep;
-import androidx.core.content.PermissionChecker;
-import androidx.preference.ListPreference;
-import androidx.preference.Preference;
-
-import com.github.times.R;
-import com.github.times.preference.AbstractPreferenceFragment;
-
-import timber.log.Timber;
+import android.Manifest
+import android.annotation.TargetApi
+import android.content.Context
+import android.os.Build
+import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.Keep
+import androidx.core.content.PermissionChecker
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import com.github.app.PERMISSION_WALLPAPER
+import com.github.times.R
+import com.github.times.preference.AbstractPreferenceFragment
+import com.github.times.preference.ZmanimPreferences
+import timber.log.Timber
 
 /**
  * This fragment shows the preferences for the widgets.
  */
 @Keep
-public class ZmanimWidgetPreferenceFragment extends AbstractPreferenceFragment {
-
-    private static final String PERMISSION_WALLPAPER = Manifest.permission.READ_EXTERNAL_STORAGE;
-
-    private final ActivityResultLauncher<String> requestPermission = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-        Timber.i("Permission to read wallpaper: %s", isGranted);
-    });
-
-    private ListPreference widgetPreference;
-
-    @Override
-    protected int getPreferencesXml() {
-        return R.xml.widget_preferences;
-    }
-
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        super.onCreatePreferences(savedInstanceState, rootKey);
-
-        ListPreference widgetThemePreference = initList(KEY_THEME_WIDGET);
-        if (widgetThemePreference != null) {
-            widgetThemePreference.setOnPreferenceClickListener(this);
-            widgetThemePreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                notifyAppWidgets();
-                return true;
-            });
+class ZmanimWidgetPreferenceFragment : AbstractPreferenceFragment() {
+    private val requestPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean? ->
+            Timber.i("Permission to read wallpaper: %s", isGranted)
         }
-        this.widgetPreference = widgetThemePreference;
+    private var widgetPreference: ListPreference? = null
 
-        findPreference(KEY_THEME_WIDGET_RATIONALE).setOnPreferenceClickListener(this);
+    override val preferencesXml: Int = R.xml.widget_preferences
+
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
+        widgetPreference = initList(ZmanimPreferences.KEY_THEME_WIDGET)?.apply {
+            onPreferenceClickListener = this@ZmanimWidgetPreferenceFragment
+            onPreferenceChangeListener =
+                Preference.OnPreferenceChangeListener { preference: Preference, _: Any? ->
+                    notifyAppWidgets(preference.context)
+                    true
+                }
+        }
+        findPreference<Preference>(ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE)?.onPreferenceClickListener =
+            this
     }
 
-    @Override
-    public boolean onPreferenceClick(Preference preference) {
-        final String key = preference.getKey();
-        final Context context = preference.getContext();
-        if (preference == widgetPreference) {
+    override fun onPreferenceClick(preference: Preference): Boolean {
+        val key = preference.key
+        val context = preference.context
+        if (preference === widgetPreference) {
             if (checkWallpaperPermission(context)) {
-                return true;
+                return true
             }
-        } else if (KEY_THEME_WIDGET_RATIONALE.equals(key)) {
+        } else if (ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE == key) {
             if (checkWallpaperPermission(context)) {
-                return true;
+                return true
             }
         }
-        return super.onPreferenceClick(preference);
+        return super.onPreferenceClick(preference)
     }
 
-    private boolean checkWallpaperPermission(Context context) {
+    @TargetApi(Build.VERSION_CODES.M)
+    private fun checkWallpaperPermission(context: Context): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             // Wallpaper colors don't need permissions.
-            return true;
+            return true
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_WALLPAPER) != PermissionChecker.PERMISSION_GRANTED) {
-                requestPermission.launch(PERMISSION_WALLPAPER);
-                return true;
+            if (PermissionChecker.checkCallingOrSelfPermission(
+                    context,
+                    PERMISSION_WALLPAPER
+                ) != PermissionChecker.PERMISSION_GRANTED
+            ) {
+                requestPermission.launch(PERMISSION_WALLPAPER)
+                return true
             }
         }
-        return false;
+        return false
     }
 }

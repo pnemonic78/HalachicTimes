@@ -13,32 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass.preference;
+package com.github.times.compass.preference
 
-import androidx.preference.PreferenceFragmentCompat;
-
-import com.github.preference.PreferenceActivity;
-import com.github.times.compass.lib.R;
-
-import java.util.List;
-
-import static com.github.preference.ThemePreferences.KEY_THEME;
-import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
+import androidx.preference.PreferenceFragmentCompat
+import com.github.preference.PreferenceActivity
+import com.github.preference.ThemePreferences
 
 /**
  * Application preferences that populate the settings.
  *
  * @author Moshe Waisberg
  */
-public class CompassPreferenceActivity extends PreferenceActivity {
-
-    @Override
-    protected PreferenceFragmentCompat createMainFragment() {
-        return new MainPreferencesFragment();
+class CompassPreferenceActivity : PreferenceActivity() {
+    override fun createMainFragment(): PreferenceFragmentCompat {
+        return MainPreferencesFragment()
     }
 
-    @Override
-    protected boolean shouldRestartParentActivityForUi(String key) {
-        return KEY_THEME.equals(key) || KEY_THEME_COMPASS.equals(key);
+    override fun shouldRestartParentActivityForUi(key: String?): Boolean {
+        return ThemePreferences.KEY_THEME == key || CompassPreferences.KEY_THEME_COMPASS == key
     }
 }

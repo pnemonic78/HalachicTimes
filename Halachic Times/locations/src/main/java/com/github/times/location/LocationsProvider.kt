@@ -13,245 +13,112 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
-import static android.text.format.DateUtils.HOUR_IN_MILLIS;
-import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static android.text.format.DateUtils.SECOND_IN_MILLIS;
-import static com.github.times.location.GeocoderBase.USER_PROVIDER;
-
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.location.Address;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
-import android.text.TextUtils;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.core.content.PermissionChecker;
-
-import java.util.Collection;
-import java.util.TimeZone;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import timber.log.Timber;
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.location.Address
+import android.location.Criteria
+import android.location.Location
+import android.location.LocationManager
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
+import android.os.Message
+import android.text.format.DateUtils
+import androidx.annotation.RequiresApi
+import androidx.core.content.PermissionChecker
+import com.github.os.getParcelableCompat
+import com.github.times.location.AddressService.Companion.enqueueWork
+import com.github.times.location.ZmanimLocation.Companion.compare
+import com.github.times.location.ZmanimLocation.Companion.compareAll
+import com.github.times.location.ZmanimLocation.Companion.distanceBetween
+import com.github.times.location.country.CountriesGeocoder
+import java.util.TimeZone
+import java.util.concurrent.CopyOnWriteArrayList
+import timber.log.Timber
 
 /**
  * Locations provider.
  *
  * @author Moshe Waisberg
  */
-public class LocationsProvider implements ZmanimLocationListener, LocationFormatter {
+@SuppressLint("UnspecifiedRegisterReceiverFlag", "WrongConstant")
+open class LocationsProvider(private val context: Context) : ZmanimLocationListener,
+    LocationFormatter {
 
-    private static final String TAG = "LocationProvider";
-
-    public static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION};
-
-    /**
-     * The maximum time interval between location updates, in milliseconds.
-     */
-    private static final long UPDATE_INTERVAL_MAX = 6 * HOUR_IN_MILLIS;
-    /**
-     * The time interval between requesting location updates, in milliseconds.
-     */
-    private static final long UPDATE_INTERVAL_START = 30 * SECOND_IN_MILLIS;
-    /**
-     * The duration to receive updates, in milliseconds.<br>
-     * Should be enough time to get a sufficiently accurate location.
-     */
-    private static final long UPDATE_DURATION = MINUTE_IN_MILLIS;
-    /**
-     * The minimum time interval between location updates, in milliseconds.
-     */
-    private static final long UPDATE_TIME = 10 * SECOND_IN_MILLIS;
-    /**
-     * The minimum distance between location updates, in metres.
-     */
-    private static final int UPDATE_DISTANCE = 10;
-
-    /**
-     * Time zone ID for Jerusalem.
-     */
-    private static final String TZ_JERUSALEM = "Asia/Jerusalem";
-    /**
-     * Time zone ID for Israeli Standard Time.
-     */
-    private static final String TZ_IST = "IST";
-    /**
-     * Time zone ID for Israeli Daylight Time.
-     */
-    private static final String TZ_IDT = "IDT";
-    /**
-     * Time zone ID for Jerusalem Standard Time.
-     */
-    private static final String TZ_JST = "JST";
-    /**
-     * Time zone ID for Beirut (patch for Israeli law of DST 2013).
-     */
-    private static final String TZ_BEIRUT = "Asia/Beirut";
-    /**
-     * The offset in milliseconds from UTC of Israeli time zone's standard time.
-     */
-    private static final int TZ_OFFSET_ISRAEL = (int) (2 * HOUR_IN_MILLIS);
-    /**
-     * Israeli time zone offset with daylight savings time.
-     */
-    private static final int TZ_OFFSET_DST_ISRAEL = (int) (TZ_OFFSET_ISRAEL + HOUR_IN_MILLIS);
-
-    /**
-     * Northern-most latitude for Israel.
-     */
-    private static final double ISRAEL_NORTH = 33.289212;
-    /**
-     * Southern-most latitude for Israel.
-     */
-    private static final double ISRAEL_SOUTH = 29.489218;
-    /**
-     * Eastern-most longitude for Israel.
-     */
-    private static final double ISRAEL_EAST = 35.891876;
-    /**
-     * Western-most longitude for Israel.
-     */
-    private static final double ISRAEL_WEST = 34.215317;
-
-    /**
-     * Start seeking locations.
-     */
-    private static final int WHAT_START = 0;
-    /**
-     * Stop seeking locations.
-     */
-    private static final int WHAT_STOP = 1;
-    /**
-     * Location has changed.
-     */
-    private static final int WHAT_CHANGED = 2;
-    /**
-     * Found an elevation.
-     */
-    private static final int WHAT_ELEVATION = 3;
-    /**
-     * Found an address.
-     */
-    private static final int WHAT_ADDRESS = 4;
-
-    /**
-     * If the current location is older than 1 second, then it is stale.
-     */
-    private static final long LOCATION_EXPIRATION = SECOND_IN_MILLIS;
-
-    protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
-    protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
-    protected static final double LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN;
-    protected static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
-
-    /**
-     * The context.
-     */
-    private final Context context;
     /**
      * The owner location listeners.
      */
-    private final Collection<ZmanimLocationListener> locationListeners = new CopyOnWriteArrayList<>();
+    private val listeners: MutableCollection<ZmanimLocationListener> = CopyOnWriteArrayList()
+
     /**
      * Service provider for locations.
      */
-    private final LocationManager locationManager;
+    private val locationManager =
+        context.getSystemService(Context.LOCATION_SERVICE) as? LocationManager
+
     /**
      * The location.
      */
-    private Location location;
+    private var locationLocal: Location? = null
+
     /**
      * The preferences.
      */
-    private final LocationPreferences preferences;
+    val preferences: LocationPreferences = SimpleLocationPreferences(context)
+
     /**
      * The list of countries.
      */
-    private final CountriesGeocoder countriesGeocoder;
+    private val countriesGeocoder: CountriesGeocoder =
+        CountriesGeocoder(context)
+
     /**
      * The time zone.
      */
-    private TimeZone timeZone;
+    var timeZone: TimeZone = TimeZone.getDefault()
+        private set
+
     /**
      * The handler thread.
      */
-    private final HandlerThread handlerThread;
+    private val handlerThread: HandlerThread = HandlerThread(TAG)
+
     /**
      * The handler.
      */
-    private final Handler handler;
+    private lateinit var handler: Handler
+
     /**
      * The next time to start update locations.
      */
-    private long startTaskDelay = UPDATE_INTERVAL_START;
+    private var startTaskDelay = UPDATE_INTERVAL_START
+
     /**
      * The location is externally set?
      */
-    private boolean manualLocation;
+    private var isManualLocation = false
+
     /**
      * The location formatter.
      */
-    private final LocationFormatter formatterHelper;
-
-    /**
-     * Constructs a new provider.
-     *
-     * @param context the context.
-     */
-    @SuppressLint({"UnspecifiedRegisterReceiverFlag", "WrongConstant"})
-    public LocationsProvider(Context context) {
-        Context app = context.getApplicationContext();
-        if (app != null) {
-            context = app;
-        }
-        this.context = context;
-        preferences = new SimpleLocationPreferences(context);
-        countriesGeocoder = new CountriesGeocoder(context);
-        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        timeZone = TimeZone.getDefault();
-        formatterHelper = createLocationFormatter(context);
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ACTION_ADDRESS);
-        filter.addAction(ACTION_ELEVATION);
-        filter.addAction(ACTION_TIMEZONE_CHANGED);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context.registerReceiver(broadcastReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.registerReceiver(broadcastReceiver, filter, 0x4);
-        } else {
-            context.registerReceiver(broadcastReceiver, filter);
-        }
-
-        handlerThread = new HandlerThread(TAG);
-        handlerThread.start();
-        handler = new UpdatesHandler(handlerThread.getLooper());
-    }
+    private val formatterHelper: LocationFormatter = createLocationFormatter(context)
 
     /**
      * Register a location listener to receive location notifications.
      *
      * @param listener the listener.
      */
-    private void addLocationListener(ZmanimLocationListener listener) {
-        if (!locationListeners.contains(listener) && (listener != this)) {
-            locationListeners.add(listener);
+    private fun addLocationListener(listener: ZmanimLocationListener) {
+        if (!listeners.contains(listener) && listener !== this) {
+            listeners.add(listener)
         }
     }
 
@@ -260,304 +127,296 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @param listener the listener.
      */
-    private void removeLocationListener(ZmanimLocationListener listener) {
-        locationListeners.remove(listener);
+    private fun removeLocationListener(listener: ZmanimLocationListener) {
+        listeners.remove(listener)
     }
 
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-        Timber.v("onLocationChanged %s", location);
-        onLocationChanged(location, true, true);
+    override fun onLocationChanged(location: Location) {
+        Timber.v("onLocationChanged %s", location)
+        onLocationChanged(location, true, true)
     }
 
-    private void onLocationChanged(final Location location, boolean findAddress, boolean findElevation) {
+    private fun onLocationChanged(
+        location: Location,
+        findAddress: Boolean,
+        findElevation: Boolean
+    ) {
         if (!isValid(location)) {
-            return;
+            return
         }
-        final Location locationOld = this.location;
-        Location locationNew = location;
-        if (ZmanimLocation.compareAll(locationNew, locationOld) == 0) {
-            return;
+        val locationOld = this.locationLocal
+        var locationNew = location
+        if (compareAll(locationNew, locationOld) == 0) {
+            return
         }
         // Ignore non-user locations after user selected from locations list.
-        if ((locationOld != null) && USER_PROVIDER.equals(locationOld.getProvider())) {
-            if (!USER_PROVIDER.equals(locationNew.getProvider())) {
-                return;
+        if (locationOld != null && GeocoderBase.USER_PROVIDER == locationOld.provider) {
+            if (GeocoderBase.USER_PROVIDER != locationNew.provider) {
+                return
             }
         }
 
-        boolean keepLocation = true;
-        if ((locationOld != null) && (ZmanimLocation.compare(locationOld, locationNew) != 0)) {
+        var keepLocation = true
+        if (locationOld != null && compare(locationOld, locationNew) != 0) {
             // Ignore old locations.
-            if (locationOld.getTime() + LOCATION_EXPIRATION > locationNew.getTime()) {
-                keepLocation = false;
+            if (locationOld.time + LOCATION_EXPIRATION > locationNew.time) {
+                keepLocation = false
             }
             // Ignore manual locations.
-            if (manualLocation) {
+            if (isManualLocation) {
                 // But does the new location have an elevation?
                 if (locationNew.hasAltitude() && !locationOld.hasAltitude()) {
-                    double distance = ZmanimLocation.distanceBetween(locationOld, location);
+                    val distance = distanceBetween(locationOld, location)
                     if (distance <= GeocoderBase.SAME_CITY) {
-                        locationOld.setAltitude(locationNew.getAltitude());
+                        locationOld.altitude = locationNew.altitude
                     }
                 }
-                locationNew = locationOld;
+                locationNew = locationOld
             }
         }
-
         if (keepLocation) {
-            this.location = locationNew;
-            preferences.putLocation(locationNew);
+            this.locationLocal = locationNew
+            preferences.putLocation(locationNew)
         }
-
-        notifyLocationChanged(locationNew);
-
+        notifyLocationChanged(locationNew)
         if (findElevation && !locationNew.hasAltitude()) {
-            findElevation(locationNew);
+            findElevation(locationNew)
         } else if (findAddress) {
-            findAddress(locationNew);
+            findAddress(locationNew)
         }
     }
 
-    private void notifyLocationChanged(Location location) {
-        for (ZmanimLocationListener listener : locationListeners) {
-            listener.onLocationChanged(location);
+    private fun notifyLocationChanged(location: Location) {
+        for (listener in listeners) {
+            listener.onLocationChanged(location)
         }
-        broadcastLocationChanged(location);
+        broadcastLocationChanged(location)
     }
 
-    private void broadcastLocationChanged(Location location) {
-        Intent intent = new Intent(ACTION_LOCATION_CHANGED)
-            .setPackage(context.getPackageName())
-            .putExtra(EXTRA_LOCATION, location);
-        context.sendBroadcast(intent);
+    private fun broadcastLocationChanged(location: Location) {
+        val intent = Intent(ZmanimLocationListener.ACTION_LOCATION_CHANGED)
+            .setPackage(context.packageName)
+            .putExtra(ZmanimLocationListener.EXTRA_LOCATION, location)
+        context.sendBroadcast(intent)
     }
 
-    private void handleLocationChanged(Location location) {
-        handler.obtainMessage(WHAT_CHANGED, location).sendToTarget();
+    private fun handleLocationChanged(location: Location?) {
+        handler.obtainMessage(WHAT_CHANGED, location).sendToTarget()
     }
 
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-        for (ZmanimLocationListener listener : locationListeners) {
-            listener.onProviderDisabled(provider);
-        }
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-        for (ZmanimLocationListener listener : locationListeners) {
-            listener.onProviderEnabled(provider);
+    override fun onProviderDisabled(provider: String) {
+        for (listener in listeners) {
+            listener.onProviderDisabled(provider)
         }
     }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        for (ZmanimLocationListener listener : locationListeners) {
-            listener.onStatusChanged(provider, status, extras);
+    override fun onProviderEnabled(provider: String) {
+        for (listener in listeners) {
+            listener.onProviderEnabled(provider)
         }
     }
 
-    @Override
-    public void onAddressChanged(Location location, ZmanimAddress address) {
+    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
+        for (listener in listeners) {
+            listener.onStatusChanged(provider, status, extras)
+        }
+    }
+
+    override fun onAddressChanged(location: Location, address: ZmanimAddress) {
         if (!isValid(location)) {
-            return;
+            return
         }
         if (!isValid(address)) {
-            return;
+            return
         }
-
-        for (ZmanimLocationListener listener : locationListeners) {
-            listener.onAddressChanged(location, address);
+        for (listener in listeners) {
+            listener.onAddressChanged(location, address)
         }
     }
 
-    @Override
-    public void onElevationChanged(Location location) {
-        onLocationChanged(location, true, false);
-    }
-
-    public static boolean hasNoLocationPermission(Context context) {
-        return PermissionChecker.checkCallingOrSelfPermission(context, PERMISSIONS[0]) != PermissionChecker.PERMISSION_GRANTED;
+    override fun onElevationChanged(location: Location) {
+        onLocationChanged(location, true, false)
     }
 
     /**
      * Get a fused location from several providers.
      *
-     * @return the location - {@code null} otherwise.
+     * @return the location - `null` otherwise.
      */
-    @RequiresApi(api = Build.VERSION_CODES.S)
-    @Nullable
-    public Location getLocationFused() {
-        LocationManager locationManager = this.locationManager;
-        if ((locationManager == null) || hasNoLocationPermission(context)) {
-            return null;
+    @get:RequiresApi(api = Build.VERSION_CODES.S)
+    val locationFused: Location?
+        get() {
+            val locationManager = locationManager
+            if (locationManager == null || hasNoLocationPermission(context)) {
+                return null
+            }
+            try {
+                return locationManager.getLastKnownLocation(LocationManager.FUSED_PROVIDER)
+            } catch (e: IllegalArgumentException) {
+                Timber.e(e, "Fused: %s", e.localizedMessage)
+            } catch (e: SecurityException) {
+                Timber.e(e, "Fused: %s", e.localizedMessage)
+            } catch (e: NullPointerException) {
+                Timber.e(e, "Fused: %s", e.localizedMessage)
+            }
+            return null
         }
-
-        try {
-            return locationManager.getLastKnownLocation(LocationManager.FUSED_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Timber.e(e, "Fused: %s", e.getLocalizedMessage());
-        }
-        return null;
-    }
 
     /**
      * Get a location from GPS.
      *
-     * @return the location - {@code null} otherwise.
+     * @return the location - `null` otherwise.
      */
-    @Nullable
-    public Location getLocationGPS() {
-        LocationManager locationManager = this.locationManager;
-        if ((locationManager == null) || hasNoLocationPermission(context)) {
-            return null;
+    val locationGPS: Location?
+        get() {
+            val locationManager = locationManager
+            if (locationManager == null || hasNoLocationPermission(context)) {
+                return null
+            }
+            try {
+                return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            } catch (e: IllegalArgumentException) {
+                Timber.e(e, "GPS: %s", e.localizedMessage)
+            } catch (e: SecurityException) {
+                Timber.e(e, "GPS: %s", e.localizedMessage)
+            } catch (e: NullPointerException) {
+                Timber.e(e, "GPS: %s", e.localizedMessage)
+            }
+            return null
         }
-
-        try {
-            return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Timber.e(e, "GPS: %s", e.getLocalizedMessage());
-        }
-        return null;
-    }
 
     /**
      * Get a location from the GSM network.
      *
-     * @return the location - {@code null} otherwise.
+     * @return the location - `null` otherwise.
      */
-    @Nullable
-    public Location getLocationNetwork() {
-        LocationManager locationManager = this.locationManager;
-        if ((locationManager == null) || hasNoLocationPermission(context)) {
-            return null;
+    val locationNetwork: Location?
+        get() {
+            val locationManager = locationManager
+            if (locationManager == null || hasNoLocationPermission(context)) {
+                return null
+            }
+            try {
+                return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+            } catch (e: IllegalArgumentException) {
+                Timber.e(e, "Network: %s", e.localizedMessage)
+            } catch (e: SecurityException) {
+                Timber.e(e, "Network: %s", e.localizedMessage)
+            } catch (e: NullPointerException) {
+                Timber.e(e, "Network: %s", e.localizedMessage)
+            }
+            return null
         }
-
-        try {
-            return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Timber.e(e, "Network: %s", e.getLocalizedMessage());
-        }
-        return null;
-    }
 
     /**
      * Get a passive location from other application's GPS.
      *
-     * @return the location - {@code null} otherwise.
+     * @return the location - `null` otherwise.
      */
-    @Nullable
-    public Location getLocationPassive() {
-        LocationManager locationManager = this.locationManager;
-        if ((locationManager == null) || hasNoLocationPermission(context)) {
-            return null;
+    val locationPassive: Location?
+        get() {
+            val locationManager = locationManager
+            if (locationManager == null || hasNoLocationPermission(context)) {
+                return null
+            }
+            try {
+                return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
+            } catch (e: IllegalArgumentException) {
+                Timber.e(e, "Passive: %s", e.localizedMessage)
+            } catch (e: SecurityException) {
+                Timber.e(e, "Passive: %s", e.localizedMessage)
+            } catch (e: NullPointerException) {
+                Timber.e(e, "Passive: %s", e.localizedMessage)
+            }
+            return null
         }
-
-        try {
-            return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Timber.e(e, "Passive: %s", e.getLocalizedMessage());
-        }
-        return null;
-    }
-
-    /**
-     * Get a location from the time zone.
-     *
-     * @return the location - {@code null} otherwise.
-     */
-    @Nullable
-    public Location getLocationTZ() {
-        return getLocationTZ(timeZone);
-    }
-
-    /**
-     * Get a location from the time zone.
-     *
-     * @param timeZone the time zone.
-     * @return the location - {@code null} otherwise.
-     */
-    @Nullable
-    public Location getLocationTZ(TimeZone timeZone) {
-        return countriesGeocoder.findLocation(timeZone);
-    }
 
     /**
      * Get a location from the saved preferences.
      *
      * @return the location - {@code null} otherwise.
      */
-    @Nullable
-    public Location getLocationSaved() {
-        return preferences.getLocation();
+    val locationSaved: Location?
+        get() = preferences.location
+
+    /**
+     * Get a location from the time zone.
+     *
+     * @return the location - `null` otherwise.
+     */
+    val locationTZ: Location?
+        get() = getLocationTZ(timeZone)
+
+    /**
+     * Get a location from the time zone.
+     *
+     * @param timeZone the time zone.
+     * @return the location - `null` otherwise.
+     */
+    fun getLocationTZ(timeZone: TimeZone?): Location? {
+        return countriesGeocoder.findLocation(timeZone)
     }
 
     /**
      * Get the best location.
      *
-     * @return the location - {@code null} otherwise.
+     * @return the location - `null` otherwise.
      */
-    @Nullable
-    public Location getLocation() {
-        Location location = this.location;
-        if (isValid(location))
-            return location;
-        location = getLocationSaved();
-        if (isValid(location))
-            return location;
-        location = getLocationGPS();
-        if (isValid(location))
-            return location;
-        location = getLocationNetwork();
-        if (isValid(location))
-            return location;
-        location = getLocationPassive();
-        if (isValid(location))
-            return location;
-        location = getLocationTZ();
-        return location;
+    fun getLocation(): Location? {
+        var location = locationLocal
+        if (isValid(location)) return location
+        location = this.locationSaved
+        if (isValid(location)) return location
+        location = locationGPS
+        if (isValid(location)) return location
+        location = locationNetwork
+        if (isValid(location)) return location
+        location = locationPassive
+        if (isValid(location)) return location
+        location = locationTZ
+        if (isValid(location)) return location
+        return null
     }
 
     /**
      * Load available locations.
      */
-    public void findLocations() {
-        Location location = this.location;
+    private fun findLocations() {
+        var location = locationLocal
         if (isValid(location)) {
-            handleLocationChanged(location);
-            return;
+            handleLocationChanged(location)
+            return
         }
-        location = getLocationSaved();
+        location = locationSaved
         if (isValid(location)) {
-            handleLocationChanged(location);
-            return;
+            handleLocationChanged(location)
+            return
         }
-        location = getLocationGPS();
+        location = locationGPS
         if (isValid(location)) {
-            handleLocationChanged(location);
-            return;
+            handleLocationChanged(location)
+            return
         }
-        location = getLocationNetwork();
+        location = locationNetwork
         if (isValid(location)) {
-            handleLocationChanged(location);
-            return;
+            handleLocationChanged(location)
+            return
         }
-        location = getLocationPassive();
+        location = locationPassive
         if (isValid(location)) {
-            handleLocationChanged(location);
-            return;
+            handleLocationChanged(location)
+            return
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            location = getLocationFused();
+            location = locationFused
             if (isValid(location)) {
-                handleLocationChanged(location);
-                return;
+                handleLocationChanged(location)
+                return
             }
         }
-        location = getLocationTZ();
+        location = locationTZ
         if (isValid(location)) {
-            handleLocationChanged(location);
+            handleLocationChanged(location)
         }
     }
 
@@ -565,20 +424,20 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * Is the location valid?
      *
      * @param location the location to check.
-     * @return {@code false} if location is invalid.
+     * @return `false` if location is invalid.
      */
-    public boolean isValid(Location location) {
-        return ZmanimLocation.isValid(location);
+    private fun isValid(location: Location?): Boolean {
+        return ZmanimLocation.isValid(location)
     }
 
     /**
      * Is the location valid?
      *
      * @param address the address to check.
-     * @return {@code false} if address is invalid.
+     * @return `false` if address is invalid.
      */
-    public boolean isValid(ZmanimAddress address) {
-        return ZmanimAddress.isValid(address);
+    private fun isValid(address: ZmanimAddress?): Boolean {
+        return ZmanimAddress.isValid(address)
     }
 
     /**
@@ -586,12 +445,10 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @param listener the listener who wants to stop listening.
      */
-    public void stop(ZmanimLocationListener listener) {
-        if (listener != null) {
-            removeLocationListener(listener);
-        }
+    fun stop(listener: ZmanimLocationListener?) {
+        listener?.let { removeLocationListener(it) }
         if (!hasActiveListeners()) {
-            removeUpdates();
+            removeUpdates()
         }
     }
 
@@ -600,299 +457,282 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @param listener the listener who wants to resume listening.
      */
-    public void start(ZmanimLocationListener listener) {
+    fun start(listener: ZmanimLocationListener?) {
         if (listener == null) {
-            Timber.w("start with listener null");
-            return;
+            Timber.w("start with listener null")
+            return
         }
-        if (!handlerThread.isAlive()) {
-            Timber.w("start with dead handler");
-            return;
+        if (!handlerThread.isAlive) {
+            Timber.w("start with dead handler")
+            return
         }
-        addLocationListener(listener);
+        addLocationListener(listener)
 
         // Give the listener our latest known location and address.
-        if (this.location == null) {
-            findLocations();
+        if (locationLocal == null) {
+            findLocations()
         } else {
-            Location location = getLocation();
+            val location = getLocation()
             if (location != null) {
-                listener.onLocationChanged(location);
+                listener.onLocationChanged(location)
             }
         }
-
-        startTaskDelay = UPDATE_INTERVAL_START;
-        sendEmptyMessage(WHAT_START);
+        startTaskDelay = UPDATE_INTERVAL_START
+        sendEmptyMessage(WHAT_START)
     }
 
     /**
-     * Is the location in Israel?<br>
+     * Is the location in Israel?<br></br>
      * Used to determine if user is in diaspora for 2-day festivals.
      *
      * @param location the location.
      * @param timeZone the time zone.
-     * @return {@code true} if user is in Israel - {@code false} otherwise.
+     * @return `true` if user is in Israel - `false` otherwise.
      */
-    public boolean isInIsrael(Location location, TimeZone timeZone) {
+    private fun isInIsrael(location: Location?, timeZone: TimeZone?): Boolean {
         if (location == null) {
-            if (timeZone == null)
-                timeZone = this.timeZone;
-            String id = timeZone.getID();
-            if (TZ_JERUSALEM.equals(id) || TZ_BEIRUT.equals(id))
-                return true;
-            // Check offsets because "IST" could be "Ireland ST", "JST" could be
-            // "Japan ST".
-            int offset = timeZone.getRawOffset() + timeZone.getDSTSavings();
-            if ((offset >= TZ_OFFSET_ISRAEL) && (offset <= TZ_OFFSET_DST_ISRAEL)) {
-                return TZ_IDT.equals(id) || TZ_IST.equals(id) || TZ_JST.equals(id);
-            }
-            return false;
+            val tz = timeZone ?: this.timeZone
+            val id = tz.id
+            if (TZ_JERUSALEM == id || TZ_BEIRUT == id) return true
+            // Check offsets because "IST" could be "Ireland ST",
+            // "JST" could be "Japan ST".
+            val offset = tz.rawOffset + tz.dstSavings
+            return (offset in TZ_OFFSET_ISRAEL..TZ_OFFSET_DST_ISRAEL) &&
+                (TZ_IDT == id || TZ_IST == id || TZ_JST == id)
         }
-
-        final double latitude = location.getLatitude();
-        final double longitude = location.getLongitude();
-        return (latitude <= ISRAEL_NORTH) && (latitude >= ISRAEL_SOUTH) && (longitude >= ISRAEL_WEST) && (longitude <= ISRAEL_EAST);
+        val latitude = location.latitude
+        val longitude = location.longitude
+        return (latitude in ISRAEL_SOUTH..ISRAEL_NORTH) && (longitude in ISRAEL_WEST..ISRAEL_EAST)
     }
 
     /**
-     * Is the current location in Israel?<br>
+     * Is the current location in Israel?<br></br>
      * Used to determine if user is in diaspora for 2-day festivals.
      *
      * @param timeZone the time zone.
-     * @return {@code true} if user is in Israel - {@code false} otherwise.
+     * @return `true` if user is in Israel - `false` otherwise.
      */
-    public boolean isInIsrael(TimeZone timeZone) {
-        return isInIsrael(getLocation(), timeZone);
+    private fun isInIsrael(timeZone: TimeZone?): Boolean {
+        return isInIsrael(getLocation(), timeZone)
     }
 
     /**
-     * Is the current location in Israel?<br>
+     * Is the current location in Israel?<br></br>
      * Used to determine if user is in diaspora for 2-day festivals.
      *
-     * @return {@code true} if user is in Israel - {@code false} otherwise.
+     * @return `true` if user is in Israel - `false` otherwise.
      */
-    public boolean isInIsrael() {
-        return isInIsrael(timeZone);
+    val isInIsrael: Boolean
+        get() = isInIsrael(timeZone)
+
+    override fun formatCoordinates(location: Location): String {
+        return formatterHelper.formatCoordinates(location)
     }
 
-    @Override
-    public String formatCoordinates(Location location) {
-        return formatterHelper.formatCoordinates(location);
+    override fun formatCoordinates(address: Address): String {
+        return formatterHelper.formatCoordinates(address)
     }
 
-    @Override
-    public String formatCoordinates(Address address) {
-        return formatterHelper.formatCoordinates(address);
+    override fun formatCoordinates(latitude: Double, longitude: Double, elevation: Double): String {
+        return formatterHelper.formatCoordinates(latitude, longitude, elevation)
     }
 
-    @Override
-    public String formatCoordinates(double latitude, double longitude, double elevation) {
-        return formatterHelper.formatCoordinates(latitude, longitude, elevation);
+    override fun formatLatitude(latitude: Double): String {
+        return formatterHelper.formatLatitude(latitude)
     }
 
-    @Override
-    public String formatLatitude(double latitude) {
-        return formatterHelper.formatLatitude(latitude);
+    override fun formatLatitudeDecimal(latitude: Double): String {
+        return formatterHelper.formatLatitudeDecimal(latitude)
     }
 
-    @Override
-    public String formatLatitudeDecimal(double latitude) {
-        return formatterHelper.formatLatitudeDecimal(latitude);
+    override fun formatLatitudeSexagesimal(latitude: Double): String {
+        return formatterHelper.formatLatitudeSexagesimal(latitude)
     }
 
-    @Override
-    public String formatLatitudeSexagesimal(double latitude) {
-        return formatterHelper.formatLatitudeSexagesimal(latitude);
+    override fun formatLongitude(longitude: Double): String {
+        return formatterHelper.formatLongitude(longitude)
     }
 
-    @Override
-    public String formatLongitude(double longitude) {
-        return formatterHelper.formatLongitude(longitude);
+    override fun formatLongitudeDecimal(longitude: Double): String {
+        return formatterHelper.formatLongitudeDecimal(longitude)
     }
 
-    @Override
-    public String formatLongitudeDecimal(double longitude) {
-        return formatterHelper.formatLongitudeDecimal(longitude);
+    override fun formatLongitudeSexagesimal(longitude: Double): String {
+        return formatterHelper.formatLongitudeSexagesimal(longitude)
     }
 
-    @Override
-    public String formatLongitudeSexagesimal(double longitude) {
-        return formatterHelper.formatLongitudeSexagesimal(longitude);
+    override fun formatElevation(elevation: Double): String {
+        return formatterHelper.formatElevation(elevation)
     }
 
-    @Override
-    public String formatElevation(double elevation) {
-        return formatterHelper.formatElevation(elevation);
+    override fun formatBearing(azimuth: Double): String {
+        return formatterHelper.formatBearing(azimuth)
     }
 
-    @Override
-    public String formatBearing(double azimuth) {
-        return formatterHelper.formatBearing(azimuth);
+    override fun formatBearingDecimal(azimuth: Double): String {
+        return formatterHelper.formatBearingDecimal(azimuth)
     }
 
-    @Override
-    public String formatBearingDecimal(double azimuth) {
-        return formatterHelper.formatBearingDecimal(azimuth);
+    override fun formatBearingSexagesimal(azimuth: Double): String {
+        return formatterHelper.formatBearingSexagesimal(azimuth)
     }
 
-    @Override
-    public String formatBearingSexagesimal(double azimuth) {
-        return formatterHelper.formatBearingSexagesimal(azimuth);
+    override fun parseLatitude(coordinate: String): Double {
+        return formatterHelper.parseLatitude(coordinate)
     }
 
-    @Override
-    public double parseLatitude(String coordinate) {
-        return formatterHelper.parseLatitude(coordinate);
-    }
-
-    @Override
-    public double parseLongitude(String coordinate) {
-        return formatterHelper.parseLongitude(coordinate);
-    }
-
-    /**
-     * Get the time zone.
-     *
-     * @return the time zone.
-     */
-    public TimeZone getTimeZone() {
-        return timeZone;
+    override fun parseLongitude(coordinate: String): Double {
+        return formatterHelper.parseLongitude(coordinate)
     }
 
     /**
      * Set the location.
      *
-     * @param location the location - {@code null} to request the current location.
+     * @param location the location - `null` to request the current location.
      */
-    public void setLocation(Location location) {
-        this.location = null;
-        manualLocation = location != null;
-        preferences.putLocation(null);
-        onLocationChanged(location);
+    fun setLocation(location: Location?) {
+        this.locationLocal = null
+        isManualLocation = location != null
+        preferences.putLocation(null)
         if (location == null) {
-            sendEmptyMessage(WHAT_START);
+            sendEmptyMessage(WHAT_START)
+        } else {
+            onLocationChanged(location)
         }
     }
 
-    private void requestUpdates() {
-        LocationManager locationManager = this.locationManager;
-        if ((locationManager == null) || hasNoLocationPermission(context)) {
-            return;
+    private fun requestUpdates() {
+        val locationManager = locationManager
+        if (locationManager == null || hasNoLocationPermission(context)) {
+            return
         }
-
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-        criteria.setCostAllowed(true);
-
-        String provider = locationManager.getBestProvider(criteria, true);
+        val provider = getBestProvider(locationManager)
         if (provider == null) {
-            Timber.w("No location provider");
-            return;
+            Timber.w("No location provider")
+            return
         }
-
         try {
-            locationManager.removeUpdates(this);
-            locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this, handlerThread.getLooper());
-        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Timber.e(e, "request updates: %s", e.getMessage());
+            locationManager.removeUpdates(this)
+            locationManager.requestLocationUpdates(
+                provider,
+                UPDATE_TIME,
+                UPDATE_DISTANCE,
+                this,
+                handlerThread.looper
+            )
+        } catch (e: IllegalArgumentException) {
+            Timber.e(e, "request updates: %s", e.message)
+        } catch (e: SecurityException) {
+            Timber.e(e, "request updates: %s", e.message)
+        } catch (e: NullPointerException) {
+            Timber.e(e, "request updates: %s", e.message)
         }
 
         // Let the updates run for only a small while to save battery.
-        sendEmptyMessageDelayed(WHAT_STOP, UPDATE_DURATION);
-        startTaskDelay = Math.min(UPDATE_INTERVAL_MAX, startTaskDelay << 1);
+        sendEmptyMessageDelayed(WHAT_STOP, UPDATE_DURATION)
+        startTaskDelay = UPDATE_INTERVAL_MAX.coerceAtMost(startTaskDelay shl 1)
     }
 
-    private void removeUpdates() {
-        if (locationManager != null) {
-            try {
-                locationManager.removeUpdates(this);
-            } catch (Exception e) {
-                Timber.e(e, "remove updates: %s", e.getMessage());
+    @Suppress("DEPRECATION")
+    private fun getBestProvider(locationManager: LocationManager): String? {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            val providers = locationManager.getProviders(true)
+            val providerGPS = providers.firstOrNull { provider ->
+                val props =
+                    locationManager.getProviderProperties(provider) ?: return@firstOrNull false
+                return@firstOrNull props.hasSatelliteRequirement()
             }
+            if (providerGPS != null) return providerGPS
+            if (providers.contains(LocationManager.FUSED_PROVIDER)) {
+                return LocationManager.FUSED_PROVIDER
+            }
+            return providers.firstOrNull()
         }
+        val criteria = Criteria().apply {
+            accuracy = Criteria.ACCURACY_COARSE
+            isCostAllowed = true
+        }
+        return locationManager.getBestProvider(criteria, true)
+    }
 
+    private fun removeUpdates() {
+        try {
+            locationManager?.removeUpdates(this)
+        } catch (e: Exception) {
+            Timber.e(e, "remove updates: %s", e.message)
+        }
         if (hasActiveListeners()) {
-            sendEmptyMessageDelayed(WHAT_START, startTaskDelay);
+            sendEmptyMessageDelayed(WHAT_START, startTaskDelay)
         } else {
-            handler.removeMessages(WHAT_START);
+            handler.removeMessages(WHAT_START)
         }
     }
 
     /**
      * Quit updating locations.
      */
-    public void quit() {
-        manualLocation = false;
-        locationListeners.clear();
-        removeUpdates();
-        handler.removeMessages(WHAT_ADDRESS);
-        handler.removeMessages(WHAT_CHANGED);
-        handler.removeMessages(WHAT_ELEVATION);
-        handler.removeMessages(WHAT_START);
-        handler.removeMessages(WHAT_STOP);
-
-        context.unregisterReceiver(broadcastReceiver);
-
-        handlerThread.quit();
-        handlerThread.interrupt();
+    fun quit() {
+        isManualLocation = false
+        listeners.clear()
+        removeUpdates()
+        context.unregisterReceiver(broadcastReceiver)
+        handler.removeMessages(WHAT_ADDRESS)
+        handler.removeMessages(WHAT_CHANGED)
+        handler.removeMessages(WHAT_ELEVATION)
+        handler.removeMessages(WHAT_START)
+        handler.removeMessages(WHAT_STOP)
+        handlerThread.quit()
+        handlerThread.interrupt()
     }
 
-    private class UpdatesHandler extends Handler {
+    private inner class UpdatesHandler(looper: Looper) : Handler(looper) {
+        override fun handleMessage(msg: Message) {
+            var location: Location? = null
+            var address: ZmanimAddress? = null
 
-        UpdatesHandler(Looper looper) {
-            super(looper);
-        }
+            when (msg.what) {
+                WHAT_START -> requestUpdates()
+                WHAT_STOP -> removeUpdates()
+                WHAT_CHANGED -> if (msg.obj != null) {
+                    location = msg.obj as Location
+                    onLocationChanged(location)
+                }
 
-        @Override
-        public void handleMessage(Message msg) {
-            Location location = null;
-            ZmanimAddress address = null;
-
-            switch (msg.what) {
-                case WHAT_START:
-                    requestUpdates();
-                    break;
-                case WHAT_STOP:
-                    removeUpdates();
-                    break;
-                case WHAT_CHANGED:
-                    location = (Location) msg.obj;
-                    onLocationChanged(location);
-                    break;
-                case WHAT_ADDRESS:
-                    if (msg.obj != null) {
-                        if (msg.obj instanceof ZmanimAddress) {
-                            address = (ZmanimAddress) msg.obj;
-                            location = address.getExtras().getParcelable(EXTRA_LOCATION);
-                        } else if (msg.obj instanceof Location) {
-                            location = (Location) msg.obj;
-                        }
-                        onAddressChanged(location, address);
+                WHAT_ADDRESS -> if (msg.obj != null) {
+                    if (msg.obj is ZmanimAddress) {
+                        address = msg.obj as ZmanimAddress
+                        location = address.extras.getParcelableCompat(
+                            ZmanimLocationListener.EXTRA_LOCATION,
+                            Location::class.java
+                        )
+                    } else if (msg.obj is Location) {
+                        location = msg.obj as Location
                     }
-                    break;
-                case WHAT_ELEVATION:
-                    location = (Location) msg.obj;
-                    onElevationChanged(location);
-                    break;
+                    if (location != null && address != null) {
+                        onAddressChanged(location, address)
+                    }
+                }
+
+                WHAT_ELEVATION -> if (msg.obj != null) {
+                    location = msg.obj as Location
+                    onElevationChanged(location)
+                }
             }
         }
     }
 
-    public void findAddress(Location location) {
-        findAddress(location, true);
+    @JvmOverloads
+    fun findAddress(location: Location, persist: Boolean = true) {
+        val findAddress = Intent(ZmanimLocationListener.ACTION_ADDRESS)
+            .putExtra(ZmanimLocationListener.EXTRA_LOCATION, location)
+            .putExtra(ZmanimLocationListener.EXTRA_PERSIST, persist)
+        enqueueWork(context, findAddress)
     }
 
-    public void findAddress(Location location, boolean persist) {
-        Intent findAddress = new Intent(ACTION_ADDRESS)
-            .putExtra(EXTRA_LOCATION, location)
-            .putExtra(EXTRA_PERSIST, persist);
-        AddressService.enqueueWork(context, findAddress);
-    }
-
-    public void findElevation(Location location) {
-        Intent findElevation = new Intent(ACTION_ELEVATION)
-            .putExtra(EXTRA_LOCATION, location);
-        AddressService.enqueueWork(context, findElevation);
+    fun findElevation(location: Location) {
+        val findElevation = Intent(ZmanimLocationListener.ACTION_ELEVATION)
+            .putExtra(ZmanimLocationListener.EXTRA_LOCATION, location)
+        enqueueWork(context, findElevation)
     }
 
     /**
@@ -901,98 +741,231 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @param context the context.
      * @return the formatter.
      */
-    protected LocationFormatter createLocationFormatter(Context context) {
-        return new SimpleLocationFormatter(context, preferences);
+    protected open fun createLocationFormatter(context: Context): LocationFormatter {
+        return SimpleLocationFormatter(context, preferences)
     }
 
     /**
      * Are any listeners active?
      *
-     * @return {@code true} if no listeners are passive.
+     * @return `true` if no listeners are passive.
      */
-    private boolean hasActiveListeners() {
-        return !locationListeners.isEmpty();
-    }
-
-    /**
-     * Get the location preferences.
-     *
-     * @return the preferences.
-     */
-    public LocationPreferences getLocationPreferences() {
-        return preferences;
+    private fun hasActiveListeners(): Boolean {
+        return !listeners.isEmpty()
     }
 
     /**
      * The receiver for addresses and date/time settings.
      */
-    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (TextUtils.isEmpty(action)) {
-                return;
+    private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.action
+            if (action.isNullOrEmpty()) {
+                return
             }
-            String intentPackage = intent.getPackage();
-            Location location = null;
-            ZmanimAddress address = null;
-            Bundle intentExtras = intent.getExtras();
+            val intentPackage = intent.getPackage()
+            var location: Location? = null
+            var address: ZmanimAddress? = null
+            val intentExtras = intent.extras
+            val handler = this@LocationsProvider.handler
 
-            switch (action) {
-                case ACTION_ADDRESS:
-                    if (TextUtils.isEmpty(intentPackage) || !intentPackage.equals(context.getPackageName())) {
-                        return;
+            when (action) {
+                ZmanimLocationListener.ACTION_ADDRESS -> {
+                    if (intentPackage.isNullOrEmpty() || intentPackage != context.packageName) {
+                        return
                     }
                     if (intentExtras != null) {
-                        location = intentExtras.getParcelable(EXTRA_LOCATION);
-                        address = intentExtras.getParcelable(EXTRA_ADDRESS);
+                        location = intentExtras.getParcelableCompat(
+                            ZmanimLocationListener.EXTRA_LOCATION,
+                            Location::class.java
+                        )
+                        address = intentExtras.getParcelableCompat(
+                            ZmanimLocationListener.EXTRA_ADDRESS,
+                            ZmanimAddress::class.java
+                        )
                     }
                     if (address != null) {
-                        Bundle extras = address.getExtras();
-                        if (extras == null) {
-                            extras = new Bundle();
-                        }
-                        extras.putParcelable(EXTRA_LOCATION, location);
-                        address.setExtras(extras);
-                        if (handler != null) {
-                            //In case we receive broadcast before provider is constructed.
-                            handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
-                        }
-                    } else if (handler != null) {
-                        //In case we receive broadcast before provider is constructed.
-                        handler.obtainMessage(WHAT_ADDRESS, location).sendToTarget();
+                        val extras = address.extras ?: Bundle()
+                        extras.putParcelable(ZmanimLocationListener.EXTRA_LOCATION, location)
+                        address.extras = extras
+                        handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget()
+                    } else {
+                        handler.obtainMessage(WHAT_ADDRESS, location).sendToTarget()
                     }
-                    break;
-                case ACTION_ELEVATION:
-                    if (TextUtils.isEmpty(intentPackage) || !intentPackage.equals(context.getPackageName())) {
-                        return;
+                }
+
+                ZmanimLocationListener.ACTION_ELEVATION -> {
+                    if (intentPackage.isNullOrEmpty() || intentPackage != context.packageName) {
+                        return
                     }
                     if (intentExtras != null) {
-                        location = intentExtras.getParcelable(EXTRA_LOCATION);
+                        location = intentExtras.getParcelableCompat(
+                            ZmanimLocationListener.EXTRA_LOCATION,
+                            Location::class.java
+                        )
                     }
-                    if (handler != null) {
-                        //In case we receive broadcast before provider is constructed.
-                        handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget();
-                    }
-                    break;
-                case ACTION_TIMEZONE_CHANGED:
-                    timeZone = TimeZone.getDefault();
-                    break;
+                    handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget()
+                }
+
+                Intent.ACTION_TIMEZONE_CHANGED -> timeZone = TimeZone.getDefault()
             }
         }
-    };
-
-    private boolean sendEmptyMessage(int what) {
-        if (handlerThread.isAlive()) {
-            return handler.sendEmptyMessage(what);
-        }
-        return false;
     }
 
-    private boolean sendEmptyMessageDelayed(int what, long delayMillis) {
-        if (handlerThread.isAlive()) {
-            return handler.sendEmptyMessageDelayed(what, delayMillis);
+    init {
+        val filter = IntentFilter()
+        filter.addAction(ZmanimLocationListener.ACTION_ADDRESS)
+        filter.addAction(ZmanimLocationListener.ACTION_ELEVATION)
+        filter.addAction(Intent.ACTION_TIMEZONE_CHANGED)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(broadcastReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.registerReceiver(broadcastReceiver, filter, 0x4)
+        } else {
+            context.registerReceiver(broadcastReceiver, filter)
         }
-        return false;
+
+        handlerThread.start()
+        handler = UpdatesHandler(handlerThread.looper)
+    }
+
+    private fun sendEmptyMessage(what: Int): Boolean {
+        return handlerThread.isAlive && handler.sendEmptyMessage(what)
+    }
+
+    private fun sendEmptyMessageDelayed(what: Int, delayMillis: Long): Boolean {
+        return handlerThread.isAlive && handler.sendEmptyMessageDelayed(what, delayMillis)
+    }
+
+    companion object {
+        private const val TAG = "LocationProvider"
+
+        @JvmField
+        val PERMISSIONS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+
+        /**
+         * The maximum time interval between location updates, in milliseconds.
+         */
+        private const val UPDATE_INTERVAL_MAX = 6 * DateUtils.HOUR_IN_MILLIS
+
+        /**
+         * The time interval between requesting location updates, in milliseconds.
+         */
+        private const val UPDATE_INTERVAL_START = 30 * DateUtils.SECOND_IN_MILLIS
+
+        /**
+         * The duration to receive updates, in milliseconds.<br></br>
+         * Should be enough time to get a sufficiently accurate location.
+         */
+        private const val UPDATE_DURATION = DateUtils.MINUTE_IN_MILLIS
+
+        /**
+         * The minimum time interval between location updates, in milliseconds.
+         */
+        private const val UPDATE_TIME = 10 * DateUtils.SECOND_IN_MILLIS
+
+        /**
+         * The minimum distance between location updates, in metres.
+         */
+        private const val UPDATE_DISTANCE = 10f
+
+        /**
+         * Time zone ID for Jerusalem.
+         */
+        private const val TZ_JERUSALEM = "Asia/Jerusalem"
+
+        /**
+         * Time zone ID for Israeli Standard Time.
+         */
+        private const val TZ_IST = "IST"
+
+        /**
+         * Time zone ID for Israeli Daylight Time.
+         */
+        private const val TZ_IDT = "IDT"
+
+        /**
+         * Time zone ID for Jerusalem Standard Time.
+         */
+        private const val TZ_JST = "JST"
+
+        /**
+         * Time zone ID for Beirut (patch for Israeli law of DST 2013).
+         */
+        private const val TZ_BEIRUT = "Asia/Beirut"
+
+        /**
+         * The offset in milliseconds from UTC of Israeli time zone's standard time.
+         */
+        private const val TZ_OFFSET_ISRAEL = (2 * DateUtils.HOUR_IN_MILLIS).toInt()
+
+        /**
+         * Israeli time zone offset with daylight savings time.
+         */
+        private const val TZ_OFFSET_DST_ISRAEL =
+            (TZ_OFFSET_ISRAEL + DateUtils.HOUR_IN_MILLIS).toInt()
+
+        /**
+         * Northern-most latitude for Israel.
+         */
+        private const val ISRAEL_NORTH = 33.289212
+
+        /**
+         * Southern-most latitude for Israel.
+         */
+        private const val ISRAEL_SOUTH = 29.489218
+
+        /**
+         * Eastern-most longitude for Israel.
+         */
+        private const val ISRAEL_EAST = 35.891876
+
+        /**
+         * Western-most longitude for Israel.
+         */
+        private const val ISRAEL_WEST = 34.215317
+
+        /**
+         * Start seeking locations.
+         */
+        private const val WHAT_START = 0
+
+        /**
+         * Stop seeking locations.
+         */
+        private const val WHAT_STOP = 1
+
+        /**
+         * Location has changed.
+         */
+        private const val WHAT_CHANGED = 2
+
+        /**
+         * Found an elevation.
+         */
+        private const val WHAT_ELEVATION = 3
+
+        /**
+         * Found an address.
+         */
+        private const val WHAT_ADDRESS = 4
+
+        /**
+         * If the current location is older than 1 second, then it is stale.
+         */
+        private const val LOCATION_EXPIRATION = DateUtils.SECOND_IN_MILLIS
+
+        const val LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN
+        const val LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX
+        const val LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN
+        const val LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX
+
+        @JvmStatic
+        fun hasNoLocationPermission(context: Context): Boolean {
+            return PermissionChecker.checkCallingOrSelfPermission(
+                context,
+                PERMISSIONS[0]
+            ) != PermissionChecker.PERMISSION_GRANTED
+        }
     }
 }

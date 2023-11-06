@@ -13,144 +13,104 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.github.times.location.databinding.LocationBinding;
-import com.github.util.LocaleUtils;
-import com.github.widget.ArrayAdapter;
-
-import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
+import android.annotation.SuppressLint
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.github.times.location.LocationAdapter.LocationItem
+import com.github.times.location.databinding.LocationBinding
+import com.github.util.LocaleUtils.getDefaultLocale
+import com.github.widget.ArrayAdapter
+import java.text.Collator
+import java.util.Locale
+import java.util.TreeSet
 
 /**
  * Location adapter.
  *
  * @author Moshe Waisberg
  */
-public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, LocationViewHolder> {
-
+open class LocationAdapter @JvmOverloads constructor(
+    context: Context,
+    items: List<LocationItem>,
+    listener: LocationItemListener? = null
+) : ArrayAdapter<LocationItem, LocationViewHolder>(R.layout.location, R.id.title, items) {
     /**
      * Interface definition for callbacks to be invoked when an item in this list has been clicked.
      *
      * @author Moshe Waisberg
      */
-    public interface LocationItemListener {
-
+    interface LocationItemListener {
         /**
          * Callback to be invoked when an item in this list has been clicked.
          */
-        void onItemClick(LocationItem item);
+        fun onItemClick(item: LocationItem)
 
         /**
          * Callback to be invoked when a "favorite" checkbox in this list has been clicked.
-         **/
-        void onFavoriteClick(LocationItem item, boolean checked);
+         */
+        fun onFavoriteClick(item: LocationItem, checked: Boolean)
 
         /**
          * Callback to be invoked when an item in this list has been swiped.
-         **/
-        void onItemSwipe(LocationItem item);
-
+         */
+        fun onItemSwipe(item: LocationItem)
     }
 
     /**
      * Listener used to receive a notification upon completion of a filtering operation.
      */
-    public interface FilterListener {
+    interface FilterListener {
         /**
-         * <p>Notifies the end of a filtering operation.</p>
+         *
+         * Notifies the end of a filtering operation.
          *
          * @param adapter the adapter.
          * @param count   the number of values computed by the filter
          */
-        void onFilterComplete(LocationAdapter adapter, int count);
+        fun onFilterComplete(adapter: LocationAdapter?, count: Int)
     }
 
-    private LocationComparator comparator;
-    private final Collator collator;
-    private final Locale locale;
-    private LocationItemListener listener;
+    protected val comparator: LocationComparator by lazy { LocationComparator() }
+    private val collator: Collator = Collator.getInstance()
+    private val locale: Locale = getDefaultLocale(context)
+    private var listener: LocationItemListener? = null
 
-    /**
-     * Constructs a new adapter.
-     *
-     * @param context the context.
-     * @param items   the list of addresses' items.
-     */
-    public LocationAdapter(Context context, List<LocationItem> items) {
-        this(context, items, null);
+    init {
+        setHasStableIds(false)
+        collator.strength = Collator.PRIMARY
+        setOnItemListener(listener)
+        sortNoNotify()
     }
 
-    /**
-     * Constructs a new adapter.
-     *
-     * @param context  the context.
-     * @param items    the list of addresses' items.
-     * @param listener the item listener.
-     */
-    public LocationAdapter(Context context, List<LocationItem> items, LocationItemListener listener) {
-        super(R.layout.location, R.id.title, items);
-        setHasStableIds(false);
-        collator = Collator.getInstance();
-        collator.setStrength(Collator.PRIMARY);
-        locale = LocaleUtils.getDefaultLocale(context);
-        setOnItemListener(listener);
-        sortNoNotify();
+    override fun getItemId(position: Int): Long {
+        return getItem(position)!!.address.id
     }
 
-    @Override
-    public long getItemId(int position) {
-        return getItem(position).getAddress().getId();
+    override fun createArrayViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        viewType: Int,
+        fieldId: Int
+    ): LocationViewHolder {
+        val binding = LocationBinding.inflate(inflater, parent, false)
+        return LocationViewHolder(binding, fieldId, listener)
     }
-
-    @NonNull
-    @Override
-    protected LocationViewHolder createArrayViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, int viewType, int fieldId) {
-        LocationBinding binding = LocationBinding.inflate(inflater, parent, false);
-        return new LocationViewHolder(binding, fieldId, listener);
-    }
-
-    @NonNull
-    protected LocationComparator getComparator() {
-        LocationComparator comparator = this.comparator;
-        if (comparator == null) {
-            comparator = new LocationComparator();
-            this.comparator = comparator;
-        }
-        return comparator;
-    }
-
-    /**
-     * Sort without notification.
-     */
-    protected void sortNoNotify() {
-        sortNoNotify(getComparator());
-    }
-
     /**
      * Sort without notification.
      *
      * @param comparator comparator used to sort the objects contained in this adapter.
      */
-    protected void sortNoNotify(@NonNull Comparator<? super LocationItem> comparator) {
+    /**
+     * Sort without notification.
+     */
+    private fun sortNoNotify(comparator: Comparator<in LocationItem?> = this.comparator) {
         if (objectsFiltered) {
-            sortNoNotify(originalValues, comparator);
+            sortNoNotify(originalValues, comparator)
         } else {
-            sortNoNotify(objects, comparator);
+            sortNoNotify(objects, comparator)
         }
     }
 
@@ -160,74 +120,73 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      * @param objects    the list of objects to sort.
      * @param comparator comparator used to sort the objects contained in this adapter.
      */
-    protected void sortNoNotify(@NonNull List<LocationItem> objects, @NonNull Comparator<? super LocationItem> comparator) {
+    private fun sortNoNotify(
+        objects: MutableList<LocationItem?>,
+        comparator: Comparator<in LocationItem?>
+    ) {
         // Removes duplicate locations.
-        Set<LocationItem> items = new TreeSet<>(comparator);
-
-        items.addAll(objects);
-        objects.clear();
-        objects.addAll(items);
+        val items: MutableSet<LocationItem?> = TreeSet(comparator)
+        items.addAll(objects)
+        objects.clear()
+        objects.addAll(items)
     }
 
     /**
      * Sort.
      */
     @SuppressLint("NotifyDataSetChanged")
-    public void sort() {
-        sortNoNotify();
-        notifyDataSetChanged();
+    fun sort() {
+        sortNoNotify()
+        notifyDataSetChanged()
     }
 
-    @Override
     @SuppressLint("NotifyDataSetChanged")
-    public void sort(@NonNull Comparator<? super LocationItem> comparator) {
-        sortNoNotify(comparator);
-        notifyDataSetChanged();
+    override fun sort(comparator: Comparator<in LocationItem?>) {
+        sortNoNotify(comparator)
+        notifyDataSetChanged()
     }
 
-    @NonNull
-    @Override
-    protected ArrayFilter createFilter() {
-        return new LocationsFilter();
+    override fun createFilter(): ArrayFilter {
+        return LocationsFilter()
     }
 
-    public void notifyItemChanged(ZmanimAddress address) {
-        synchronized (lock) {
-            final int size = getItemCount();
-            LocationItem item;
-            for (int i = 0; i < size; i++) {
-                item = getItem(i);
-                if (item.address.equals(address)) {
-                    notifyItemChanged(i);
-                    return;
+    open fun notifyItemChanged(address: ZmanimAddress) {
+        synchronized(lock) {
+            val size = itemCount
+            var item: LocationItem?
+            for (i in 0 until size) {
+                item = getItem(i) ?: continue
+                if (item.address == address) {
+                    notifyItemChanged(i)
+                    return
                 }
             }
         }
     }
 
-    public void remove(ZmanimAddress address) {
-        synchronized (lock) {
-            final int size = getItemCount();
-            LocationItem item;
-            for (int i = 0; i < size; i++) {
-                item = getItem(i);
-                if (item.address.equals(address)) {
-                    remove(item);
-                    return;
+    fun remove(address: ZmanimAddress?) {
+        synchronized(lock) {
+            val size = itemCount
+            var item: LocationItem?
+            for (i in 0 until size) {
+                item = getItem(i)
+                if (item!!.address.equals(address)) {
+                    remove(item)
+                    return
                 }
             }
         }
     }
 
-    public void delete(ZmanimAddress address) {
-        synchronized (lock) {
-            final int size = getItemCount();
-            LocationItem item;
-            for (int i = 0; i < size; i++) {
-                item = getItem(i);
-                if (item.address.equals(address)) {
-                    delete(item);
-                    return;
+    fun delete(address: ZmanimAddress?) {
+        synchronized(lock) {
+            val size = itemCount
+            var item: LocationItem?
+            for (i in 0 until size) {
+                item = getItem(i)
+                if (item!!.address.equals(address)) {
+                    delete(item)
+                    return
                 }
             }
         }
@@ -238,61 +197,44 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *
      * @author Moshe Waisberg
      */
-    protected class LocationsFilter extends ArrayFilter {
-
-        /**
-         * Constructs a new filter.
-         */
-        public LocationsFilter() {
-        }
-
-        @NonNull
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-
+    protected open inner class LocationsFilter : ArrayFilter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val results = FilterResults()
             if (!objectsFiltered) {
-                synchronized (lock) {
-                    objectsFiltered = true;
-                    originalValues.clear();
-                    originalValues.addAll(objects);
+                synchronized(lock) {
+                    objectsFiltered = true
+                    originalValues.clear()
+                    originalValues.addAll(objects)
                 }
             }
-
-            final List<LocationItem> values = new ArrayList<>(originalValues);
-            final int count = values.size();
-
-            final Locale locale = LocationAdapter.this.locale;
-            final String constraintString = TextUtils.isEmpty(constraint) ? null : constraint.toString().toLowerCase(locale);
-
-            final List<LocationItem> newValues = new ArrayList<>();
-            LocationItem value;
-
-            for (int i = 0; i < count; i++) {
-                value = values.get(i);
+            val values: List<LocationItem> = ArrayList(originalValues.filterNotNull())
+            val count = values.size
+            val locale = locale
+            val constraintString =
+                if (constraint.isNullOrEmpty()) null else constraint.toString().lowercase(locale)
+            val newValues = mutableListOf<LocationItem>()
+            var value: LocationItem
+            for (i in 0 until count) {
+                value = values[i]
                 if (accept(value, constraintString)) {
-                    newValues.add(value);
+                    newValues.add(value)
                 }
             }
-
-            results.values = newValues;
-            results.count = newValues.size();
-
-            return results;
+            results.values = newValues
+            results.count = newValues.size
+            return results
         }
 
-        protected boolean accept(@NonNull LocationItem value, @Nullable String constraint) {
-            if (TextUtils.isEmpty(constraint)) {
-                return true;
+        protected open fun accept(value: LocationItem, constraint: String?): Boolean {
+            if (constraint.isNullOrEmpty()) {
+                return true
             }
-
-            String valueText = value.getLabelLower();
-            CharSequence latitude = value.getFormatLatitude();
-            CharSequence longitude = value.getFormatLongitude();
-
+            val valueText = value.labelLower
+            val latitude = value.formatLatitude
+            val longitude = value.formatLongitude
             return contains(valueText, constraint)
-                || (TextUtils.indexOf(latitude, constraint) >= 0)
-                || (TextUtils.indexOf(longitude, constraint) >= 0);
+                || latitude.indexOf(constraint) >= 0
+                || longitude.indexOf(constraint) >= 0
         }
 
         /**
@@ -300,39 +242,31 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
          *
          * @param s      the source string.
          * @param search the character sequence to search for.
-         * @return {@code true} if {@code s} contains {@code search}.
+         * @return `true` if `s` contains `search`.
          */
-        private boolean contains(@NonNull String s, @Nullable String search) {
-            if (search == null) return true;
-            final int len1 = s.length();
-            final int len2 = search.length();
-
-            if (len1 < len2)
-                return false;
-
-            final Collator collator = LocationAdapter.this.collator;
-
+        private fun contains(s: String, search: String?): Boolean {
+            if (search == null) return true
+            val len1 = s.length
+            val len2 = search.length
+            if (len1 < len2) return false
+            val collator = collator
             if (len1 == len2) {
-                return s.equals(search) || collator.equals(s, search);
+                return s == search || collator.equals(s, search)
             }
-
-            if (s.contains(search))
-                return true;
+            if (s.contains(search)) return true
 
             // Let's do a "Collator.contains"
-            String lhs;
-            String rhs;
-            int dLen = len1 - len2;
-            String concat;
-            for (int i = 0; i < dLen; i++) {
-                lhs = s.substring(0, i);
-                rhs = s.substring(len2 + i);
-                concat = lhs + search + rhs;
-                if (collator.equals(s, concat))
-                    return true;
+            var lhs: String
+            var rhs: String
+            val dLen = len1 - len2
+            var concat: String
+            for (i in 0 until dLen) {
+                lhs = s.substring(0, i)
+                rhs = s.substring(len2 + i)
+                concat = lhs + search + rhs
+                if (collator.equals(s, concat)) return true
             }
-
-            return false;
+            return false
         }
     }
 
@@ -341,115 +275,77 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *
      * @author Moshe Waisberg
      */
-    /*FIXME protected*/public static class LocationItem {
-
-        private final ZmanimAddress address;
-        private final CharSequence label;
-        private final String labelLower;
-        private final CharSequence latitude;
-        private final CharSequence longitude;
-        private final CharSequence coordinates;
-
-        /**
-         * Constructs a new item.
-         *
-         * @param address the address.
-         */
-        public LocationItem(ZmanimAddress address, LocationFormatter formatter) {
-            this.address = address;
-            this.label = address.getFormatted();
-            this.labelLower = label.toString().toLowerCase(address.getLocale());
-            this.latitude = formatter.formatLatitude(address.getLatitude());
-            this.longitude = formatter.formatLongitude(address.getLongitude());
-            this.coordinates = formatter.formatCoordinates(address.getLatitude(), address.getLongitude(), Double.NaN);
-        }
-
+    /*FIXME protected*/
+    class LocationItem(
         /**
          * Get the source address.
          *
          * @return the address.
          */
-        public ZmanimAddress getAddress() {
-            return address;
-        }
-
+        val address: ZmanimAddress,
+        formatter: LocationFormatter
+    ) {
         /**
          * Get the label.
          *
          * @return the label.
          */
-        public CharSequence getLabel() {
-            return label;
-        }
+        val label: CharSequence = address.formatted
 
         /**
          * Get the label in lower casing.
          *
          * @return the label.
          */
-        public String getLabelLower() {
-            return labelLower;
-        }
+        val labelLower: String = label.toString().lowercase(address.locale)
 
         /**
          * Get the formatted latitude.
          *
          * @return the latitude.
          */
-        public CharSequence getFormatLatitude() {
-            return latitude;
-        }
+        val formatLatitude: CharSequence = formatter.formatLatitude(address.latitude)
 
         /**
          * Get the formatted longitude.
          *
          * @return the longitude.
          */
-        public CharSequence getFormatLongitude() {
-            return longitude;
-        }
+        val formatLongitude: CharSequence = formatter.formatLongitude(address.longitude)
 
         /**
          * Get the formatted coordinates.
          *
          * @return the coordinates.
          */
-        public CharSequence getCoordinates() {
-            return coordinates;
-        }
+        val coordinates: CharSequence =
+            formatter.formatCoordinates(address.latitude, address.longitude, Double.NaN)
 
         /**
          * Get the address id.
          *
          * @return the id.
          */
-        public long getId() {
-            return getAddress().getId();
-        }
+        val id: Long
+            get() = address.id
 
         /**
          * Is location a favourite?
          *
-         * @return {@code true} if a favourite.
+         * @return `true` if a favourite.
          */
-        public boolean isFavorite() {
-            return getAddress().isFavorite();
+        val isFavorite: Boolean
+            get() = address.isFavorite
+
+        override fun equals(other: Any?): Boolean {
+            if (other == null) return false
+            if (other is LocationItem) return address == other.address
+            if (other is ZmanimAddress) return address.equals(other)
+            return super.equals(other)
         }
 
-        @Override
-        public boolean equals(Object o) {
-            if (o == null)
-                return false;
-            if (o instanceof LocationItem)
-                return getAddress().equals(((LocationItem) o).getAddress());
-            if (o instanceof ZmanimAddress)
-                return getAddress().equals(o);
-            return super.equals(o);
-        }
-
-        @Override
-        public String toString() {
-            return getAddress().toString();
+        override fun toString(): String {
+            return address.toString()
         }
     }
 
@@ -458,55 +354,51 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *
      * @author Moshe Waisberg
      */
-    protected static class LocationComparator implements Comparator<LocationItem> {
+    protected class LocationComparator : Comparator<LocationItem?> {
+        private val collator: Collator = Collator.getInstance()
 
-        /**
-         * Double subtraction error.
-         */
-        private static final double EPSILON = 1e-6;
-
-        private Collator collator;
-
-        /**
-         * Constructs a new comparator.
-         */
-        public LocationComparator() {
-            collator = Collator.getInstance();
-            collator.setStrength(Collator.PRIMARY);
+        init {
+            collator.strength = Collator.PRIMARY
         }
 
-        @Override
-        public int compare(LocationItem item1, LocationItem item2) {
-            ZmanimAddress addr1 = item1.getAddress();
-            ZmanimAddress addr2 = item2.getAddress();
+        override fun compare(item1: LocationItem?, item2: LocationItem?): Int {
+            if (item1 === item2) return 0
+            if (item1 == null) return -1
+            if (item2 == null) return +1
 
             // Sort first by name.
-            String format1 = item1.getLabelLower();
-            String format2 = item2.getLabelLower();
-            int c = collator.compare(format1, format2);
-            if (c != 0)
-                return c;
+            val format1 = item1.labelLower
+            val format2 = item2.labelLower
+            val c = collator.compare(format1, format2)
+            if (c != 0) return c
+
+            val addr1 = item1.address
+            val addr2 = item2.address
 
             // Is same location?
-            double lat1 = addr1.getLatitude();
-            double lat2 = addr2.getLatitude();
-            double latD = lat1 - lat2;
-            double lng1 = addr1.getLongitude();
-            double lng2 = addr2.getLongitude();
-            double lngD = lng1 - lng2;
-            if (latD >= EPSILON)
-                return 1;
-            if (latD <= -EPSILON)
-                return -1;
-            if (lngD >= EPSILON)
-                return 1;
-            if (lngD < -EPSILON)
-                return -1;
+            val lat1 = addr1.latitude
+            val lat2 = addr2.latitude
+            val latD = lat1 - lat2
+            if (latD >= EPSILON) return 1
+            if (latD <= -EPSILON) return -1
+
+            val lng1 = addr1.longitude
+            val lng2 = addr2.longitude
+            val lngD = lng1 - lng2
+            if (lngD >= EPSILON) return 1
+            if (lngD <= -EPSILON) return -1
 
             // Then sort by id. Positive id is more important.
-            long id1 = addr1.getId();
-            long id2 = addr2.getId();
-            return Long.compare(id1, id2);
+            val id1 = addr1.id
+            val id2 = addr2.id
+            return id1.compareTo(id2)
+        }
+
+        companion object {
+            /**
+             * Double subtraction error.
+             */
+            private const val EPSILON = 1e-6
         }
     }
 
@@ -515,8 +407,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *
      * @param listener the listener.
      */
-    public void setOnItemListener(LocationItemListener listener) {
-        this.listener = listener;
+    fun setOnItemListener(listener: LocationItemListener?) {
+        this.listener = listener
     }
-
 }

@@ -13,74 +13,63 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.app.Application;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.res.Configuration;
-
-import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import com.github.app.SimpleThemeCallbacks;
-import com.github.app.ThemeCallbacks;
-import com.github.preference.ThemePreferences;
-
-import static android.content.Intent.ACTION_LOCALE_CHANGED;
+import android.app.Application
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.github.app.SimpleThemeCallbacks
+import com.github.app.ThemeCallbacks
+import com.github.preference.ThemePreferences
 
 /**
  * Location application.
  *
  * @author Moshe Waisberg
  */
-public abstract class LocationApplication<TP extends ThemePreferences, AP extends AddressProvider, LP extends LocationsProvider> extends Application implements ThemeCallbacks<TP> {
+abstract class LocationApplication<TP : ThemePreferences, AP : AddressProvider, LP : LocationsProvider> :
+    Application(), ThemeCallbacks<TP> {
 
-    private final ThemeCallbacks<TP> themeCallbacks = new SimpleThemeCallbacks<>(this);
-    private LocationHolder<AP, LP> locationHolder;
-    private final BroadcastReceiver localeReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
-
-            if (ACTION_LOCALE_CHANGED.equals(action)) {
-                Configuration newConfig = context.getResources().getConfiguration();
-                onConfigurationChanged(newConfig);
+    private val themeCallbacks: ThemeCallbacks<TP> = SimpleThemeCallbacks(this)
+    private var locationHolder: LocationHolder<AP, LP>? = null
+    private val localeReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.action
+            if (Intent.ACTION_LOCALE_CHANGED == action) {
+                val newConfig = context.resources.configuration
+                onConfigurationChanged(newConfig)
             }
         }
-    };
-
-    @Override
-    public void onCreate() {
-        onPreCreate();
-        super.onCreate();
     }
 
-    @Override
-    public void onPreCreate() {
-        themeCallbacks.onPreCreate();
+    override fun onCreate() {
+        onPreCreate()
+        super.onCreate()
     }
 
-    @Override
-    public TP getThemePreferences() {
-        return themeCallbacks.getThemePreferences();
+    override fun onPreCreate() {
+        themeCallbacks.onPreCreate()
     }
 
-    @NonNull
-    protected LocationHolder<AP, LP> getLocationHolder() {
-        LocationHolder<AP, LP> holder = locationHolder;
+    override val themePreferences: TP
+        get() = themeCallbacks.themePreferences
+
+    private fun getLocationHolder(): LocationHolder<AP, LP> {
+        var holder = locationHolder
         if (holder == null) {
-            final Context context = getApplicationContext();
-            holder = new LocationHolder<>(createProviderFactory(context));
-            this.locationHolder = holder;
-            registerComponentCallbacks(holder);
+            val context: Context = applicationContext
+            holder = LocationHolder(createProviderFactory(context))
+            locationHolder = holder
+            registerComponentCallbacks(holder)
 
-            IntentFilter intentFilter = new IntentFilter(ACTION_LOCALE_CHANGED);
-            LocalBroadcastManager.getInstance(context).registerReceiver(localeReceiver, intentFilter);
+            val intentFilter = IntentFilter(Intent.ACTION_LOCALE_CHANGED)
+            LocalBroadcastManager.getInstance(context)
+                .registerReceiver(localeReceiver, intentFilter)
         }
-        return holder;
+        return holder
     }
 
     /**
@@ -88,34 +77,30 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
      *
      * @return the provider.
      */
-    public AP getAddresses() {
-        return getLocationHolder().getAddresses();
-    }
+    val addresses: AP
+        get() = getLocationHolder().addresses
 
-    @NonNull
-    protected abstract LocationsProviderFactory<AP, LP> createProviderFactory(Context context);
+    protected abstract fun createProviderFactory(context: Context): LocationsProviderFactory<AP, LP>
 
     /**
      * Get the locations provider instance.
      *
      * @return the provider.
      */
-    public LP getLocations() {
-        return getLocationHolder().getLocations();
+    val locations: LP
+        get() = getLocationHolder().locations
+
+    override fun onTerminate() {
+        super.onTerminate()
+        stopLocationHolder()
     }
 
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        stopLocationHolder();
-    }
-
-    private void stopLocationHolder() {
-        final LocationHolder<AP, LP> locationHolder = this.locationHolder;
+    private fun stopLocationHolder() {
+        val locationHolder = locationHolder
         if (locationHolder != null) {
-            this.locationHolder = null;
-            locationHolder.onTerminate();
-            unregisterComponentCallbacks(locationHolder);
+            this.locationHolder = null
+            locationHolder.onTerminate()
+            unregisterComponentCallbacks(locationHolder)
         }
     }
 }

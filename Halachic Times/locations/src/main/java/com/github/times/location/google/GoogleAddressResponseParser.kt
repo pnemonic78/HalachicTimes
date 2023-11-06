@@ -54,7 +54,7 @@ internal class GoogleAddressResponseParser : AddressResponseParser() {
         return try {
             val reader: Reader = InputStreamReader(data, StandardCharsets.UTF_8)
             val response = gson.fromJson(reader, GeocodingResponse::class.java)
-            val results: MutableList<Address> = ArrayList(maxResults)
+            val results = mutableListOf<Address>()
             handleResponse(response, results, maxResults, locale)
             results
         } catch (e: JsonIOException) {

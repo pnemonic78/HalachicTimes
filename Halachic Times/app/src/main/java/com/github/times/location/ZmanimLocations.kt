@@ -13,61 +13,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.content.Context;
-import android.location.Location;
-
-import androidx.annotation.Nullable;
-
-import com.kosherjava.zmanim.util.GeoLocation;
-
-import java.util.TimeZone;
+import android.content.Context
+import com.kosherjava.zmanim.util.GeoLocation
+import java.util.TimeZone
+import kotlin.math.max
 
 /**
  * Locations provider.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimLocations extends LocationsProvider {
-
-    private static final double GEOLOCATION_ELEVATION_MIN = 0;//FIXME GEOLOCATION_ELEVATION_MIN = ELEVATION_MIN;
-
-    /**
-     * Constructs a new provider.
-     *
-     * @param context the context.
-     */
-    public ZmanimLocations(Context context) {
-        super(context);
-    }
-
+class ZmanimLocations(context: Context) : LocationsProvider(context) {
     /**
      * Get the location.
      *
      * @param timeZone the time zone.
-     * @return the location - {@code null} otherwise.
+     * @return the location - `null` otherwise.
      */
-    @Nullable
-    public GeoLocation getGeoLocation(TimeZone timeZone) {
-        Location location = getLocation();
-        if (location == null)
-            return null;
-        final String locationName = location.getProvider();
-        final double latitude = location.getLatitude();
-        final double longitude = location.getLongitude();
-        final double elevation = location.hasAltitude() ? Math.max(GEOLOCATION_ELEVATION_MIN, location.getAltitude()) : 0;
-
-        return new GeoLocation(locationName, latitude, longitude, elevation, timeZone);
+    fun getGeoLocation(timeZone: TimeZone): GeoLocation? {
+        val location = getLocation() ?: return null
+        val locationName = location.provider
+        val latitude = location.latitude
+        val longitude = location.longitude
+        val elevation =
+            if (location.hasAltitude()) max(GEOLOCATION_ELEVATION_MIN, location.altitude) else 0.0
+        return GeoLocation(locationName, latitude, longitude, elevation, timeZone)
     }
 
     /**
      * Get the location for the time zone.
      *
-     * @return the location - {@code null} otherwise.
+     * @return the location - `null` otherwise.
      */
-    @Nullable
-    public GeoLocation getGeoLocation() {
-        return getGeoLocation(getTimeZone());
+    val geoLocation: GeoLocation?
+        get() = getGeoLocation(timeZone)
+
+    companion object {
+        //FIXME GEOLOCATION_ELEVATION_MIN = ELEVATION_MIN;
+        private const val GEOLOCATION_ELEVATION_MIN = 0.0
     }
 }

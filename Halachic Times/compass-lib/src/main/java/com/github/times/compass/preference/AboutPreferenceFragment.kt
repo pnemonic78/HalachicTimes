@@ -13,41 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass.preference;
+package com.github.times.compass.preference
 
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-
-import androidx.annotation.Keep;
-import androidx.preference.Preference;
-
-import com.github.preference.AbstractPreferenceFragment;
-import com.github.times.compass.lib.R;
+import android.content.pm.PackageManager
+import android.os.Bundle
+import androidx.annotation.Keep
+import androidx.preference.Preference
+import com.github.preference.AbstractPreferenceFragment
+import com.github.times.compass.lib.R
 
 /**
  * This fragment shows the preferences for the About header.
  */
 @Keep
-public class AboutPreferenceFragment extends AbstractPreferenceFragment {
+class AboutPreferenceFragment : AbstractPreferenceFragment() {
+    override val preferencesXml: Int = R.xml.about_preferences
 
-    @Override
-    protected int getPreferencesXml() {
-        return R.xml.about_preferences;
-    }
-
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        super.onCreatePreferences(savedInstanceState, rootKey);
-
-        final Context context = getContext();
-        Preference version = findPreference("about.version");
-        try {
-            version.setSummary(context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName);
-        } catch (PackageManager.NameNotFoundException e) {
-            // Never should happen with our own package!
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
+        findPreference<Preference>("about.version")!!.apply {
+            val context = this.context
+            try {
+                summary = context.packageManager.getPackageInfo(context.packageName, 0).versionName
+            } catch (e: PackageManager.NameNotFoundException) {
+                // Never should happen with our own package!
+            }
+            validateIntent(this)
         }
-        validateIntent(version);
-        validateIntent("about.issue");
+
+        validateIntent("about.issue")
     }
 }

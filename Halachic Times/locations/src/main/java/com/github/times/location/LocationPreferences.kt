@@ -13,81 +13,95 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.location.Location;
-
-import androidx.annotation.Nullable;
+import android.location.Location
 
 /**
  * Location preferences.
  *
  * @author Moshe Waisberg
  */
-public interface LocationPreferences {
+interface LocationPreferences {
+    open class Values {
+        companion object {
+            /** Default coordinates format.  */
+            @JvmField
+            var FORMAT_DEFAULT: String? = null
 
-    /** Preference name for the latitude. */
-    String KEY_LATITUDE = "location.latitude";
-    /** Preference name for the longitude. */
-    String KEY_LONGITUDE = "location.longitude";
-    /** Preference key for the elevation / altitude. */
-    String KEY_ELEVATION = "location.altitude";
-    /** Preference name for the location provider. */
-    String KEY_PROVIDER = "location.provider";
-    /** Preference name for the location time. */
-    String KEY_TIME = "location.time";
-    /** Preference name for the co-ordinates format. */
-    String KEY_COORDS_FORMAT = "coords.format";
-    /** Preference name for the co-ordinates with elevation/altitude. */
-    String KEY_COORDS_ELEVATION = "coords.elevation";
+            /** Format the coordinates in decimal notation.  */
+            @JvmField
+            var FORMAT_NONE: String? = null
 
-    /** Name for the locale in an intent. */
-    String EXTRA_LOCALE = "locale";
+            /** Format the coordinates in decimal notation.  */
+            @JvmField
+            var FORMAT_DECIMAL: String? = null
 
-    class Values {
-        /** Default coordinates format. */
-        static String FORMAT_DEFAULT;
-        /** Format the coordinates in decimal notation. */
-        static String FORMAT_NONE;
-        /** Format the coordinates in decimal notation. */
-        static String FORMAT_DECIMAL;
-        /** Format the coordinates in sexagesimal notation. */
-        static String FORMAT_SEXAGESIMAL;
+            /** Format the coordinates in sexagesimal notation.  */
+            @JvmField
+            var FORMAT_SEXAGESIMAL: String? = null
 
-        static boolean ELEVATION_VISIBLE_DEFAULT = false;
+            @JvmField
+            var ELEVATION_VISIBLE_DEFAULT = false
+        }
     }
 
     /**
      * Get the location.
      *
-     * @return the location - {@code null} otherwise.
+     * @return the location - `null` otherwise.
      */
-    @Nullable
-    Location getLocation();
+    val location: Location?
 
     /**
      * Set the location.
      */
-    void putLocation(@Nullable Location location);
+    fun putLocation(location: Location?)
 
     /**
      * Are coordinates visible?
      *
-     * @return {@code true} to show coordinates.
+     * @return `true` to show coordinates.
      */
-    boolean isCoordinatesVisible();
+    val isCoordinatesVisible: Boolean
 
     /**
      * Get the notation of latitude and longitude.
      *
      * @return the format.
      */
-    String getCoordinatesFormat();
+    val coordinatesFormat: String
 
     /**
      * Are coordinates with elevation (altitude) visible?
      *
-     * @return {@code true} to show coordinates with elevation.
+     * @return `true` to show coordinates with elevation.
      */
-    boolean isElevationVisible();
+    val isElevationVisible: Boolean
+
+    companion object {
+        /** Preference name for the latitude.  */
+        const val KEY_LATITUDE = "location.latitude"
+
+        /** Preference name for the longitude.  */
+        const val KEY_LONGITUDE = "location.longitude"
+
+        /** Preference key for the elevation / altitude.  */
+        const val KEY_ELEVATION = "location.altitude"
+
+        /** Preference name for the location provider.  */
+        const val KEY_PROVIDER = "location.provider"
+
+        /** Preference name for the location time.  */
+        const val KEY_TIME = "location.time"
+
+        /** Preference name for the co-ordinates format.  */
+        const val KEY_COORDS_FORMAT = "coords.format"
+
+        /** Preference name for the co-ordinates with elevation/altitude.  */
+        const val KEY_COORDS_ELEVATION = "coords.elevation"
+
+        /** Name for the locale in an intent.  */
+        const val EXTRA_LOCALE = "locale"
+    }
 }

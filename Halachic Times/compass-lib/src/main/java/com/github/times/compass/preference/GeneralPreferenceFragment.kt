@@ -13,32 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass.preference;
+package com.github.times.compass.preference
 
-import android.os.Bundle;
-
-import androidx.annotation.Keep;
-
-import com.github.preference.AbstractPreferenceFragment;
-import com.github.times.compass.lib.R;
-
-import static com.github.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
+import android.os.Bundle
+import androidx.annotation.Keep
+import com.github.preference.AbstractPreferenceFragment
+import com.github.times.compass.lib.R
 
 /**
  * This fragment shows the preferences for the General header.
  */
 @Keep
-public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
+class GeneralPreferenceFragment : AbstractPreferenceFragment() {
+    override val preferencesXml: Int = R.xml.general_preferences
 
-    @Override
-    protected int getPreferencesXml() {
-        return R.xml.general_preferences;
-    }
-
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        super.onCreatePreferences(savedInstanceState, rootKey);
-
-        initList(KEY_COMPASS_BEARING);
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
+        initList(CompassPreferences.KEY_COMPASS_BEARING)
     }
 }

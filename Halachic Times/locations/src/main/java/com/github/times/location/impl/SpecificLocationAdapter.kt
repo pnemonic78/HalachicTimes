@@ -27,7 +27,7 @@ import com.github.times.location.ZmanimAddress
  */
 abstract class SpecificLocationAdapter(
     context: Context,
-    items: List<LocationItem?>,
+    items: List<LocationItem>,
     itemListener: LocationItemListener? = null,
     filterListener: FilterListener? = null
 ) : LocationAdapter(context, items, itemListener) {
@@ -97,7 +97,7 @@ abstract class SpecificLocationAdapter(
                     item = originalValues[position] ?: return
                     // Find the sorted position.
                     var positionInsert = count
-                    val comparator: Comparator<LocationItem> = comparator
+                    val comparator: Comparator<LocationItem?> = comparator
                     for (i in 0 until count) {
                         if (comparator.compare(item, getItem(i)) < 0) {
                             positionInsert = i

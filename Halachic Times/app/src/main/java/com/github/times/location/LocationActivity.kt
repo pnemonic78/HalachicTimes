@@ -31,19 +31,8 @@ import com.github.times.preference.ZmanimPreferences
  * @author Moshe Waisberg
  */
 class LocationActivity : LocationTabActivity<ZmanimPreferences>() {
-    private var localeCallbacks: LocaleCallbacks<LocalePreferences>? = null
 
-    /** The preferences.  */
-    private var _preferences: ZmanimPreferences? = null
-    val preferences: ZmanimPreferences
-        get() {
-            var preferences = _preferences
-            if (preferences == null) {
-                preferences = SimpleZmanimPreferences(this)
-                this._preferences = preferences
-            }
-            return preferences
-        }
+    private lateinit var localeCallbacks: LocaleCallbacks<LocalePreferences>
 
     override fun attachBaseContext(newBase: Context) {
         val localeCallbacks: LocaleCallbacks<LocalePreferences> = LocaleHelper(newBase)
@@ -55,14 +44,14 @@ class LocationActivity : LocationTabActivity<ZmanimPreferences>() {
 
     override fun onPreCreate() {
         super.onPreCreate()
-        localeCallbacks?.onPreCreate(this)
+        localeCallbacks.onPreCreate(this)
     }
 
-    override fun getAddLocationActivityClass(): Class<out Activity> {
-        return ZmanimAddLocationActivity::class.java
-    }
+    override val addLocationActivityClass: Class<out Activity>
+        get() = ZmanimAddLocationActivity::class.java
 
     override fun createThemeCallbacks(context: Context): ThemeCallbacks<ZmanimPreferences> {
+        val preferences: ZmanimPreferences = SimpleZmanimPreferences(context)
         return SimpleThemeCallbacks(context, preferences)
     }
 }

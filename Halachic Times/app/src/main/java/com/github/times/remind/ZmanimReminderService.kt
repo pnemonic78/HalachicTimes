@@ -33,9 +33,9 @@ import com.github.times.ZmanimHelper
 import com.github.times.ZmanimItem
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
-import com.github.times.remind.ZmanimReminder.ACTION_CANCEL
-import com.github.times.remind.ZmanimReminder.ACTION_DISMISS
-import com.github.times.remind.ZmanimReminder.ACTION_REMIND
+import com.github.times.remind.ZmanimReminder.Companion.ACTION_CANCEL
+import com.github.times.remind.ZmanimReminder.Companion.ACTION_DISMISS
+import com.github.times.remind.ZmanimReminder.Companion.ACTION_REMIND
 import java.util.Date
 import timber.log.Timber
 
@@ -95,7 +95,7 @@ class ZmanimReminderService : Service() {
         val settings = this.settings
         val reminder = ZmanimReminder(context)
         reminder.initNotifications()
-        val notification = reminder.createAlarmServiceNotification(context, settings, item)
+        val notification = reminder.createAlarmServiceNotification(settings, item)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             startForeground(
                 ID_NOTIFY,
@@ -132,10 +132,12 @@ class ZmanimReminderService : Service() {
      * @param time the time to format.
      * @return the formatted time.
      */
-    private fun formatDateTime(time: Long): String? {
+    private fun formatDateTime(time: Long): String {
         return if (time == ZmanimItem.NEVER) {
             "NEVER"
-        } else ZmanimHelper.formatDateTime(Date(time))
+        } else {
+            ZmanimHelper.formatDateTime(Date(time))
+        }
     }
 
     companion object {

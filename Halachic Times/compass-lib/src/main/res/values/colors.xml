@@ -40,7 +40,7 @@
     <color name="compass_east_dark_gold">@color/compass_label_dark_gold</color>
     <color name="compass_west_gold">@color/compass_label_gold</color>
     <color name="compass_west_dark_gold">@color/compass_label_dark_gold</color>
-    <color name="compass_target_gold">@color/yellow</color>
+    <color name="compass_target_gold">#fee6a8</color>
     <color name="compass_arrow_bg_gold">@color/olive_x80</color>
     <color name="compass_pivot_gold">@color/compass_frame_highlight_gold</color>
     <color name="compass_pivot_dark_gold">@color/compass_frame_gold</color>

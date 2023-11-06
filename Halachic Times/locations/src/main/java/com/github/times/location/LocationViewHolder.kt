@@ -13,70 +13,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-
-import com.github.times.location.databinding.LocationBinding;
-import com.github.widget.ArrayAdapter;
+import android.view.View
+import android.widget.CheckBox
+import android.widget.TextView
+import com.github.times.location.LocationAdapter.LocationItem
+import com.github.times.location.LocationAdapter.LocationItemListener
+import com.github.times.location.databinding.LocationBinding
+import com.github.widget.ArrayAdapter.ArrayViewHolder
 
 /**
  * View holder for location row item.
  *
  * @author Moshe Waisberg
  */
-public class LocationViewHolder extends ArrayAdapter.ArrayViewHolder<LocationAdapter.LocationItem> implements View.OnClickListener {
+class LocationViewHolder(
+    binding: LocationBinding,
+    fieldId: Int,
+    private val itemListener: LocationItemListener?
+) : ArrayViewHolder<LocationItem>(binding.root, fieldId), View.OnClickListener {
 
-    private final TextView cityName;
-    private final TextView coordinates;
-    private final CheckBox favorite;
+    private val cityName: TextView = binding.title
+    private val coordinates: TextView = binding.coordinates
+    private val favorite: CheckBox = binding.checkbox
 
-    private LocationAdapter.LocationItem item;
+    var item: LocationItem? = null
+        private set
 
-    private final LocationAdapter.LocationItemListener itemListener;
-
-    public LocationViewHolder(LocationBinding binding, int fieldId, LocationAdapter.LocationItemListener itemListener) {
-        super(binding.getRoot(), fieldId);
-
-        this.cityName = binding.title;
-        this.coordinates = binding.coordinates;
-        this.favorite = binding.checkbox;
-
-        this.itemListener = itemListener;
-        itemView.setOnClickListener(this);
-        favorite.setOnClickListener(this);
+    init {
+        itemView.setOnClickListener(this)
+        favorite.setOnClickListener(this)
     }
 
-    @Override
-    public void bind(@Nullable LocationAdapter.LocationItem item) {
-        this.item = item;
-
+    override fun bind(item: LocationItem?) {
+        this.item = item
         if (item != null) {
-            cityName.setText(item.getLabel());
-            coordinates.setText(item.getCoordinates());
-            favorite.setChecked(item.isFavorite());
+            cityName.text = item.label
+            coordinates.text = item.coordinates
+            favorite.isChecked = item.isFavorite
         } else {
-            cityName.setText("");
-            coordinates.setText("");
-            favorite.setChecked(false);
+            cityName.text = ""
+            coordinates.text = ""
+            favorite.isChecked = false
         }
     }
 
-    public LocationAdapter.LocationItem getItem() {
-        return item;
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (itemListener != null) {
-            if (view == favorite) {
-                itemListener.onFavoriteClick(item, favorite.isChecked());
+    override fun onClick(view: View) {
+        val item = this.item
+        val listener = itemListener
+        if ((listener != null) && (item != null)) {
+            if (view === favorite) {
+                listener.onFavoriteClick(item, favorite.isChecked)
             } else {
-                itemListener.onItemClick(item);
+                listener.onItemClick(item)
             }
         }
     }

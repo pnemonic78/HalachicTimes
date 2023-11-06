@@ -13,541 +13,513 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import static com.github.times.location.GeocoderBase.USER_PROVIDER;
-
-import android.content.Context;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.NumberPicker;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.ViewSwitcher;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.github.app.SimpleThemeCallbacks;
-import com.github.app.ThemeCallbacks;
-import com.github.preference.ThemePreferences;
-import com.github.text.method.RangeInputFilter;
-import com.github.times.location.databinding.LocationAddBinding;
-import com.github.times.location.text.LatitudeInputFilter;
-import com.github.times.location.text.LongitudeInputFilter;
-
-import java.text.NumberFormat;
-import java.util.Locale;
+import android.content.Context
+import android.content.Intent
+import android.location.Location
+import android.location.LocationManager
+import android.os.Bundle
+import android.text.InputFilter
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.EditText
+import android.widget.NumberPicker
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.ViewSwitcher
+import androidx.appcompat.app.AppCompatActivity
+import com.github.app.SimpleThemeCallbacks
+import com.github.app.ThemeCallbacks
+import com.github.os.getParcelableCompat
+import com.github.preference.ThemePreferences
+import com.github.text.method.RangeInputFilter
+import com.github.times.location.ZmanimLocation.Companion.toDecimal
+import com.github.times.location.databinding.LocationAddBinding
+import com.github.times.location.text.LatitudeInputFilter
+import com.github.times.location.text.LongitudeInputFilter
+import java.text.NumberFormat
+import java.util.Locale
+import kotlin.math.abs
+import kotlin.math.floor
 
 /**
  * Add a location by specifying its coordinates.
  *
  * @author Moshe Waisberg
  */
-public class AddLocationActivity<P extends ThemePreferences> extends AppCompatActivity implements
+open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
     ThemeCallbacks<P>,
-    AdapterView.OnItemSelectedListener,
+    OnItemSelectedListener,
     ZmanimLocationListener {
+    private val themeCallbacks: ThemeCallbacks<P> by lazy { createThemeCallbacks(this) }
+    private lateinit var coordsFormatSpinner: Spinner
+    private lateinit var latitudeSwitcher: ViewSwitcher
+    private lateinit var latitudeDegreesEdit: NumberPicker
+    private lateinit var latitudeDecimalEdit: EditText
+    private lateinit var latitudeMinutesEdit: NumberPicker
+    private lateinit var latitudeSecondsEdit: NumberPicker
+    private lateinit var latitudeMillisecondsEdit: EditText
+    private lateinit var latitudeDirection: Spinner
+    private lateinit var longitudeSwitcher: ViewSwitcher
+    private lateinit var longitudeDegreesEdit: NumberPicker
+    private lateinit var longitudeDecimalEdit: EditText
+    private lateinit var longitudeMinutesEdit: NumberPicker
+    private lateinit var longitudeSecondsEdit: NumberPicker
+    private lateinit var longitudeMillisecondsEdit: EditText
+    private lateinit var longitudeDirection: Spinner
+    private lateinit var addressView: TextView
 
-    /**
-     * The location parameter.
-     */
-    public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
-    /**
-     * The location's latitude parameter.
-     */
-    public static final String EXTRA_LATITUDE = "latitude";
-    /**
-     * The location's longitude parameter.
-     */
-    public static final String EXTRA_LONGITUDE = "longitude";
-
-    /**
-     * The location state.
-     */
-    private static final String SAVE_STATE_LOCATION = EXTRA_LOCATION;
-    /**
-     * The address state.
-     */
-    private static final String SAVE_STATE_ADDRESS = "address";
-
-    private static final int FORMAT_DECIMAL = 0;
-    private static final int FORMAT_SEXAGESIMAL = 1;
-
-    private static final int POSITION_POSITIVE = 0;
-    private static final int POSITION_NEGATIVE = 1;
-
-    private static final int DIRECTION_NORTH = +1;
-    private static final int DIRECTION_SOUTH = -1;
-    private static final int DIRECTION_EAST = +1;
-    private static final int DIRECTION_WEST = -1;
-
-    private static final int DEGREES_MIN = 0;
-    private static final int DECIMAL_MIN = 0;
-    private static final int DECIMAL_MAX = 999999;
-    private static final int MINUTES_MIN = 0;
-    private static final int MINUTES_MAX = 59;
-    private static final int SECONDS_MIN = 0;
-    private static final int SECONDS_MAX = 59;
-    private static final int MILLISECONDS_MIN = 0;
-    private static final int MILLISECONDS_MAX = 9999;
-
-    private ThemeCallbacks<P> themeCallbacks;
-    private Location location;
-    private Spinner coordsFormatSpinner;
-    private ViewSwitcher latitudeSwitcher;
-    private NumberPicker latitudeDegreesEdit;
-    private EditText latitudeDecimalEdit;
-    private NumberPicker latitudeMinutesEdit;
-    private NumberPicker latitudeSecondsEdit;
-    private EditText latitudeMillisecondsEdit;
-    private Spinner latitudeDirection;
-    private ViewSwitcher longitudeSwitcher;
-    private NumberPicker longitudeDegreesEdit;
-    private EditText longitudeDecimalEdit;
-    private NumberPicker longitudeMinutesEdit;
-    private NumberPicker longitudeSecondsEdit;
-    private EditText longitudeMillisecondsEdit;
-    private Spinner longitudeDirection;
-    private TextView addressView;
     /**
      * Provider for locations.
      */
-    private LocationsProvider locations;
-    private ZmanimAddress address;
-    private Runnable addressFormatRunnable;
-    private Location locationForConvert;
+    private lateinit var locations: LocationsProvider
+    private var location: Location = Location(GeocoderBase.USER_PROVIDER)
+    private var address: ZmanimAddress? = null
+    private var locationForConvert: Location? = null
+
     /**
      * Formatter for for displaying the current value.
      */
-    private NumberPicker.Formatter formatter;
-    private boolean coordsFormatSpinnerSelectedFirst;
+    private val formatter: NumberPicker.Formatter
+    private var coordsFormatSpinnerSelectedFirst = false
 
-    public AddLocationActivity() {
-        final NumberFormat formatter = NumberFormat.getIntegerInstance();
-        formatter.setGroupingUsed(false);
+    override val themePreferences: P
+        get() = themeCallbacks.themePreferences
 
-        setFormatter(new NumberPicker.Formatter() {
-
-            @Override
-            public String format(int value) {
-                return formatter.format(value);
-            }
-        });
+    init {
+        val formatter = NumberFormat.getIntegerInstance()
+        formatter.isGroupingUsed = false
+        this.formatter = NumberPicker.Formatter { value -> formatter.format(value) }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        onPreCreate();
-        super.onCreate(savedInstanceState);
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        onPreCreate()
+        super.onCreate(savedInstanceState)
+        val app = application as LocationApplication<*, *, *>
+        locations = app.locations
 
-        LocationApplication app = (LocationApplication) getApplication();
-        locations = app.getLocations();
+        val actionBar = supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-        LocationAddBinding binding = LocationAddBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        initView(binding);
+        val binding = LocationAddBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initView(binding)
 
         if (savedInstanceState == null) {
-            Bundle args = getIntent().getExtras();
-            Location location = this.location;
-            if (args != null) {
-                if (args.containsKey(EXTRA_LOCATION)) {
-                    location = args.getParcelable(EXTRA_LOCATION);
+            onNewIntent(intent)
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+
+        val args = intent.extras
+        var location: Location = location
+        if (args != null) {
+            if (args.containsKey(EXTRA_LOCATION)) {
+                location =
+                    args.getParcelableCompat(EXTRA_LOCATION, Location::class.java) ?: Location(
+                        GeocoderBase.USER_PROVIDER
+                    )
+            }
+            if (args.containsKey(EXTRA_LATITUDE)) {
+                location.latitude = args.getDouble(EXTRA_LATITUDE)
+            }
+            if (args.containsKey(EXTRA_LONGITUDE)) {
+                location.longitude = args.getDouble(EXTRA_LONGITUDE)
+            }
+        }
+        this.location = location
+        setDecimalTexts(
+            location.latitude,
+            latitudeDegreesEdit,
+            latitudeDecimalEdit,
+            latitudeDirection
+        )
+        setDecimalTexts(
+            location.longitude,
+            longitudeDegreesEdit,
+            longitudeDecimalEdit,
+            longitudeDirection
+        )
+    }
+
+    override fun onPreCreate() {
+        themeCallbacks.onPreCreate()
+    }
+
+    protected open fun createThemeCallbacks(context: Context): ThemeCallbacks<P> {
+        return SimpleThemeCallbacks(context)
+    }
+
+    private fun initView(binding: LocationAddBinding) {
+        coordsFormatSpinner = binding.coordsFormat
+        coordsFormatSpinner.onItemSelectedListener = this
+        coordsFormatSpinnerSelectedFirst = true
+        latitudeSwitcher = binding.latitude.latitudeSwitch
+        latitudeDegreesEdit = binding.latitude.latitudeDegreesEdit
+        latitudeDegreesEdit.minValue = DEGREES_MIN
+        latitudeDegreesEdit.maxValue = LatitudeInputFilter.LATITUDE_MAX.toInt()
+        latitudeDecimalEdit = binding.latitude.latitudeDecimalEdit
+        latitudeDecimalEdit.filters = arrayOf<InputFilter>(
+            RangeInputFilter(DECIMAL_MIN, DECIMAL_MAX)
+        )
+        latitudeMinutesEdit = binding.latitude.latitudeMinutesEdit
+        latitudeMinutesEdit.minValue = MINUTES_MIN
+        latitudeMinutesEdit.maxValue = MINUTES_MAX
+        latitudeSecondsEdit = binding.latitude.latitudeSecondsEdit
+        latitudeSecondsEdit.minValue = SECONDS_MIN
+        latitudeSecondsEdit.maxValue = SECONDS_MAX
+        latitudeMillisecondsEdit = binding.latitude.latitudeMillisecondsEdit
+        latitudeMillisecondsEdit.filters = arrayOf<InputFilter>(
+            RangeInputFilter(MILLISECONDS_MIN, MILLISECONDS_MAX)
+        )
+        latitudeDirection = binding.latitude.latitudeDirection
+        longitudeSwitcher = binding.longitude.longitudeSwitch
+        longitudeDegreesEdit = binding.longitude.longitudeDegreesEdit
+        longitudeDegreesEdit.minValue = DEGREES_MIN
+        longitudeDegreesEdit.maxValue = LongitudeInputFilter.LONGITUDE_MAX.toInt()
+        longitudeDecimalEdit = binding.longitude.longitudeDecimalEdit
+        longitudeDecimalEdit.filters = arrayOf<InputFilter>(
+            RangeInputFilter(DECIMAL_MIN, DECIMAL_MAX)
+        )
+        longitudeMinutesEdit = binding.longitude.longitudeMinutesEdit
+        longitudeMinutesEdit.minValue = MINUTES_MIN
+        longitudeMinutesEdit.maxValue = MINUTES_MAX
+        longitudeSecondsEdit = binding.longitude.longitudeSecondsEdit
+        longitudeSecondsEdit.minValue = SECONDS_MIN
+        longitudeSecondsEdit.maxValue = SECONDS_MAX
+        longitudeMillisecondsEdit = binding.longitude.longitudeMillisecondsEdit
+        longitudeMillisecondsEdit.filters = arrayOf<InputFilter>(
+            RangeInputFilter(MILLISECONDS_MIN, MILLISECONDS_MAX)
+        )
+        longitudeDirection = binding.longitude.longitudeDirection
+        addressView = binding.address
+        updateNumberPickers()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        locations.start(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        locations.stop(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val location = location
+        val address = address
+        if (address != null) {
+            onAddressChanged(location, address)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menu.clear()
+        menuInflater.inflate(R.menu.add_location, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            // Cannot use 'switch' here because library ids are not final.
+            R.id.menu_location_cancel -> {
+                setResult(RESULT_CANCELED)
+                finish()
+                true
+            }
+
+            R.id.menu_location_add -> {
+                if (saveLocation(location, coordsFormatSpinner.selectedItemPosition)) {
+                    val data = Intent()
+                        .putExtra(EXTRA_LOCATION, location)
+                    setResult(RESULT_OK, data)
+                    finish()
                 }
-                if (location == null) {
-                    location = new Location(USER_PROVIDER);
+                true
+            }
 
-                    if (args.containsKey(EXTRA_LATITUDE)) {
-                        location.setLatitude(args.getDouble(EXTRA_LATITUDE));
-                    }
-                    if (args.containsKey(EXTRA_LONGITUDE)) {
-                        location.setLongitude(args.getDouble(EXTRA_LONGITUDE));
-                    }
+            R.id.menu_location_show -> {
+                if (saveLocation(location, coordsFormatSpinner.selectedItemPosition)) {
+                    fetchAddress(location)
                 }
-            } else {
-                location = new Location(USER_PROVIDER);
+                true
             }
-            this.location = location;
 
-            setDecimalTexts(location.getLatitude(), latitudeDegreesEdit, latitudeDecimalEdit, latitudeDirection);
-            setDecimalTexts(location.getLongitude(), longitudeDegreesEdit, longitudeDecimalEdit, longitudeDirection);
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
-    @Override
-    public void onPreCreate() {
-        getThemeCallbacks().onPreCreate();
-    }
-
-    @Override
-    public P getThemePreferences() {
-        return getThemeCallbacks().getThemePreferences();
-    }
-
-    protected ThemeCallbacks<P> getThemeCallbacks() {
-        ThemeCallbacks<P> themeCallbacks = this.themeCallbacks;
-        if (themeCallbacks == null) {
-            themeCallbacks = createThemeCallbacks(this);
-            this.themeCallbacks = themeCallbacks;
-        }
-        return themeCallbacks;
-    }
-
-    protected ThemeCallbacks<P> createThemeCallbacks(Context context) {
-        return new SimpleThemeCallbacks<>(context);
-    }
-
-    private void initView(LocationAddBinding binding) {
-        coordsFormatSpinner = binding.coordsFormat;
-        coordsFormatSpinner.setOnItemSelectedListener(this);
-        coordsFormatSpinnerSelectedFirst = true;
-
-        latitudeSwitcher = binding.latitude.latitudeSwitch;
-        latitudeDegreesEdit = binding.latitude.latitudeDegreesEdit;
-        latitudeDegreesEdit.setMinValue(DEGREES_MIN);
-        latitudeDegreesEdit.setMaxValue((int) LatitudeInputFilter.LATITUDE_MAX);
-        latitudeDecimalEdit = binding.latitude.latitudeDecimalEdit;
-        latitudeDecimalEdit.setFilters(new InputFilter[]{new RangeInputFilter(DECIMAL_MIN, DECIMAL_MAX)});
-        latitudeMinutesEdit = binding.latitude.latitudeMinutesEdit;
-        latitudeMinutesEdit.setMinValue(MINUTES_MIN);
-        latitudeMinutesEdit.setMaxValue(MINUTES_MAX);
-        latitudeSecondsEdit = binding.latitude.latitudeSecondsEdit;
-        latitudeSecondsEdit.setMinValue(SECONDS_MIN);
-        latitudeSecondsEdit.setMaxValue(SECONDS_MAX);
-        latitudeMillisecondsEdit = binding.latitude.latitudeMillisecondsEdit;
-        latitudeMillisecondsEdit.setFilters(new InputFilter[]{new RangeInputFilter(MILLISECONDS_MIN, MILLISECONDS_MAX)});
-        latitudeDirection = binding.latitude.latitudeDirection;
-
-        longitudeSwitcher = binding.longitude.longitudeSwitch;
-        longitudeDegreesEdit = binding.longitude.longitudeDegreesEdit;
-        longitudeDegreesEdit.setMinValue(DEGREES_MIN);
-        longitudeDegreesEdit.setMaxValue((int) LongitudeInputFilter.LONGITUDE_MAX);
-        longitudeDecimalEdit = binding.longitude.longitudeDecimalEdit;
-        longitudeDecimalEdit.setFilters(new InputFilter[]{new RangeInputFilter(DECIMAL_MIN, DECIMAL_MAX)});
-        longitudeMinutesEdit = binding.longitude.longitudeMinutesEdit;
-        longitudeMinutesEdit.setMinValue(MINUTES_MIN);
-        longitudeMinutesEdit.setMaxValue(MINUTES_MAX);
-        longitudeSecondsEdit = binding.longitude.longitudeSecondsEdit;
-        longitudeSecondsEdit.setMinValue(SECONDS_MIN);
-        longitudeSecondsEdit.setMaxValue(SECONDS_MAX);
-        longitudeMillisecondsEdit = binding.longitude.longitudeMillisecondsEdit;
-        longitudeMillisecondsEdit.setFilters(new InputFilter[]{new RangeInputFilter(MILLISECONDS_MIN, MILLISECONDS_MAX)});
-        longitudeDirection = binding.longitude.longitudeDirection;
-
-        addressView = binding.address;
-
-        updateNumberPickers();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        locations.start(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        locations.stop(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        onAddressChanged(location, address);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.clear();
-        getMenuInflater().inflate(R.menu.add_location, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        final int id = item.getItemId();
-
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
-        // Cannot use 'switch' here because library ids are not final.
-        if (id == R.id.menu_location_cancel) {
-            setResult(RESULT_CANCELED);
-            finish();
-            return true;
-        }
-        if (id == R.id.menu_location_add) {
-            if (saveLocation(location, coordsFormatSpinner.getSelectedItemPosition())) {
-                Intent data = new Intent()
-                    .putExtra(EXTRA_LOCATION, location);
-                setResult(RESULT_OK, data);
-                finish();
-            }
-            return true;
-        }
-        if (id == R.id.menu_location_show) {
-            if (saveLocation(location, coordsFormatSpinner.getSelectedItemPosition())) {
-                fetchAddress(location);
-            }
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         if (coordsFormatSpinnerSelectedFirst) {
-            coordsFormatSpinnerSelectedFirst = false;
-            return;
+            coordsFormatSpinnerSelectedFirst = false
+            return
         }
         if (position == FORMAT_DECIMAL) {
-            convertToDecimal();
+            convertToDecimal()
         } else {
-            convertFromDecimal();
+            convertFromDecimal()
         }
-        latitudeSwitcher.setDisplayedChild(position);
-        longitudeSwitcher.setDisplayedChild(position);
+        latitudeSwitcher.displayedChild = position
+        longitudeSwitcher.displayedChild = position
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-    }
+    override fun onNothingSelected(parent: AdapterView<*>) = Unit
 
-    private boolean saveLocation(Location location, int coordsFormat) {
-        double latitude;
-        double longitude;
-
-        int latitudeDegrees = latitudeDegreesEdit.getValue();
-        int longitudeDegrees = longitudeDegreesEdit.getValue();
-
+    private fun saveLocation(location: Location, coordsFormat: Int): Boolean {
+        var latitude: Double
+        var longitude: Double
+        val latitudeDegrees = latitudeDegreesEdit.value
+        val longitudeDegrees = longitudeDegreesEdit.value
         if (coordsFormat == FORMAT_DECIMAL) {
-            CharSequence latitudeString = latitudeDecimalEdit.getText();
-            latitude = latitudeDegrees + Double.parseDouble("0." + latitudeString.toString());
-
-            CharSequence longitudeString = longitudeDecimalEdit.getText();
-            longitude = longitudeDegrees + Double.parseDouble("0." + longitudeString.toString());
+            val latitudeString: CharSequence = latitudeDecimalEdit.text
+            latitude = latitudeDegrees + "0.$latitudeString".toDouble()
+            val longitudeString: CharSequence = longitudeDecimalEdit.text
+            longitude = longitudeDegrees + "0.$longitudeString".toDouble()
         } else {
-            int latitudeMinutes = latitudeMinutesEdit.getValue();
-            int latitudeSeconds = latitudeSecondsEdit.getValue();
-
-            CharSequence latitudeMillisecondsString = latitudeMillisecondsEdit.getText();
-            int latitudeMilliseconds = TextUtils.isEmpty(latitudeMillisecondsString) ? 0 : Integer.parseInt(latitudeMillisecondsString.toString(), 10);
-
-            int longitudeMinutes = longitudeMinutesEdit.getValue();
-            int longitudeSeconds = longitudeSecondsEdit.getValue();
-
-            CharSequence longitudeMillisecondsString = longitudeMillisecondsEdit.getText();
-            int longitudeMilliseconds = TextUtils.isEmpty(longitudeMillisecondsString) ? 0 : Integer.parseInt(longitudeMillisecondsString.toString(), 10);
-
-            latitude = ZmanimLocation.toDecimal(latitudeDegrees, latitudeMinutes, Double.parseDouble(latitudeSeconds + "." + latitudeMilliseconds));
-            longitude = ZmanimLocation.toDecimal(longitudeDegrees, longitudeMinutes, Double.parseDouble(longitudeSeconds + "." + longitudeMilliseconds));
+            val latitudeMinutes = latitudeMinutesEdit.value
+            val latitudeSeconds = latitudeSecondsEdit.value
+            val latitudeMillisecondsString: CharSequence = latitudeMillisecondsEdit.text
+            val latitudeMilliseconds = if (latitudeMillisecondsString.isEmpty()) 0
+            else latitudeMillisecondsString.toString().toInt(10)
+            val longitudeMinutes = longitudeMinutesEdit.value
+            val longitudeSeconds = longitudeSecondsEdit.value
+            val longitudeMillisecondsString: CharSequence = longitudeMillisecondsEdit.text
+            val longitudeMilliseconds = if (longitudeMillisecondsString.isEmpty()) 0
+            else longitudeMillisecondsString.toString().toInt(10)
+            latitude = toDecimal(
+                latitudeDegrees,
+                latitudeMinutes,
+                "$latitudeSeconds.$latitudeMilliseconds".toDouble()
+            )
+            longitude = toDecimal(
+                longitudeDegrees,
+                longitudeMinutes,
+                "$longitudeSeconds.$longitudeMilliseconds".toDouble()
+            )
         }
-
-        latitude = Math.abs(latitude) * ((latitudeDirection.getSelectedItemPosition() == POSITION_POSITIVE) ? DIRECTION_NORTH : DIRECTION_SOUTH);
-        if ((latitude < ZmanimLocation.LATITUDE_MIN) || (latitude > ZmanimLocation.LATITUDE_MAX)) {
-            return false;
+        latitude = abs(latitude) *
+            if (latitudeDirection.selectedItemPosition == POSITION_POSITIVE) DIRECTION_NORTH
+            else DIRECTION_SOUTH
+        if (latitude < ZmanimLocation.LATITUDE_MIN || latitude > ZmanimLocation.LATITUDE_MAX) {
+            return false
         }
-
-        longitude = Math.abs(longitude) * ((longitudeDirection.getSelectedItemPosition() == POSITION_POSITIVE) ? DIRECTION_EAST : DIRECTION_WEST);
-        if ((longitude < ZmanimLocation.LONGITUDE_MIN) || (longitude > ZmanimLocation.LONGITUDE_MAX)) {
-            return false;
+        longitude = abs(longitude) *
+            if (longitudeDirection.selectedItemPosition == POSITION_POSITIVE) DIRECTION_EAST
+            else DIRECTION_WEST
+        if (longitude < ZmanimLocation.LONGITUDE_MIN || longitude > ZmanimLocation.LONGITUDE_MAX) {
+            return false
         }
-
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        return true;
+        location.latitude = latitude
+        location.longitude = longitude
+        return true
     }
 
-    /**
-     * Get the locations provider.
-     *
-     * @return hte provider.
-     */
-    public LocationsProvider getLocations() {
-        return locations;
+    private fun fetchAddress(location: Location) {
+        addressView.setText(R.string.location_unknown)
+        val locations = locations
+        locations.findAddress(location, false)
     }
 
-    private void fetchAddress(Location location) {
-        addressView.setText(R.string.location_unknown);
-
-        LocationsProvider locations = getLocations();
-        locations.findAddress(location, false);
-    }
-
-    @Override
-    public void onAddressChanged(@NonNull Location location, ZmanimAddress address) {
-        if ((location == null) || (address == null)) {
-            return;
+    override fun onAddressChanged(location: Location, address: ZmanimAddress) {
+        val locationOld = this.location
+        if (location.latitude != locationOld.latitude || location.longitude != locationOld.longitude) {
+            return
         }
-        if ((location.getLatitude() != this.location.getLatitude()) || (location.getLongitude() != this.location.getLongitude())) {
-            return;
-        }
-        this.address = address;
-
-        if (addressView != null) {
-            Runnable addressFormatRunnable = this.addressFormatRunnable;
-            if (addressFormatRunnable == null) {
-                addressFormatRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        addressView.setText(AddLocationActivity.this.address.getFormatted());
-                    }
-                };
-                this.addressFormatRunnable = addressFormatRunnable;
-            }
-            runOnUiThread(addressFormatRunnable);
+        this.address = address
+        runOnUiThread {
+            addressView.text = address.formatted
         }
     }
 
-    @Override
-    public void onElevationChanged(@NonNull Location location) {
+    override fun onElevationChanged(location: Location) = Unit
+
+    override fun onLocationChanged(location: Location) = Unit
+
+    @Deprecated("Deprecated in Java", ReplaceWith("Unit"))
+    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) = Unit
+
+    override fun onProviderEnabled(provider: String) = Unit
+
+    override fun onProviderDisabled(provider: String) = Unit
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(SAVE_STATE_LOCATION, location)
+        outState.putParcelable(SAVE_STATE_ADDRESS, address)
     }
 
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        location = savedInstanceState.getParcelableCompat(SAVE_STATE_LOCATION, Location::class.java)
+            ?: Location(GeocoderBase.USER_PROVIDER)
+        address =
+            savedInstanceState.getParcelableCompat(SAVE_STATE_ADDRESS, ZmanimAddress::class.java)
     }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable(SAVE_STATE_LOCATION, location);
-        outState.putParcelable(SAVE_STATE_ADDRESS, address);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        location = savedInstanceState.getParcelable(SAVE_STATE_LOCATION);
-        address = savedInstanceState.getParcelable(SAVE_STATE_ADDRESS);
-    }
-
-    private void convertFromDecimal() {
-        Location locationForConvert = this.locationForConvert;
+    private fun convertFromDecimal() {
+        var locationForConvert = locationForConvert
         if (locationForConvert == null) {
-            locationForConvert = new Location(location);
-            this.locationForConvert = locationForConvert;
+            locationForConvert = Location(location)
+            this.locationForConvert = locationForConvert
         }
         if (saveLocation(locationForConvert, FORMAT_DECIMAL)) {
-            setSexagesimalTexts(locationForConvert.getLatitude(), latitudeDegreesEdit, latitudeMinutesEdit, latitudeSecondsEdit, latitudeMillisecondsEdit, latitudeDirection);
-            setSexagesimalTexts(locationForConvert.getLongitude(), longitudeDegreesEdit, longitudeMinutesEdit, longitudeSecondsEdit, longitudeMillisecondsEdit, longitudeDirection);
+            setSexagesimalTexts(
+                locationForConvert.latitude,
+                latitudeDegreesEdit,
+                latitudeMinutesEdit,
+                latitudeSecondsEdit,
+                latitudeMillisecondsEdit,
+                latitudeDirection
+            )
+            setSexagesimalTexts(
+                locationForConvert.longitude,
+                longitudeDegreesEdit,
+                longitudeMinutesEdit,
+                longitudeSecondsEdit,
+                longitudeMillisecondsEdit,
+                longitudeDirection
+            )
         }
     }
 
-    private void setSexagesimalTexts(double coordinate, NumberPicker degreesView, NumberPicker minutesView, NumberPicker secondsView, TextView millisecondsView, Spinner directionView) {
-        int direction = (coordinate >= 0) ? POSITION_POSITIVE : POSITION_NEGATIVE;
-        coordinate = Math.abs(coordinate);
-        int degrees = (int) Math.floor(coordinate);
-        coordinate -= degrees;
-        coordinate *= 60.0;
-        int minutes = (int) Math.floor(coordinate);
-        coordinate -= minutes;
-        coordinate *= 60.0;
-        int seconds = (int) Math.floor(coordinate);
-        coordinate -= seconds;
-        coordinate *= 10000; /* 0 - 9999 */
-        int milliseconds = (int) Math.floor(coordinate);
-
-        degreesView.setValue(degrees);
-        minutesView.setValue(minutes);
-        secondsView.setValue(seconds);
-        millisecondsView.setText(formatNumber(milliseconds));
-        directionView.setSelection(direction);
+    private fun setSexagesimalTexts(
+        coordinate: Double,
+        degreesView: NumberPicker,
+        minutesView: NumberPicker,
+        secondsView: NumberPicker,
+        millisecondsView: TextView,
+        directionView: Spinner
+    ) {
+        var coordinate = coordinate
+        val direction = if (coordinate >= 0) POSITION_POSITIVE else POSITION_NEGATIVE
+        coordinate = abs(coordinate)
+        val degrees = floor(coordinate).toInt()
+        coordinate -= degrees.toDouble()
+        coordinate *= 60.0
+        val minutes = floor(coordinate).toInt()
+        coordinate -= minutes.toDouble()
+        coordinate *= 60.0
+        val seconds = floor(coordinate).toInt()
+        coordinate -= seconds.toDouble()
+        coordinate *= 10000.0 /* 0 - 9999 */
+        val milliseconds = floor(coordinate).toInt()
+        degreesView.value = degrees
+        minutesView.value = minutes
+        secondsView.value = seconds
+        millisecondsView.text = formatNumber(milliseconds)
+        directionView.setSelection(direction)
     }
 
-    private void convertToDecimal() {
-        Location locationForConvert = this.locationForConvert;
+    private fun convertToDecimal() {
+        var locationForConvert = locationForConvert
         if (locationForConvert == null) {
-            locationForConvert = new Location(location);
-            this.locationForConvert = locationForConvert;
+            locationForConvert = Location(location)
+            this.locationForConvert = locationForConvert
         }
         if (saveLocation(locationForConvert, FORMAT_SEXAGESIMAL)) {
-            setDecimalTexts(locationForConvert.getLatitude(), latitudeDegreesEdit, latitudeDecimalEdit, latitudeDirection);
-            setDecimalTexts(locationForConvert.getLongitude(), longitudeDegreesEdit, longitudeDecimalEdit, longitudeDirection);
+            setDecimalTexts(
+                locationForConvert.latitude,
+                latitudeDegreesEdit,
+                latitudeDecimalEdit,
+                latitudeDirection
+            )
+            setDecimalTexts(
+                locationForConvert.longitude,
+                longitudeDegreesEdit,
+                longitudeDecimalEdit,
+                longitudeDirection
+            )
         }
     }
 
-    private void setDecimalTexts(double coordinate, NumberPicker degreesView, EditText decimalView, Spinner directionView) {
-        int direction = (coordinate >= 0) ? POSITION_POSITIVE : POSITION_NEGATIVE;
-        coordinate = Math.abs(coordinate);
-        int degrees = (int) Math.floor(coordinate);
-        coordinate -= degrees;
-        coordinate *= 1000000;/* 0 - 999999 */
-        int milliseconds = (int) Math.floor(coordinate);
-
-        degreesView.setValue(degrees);
-        decimalView.setText(formatNumber(milliseconds));
-        directionView.setSelection(direction);
+    private fun setDecimalTexts(
+        coordinate: Double,
+        degreesView: NumberPicker,
+        decimalView: EditText,
+        directionView: Spinner
+    ) {
+        var coordinate = coordinate
+        val direction = if (coordinate >= 0) POSITION_POSITIVE else POSITION_NEGATIVE
+        coordinate = abs(coordinate)
+        val degrees = floor(coordinate).toInt()
+        coordinate -= degrees.toDouble()
+        coordinate *= 1000000.0 /* 0 - 999999 */
+        val milliseconds = floor(coordinate).toInt()
+        degreesView.value = degrees
+        decimalView.setText(formatNumber(milliseconds))
+        directionView.setSelection(direction)
     }
 
-    /**
-     * Set the formatter to be used for formatting the numbers.
-     *
-     * @param formatter The formatter object. If formatter is <code>null</code>,
-     *                  {@link String#valueOf(int)} will be used.
-     */
-    public void setFormatter(NumberPicker.Formatter formatter) {
-        if (formatter == this.formatter) {
-            return;
-        }
-        this.formatter = formatter;
-        updateNumberPickers();
+    private fun formatNumber(value: Int): String {
+        return formatter.format(value) ?: formatNumberWithLocale(value)
     }
 
-    private String formatNumber(int value) {
-        return (formatter != null) ? formatter.format(value) : formatNumberWithLocale(value);
+    private fun updateNumberPickers() {
+        latitudeDegreesEdit.setFormatter(formatter)
+        latitudeMinutesEdit.setFormatter(formatter)
+        latitudeSecondsEdit.setFormatter(formatter)
+        longitudeDegreesEdit.setFormatter(formatter)
+        longitudeMinutesEdit.setFormatter(formatter)
+        longitudeSecondsEdit.setFormatter(formatter)
     }
 
-    static private String formatNumberWithLocale(int value) {
-        return String.format(Locale.getDefault(), "%d", value);
-    }
+    companion object {
+        /**
+         * The location parameter.
+         */
+        const val EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED
 
-    private void updateNumberPickers() {
-        if (latitudeDegreesEdit != null) {
-            latitudeDegreesEdit.setFormatter(formatter);
-        }
-        if (latitudeMinutesEdit != null) {
-            latitudeMinutesEdit.setFormatter(formatter);
-        }
-        if (latitudeSecondsEdit != null) {
-            latitudeSecondsEdit.setFormatter(formatter);
-        }
-        if (longitudeDegreesEdit != null) {
-            longitudeDegreesEdit.setFormatter(formatter);
-        }
-        if (longitudeMinutesEdit != null) {
-            longitudeMinutesEdit.setFormatter(formatter);
-        }
-        if (longitudeSecondsEdit != null) {
-            longitudeSecondsEdit.setFormatter(formatter);
+        /**
+         * The location's latitude parameter.
+         */
+        const val EXTRA_LATITUDE = "latitude"
+
+        /**
+         * The location's longitude parameter.
+         */
+        const val EXTRA_LONGITUDE = "longitude"
+
+        /**
+         * The location state.
+         */
+        private const val SAVE_STATE_LOCATION = EXTRA_LOCATION
+
+        /**
+         * The address state.
+         */
+        private const val SAVE_STATE_ADDRESS = "address"
+        private const val FORMAT_DECIMAL = 0
+        private const val FORMAT_SEXAGESIMAL = 1
+        private const val POSITION_POSITIVE = 0
+        private const val POSITION_NEGATIVE = 1
+        private const val DIRECTION_NORTH = +1
+        private const val DIRECTION_SOUTH = -1
+        private const val DIRECTION_EAST = +1
+        private const val DIRECTION_WEST = -1
+        private const val DEGREES_MIN = 0
+        private const val DECIMAL_MIN = 0
+        private const val DECIMAL_MAX = 999999
+        private const val MINUTES_MIN = 0
+        private const val MINUTES_MAX = 59
+        private const val SECONDS_MIN = 0
+        private const val SECONDS_MAX = 59
+        private const val MILLISECONDS_MIN = 0
+        private const val MILLISECONDS_MAX = 9999
+
+        private fun formatNumberWithLocale(value: Int): String {
+            return String.format(Locale.getDefault(), "%d", value)
         }
     }
 }

@@ -13,28 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import java.io.IOException;
+import java.io.IOException
 
 /**
  * Location exception.
  *
  * @author Moshe Waisberg
  */
-public class LocationException extends IOException {
-    public LocationException() {
-    }
-
-    public LocationException(String message) {
-        super(message);
-    }
-
-    public LocationException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public LocationException(Throwable cause) {
-        super(cause);
-    }
+class LocationException : IOException {
+    constructor()
+    constructor(message: String?) : super(message)
+    constructor(message: String?, cause: Throwable?) : super(message, cause)
+    constructor(cause: Throwable?) : super(cause)
 }

@@ -13,214 +13,80 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.remind;
+package com.github.times.remind
 
-import static android.app.Notification.DEFAULT_VIBRATE;
-import static android.content.Intent.ACTION_BOOT_COMPLETED;
-import static android.content.Intent.ACTION_DATE_CHANGED;
-import static android.content.Intent.ACTION_LOCALE_CHANGED;
-import static android.content.Intent.ACTION_MY_PACKAGE_REPLACED;
-import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
-import static android.content.Intent.ACTION_TIME_CHANGED;
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static android.content.Intent.FLAG_ACTIVITY_NO_USER_ACTION;
-import static android.media.RingtoneManager.TYPE_NOTIFICATION;
-import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static android.text.format.DateUtils.SECOND_IN_MILLIS;
-import static com.github.times.ZmanimDays.SHABBATH;
-import static com.github.times.ZmanimHelper.formatDateTime;
-import static com.github.times.ZmanimItem.NEVER;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.PESACH;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SHAVUOS;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SHEMINI_ATZERES;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SIMCHAS_TORAH;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SUCCOS;
-import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
-import static java.lang.System.currentTimeMillis;
-import static java.util.Calendar.FRIDAY;
-import static java.util.Calendar.MONDAY;
-import static java.util.Calendar.SATURDAY;
-import static java.util.Calendar.SUNDAY;
-import static java.util.Calendar.THURSDAY;
-import static java.util.Calendar.TUESDAY;
-import static java.util.Calendar.WEDNESDAY;
-
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
-import android.provider.Settings;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.AlarmManagerCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.PermissionChecker;
-
-import com.github.times.CandleData;
-import com.github.times.R;
-import com.github.times.ZmanItemViewHolder;
-import com.github.times.ZmanimActivity;
-import com.github.times.ZmanimAdapter;
-import com.github.times.ZmanimApplication;
-import com.github.times.ZmanimItem;
-import com.github.times.ZmanimPopulater;
-import com.github.times.location.ZmanimLocations;
-import com.github.times.preference.SimpleZmanimPreferences;
-import com.github.times.preference.ZmanimPreferences;
-import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
-import com.kosherjava.zmanim.util.GeoLocation;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import timber.log.Timber;
+import android.Manifest
+import android.annotation.SuppressLint
+import android.annotation.TargetApi
+import android.app.Activity
+import android.app.AlarmManager
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Rect
+import android.media.AudioAttributes
+import android.media.AudioManager
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
+import android.text.format.DateUtils
+import androidx.annotation.RequiresApi
+import androidx.core.app.AlarmManagerCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
+import com.github.times.BuildConfig
+import com.github.times.CandleData
+import com.github.times.R
+import com.github.times.ZmanViewHolder
+import com.github.times.ZmanimActivity
+import com.github.times.ZmanimAdapter
+import com.github.times.ZmanimApplication
+import com.github.times.ZmanimDays.SHABBATH
+import com.github.times.ZmanimHelper.formatDateTime
+import com.github.times.ZmanimItem
+import com.github.times.ZmanimPopulater
+import com.github.times.isNullOrEmptyOrElapsed
+import com.github.times.preference.SimpleZmanimPreferences
+import com.github.times.preference.ZmanimPreferences
+import com.github.times.remind.ZmanimReminderItem.Companion.from
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
+import java.util.Calendar
+import timber.log.Timber
 
 /**
  * Check for reminders, and manage the notifications.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimReminder {
+class ZmanimReminder(private val context: Context) {
 
-    /**
-     * Id for reminder notifications.<br>
-     * Newer notifications will override current notifications.
-     */
-    private static final int ID_NOTIFY = 1;
-    /**
-     * Id for alarms.
-     */
-    private static final int ID_ALARM_REMINDER = 2;
-    /**
-     * Id for upcoming time notification.<br>
-     * Newer notifications will override current notifications.
-     */
-    private static final int ID_NOTIFY_UPCOMING = 3;
-    /**
-     * Id for alarms for upcoming time notification.
-     */
-    private static final int ID_ALARM_UPCOMING = 4;
-    /**
-     * Id for cancelling alarms.
-     */
-    private static final int ID_ALARM_CANCEL = 5;
-    /**
-     * Id for silent alarms.
-     */
-    private static final int ID_ALARM_SILENT = 6;
-    /**
-     * Id for dismissing alarms.
-     */
-    private static final int ID_ALARM_DISMISS = 7;
+    private var largeIconSolar: Bitmap? = null
+    private var largeIconReminder: Bitmap? = null
 
-    private static final long WAS_DELTA = SECOND_IN_MILLIS;
-    private static final long SOON_DELTA = 10 * SECOND_IN_MILLIS;
-    /**
-     * The number of days to check forwards for a reminder.
-     */
-    private static final int DAYS_FORWARD = 30;
+    private val notificationManager: NotificationManager?
+        get() = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
 
-    /* Yellow represents the sun or a candle flame. */
-    private static final int LED_COLOR = Color.YELLOW;
-    private static final int LED_ON = 750;
-    private static final int LED_OFF = 500;
-
-    /**
-     * Action to remind.
-     */
-    public static final String ACTION_REMIND = "com.github.times.action.REMIND";
-    /**
-     * Action to update reminders.
-     */
-    public static final String ACTION_UPDATE = "com.github.times.action.UPDATE";
-    /**
-     * Action to cancel reminders.
-     */
-    public static final String ACTION_CANCEL = "com.github.times.action.CANCEL";
-    /**
-     * Action to silence reminders.
-     */
-    public static final String ACTION_SILENCE = "com.github.times.action.SILENCE";
-    /**
-     * Action to dismiss alarms.
-     */
-    public static final String ACTION_DISMISS = "com.github.times.action.DISMISS";
-
-    /**
-     * How much time to wait for the notification sound once entered into a day not allowed to disturb.
-     */
-    // TODO put as user settings.
-    private static final long STOP_NOTIFICATION_AFTER = MINUTE_IN_MILLIS;
-
-    private static final String CHANNEL_ALARM = "channel_alarm";
-    private static final String CHANNEL_REMINDER = "channel_reminder";
-    private static final String CHANNEL_ALARM_OLD = "reminder_alarm";
-    private static final String CHANNEL_REMINDER_OLD = "reminder";
-    private static final String CHANNEL_UPCOMING = "upcoming";
-
-    private static final String WAKE_TAG = "ZmanimReminder:wake";
-
-    @TargetApi(Build.VERSION_CODES.TIRAMISU)
-    public static final String PERMISSION_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS;
-    /**
-     * Activity id for requesting notification permissions.
-     */
-    protected static final int ACTIVITY_PERMISSIONS = 0x6057; // "POST"
-
-    private static final int FLAGS_UPDATE = PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE;
-
-    private final Context context;
-    private Bitmap largeIconSolar;
-    private Bitmap largeIconReminder;
-
-    /**
-     * Constructs a new reminder worker.
-     *
-     * @param context The context.
-     */
-    public ZmanimReminder(@NonNull Context context) {
-        this.context = context;
-    }
-
-    protected Context getContext() {
-        return context;
-    }
+    private val alarmManager: AlarmManager?
+        get() = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 
     /**
      * Setup the first reminder for today.
      */
-    public void remind() {
-        final Context context = getContext();
-        ZmanimPreferences settings = createPreferences(context);
-        remind(context, settings);
+    fun remind() {
+        val settings = createPreferences()
+        remind(settings)
     }
 
     /**
@@ -228,150 +94,146 @@ public class ZmanimReminder {
      *
      * @param settings the preferences.
      */
-    public void remind(ZmanimPreferences settings) {
-        final Context context = getContext();
-        remind(context, settings);
-    }
-
-    /**
-     * Setup the first reminder for today.
-     *
-     * @param context  The context.
-     * @param settings the preferences.
-     */
-    private void remind(Context context, ZmanimPreferences settings) {
-        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-        ZmanimLocations locations = app.getLocations();
-        GeoLocation gloc = locations.getGeoLocation();
+    fun remind(settings: ZmanimPreferences) {
+        val app = context.applicationContext as ZmanimApplication
+        val locations = app.locations
         // Have we been destroyed?
-        if (gloc == null)
-            return;
+        val gloc = locations.geoLocation ?: return
 
-        ZmanimPopulater populater = new ZmanimPopulater<>(context, settings);
-        populater.setCalendar(currentTimeMillis());
-        populater.setGeoLocation(gloc);
-        populater.setInIsrael(locations.isInIsrael());
-
-        ZmanimAdapter adapter = new ZmanimAdapter(context, settings, null);
-        remind(settings, populater, adapter);
+        val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, settings)
+        populater.setCalendar(System.currentTimeMillis())
+        populater.setGeoLocation(gloc)
+        populater.isInIsrael = locations.isInIsrael
+        val adapter = ZmanimAdapter<ZmanViewHolder>(context, settings, null)
+        remind(settings, populater, adapter)
     }
 
     /**
      * Setup the first reminder for the week.
      *
      * @param settings the preferences.
+     * @param populater  the populater.
      * @param adapter  the populated adapter.
      */
-    private void remind(ZmanimPreferences settings, ZmanimPopulater populater, ZmanimAdapter<ZmanItemViewHolder> adapter) {
-        final long latest = settings.getLatestReminder();
-        Timber.i("remind latest [%s]", formatDateTime(latest));
-
-        final Calendar gcal = Calendar.getInstance();
-        final long now = gcal.getTimeInMillis();
-        final long was = now - WAS_DELTA;
-        final long soon = now + SOON_DELTA;
-        ZmanimItem item;
-        ZmanimItem itemFirst = null;
-        long when;
-        long whenFirst = Long.MAX_VALUE;
-        boolean nextDay = true;
-        int count;
-        final boolean upcomingNotification = settings.isUpcomingNotification();
-        ZmanimItem itemUpcoming = null;
-        long whenUpcoming = Long.MAX_VALUE;
-
-        JewishCalendar jcal = new JewishCalendar(gcal);
-        jcal.setInIsrael(populater.isInIsrael());
-        Calendar cal = populater.getCalendar().getCalendar();
-        CandleData candles;
+    private fun remind(
+        settings: ZmanimPreferences,
+        populater: ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>,
+        adapter: ZmanimAdapter<ZmanViewHolder>
+    ) {
+        val latest = settings.latestReminder
+        Timber.i("remind latest [%s]", formatDateTime(latest))
+        val gcal = Calendar.getInstance()
+        val now = gcal.timeInMillis
+        val was = now - WAS_DELTA
+        val soon = now + SOON_DELTA
+        var item: ZmanimItem?
+        var itemFirst: ZmanimItem? = null
+        var whenRemind: Long
+        var whenFirst = Long.MAX_VALUE
+        var nextDay = true
+        var count: Int
+        val upcomingNotification = settings.isUpcomingNotification
+        var itemUpcoming: ZmanimItem? = null
+        var whenUpcoming = Long.MAX_VALUE
+        val jcal = JewishCalendar(gcal).apply {
+            inIsrael = populater.isInIsrael
+        }
+        val cal = populater.calendar.calendar
+        var candles: CandleData
 
         // Find the first reminder in the upcoming week.
-        for (int day = 1; nextDay && (day <= DAYS_FORWARD); day++) {
+        var day = 1
+        while (nextDay && day <= DAYS_FORWARD) {
             if (day > 1) {
-                gcal.add(Calendar.DAY_OF_MONTH, 1);
-                jcal.setDate(gcal);
-                cal.add(Calendar.DAY_OF_MONTH, 1);
-                populater.setCalendar(cal);
+                gcal.add(Calendar.DAY_OF_MONTH, 1)
+                jcal.setDate(gcal)
+                cal.add(Calendar.DAY_OF_MONTH, 1)
+                populater.setCalendar(cal)
             }
-            populater.populate(adapter, false);
-            candles = adapter.getCandles();
-
-            count = adapter.getItemCount();
-            for (int i = 0; i < count; i++) {
-                item = adapter.getItem(i);
-                if ((item == null) || item.isEmptyOrElapsed()) {
-                    continue;
-                }
+            populater.populate(adapter, false)
+            candles = adapter.candles
+            count = adapter.itemCount
+            for (i in 0 until count) {
+                item = adapter.getItem(i)
+                if (item.isNullOrEmptyOrElapsed()) continue
 
                 // Is the zman to be reminded?
-                when = settings.getReminder(item.titleId, item.time);
-                if ((when != NEVER) && allowReminder(settings, item, jcal, candles)) {
-                    if (nextDay && (latest < when) && (was <= when) && (when <= soon)) {
-                        notifyNow(settings, item);
-                        nextDay = false;
+                whenRemind = settings.getReminder(item.titleId, item.time)
+                if (whenRemind != ZmanimItem.NEVER && allowReminder(
+                        settings,
+                        item,
+                        jcal,
+                        candles
+                    )
+                ) {
+                    if (nextDay && latest < whenRemind && was <= whenRemind && whenRemind <= soon) {
+                        notifyNow(settings, item)
+                        nextDay = false
                     }
-                    if ((now < when) && (when < whenFirst)) {
-                        itemFirst = item;
-                        whenFirst = when;
+                    if (now < whenRemind && whenRemind < whenFirst) {
+                        itemFirst = item
+                        whenFirst = whenRemind
                     }
                 }
 
                 // Is the zman to be notified?
                 if (upcomingNotification) {
-                    when = item.time;
-                    if ((when != NEVER) && (now <= when) && (when < whenUpcoming)) {
-                        itemUpcoming = item;
-                        whenUpcoming = when;
+                    whenRemind = item.time
+                    if (whenRemind != ZmanimItem.NEVER && now <= whenRemind && whenRemind < whenUpcoming) {
+                        itemUpcoming = item
+                        whenUpcoming = whenRemind
                     }
                 }
             }
+            day++
         }
         if (itemFirst != null) {
-            item = itemFirst;
-            Timber.i("notify at [%s] for [%s]", formatDateTime(whenFirst), formatDateTime(item.time));
-            notifyFuture(item, whenFirst);
+            item = itemFirst
+            Timber.i(
+                "notify at [%s] for [%s]",
+                formatDateTime(whenFirst),
+                formatDateTime(item.time)
+            )
+            notifyFuture(item, whenFirst)
         }
-        if (itemUpcoming != null) {
-            notifyUpcoming(itemUpcoming);
-        }
+        itemUpcoming?.let { notifyUpcoming(it) }
     }
 
     /**
      * Cancel all reminders.
      */
-    public void cancel() {
-        Timber.i("cancel");
-        final Context context = getContext();
-        cancelAlarm(context);
-        cancelNotification(context);
-        cancelUpcoming(context);
+    fun cancel() {
+        Timber.i("cancel")
+        cancelAlarm()
+        cancelNotification()
+        cancelUpcoming()
     }
 
-    private void cancelAlarm(Context context) {
-        Intent service = createAlarmServiceIntent(context, null, NEVER);
-        context.stopService(service);
+    private fun cancelAlarm() {
+        val service = createAlarmServiceIntent(null, ZmanimItem.NEVER)
+        context.stopService(service)
     }
 
-    private void cancelNotification(Context context) {
-        Timber.i("cancelNotification");
-        PendingIntent alarmIntent = createAlarmIntent(context, (ZmanimItem) null);
-
-        AlarmManager alarms = getAlarmManager();
-        alarms.cancel(alarmIntent);
-
-        NotificationManager nm = getNotificationManager();
-        nm.cancel(ID_NOTIFY);
+    private fun cancelNotification() {
+        Timber.i("cancelNotification")
+        alarmManager?.let { alarms ->
+            val alarmIntent = createAlarmIntent(null as ZmanimItem?)
+            alarms.cancel(alarmIntent)
+        }
+        notificationManager?.let { nm ->
+            nm.cancel(ID_NOTIFY)
+        }
     }
 
-    private void cancelUpcoming(Context context) {
-        Timber.i("cancelUpcoming");
-        PendingIntent upcomingIntent = createUpcomingIntent(context);
-
-        AlarmManager alarms = getAlarmManager();
-        alarms.cancel(upcomingIntent);
-
-        NotificationManager nm = getNotificationManager();
-        nm.cancel(ID_NOTIFY_UPCOMING);
+    private fun cancelUpcoming() {
+        Timber.i("cancelUpcoming")
+        alarmManager?.let { alarms ->
+            val upcomingIntent = createUpcomingIntent()
+            alarms.cancel(upcomingIntent)
+        }
+        notificationManager?.let { nm ->
+            nm.cancel(ID_NOTIFY_UPCOMING)
+        }
     }
 
     /**
@@ -380,13 +242,11 @@ public class ZmanimReminder {
      * @param settings the preferences.
      * @param item     the zmanim item to notify about.
      */
-    public void notifyNow(ZmanimPreferences settings, ZmanimItem item) {
-        final Context context = getContext();
-        CharSequence contentTitle = item.title;
-        CharSequence contentText = context.getText(R.string.reminder);
-        ZmanimReminderItem reminderItem = new ZmanimReminderItem(item.titleId, contentTitle, contentText, item.time);
-
-        notifyNow(settings, reminderItem);
+    fun notifyNow(settings: ZmanimPreferences, item: ZmanimItem) {
+        val contentTitle = item.title
+        val contentText = context.getText(R.string.reminder)
+        val reminderItem = ZmanimReminderItem(item.titleId, contentTitle, contentText, item.time)
+        notifyNow(settings, reminderItem)
     }
 
     /**
@@ -396,33 +256,37 @@ public class ZmanimReminder {
      * @param item     the reminder item.
      */
     @SuppressLint("Wakelock")
-    public void notifyNow(ZmanimPreferences settings, ZmanimReminderItem item) {
-        Timber.i("notify now [%s] for [%s]", item.title, formatDateTime(item.time));
-        final Context context = getContext();
-        final long now = currentTimeMillis();
+    fun notifyNow(settings: ZmanimPreferences, item: ZmanimReminderItem) {
+        Timber.i("notify now [%s] for [%s]", item.title, formatDateTime(item.time))
+        val now = System.currentTimeMillis()
 
         // Wake up the device to notify the user.
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        val pm = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
         if (pm != null) {
-            WakeLock wake = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, WAKE_TAG);
-            wake.acquire(5000L);// enough time to also hear a tone
+            val wake = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, WAKE_TAG)
+            wake.acquire(5000L) // enough time to also hear a tone
         }
+        when (settings.reminderType) {
+            RingtoneManager.TYPE_ALARM -> alarmNow(item, now + STOP_NOTIFICATION_AFTER)
+            RingtoneManager.TYPE_NOTIFICATION -> {
+                val contentIntent = createActivityIntent()
+                val notification =
+                    createReminderNotification(settings, item, contentIntent)
+                showReminderNotification(notification)
+                silenceFuture(item, now + STOP_NOTIFICATION_AFTER)
+            }
 
-        switch (settings.getReminderType()) {
-            case RingtoneManager.TYPE_ALARM:
-                alarmNow(context, item, now + STOP_NOTIFICATION_AFTER);
-                break;
-            case RingtoneManager.TYPE_NOTIFICATION:
-            default:
-                PendingIntent contentIntent = createActivityIntent(context);
-                Notification notification = createReminderNotification(context, settings, item, contentIntent);
-                showReminderNotification(notification);
-                silenceFuture(context, item, now + STOP_NOTIFICATION_AFTER);
-                break;
+            else -> {
+                val contentIntent = createActivityIntent()
+                val notification =
+                    createReminderNotification(settings, item, contentIntent)
+                showReminderNotification(notification)
+                silenceFuture(item, now + STOP_NOTIFICATION_AFTER)
+            }
         }
 
         // This was the last notification.
-        settings.setLatestReminder(now);
+        settings.latestReminder = now
     }
 
     /**
@@ -431,22 +295,33 @@ public class ZmanimReminder {
      * @param item      the zmanim item to notify about.
      * @param triggerAt the upcoming reminder.
      */
-    public void notifyFuture(ZmanimItem item, long triggerAt) {
-        final Context context = getContext();
-        CharSequence contentTitle = item.title;
-        long when = item.time;
-
-        Timber.i("notify future [%s] at [%s] for [%s]", contentTitle, formatDateTime(triggerAt), formatDateTime(when));
-
-        AlarmManager alarms = getAlarmManager();
-        PendingIntent alarmIntent = createAlarmIntent(context, item);
+    fun notifyFuture(item: ZmanimItem, triggerAt: Long) {
+        val alarms = alarmManager ?: return
+        val contentTitle = item.title
+        Timber.i(
+            "notify future [%s] at [%s] for [%s]",
+            contentTitle,
+            formatDateTime(triggerAt),
+            formatDateTime(item.time)
+        )
+        val alarmIntent = createAlarmIntent(item)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (!alarms.canScheduleExactAlarms()) {
-                AlarmManagerCompat.setAndAllowWhileIdle(alarms, AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
-                return;
+                AlarmManagerCompat.setAndAllowWhileIdle(
+                    alarms,
+                    AlarmManager.RTC_WAKEUP,
+                    triggerAt,
+                    alarmIntent
+                )
+                return
             }
         }
-        AlarmManagerCompat.setExactAndAllowWhileIdle(alarms, AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        AlarmManagerCompat.setExactAndAllowWhileIdle(
+            alarms,
+            AlarmManager.RTC_WAKEUP,
+            triggerAt,
+            alarmIntent
+        )
     }
 
     /**
@@ -454,42 +329,55 @@ public class ZmanimReminder {
      *
      * @return the pending intent.
      */
-    private PendingIntent createActivityIntent(Context context) {
-        PackageManager pm = context.getPackageManager();
-        Intent intent = pm.getLaunchIntentForPackage(context.getPackageName());
+    private fun createActivityIntent(): PendingIntent {
+        val pm = context.packageManager
+        var intent = pm.getLaunchIntentForPackage(context.packageName)
         if (intent == null) {
-            Timber.w("Launch activity not found!");
-            intent = new Intent(context, ZmanimActivity.class);
+            Timber.w("Launch activity not found!")
+            intent = Intent(context, ZmanimActivity::class.java)
         }
-        intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
-        return PendingIntent.getActivity(context, ID_NOTIFY, intent, FLAGS_UPDATE);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        return PendingIntent.getActivity(context, ID_NOTIFY, intent, FLAGS_UPDATE)
     }
 
-    private PendingIntent createAlarmIntent(Context context, ZmanimItem item) {
-        if (isAlarmService()) {
-            ZmanimReminderItem reminderItem = ZmanimReminderItem.from(context, item);
-            long now = currentTimeMillis();
-            Intent intent = createAlarmServiceIntent(context, reminderItem, now + STOP_NOTIFICATION_AFTER);
-            return PendingIntent.getForegroundService(context, ID_ALARM_REMINDER, intent, FLAGS_UPDATE);
+    private fun createAlarmIntent(item: ZmanimItem?): PendingIntent {
+        if (isAlarmService) {
+            val reminderItem = from(item)
+            val now = System.currentTimeMillis()
+            val intent =
+                createAlarmServiceIntent(reminderItem, now + STOP_NOTIFICATION_AFTER)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                return PendingIntent.getForegroundService(
+                    context,
+                    ID_ALARM_REMINDER,
+                    intent,
+                    FLAGS_UPDATE
+                )
+            }
         }
-        Intent intent = new Intent(context, getReceiverClass())
-            .setAction(ACTION_REMIND);
-        putReminderItem(item, intent);
-        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, FLAGS_UPDATE);
-    }
-
-    private PendingIntent createAlarmIntent(Context context, ZmanimReminderItem item) {
-        Intent intent = createAlarmActivity(context, item, item.time + STOP_NOTIFICATION_AFTER);
-        putReminderItem(item, intent);
-        return PendingIntent.getActivity(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-    }
-
-    private Intent createAlarmServiceIntent(Context context, ZmanimReminderItem item, long silenceWhen) {
-        Intent intent = new Intent(context, ZmanimReminderService.class)
+        val intent = Intent(context, receiverClass)
             .setAction(ACTION_REMIND)
-            .putExtra(ZmanimReminderService.EXTRA_SILENCE_TIME, silenceWhen);
-        putReminderItem(item, intent);
-        return intent;
+        putReminderItem(item, intent)
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, FLAGS_UPDATE)
+    }
+
+    private fun createAlarmIntent(item: ZmanimReminderItem): PendingIntent {
+        val intent = createAlarmActivity(item, item.time + STOP_NOTIFICATION_AFTER)
+        putReminderItem(item, intent)
+        return PendingIntent.getActivity(
+            context,
+            ID_ALARM_REMINDER,
+            intent,
+            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+    }
+
+    private fun createAlarmServiceIntent(item: ZmanimReminderItem?, silenceWhen: Long): Intent {
+        val intent = Intent(context, ZmanimReminderService::class.java)
+            .setAction(ACTION_REMIND)
+            .putExtra(ZmanimReminderService.EXTRA_SILENCE_TIME, silenceWhen)
+        putReminderItem(item, intent)
+        return intent
     }
 
     /**
@@ -497,10 +385,15 @@ public class ZmanimReminder {
      *
      * @return the pending intent.
      */
-    private PendingIntent createCancelIntent(Context context) {
-        Intent intent = new Intent(context, getReceiverClass())
-            .setAction(ACTION_CANCEL);
-        return PendingIntent.getBroadcast(context, ID_ALARM_CANCEL, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+    private fun createCancelIntent(): PendingIntent {
+        val intent = Intent(context, receiverClass)
+            .setAction(ACTION_CANCEL)
+        return PendingIntent.getBroadcast(
+            context,
+            ID_ALARM_CANCEL,
+            intent,
+            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
     /**
@@ -508,90 +401,71 @@ public class ZmanimReminder {
      *
      * @return the pending intent.
      */
-    private PendingIntent createDismissIntent(Context context) {
-        Intent intent = new Intent(context, ZmanimReminderService.class)
-            .setAction(ACTION_DISMISS);
-        return PendingIntent.getService(context, ID_ALARM_DISMISS, intent, FLAGS_UPDATE);
+    private fun createDismissIntent(): PendingIntent {
+        val intent = Intent(context, ZmanimReminderService::class.java)
+            .setAction(ACTION_DISMISS)
+        return PendingIntent.getService(context, ID_ALARM_DISMISS, intent, FLAGS_UPDATE)
     }
 
-    public void process(@Nullable Intent intent) {
-        final Context context = getContext();
-        Timber.i("process %s [%s]", intent, formatDateTime(currentTimeMillis()));
+    fun process(intent: Intent?) {
+        Timber.i("process %s [%s]", intent, formatDateTime(System.currentTimeMillis()))
         if (intent == null) {
-            return;
+            return
         }
-        String action = intent.getAction();
-        if (action == null) {
-            return;
-        }
+        val action = intent.action ?: return
+        var update = false
+        val extras: Bundle?
+        when (action) {
+            Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_DATE_CHANGED, Intent.ACTION_LOCALE_CHANGED, Intent.ACTION_TIMEZONE_CHANGED, Intent.ACTION_TIME_CHANGED, Intent.ACTION_MY_PACKAGE_REPLACED, ACTION_UPDATE -> update =
+                true
 
-        boolean update = false;
-        Bundle extras;
-
-        switch (action) {
-            case ACTION_BOOT_COMPLETED:
-            case ACTION_DATE_CHANGED:
-            case ACTION_LOCALE_CHANGED:
-            case ACTION_TIMEZONE_CHANGED:
-            case ACTION_TIME_CHANGED:
-            case ACTION_MY_PACKAGE_REPLACED:
-            case ACTION_UPDATE:
-                update = true;
-                break;
-            case ACTION_CANCEL:
-                cancel();
-                break;
-            case ACTION_REMIND:
-                extras = intent.getExtras();
+            ACTION_CANCEL -> cancel()
+            ACTION_REMIND -> {
+                extras = intent.extras
                 if (extras != null) {
-                    ZmanimReminderItem reminderItem = ZmanimReminderItem.from(context, extras);
+                    val reminderItem = from(context, extras)
                     if (reminderItem != null) {
-                        ZmanimPreferences settings = createPreferences(context);
-                        notifyNow(settings, reminderItem);
+                        val settings = createPreferences()
+                        notifyNow(settings, reminderItem)
                     }
-                    update = true;
+                    update = true
                 }
-                break;
-            case ACTION_SILENCE:
-                extras = intent.getExtras();
+            }
+
+            ACTION_SILENCE -> {
+                extras = intent.extras
                 if (extras != null) {
-                    ZmanimReminderItem reminderItem = ZmanimReminderItem.from(context, extras);
+                    val reminderItem = from(context, extras)
                     if (reminderItem != null) {
-                        ZmanimPreferences settings = createPreferences(context);
-                        silence(settings, reminderItem);
+                        val settings = createPreferences()
+                        silence(settings, reminderItem)
                     } else {
-                        cancelNotification(context);
+                        cancelNotification()
                     }
-                    update = true;
+                    update = true
                 } else {
-                    cancelNotification(context);
+                    cancelNotification()
                 }
-                break;
+            }
         }
         if (update) {
-            remind();
+            remind()
         }
     }
 
-    private Notification createReminderNotification(Context context, ZmanimPreferences settings, ZmanimReminderItem item, PendingIntent contentIntent) {
-        return createReminderNotification(context, settings, item, contentIntent, false);
-    }
-
-    private NotificationCompat.Builder createNotificationBuilder(
-        Context context,
-        CharSequence contentTitle,
-        CharSequence contentText,
-        long when,
-        PendingIntent contentIntent,
-        String channelId
-    ) {
-        Bitmap largeIconSolar = this.largeIconSolar;
+    private fun createNotificationBuilder(
+        contentTitle: CharSequence?,
+        contentText: CharSequence?,
+        `when`: Long,
+        contentIntent: PendingIntent,
+        channelId: String
+    ): NotificationCompat.Builder {
+        var largeIconSolar = largeIconSolar
         if (largeIconSolar == null) {
-            largeIconSolar = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_solar);
-            this.largeIconSolar = largeIconSolar;
+            largeIconSolar = BitmapFactory.decodeResource(context.resources, R.mipmap.ic_solar)
+            this.largeIconSolar = largeIconSolar
         }
-
-        return new NotificationCompat.Builder(context, channelId)
+        return NotificationCompat.Builder(context, channelId)
             .setCategory(NotificationCompat.CATEGORY_REMINDER)
             .setContentIntent(contentIntent)
             .setContentText(contentText)
@@ -600,86 +474,84 @@ public class ZmanimReminder {
             .setShowWhen(true)
             .setSmallIcon(R.drawable.stat_notify_time)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setWhen(when);
+            .setWhen(`when`)
     }
 
-    private Notification createReminderNotification(
-        Context context,
-        ZmanimPreferences settings,
-        ZmanimReminderItem item,
-        PendingIntent contentIntent,
-        boolean silent
-    ) {
-        final Resources res = context.getResources();
-        final CharSequence contentTitle = item.title;
-        final CharSequence contentText = item.text;
-        final long when = item.time;
-        final int audioStreamType = settings.getReminderStream();
-        final boolean alarm = audioStreamType == AudioManager.STREAM_ALARM;
-        final Uri sound = (silent || isAlarmService()) ? null : settings.getReminderRingtone();
-        final String channel = alarm ? CHANNEL_ALARM : CHANNEL_REMINDER;
-
-        final NotificationCompat.Builder builder = createNotificationBuilder(
-            context,
-            contentTitle,
-            contentText,
-            when,
+    private fun createReminderNotification(
+        settings: ZmanimPreferences,
+        item: ZmanimReminderItem,
+        contentIntent: PendingIntent,
+        silent: Boolean = false
+    ): Notification {
+        val res = context.resources
+        val audioStreamType = settings.reminderStream
+        val isAlarm = audioStreamType == AudioManager.STREAM_ALARM
+        val sound = if (silent || isAlarmService) null else settings.reminderRingtone
+        val channel = if (isAlarm) CHANNEL_ALARM else CHANNEL_REMINDER
+        val builder = createNotificationBuilder(
+            item.title,
+            item.text,
+            item.time,
             contentIntent,
             channel
         )
             .setAutoCancel(true)
-            .setCategory(alarm ? NotificationCompat.CATEGORY_ALARM : NotificationCompat.CATEGORY_REMINDER)
+            .setCategory(if (isAlarm) NotificationCompat.CATEGORY_ALARM else NotificationCompat.CATEGORY_REMINDER)
             .setLocalOnly(true)
             .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setSound(sound, audioStreamType);
+            .setSound(sound, audioStreamType)
         if (!silent) {
-            builder.setDefaults(DEFAULT_VIBRATE)
-                .setLights(LED_COLOR, LED_ON, LED_OFF);
-
-            if (alarm) {
-                PendingIntent dismissActionIntent = createDismissIntent(context);
-                NotificationCompat.Action dismissAction = new NotificationCompat.Action(
+            builder.setDefaults(Notification.DEFAULT_VIBRATE)
+                .setLights(LED_COLOR, LED_ON, LED_OFF)
+            if (isAlarm) {
+                val dismissAction = NotificationCompat.Action(
                     R.drawable.ic_dismiss,
                     res.getText(R.string.dismiss),
-                    dismissActionIntent
-                );
-
+                    createDismissIntent()
+                )
                 builder.setFullScreenIntent(contentIntent, true)
-                    .addAction(dismissAction);
+                    .addAction(dismissAction)
             }
         }
 
         // Dynamically generate the large icon.
-        Bitmap largeIconReminder = this.largeIconReminder;
+        var largeIconReminder = largeIconReminder
         if (largeIconReminder == null) {
-            int largeIconWidth = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
-            int largeIconHeight = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_height);
-            Rect largeIconRect = new Rect(0, 0, largeIconWidth, largeIconHeight);
-            Bitmap largeIcon = Bitmap.createBitmap(largeIconWidth, largeIconHeight, Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(largeIcon);
-            Drawable layerBottom = ContextCompat.getDrawable(context, com.github.times.common.R.drawable.ic_alarm_black);
+            val largeIconWidth =
+                res.getDimensionPixelSize(android.R.dimen.notification_large_icon_width)
+            val largeIconHeight =
+                res.getDimensionPixelSize(android.R.dimen.notification_large_icon_height)
+            val largeIconRect = Rect(0, 0, largeIconWidth, largeIconHeight)
+            val largeIcon =
+                Bitmap.createBitmap(largeIconWidth, largeIconHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(largeIcon)
+            val layerBottom = ContextCompat.getDrawable(
+                context,
+                com.github.times.common.R.drawable.ic_alarm_black
+            )
             if (layerBottom != null) {
-                layerBottom.setBounds(largeIconRect);
-                layerBottom.draw(canvas);
+                layerBottom.bounds = largeIconRect
+                layerBottom.draw(canvas)
             }
-            Bitmap layerTop = largeIconSolar;
+            var layerTop = largeIconSolar
             if (layerTop == null) {
-                layerTop = BitmapFactory.decodeResource(res, R.mipmap.ic_solar);
-                this.largeIconSolar = layerTop;
+                layerTop = BitmapFactory.decodeResource(res, R.mipmap.ic_solar)
+                largeIconSolar = layerTop
             }
-            canvas.drawBitmap(layerTop, null, largeIconRect, null);
-            largeIconReminder = largeIcon;
-            this.largeIconReminder = largeIconReminder;
+            if (layerTop != null) {
+                canvas.drawBitmap(layerTop, null, largeIconRect, null)
+            }
+            largeIconReminder = largeIcon
+            this.largeIconReminder = largeIconReminder
         }
-        builder.setLargeIcon(largeIconReminder);
-
-        return builder.build();
+        builder.setLargeIcon(largeIconReminder)
+        return builder.build()
     }
 
-    private void showReminderNotification(Notification notification) {
-        NotificationManager nm = getNotificationManager();
-        initNotifications(nm);
-        nm.notify(ID_NOTIFY, notification);
+    private fun showReminderNotification(notification: Notification) {
+        val nm = notificationManager ?: return
+        initNotifications(nm)
+        nm.notify(ID_NOTIFY, notification)
     }
 
     /**
@@ -689,8 +561,13 @@ public class ZmanimReminder {
      * @param jcal the Jewish calendar as of now.
      * @return can the reminder be activated?
      */
-    private boolean allowReminder(ZmanimPreferences settings, ZmanimItem item, JewishCalendar jcal, CandleData candles) {
-        return allowReminder(settings, item.titleId, jcal, candles);
+    private fun allowReminder(
+        settings: ZmanimPreferences,
+        item: ZmanimItem,
+        jcal: JewishCalendar,
+        candles: CandleData
+    ): Boolean {
+        return allowReminder(settings, item.titleId, jcal, candles)
     }
 
     /**
@@ -701,41 +578,32 @@ public class ZmanimReminder {
      * @param jcal     the Jewish calendar as of now.
      * @return can the reminder be activated?
      */
-    private boolean allowReminder(ZmanimPreferences settings, int itemId, JewishCalendar jcal, CandleData candles) {
-        int holidayIndex = candles.holidayToday;
-
-        switch (holidayIndex) {
-            case PESACH:
-            case SHAVUOS:
-            case ROSH_HASHANA:
-            case YOM_KIPPUR:
-            case SUCCOS:
-            case SHEMINI_ATZERES:
-            case SIMCHAS_TORAH:
-            case SHABBATH:
-                return settings.isReminderSaturday(itemId);
+    private fun allowReminder(
+        settings: ZmanimPreferences,
+        itemId: Int,
+        jcal: JewishCalendar,
+        candles: CandleData
+    ): Boolean {
+        when (candles.holidayToday) {
+            JewishCalendar.PESACH,
+            JewishCalendar.SHAVUOS,
+            JewishCalendar.ROSH_HASHANA,
+            JewishCalendar.YOM_KIPPUR,
+            JewishCalendar.SUCCOS,
+            JewishCalendar.SHEMINI_ATZERES,
+            JewishCalendar.SIMCHAS_TORAH,
+            SHABBATH -> return settings.isReminderSaturday(itemId)
         }
-
-        int dayOfWeek = jcal.getDayOfWeek();
-
-        switch (dayOfWeek) {
-            case SUNDAY:
-                return settings.isReminderSunday(itemId);
-            case MONDAY:
-                return settings.isReminderMonday(itemId);
-            case TUESDAY:
-                return settings.isReminderTuesday(itemId);
-            case WEDNESDAY:
-                return settings.isReminderWednesday(itemId);
-            case THURSDAY:
-                return settings.isReminderThursday(itemId);
-            case FRIDAY:
-                return settings.isReminderFriday(itemId);
-            case SATURDAY:
-                return settings.isReminderSaturday(itemId);
+        when (jcal.dayOfWeek) {
+            Calendar.SUNDAY -> return settings.isReminderSunday(itemId)
+            Calendar.MONDAY -> return settings.isReminderMonday(itemId)
+            Calendar.TUESDAY -> return settings.isReminderTuesday(itemId)
+            Calendar.WEDNESDAY -> return settings.isReminderWednesday(itemId)
+            Calendar.THURSDAY -> return settings.isReminderThursday(itemId)
+            Calendar.FRIDAY -> return settings.isReminderFriday(itemId)
+            Calendar.SATURDAY -> return settings.isReminderSaturday(itemId)
         }
-
-        return true;
+        return true
     }
 
     /**
@@ -743,29 +611,32 @@ public class ZmanimReminder {
      *
      * @param triggerAt when to stop.
      */
-    private void cancelFuture(long triggerAt) {
-        Timber.i("cancel future at [%s]", formatDateTime(triggerAt));
-
-        final Context context = getContext();
-        AlarmManager alarms = getAlarmManager();
-        PendingIntent alarmIntent = createCancelIntent(context);
-        alarms.set(AlarmManager.RTC, triggerAt, alarmIntent);
+    private fun cancelFuture(triggerAt: Long) {
+        val alarms = alarmManager ?: return
+        Timber.i("cancel future at [%s]", formatDateTime(triggerAt))
+        val alarmIntent = createCancelIntent()
+        alarms[AlarmManager.RTC, triggerAt] = alarmIntent
     }
 
-    private Notification createUpcomingNotification(Context context, ZmanimItem item, PendingIntent contentIntent) {
-        final CharSequence contentTitle = item.title;
-        final CharSequence contentText = item.summary;
-        final long when = item.time;
-
-        return createNotificationBuilder(context, contentTitle, contentText, when, contentIntent, CHANNEL_UPCOMING)
+    private fun createUpcomingNotification(
+        item: ZmanimItem,
+        contentIntent: PendingIntent
+    ): Notification {
+        return createNotificationBuilder(
+            item.title,
+            item.summary,
+            item.time,
+            contentIntent,
+            CHANNEL_UPCOMING
+        )
             .setOngoing(true)
-            .build();
+            .build()
     }
 
-    private void showUpcomingNotification(Notification notification) {
-        NotificationManager nm = getNotificationManager();
-        initNotifications(nm);
-        nm.notify(ID_NOTIFY_UPCOMING, notification);
+    private fun showUpcomingNotification(notification: Notification) {
+        val nm = notificationManager ?: return
+        initNotifications(nm)
+        nm.notify(ID_NOTIFY_UPCOMING, notification)
     }
 
     /**
@@ -773,34 +644,42 @@ public class ZmanimReminder {
      *
      * @param item the next item.
      */
-    public void notifyUpcoming(ZmanimItem item) {
-        CharSequence contentTitle = item.title;
-        long when = item.time;
-        long triggerAt = item.time;
-
-        Timber.i("notify upcoming [%s] at [%s] for [%s]", contentTitle, formatDateTime(triggerAt), formatDateTime(when));
-
-        final Context context = getContext();
-        PendingIntent contentIntent = createActivityIntent(context);
-
-        Notification notification = createUpcomingNotification(context, item, contentIntent);
-        showUpcomingNotification(notification);
-
-        AlarmManager alarms = getAlarmManager();
-        PendingIntent alarmIntent = createUpcomingIntent(context);
+    private fun notifyUpcoming(item: ZmanimItem) {
+        val alarms = alarmManager ?: return
+        val triggerAt = item.time
+        Timber.i(
+            "notify upcoming [%s] at [%s] for [%s]",
+            item.title,
+            formatDateTime(triggerAt),
+            formatDateTime(item.time)
+        )
+        val contentIntent = createActivityIntent()
+        val notification = createUpcomingNotification(item, contentIntent)
+        showUpcomingNotification(notification)
+        val alarmIntent = createUpcomingIntent()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (!alarms.canScheduleExactAlarms()) {
-                AlarmManagerCompat.setAndAllowWhileIdle(alarms, AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
-                return;
+                AlarmManagerCompat.setAndAllowWhileIdle(
+                    alarms,
+                    AlarmManager.RTC_WAKEUP,
+                    triggerAt,
+                    alarmIntent
+                )
+                return
             }
         }
-        AlarmManagerCompat.setExactAndAllowWhileIdle(alarms, AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        AlarmManagerCompat.setExactAndAllowWhileIdle(
+            alarms,
+            AlarmManager.RTC_WAKEUP,
+            triggerAt,
+            alarmIntent
+        )
     }
 
-    private PendingIntent createUpcomingIntent(Context context) {
-        Intent intent = new Intent(context, getReceiverClass())
-            .setAction(ACTION_UPDATE);
-        return PendingIntent.getBroadcast(context, ID_ALARM_UPCOMING, intent, FLAGS_UPDATE);
+    private fun createUpcomingIntent(): PendingIntent {
+        val intent = Intent(context, receiverClass)
+            .setAction(ACTION_UPDATE)
+        return PendingIntent.getBroadcast(context, ID_ALARM_UPCOMING, intent, FLAGS_UPDATE)
     }
 
     /**
@@ -809,16 +688,15 @@ public class ZmanimReminder {
      * @param item      the item to show.
      * @param triggerAt when to silence.
      */
-    private void silenceFuture(Context context, ZmanimReminderItem item, long triggerAt) {
-        Timber.i("silence future at [%s]", formatDateTime(triggerAt));
+    private fun silenceFuture(item: ZmanimReminderItem?, triggerAt: Long) {
+        Timber.i("silence future at [%s]", formatDateTime(triggerAt))
         if (item == null) {
-            cancelFuture(triggerAt);
-            return;
+            cancelFuture(triggerAt)
+            return
         }
-
-        AlarmManager alarms = getAlarmManager();
-        PendingIntent alarmIntent = createSilenceIntent(context, item);
-        alarms.set(AlarmManager.RTC, triggerAt, alarmIntent);
+        val alarms = alarmManager ?: return
+        val alarmIntent = createSilenceIntent(item)
+        alarms[AlarmManager.RTC, triggerAt] = alarmIntent
     }
 
     /**
@@ -826,11 +704,16 @@ public class ZmanimReminder {
      *
      * @return the pending intent.
      */
-    private PendingIntent createSilenceIntent(Context context, ZmanimReminderItem item) {
-        Intent intent = new Intent(context, getReceiverClass())
-            .setAction(ACTION_SILENCE);
-        item.put(intent);
-        return PendingIntent.getBroadcast(context, ID_ALARM_SILENT, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+    private fun createSilenceIntent(item: ZmanimReminderItem): PendingIntent {
+        val intent = Intent(context, receiverClass)
+            .setAction(ACTION_SILENCE)
+        item.put(intent)
+        return PendingIntent.getBroadcast(
+            context,
+            ID_ALARM_SILENT,
+            intent,
+            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
     /**
@@ -839,126 +722,107 @@ public class ZmanimReminder {
      * @param settings the preferences.
      * @param item     the reminder item.
      */
-    private void silence(ZmanimPreferences settings, ZmanimReminderItem item) {
-        Timber.i("silence now [%s] for [%s]", item.title, formatDateTime(item.time));
-        final Context context = getContext();
-        PendingIntent contentIntent = createActivityIntent(context);
-
-        Notification notification = createSilenceNotification(context, settings, item, contentIntent);
-        postSilenceNotification(notification);
+    private fun silence(settings: ZmanimPreferences, item: ZmanimReminderItem) {
+        Timber.i("silence now [%s] for [%s]", item.title, formatDateTime(item.time))
+        val contentIntent = createActivityIntent()
+        val notification = createSilenceNotification(settings, item, contentIntent)
+        postSilenceNotification(notification)
     }
 
-    private Notification createSilenceNotification(
-        Context context,
-        ZmanimPreferences settings,
-        ZmanimReminderItem item,
-        PendingIntent contentIntent
-    ) {
-        return createReminderNotification(context, settings, item, contentIntent, true);
+    private fun createSilenceNotification(
+        settings: ZmanimPreferences,
+        item: ZmanimReminderItem,
+        contentIntent: PendingIntent
+    ): Notification {
+        return createReminderNotification(settings, item, contentIntent, true)
     }
 
-    private void postSilenceNotification(Notification notification) {
-        NotificationManager nm = getNotificationManager();
-        initNotifications(nm);
+    private fun postSilenceNotification(notification: Notification) {
+        val nm = notificationManager ?: return
+        initNotifications(nm)
         // Kill the notification so that its sound stops playing.
-        nm.cancel(ID_NOTIFY);
-        nm.notify(ID_NOTIFY, notification);
-    }
-
-    /**
-     * Get the notification manager.
-     *
-     * @return the manager.
-     */
-    protected NotificationManager getNotificationManager() {
-        final Context context = getContext();
-        return (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-    }
-
-    /**
-     * Get the alarm manager.
-     *
-     * @return the manager.
-     */
-    protected AlarmManager getAlarmManager() {
-        final Context context = getContext();
-        return (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        nm.cancel(ID_NOTIFY)
+        nm.notify(ID_NOTIFY, notification)
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    private void initChannels(NotificationManager nm) {
-        final Context context = getContext();
-        initChannelAlarm(context, nm);
-        initChannelReminder(context, nm);
-        initChannelUpcoming(context, nm);
+    private fun initChannels(nm: NotificationManager) {
+        initChannelAlarm(nm)
+        initChannelReminder(nm)
+        initChannelUpcoming(nm)
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    private void initChannelAlarm(Context context, NotificationManager nm) {
-        nm.deleteNotificationChannel(CHANNEL_ALARM_OLD);
-
-        String channelName = CHANNEL_ALARM;
-        android.app.NotificationChannel channel = nm.getNotificationChannel(channelName);
+    private fun initChannelAlarm(nm: NotificationManager) {
+        nm.deleteNotificationChannel(CHANNEL_ALARM_OLD)
+        val channelName = CHANNEL_ALARM
+        var channel = nm.getNotificationChannel(channelName)
         if (channel == null) {
-            channel = new android.app.NotificationChannel(channelName, context.getString(R.string.reminder), NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription(context.getString(R.string.notification_volume_title));
-            channel.enableLights(true);
-            channel.setLightColor(LED_COLOR);
-            channel.enableVibration(true);
-            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-            channel.setSound(null, null);// Silent
-
-            nm.createNotificationChannel(channel);
+            channel = NotificationChannel(
+                channelName,
+                context.getString(R.string.reminder),
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            channel.description = context.getString(R.string.notification_volume_title)
+            channel.enableLights(true)
+            channel.lightColor = LED_COLOR
+            channel.enableVibration(true)
+            channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            channel.setSound(null, null) // Silent
+            nm.createNotificationChannel(channel)
         }
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    private void initChannelReminder(Context context, NotificationManager nm) {
-        nm.deleteNotificationChannel(CHANNEL_REMINDER_OLD);
-
-        String channelName = CHANNEL_REMINDER;
-        android.app.NotificationChannel channel = nm.getNotificationChannel(channelName);
+    private fun initChannelReminder(nm: NotificationManager) {
+        nm.deleteNotificationChannel(CHANNEL_REMINDER_OLD)
+        val channelName = CHANNEL_REMINDER
+        var channel = nm.getNotificationChannel(channelName)
         if (channel == null) {
-            channel = new android.app.NotificationChannel(channelName, context.getString(R.string.reminder), NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription(context.getString(R.string.notification_volume_title));
-            channel.enableLights(true);
-            channel.setLightColor(LED_COLOR);
-            channel.enableVibration(true);
-            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-
-            Uri sound = RingtoneManager.getDefaultUri(TYPE_NOTIFICATION);
-            android.media.AudioAttributes audioAttributes = new android.media.AudioAttributes.Builder()
+            channel = NotificationChannel(
+                channelName,
+                context.getString(R.string.reminder),
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            channel.description = context.getString(R.string.notification_volume_title)
+            channel.enableLights(true)
+            channel.lightColor = LED_COLOR
+            channel.enableVibration(true)
+            channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            val sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            val audioAttributes = AudioAttributes.Builder()
                 .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
-                .setUsage(android.media.AudioAttributes.USAGE_NOTIFICATION_EVENT)
-                .build();
-            channel.setSound(sound, audioAttributes);
-
-            nm.createNotificationChannel(channel);
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT)
+                .build()
+            channel.setSound(sound, audioAttributes)
+            nm.createNotificationChannel(channel)
         }
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    private void initChannelUpcoming(Context context, NotificationManager nm) {
-        String channelName = CHANNEL_UPCOMING;
-        android.app.NotificationChannel channel = nm.getNotificationChannel(channelName);
+    private fun initChannelUpcoming(nm: NotificationManager) {
+        val channelName = CHANNEL_UPCOMING
+        var channel = nm.getNotificationChannel(channelName)
         if (channel == null) {
-            channel = new android.app.NotificationChannel(channelName, context.getString(R.string.notification_upcoming_title), NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription(context.getString(R.string.notification_upcoming_title));
-            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-            channel.setSound(null, null);// Silent
-
-            nm.createNotificationChannel(channel);
+            channel = NotificationChannel(
+                channelName,
+                context.getString(R.string.notification_upcoming_title),
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            channel.description = context.getString(R.string.notification_upcoming_title)
+            channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            channel.setSound(null, null) // Silent
+            nm.createNotificationChannel(channel)
         }
     }
 
-    /**
-     * Get the broadcast receiver that will then start the reminder service.
-     *
-     * @return the receiver class.
-     */
-    private Class<? extends BroadcastReceiver> getReceiverClass() {
-        return ZmanimReminderReceiver.class;
-    }
+    private val receiverClass: Class<out BroadcastReceiver?>
+        /**
+         * Get the broadcast receiver that will then start the reminder service.
+         *
+         * @return the receiver class.
+         */
+        private get() = ZmanimReminderReceiver::class.java
 
     /**
      * Alarm screen now.
@@ -966,92 +830,205 @@ public class ZmanimReminder {
      * @param item        the reminder item.
      * @param silenceWhen when to silence the alarm, in milliseconds.
      */
-    public void alarmNow(Context context, ZmanimReminderItem item, long silenceWhen) {
-        Timber.i("alarm now [%s] for [%s]", item.title, formatDateTime(item.time));
-        if (isAlarmService()) {
-            startAlarmService(context, item, silenceWhen);
+    fun alarmNow(item: ZmanimReminderItem, silenceWhen: Long) {
+        Timber.i("alarm now [%s] for [%s]", item.title, formatDateTime(item.time))
+        if (isAlarmService) {
+            startAlarmService(item, silenceWhen)
         } else {
-            startAlarmActivity(context, item, silenceWhen);
+            startAlarmActivity(item, silenceWhen)
         }
     }
 
-    private boolean isAlarmService() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
-    }
+    private val isAlarmService: Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
 
-    private Intent createAlarmActivity(Context context, ZmanimReminderItem item, long silenceWhen) {
-        Intent intent = new Intent(context, AlarmActivity.class)
+    private fun createAlarmActivity(
+        item: ZmanimReminderItem,
+        silenceWhen: Long
+    ): Intent {
+        val intent = Intent(context, AlarmActivity::class.java)
             .putExtra(AlarmActivity.EXTRA_SILENCE_TIME, silenceWhen)
-            .addFlags(FLAG_ACTIVITY_NEW_TASK)
-            .addFlags(FLAG_ACTIVITY_NO_USER_ACTION);
-        putReminderItem(item, intent);
-        return intent;
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            .addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION)
+        putReminderItem(item, intent)
+        return intent
     }
 
-    private void putReminderItem(@Nullable ZmanimItem item, Intent intent) {
+    private fun putReminderItem(item: ZmanimItem?, intent: Intent) {
         if (item != null) {
-            final Context context = getContext();
-            ZmanimReminderItem reminderItem = ZmanimReminderItem.from(context, item);
-            putReminderItem(reminderItem, intent);
+            val reminderItem = from(item)
+            putReminderItem(reminderItem, intent)
         }
     }
 
-    private void putReminderItem(@Nullable ZmanimReminderItem reminderItem, Intent intent) {
-        if (reminderItem != null) {
-            reminderItem.put(intent);
-        }
+    private fun putReminderItem(reminderItem: ZmanimReminderItem?, intent: Intent) {
+        reminderItem?.put(intent)
     }
 
-    private void startAlarmActivity(Context context, ZmanimReminderItem item, long silenceWhen) {
-        Intent intent = createAlarmActivity(context, item, silenceWhen);
-        context.startActivity(intent);
+    private fun startAlarmActivity(item: ZmanimReminderItem, silenceWhen: Long) {
+        val intent = createAlarmActivity(item, silenceWhen)
+        context.startActivity(intent)
     }
 
     @TargetApi(Build.VERSION_CODES.Q)
-    private void startAlarmService(Context context, ZmanimReminderItem item, long silenceWhen) {
-        Intent intent = createAlarmServiceIntent(context, item, silenceWhen);
-        context.startForegroundService(intent);
+    private fun startAlarmService(item: ZmanimReminderItem, silenceWhen: Long) {
+        val intent = createAlarmServiceIntent(item, silenceWhen)
+        context.startForegroundService(intent)
     }
 
-    public Notification createAlarmServiceNotification(Context context, ZmanimPreferences settings, ZmanimReminderItem item) {
-        PendingIntent contentIntent = createAlarmIntent(context, item);
-        return createReminderNotification(context, settings, item, contentIntent, false);
+    fun createAlarmServiceNotification(
+        settings: ZmanimPreferences,
+        item: ZmanimReminderItem
+    ): Notification {
+        val contentIntent = createAlarmIntent(item)
+        return createReminderNotification(settings, item, contentIntent, false)
     }
 
-    private void initNotifications(NotificationManager nm) {
+    private fun initNotifications(nm: NotificationManager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            initChannels(nm);
+            initChannels(nm)
         }
     }
 
-    public void initNotifications() {
-        NotificationManager nm = getNotificationManager();
-        initNotifications(nm);
+    fun initNotifications() {
+        val nm = notificationManager ?: return
+        initNotifications(nm)
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public static void checkPermissions(Activity activity) {
-        final Context context = activity;
-        List<String> permissions = new ArrayList<>();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if (!nm.areNotificationsEnabled() || (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_NOTIFICATIONS) != PermissionChecker.PERMISSION_GRANTED)) {
-                permissions.add(PERMISSION_NOTIFICATIONS);
+    private fun createPreferences(): ZmanimPreferences {
+        return SimpleZmanimPreferences(context)
+    }
+
+    companion object {
+        /**
+         * Id for reminder notifications.<br></br>
+         * Newer notifications will override current notifications.
+         */
+        private const val ID_NOTIFY = 1
+
+        /**
+         * Id for alarms.
+         */
+        private const val ID_ALARM_REMINDER = 2
+
+        /**
+         * Id for upcoming time notification.<br></br>
+         * Newer notifications will override current notifications.
+         */
+        private const val ID_NOTIFY_UPCOMING = 3
+
+        /**
+         * Id for alarms for upcoming time notification.
+         */
+        private const val ID_ALARM_UPCOMING = 4
+
+        /**
+         * Id for cancelling alarms.
+         */
+        private const val ID_ALARM_CANCEL = 5
+
+        /**
+         * Id for silent alarms.
+         */
+        private const val ID_ALARM_SILENT = 6
+
+        /**
+         * Id for dismissing alarms.
+         */
+        private const val ID_ALARM_DISMISS = 7
+
+        private const val WAS_DELTA = DateUtils.SECOND_IN_MILLIS
+        private const val SOON_DELTA = 10 * DateUtils.SECOND_IN_MILLIS
+
+        /**
+         * The number of days to check forwards for a reminder.
+         */
+        private const val DAYS_FORWARD = 30
+
+        /* Yellow represents the sun or a candle flame. */
+        private const val LED_COLOR = Color.YELLOW
+        private const val LED_ON = 750
+        private const val LED_OFF = 500
+
+        /**
+         * Action to remind.
+         */
+        const val ACTION_REMIND = BuildConfig.APPLICATION_ID + ".action.REMIND"
+
+        /**
+         * Action to update reminders.
+         */
+        const val ACTION_UPDATE = BuildConfig.APPLICATION_ID + ".action.UPDATE"
+
+        /**
+         * Action to cancel reminders.
+         */
+        const val ACTION_CANCEL = BuildConfig.APPLICATION_ID + ".action.CANCEL"
+
+        /**
+         * Action to silence reminders.
+         */
+        const val ACTION_SILENCE = BuildConfig.APPLICATION_ID + ".action.SILENCE"
+
+        /**
+         * Action to dismiss alarms.
+         */
+        const val ACTION_DISMISS = BuildConfig.APPLICATION_ID + ".action.DISMISS"
+
+        /**
+         * How much time to wait for the notification sound once entered into a day not allowed to disturb.
+         */
+        // TODO put as user settings.
+        private const val STOP_NOTIFICATION_AFTER = DateUtils.MINUTE_IN_MILLIS
+
+        private const val CHANNEL_ALARM = "channel_alarm"
+        private const val CHANNEL_REMINDER = "channel_reminder"
+        private const val CHANNEL_ALARM_OLD = "reminder_alarm"
+        private const val CHANNEL_REMINDER_OLD = "reminder"
+        private const val CHANNEL_UPCOMING = "upcoming"
+
+        private const val WAKE_TAG = "ZmanimReminder:wake"
+
+        @TargetApi(Build.VERSION_CODES.TIRAMISU)
+        @JvmField
+        val PERMISSION_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS
+
+        /**
+         * Activity id for requesting notification permissions.
+         */
+        private const val ACTIVITY_PERMISSIONS = 0x6057 // "POST"
+
+        private const val FLAGS_UPDATE =
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @JvmStatic
+        fun checkPermissions(activity: Activity) {
+            val context: Context = activity
+            val permissions = mutableListOf<String>()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                val nm =
+                    context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                if (!nm.areNotificationsEnabled() || PermissionChecker.checkCallingOrSelfPermission(
+                        context,
+                        PERMISSION_NOTIFICATIONS
+                    ) != PermissionChecker.PERMISSION_GRANTED
+                ) {
+                    permissions.add(PERMISSION_NOTIFICATIONS)
+                }
+            }
+            if (permissions.isNotEmpty()) {
+                activity.requestPermissions(permissions.toTypedArray(), ACTIVITY_PERMISSIONS)
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val alarms = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                if (!alarms.canScheduleExactAlarms()) {
+                    val intent = Intent(
+                        Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM,
+                        Uri.parse("package:" + context.packageName)
+                    )
+                    context.startActivity(intent)
+                }
             }
         }
-        if (!permissions.isEmpty()) {
-            activity.requestPermissions(permissions.toArray(new String[0]), ACTIVITY_PERMISSIONS);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            if (!alarms.canScheduleExactAlarms()) {
-                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.parse("package:" + context.getPackageName()));
-                context.startActivity(intent);
-            }
-        }
-    }
-
-    private ZmanimPreferences createPreferences(Context context) {
-        return new SimpleZmanimPreferences(context);
     }
 }

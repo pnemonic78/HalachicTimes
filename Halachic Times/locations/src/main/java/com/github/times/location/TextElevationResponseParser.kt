@@ -13,76 +13,72 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.location.Location;
-
-import com.github.io.StreamUtils;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import timber.log.Timber;
-
-import static android.text.TextUtils.isEmpty;
-import static com.github.times.location.GeocoderBase.USER_PROVIDER;
+import android.location.Location
+import com.github.io.StreamUtils.toString
+import java.io.IOException
+import java.io.InputStream
+import timber.log.Timber
 
 /**
  * Handler for parsing the textual elevation response.
  *
  * @author Moshe Waisberg
  */
-public class TextElevationResponseParser extends ElevationResponseParser {
-
-    /**
-     * Lowest possible natural elevation on the surface of the earth.
-     */
-    private static final double ELEVATION_LOWEST_SURFACE = ZmanimLocation.ELEVATION_MIN;
-    /**
-     * Highest possible natural elevation from the surface of the earth.
-     */
-    private static final double ELEVATION_SPACE = ZmanimLocation.ELEVATION_MAX;
-
-    @Override
-    public List<Location> parse(InputStream data, double latitude, double longitude, int maxResults) throws LocationException, IOException {
-        String text = StreamUtils.toString(data);
-        if (isEmpty(text)) {
-            throw new LocationException("empty elevation");
+class TextElevationResponseParser : ElevationResponseParser() {
+    @Throws(LocationException::class, IOException::class)
+    override fun parse(
+        data: InputStream,
+        latitude: Double,
+        longitude: Double,
+        maxResults: Int
+    ): List<Location> {
+        val text = toString(data)
+        if (text.isEmpty()) {
+            throw LocationException("empty elevation")
         }
-
-        List<Location> results = new ArrayList<>(maxResults);
-        Location location = toLocation(text, latitude, longitude);
+        val results = mutableListOf<Location>()
+        val location = toLocation(text, latitude, longitude)
         if (location != null) {
-            results.add(location);
+            results.add(location)
         }
-        return results;
+        return results
     }
 
-    @Nullable
-    private Location toLocation(@NonNull String response, double latitude, double longitude) throws LocationException {
-        try {
-            double elevation = Double.parseDouble(response);
+    @Throws(LocationException::class)
+    private fun toLocation(response: String, latitude: Double, longitude: Double): Location? {
+        return try {
+            val elevation = response.toDouble()
             if (elevation <= ELEVATION_LOWEST_SURFACE) {
-                Timber.w("elevation too low: %s", response);
-                return null;
+                Timber.w("elevation too low: %s", response)
+                return null
             }
             if (elevation >= ELEVATION_SPACE) {
-                Timber.w("elevation too high: %s", response);
-                return null;
+                Timber.w("elevation too high: %s", response)
+                return null
             }
-            Location result = new Location(USER_PROVIDER);
-            result.setTime(System.currentTimeMillis());
-            result.setLatitude(latitude);
-            result.setLongitude(longitude);
-            result.setAltitude(elevation);
-            return result;
-        } catch (NumberFormatException e) {
-            Timber.e(e, "Bad elevation: [" + response + "] at " + latitude + "," + longitude);
-            throw new LocationException(e);
+            val result = Location(GeocoderBase.USER_PROVIDER)
+            result.time = System.currentTimeMillis()
+            result.latitude = latitude
+            result.longitude = longitude
+            result.altitude = elevation
+            result
+        } catch (e: NumberFormatException) {
+            Timber.e(e, "Bad elevation: [$response] at $latitude,$longitude")
+            throw LocationException(e)
         }
+    }
+
+    companion object {
+        /**
+         * Lowest possible natural elevation on the surface of the earth.
+         */
+        private const val ELEVATION_LOWEST_SURFACE = ZmanimLocation.ELEVATION_MIN
+
+        /**
+         * Highest possible natural elevation from the surface of the earth.
+         */
+        private const val ELEVATION_SPACE = ZmanimLocation.ELEVATION_MAX
     }
 }

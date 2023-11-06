@@ -13,93 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.location.Location;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
+import android.location.Location
+import android.os.Parcel
+import android.os.Parcelable
+import com.github.math.toDegrees
+import com.github.math.toRadians
+import kotlin.math.abs
+import kotlin.math.atan2
+import kotlin.math.ln
+import kotlin.math.tan
 
 /**
  * Location that is partially stored in the local database.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimLocation extends Location {
-
-    /**
-     * Minimum valid latitude.
-     */
-    public static final double LATITUDE_MIN = -90;
-    /**
-     * Maximum valid latitude.
-     */
-    public static final double LATITUDE_MAX = 90;
-    /**
-     * Minimum valid longitude.
-     */
-    public static final double LONGITUDE_MIN = -180;
-    /**
-     * Maximum valid longitude.
-     */
-    public static final double LONGITUDE_MAX = 180;
-
-    /**
-     * Lowest possible natural elevation on the surface of the earth.
-     */
-    public static final double ELEVATION_MIN = -500;
-    /**
-     * Highest possible natural elevation from the surface of the earth.
-     */
-    public static final double ELEVATION_MAX = 100_000;
-
-    /**
-     * Double subtraction error.
-     */
-    private static final double EPSILON = 1e-6;
-
-    private static final double RADIANS_180 = Math.PI;
-    private static final double RADIANS_360 = RADIANS_180 * 2;
-    private static final double RADIANS_45 = RADIANS_180 / 4;
-
-    private long id;
+class ZmanimLocation : Location {
+    var id: Long = 0
 
     /**
      * Constructs a new location.
      *
      * @param provider the name of the provider that generated this location.
      */
-    public ZmanimLocation(@NonNull String provider) {
-        super(provider);
-    }
+    constructor(provider: String) : super(provider)
 
     /**
      * Construct a new location that is copied from an existing one.
      *
      * @param location the source location.
      */
-    public ZmanimLocation(@NonNull Location location) {
-        super(location);
-    }
-
-    /**
-     * Get the id.
-     *
-     * @return the id
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * Set the id.
-     *
-     * @param id the id.
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
+    constructor(location: Location) : super(location)
 
     /**
      * Returns the approximate initial bearing in degrees East of true
@@ -110,8 +56,8 @@ public class ZmanimLocation extends Location {
      * @param dest the destination location
      * @return the initial bearing in degrees
      */
-    public float angleTo(Location dest) {
-        return angleTo(dest.getLatitude(), dest.getLongitude());
+    fun angleTo(dest: Location): Float {
+        return angleTo(dest.latitude, dest.longitude)
     }
 
     /**
@@ -124,182 +70,220 @@ public class ZmanimLocation extends Location {
      * @param longitude the destination longitude, in degrees.
      * @return the bearing in degrees.
      */
-    public float angleTo(double latitude, double longitude) {
-        return (float) computeRhumbBearing(this.getLatitude(), this.getLongitude(), latitude, longitude);
+    fun angleTo(latitude: Double, longitude: Double): Float {
+        return computeRhumbBearing(this.latitude, this.longitude, latitude, longitude).toFloat()
     }
 
-    /**
-     * Returns the approximate initial bearing in degrees East of true
-     * North when traveling along the loxodrome path between this
-     * location and the given location. The constant bearing path is defined
-     * using the Rhumb line.
-     *
-     * @param location    the initial location.
-     * @param destination the destination location.
-     * @return the bearing in degrees.
-     */
-    public static float angleTo(Location location, Location destination) {
-        return (float) computeRhumbBearing(location.getLatitude(), location.getLongitude(), destination.getLatitude(), destination.getLongitude());
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        super.writeToParcel(parcel, flags)
+        parcel.writeLong(id)
     }
 
-    /**
-     * Computes the azimuth angle (clockwise from North) of a Rhumb line (a line of constant heading) between two
-     * locations.
-     * This method uses a spherical model, not elliptical.
-     *
-     * @param latitude1  the starting latitude, in degrees.
-     * @param longitude1 the starting longitude, in degrees.
-     * @param latitude2  the destination longitude, in degrees.
-     * @param longitude2 the destination latitude, in degrees.
-     * @return teh bearing in degrees.
-     */
-    private static double computeRhumbBearing(double latitude1, double longitude1, double latitude2, double longitude2) {
-        double lat1 = Math.toRadians(latitude1);
-        double lng1 = Math.toRadians(longitude1);
-        double lat2 = Math.toRadians(latitude2);
-        double lng2 = Math.toRadians(longitude2);
+    companion object {
+        /**
+         * Minimum valid latitude.
+         */
+        const val LATITUDE_MIN = -90.0
 
-        double phi1 = Math.tan(RADIANS_45 + (lat1 / 2));
-        double phi2 = Math.tan(RADIANS_45 + (lat2 / 2));
-        double dPhi = Math.log(phi2 / phi1);
-        double dLon = lng2 - lng1;
+        /**
+         * Maximum valid latitude.
+         */
+        const val LATITUDE_MAX = 90.0
 
-        // if dLon over 180° take shorter Rhumb line across the anti-meridian:
-        if (Math.abs(dLon) > RADIANS_180)
-            dLon = dLon > 0 ? -(RADIANS_360 - dLon) : (RADIANS_360 + dLon);
+        /**
+         * Minimum valid longitude.
+         */
+        const val LONGITUDE_MIN = -180.0
 
-        double azimuth = Math.atan2(dLon, dPhi);
-        if (azimuth < 0) {
-            azimuth += RADIANS_360;
+        /**
+         * Maximum valid longitude.
+         */
+        const val LONGITUDE_MAX = 180.0
+
+        /**
+         * Lowest possible natural elevation on the surface of the earth.
+         */
+        const val ELEVATION_MIN = -500.0
+
+        /**
+         * Highest possible natural elevation from the surface of the earth.
+         */
+        const val ELEVATION_MAX = 100_000.0
+
+        /**
+         * Double subtraction error.
+         */
+        private const val EPSILON = 1e-6
+        private const val RADIANS_180 = Math.PI
+        private const val RADIANS_360 = RADIANS_180 * 2
+        private const val RADIANS_45 = RADIANS_180 / 4
+
+        /**
+         * Returns the approximate initial bearing in degrees East of true
+         * North when traveling along the loxodrome path between this
+         * location and the given location. The constant bearing path is defined
+         * using the Rhumb line.
+         *
+         * @param location    the initial location.
+         * @param destination the destination location.
+         * @return the bearing in degrees.
+         */
+        @JvmStatic
+        fun angleTo(location: Location, destination: Location): Float {
+            return computeRhumbBearing(
+                location.latitude,
+                location.longitude,
+                destination.latitude,
+                destination.longitude
+            ).toFloat()
         }
 
-        return Math.toDegrees(azimuth);
-    }
+        /**
+         * Computes the azimuth angle (clockwise from North) of a Rhumb line (a line of constant heading) between two
+         * locations.
+         * This method uses a spherical model, not elliptical.
+         *
+         * @param latitude1  the starting latitude, in degrees.
+         * @param longitude1 the starting longitude, in degrees.
+         * @param latitude2  the destination longitude, in degrees.
+         * @param longitude2 the destination latitude, in degrees.
+         * @return teh bearing in degrees.
+         */
+        @JvmStatic
+        private fun computeRhumbBearing(
+            latitude1: Double,
+            longitude1: Double,
+            latitude2: Double,
+            longitude2: Double
+        ): Double {
+            val lat1 = latitude1.toRadians()
+            val lng1 = longitude1.toRadians()
+            val lat2 = latitude2.toRadians()
+            val lng2 = longitude2.toRadians()
 
-    @Override
-    public void writeToParcel(Parcel parcel, int flags) {
-        super.writeToParcel(parcel, flags);
-        parcel.writeLong(id);
-    }
+            val phi1 = tan(RADIANS_45 + (lat1 / 2))
+            val phi2 = tan(RADIANS_45 + (lat2 / 2))
+            val dPhi = ln(phi2 / phi1)
+            var dLon = lng2 - lng1
 
-    public static final Parcelable.Creator<ZmanimLocation> CREATOR = new Parcelable.Creator<ZmanimLocation>() {
-        @Override
-        public ZmanimLocation createFromParcel(Parcel source) {
-            Location l = Location.CREATOR.createFromParcel(source);
-            ZmanimLocation zl = new ZmanimLocation(l);
-            zl.id = source.readLong();
-            return zl;
+            // if dLon over 180° take shorter Rhumb line across the anti-meridian:
+            if (abs(dLon) > RADIANS_180) {
+                dLon = if (dLon > 0) -(RADIANS_360 - dLon) else (RADIANS_360 + dLon)
+            }
+            var azimuth = atan2(dLon, dPhi)
+            if (azimuth < 0) {
+                azimuth += RADIANS_360
+            }
+            return azimuth.toDegrees()
         }
 
-        @Override
-        public ZmanimLocation[] newArray(int size) {
-            return new ZmanimLocation[size];
-        }
-    };
+        @JvmField
+        val CREATOR: Parcelable.Creator<ZmanimLocation> =
+            object : Parcelable.Creator<ZmanimLocation> {
+                override fun createFromParcel(source: Parcel): ZmanimLocation {
+                    val l = Location.CREATOR.createFromParcel(source)
+                    return ZmanimLocation(l).apply {
+                        id = source.readLong()
+                    }
+                }
 
-    /**
-     * Compare two locations by latitude and longitude only.
-     *
-     * @param l1 the first location.
-     * @param l2 the second location.
-     * @return the comparison as per {@link Comparable}.
-     */
-    public static int compare(Location l1, Location l2) {
-        if (l1 == l2) {
-            return 0;
-        }
-        if (l1 == null) {
-            return -1;
-        }
-        if (l2 == null) {
-            return 1;
-        }
+                override fun newArray(size: Int): Array<ZmanimLocation?> {
+                    return arrayOfNulls(size)
+                }
+            }
 
-        double lat1 = l1.getLatitude();
-        double lat2 = l2.getLatitude();
-        double latD = lat1 - lat2;
-        if (latD >= EPSILON) {
-            return 1;
-        }
-        if (latD <= -EPSILON) {
-            return -1;
-        }
+        /**
+         * Compare two locations by latitude and longitude only.
+         *
+         * @param l1 the first location.
+         * @param l2 the second location.
+         * @return the comparison as per [Comparable].
+         */
+        @JvmStatic
+        fun compare(l1: Location?, l2: Location?): Int {
+            if (l1 === l2) return 0
+            if (l1 == null) return -1
+            if (l2 == null) return 1
 
-        double lng1 = l1.getLongitude();
-        double lng2 = l2.getLongitude();
-        double lngD = lng1 - lng2;
-        if (lngD >= EPSILON) {
-            return 1;
-        }
-        if (lngD <= -EPSILON) {
-            return -1;
-        }
+            val lat1 = l1.latitude
+            val lat2 = l2.latitude
+            val latD = lat1 - lat2
+            if (latD >= EPSILON) return 1
+            if (latD <= -EPSILON) return -1
 
-        return 0;
-    }
+            val lng1 = l1.longitude
+            val lng2 = l2.longitude
+            val lngD = lng1 - lng2
+            if (lngD >= EPSILON) return 1
+            if (lngD <= -EPSILON) return -1
 
-    /**
-     * Compare two locations by latitude and then longitude, and then altitude, and then time.
-     *
-     * @param l1 the first location.
-     * @param l2 the second location.
-     * @return the comparison as per {@link Comparable}.
-     */
-    public static int compareAll(Location l1, Location l2) {
-        int c = compare(l1, l2);
-        if (c != 0) {
-            return c;
+            return 0
         }
 
-        double ele1 = l1.hasAltitude() ? l1.getAltitude() : 0;
-        double ele2 = l2.hasAltitude() ? l2.getAltitude() : 0;
-        double eleD = ele1 - ele2;
-        if (eleD >= EPSILON) {
-            return 1;
+        /**
+         * Compare two locations by latitude and then longitude, and then altitude, and then time.
+         *
+         * @param l1 the first location.
+         * @param l2 the second location.
+         * @return the comparison as per [Comparable].
+         */
+        @JvmStatic
+        fun compareAll(l1: Location?, l2: Location?): Int {
+            if (l1 === l2) return 0
+            if (l1 == null) return -1
+            if (l2 == null) return 1
+
+            val c = compare(l1, l2)
+            if (c != 0) return c
+
+            val ele1 = if (l1.hasAltitude()) l1.altitude else 0.0
+            val ele2 = if (l2.hasAltitude()) l2.altitude else 0.0
+            val eleD = ele1 - ele2
+            if (eleD >= EPSILON) return 1
+            if (eleD <= -EPSILON) return -1
+
+            val t1 = l1.time
+            val t2 = l2.time
+            return t1.compareTo(t2)
         }
-        if (eleD <= -EPSILON) {
-            return -1;
+
+        @JvmStatic
+        fun toDecimal(degrees: Int, minutes: Int, seconds: Double): Double {
+            return degrees + minutes / 60.0 + seconds / 3600.0
         }
 
-        long t1 = l1.getTime();
-        long t2 = l2.getTime();
-        return Long.compare(t1, t2);
-    }
+        /**
+         * Is the location valid?
+         *
+         * @param location the location to check.
+         * @return `false` if location is invalid.
+         */
+        @JvmStatic
+        fun isValid(location: Location?): Boolean {
+            if (location == null) return false
+            val latitude = location.latitude
+            if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX) return false
+            val longitude = location.longitude
+            if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX) return false
+            val elevation = location.altitude
+            return elevation in ELEVATION_MIN..ELEVATION_MAX
+        }
 
-    public static double toDecimal(int degrees, int minutes, double seconds) {
-        return degrees + (minutes / 60.0) + (seconds / 3600.0);
-    }
+        @JvmStatic
+        fun distanceBetween(startLocation: Location, endLocation: Location): Double {
+            val distances = FloatArray(1)
+            distanceBetween(startLocation, endLocation, distances)
+            return distances[0].toDouble()
+        }
 
-    /**
-     * Is the location valid?
-     *
-     * @param location the location to check.
-     * @return {@code false} if location is invalid.
-     */
-    public static boolean isValid(Location location) {
-        if (location == null)
-            return false;
-
-        final double latitude = location.getLatitude();
-        if ((latitude < LATITUDE_MIN) || (latitude > LATITUDE_MAX))
-            return false;
-
-        final double longitude = location.getLongitude();
-        if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX))
-            return false;
-
-        final double elevation = location.getAltitude();
-        return (elevation >= ELEVATION_MIN) && (elevation <= ELEVATION_MAX);
-    }
-
-    public static double distanceBetween(Location startLocation, Location endLocation) {
-        float[] distances = new float[1];
-        distanceBetween(startLocation, endLocation, distances);
-        return distances[0];
-    }
-
-    public static void distanceBetween(Location startLocation, Location endLocation, float[] distances) {
-        distanceBetween(startLocation.getLatitude(), startLocation.getLongitude(),
-            endLocation.getLatitude(), endLocation.getLongitude(), distances);
+        @JvmStatic
+        fun distanceBetween(startLocation: Location, endLocation: Location, distances: FloatArray) =
+            distanceBetween(
+                startLocation.latitude,
+                startLocation.longitude,
+                endLocation.latitude,
+                endLocation.longitude,
+                distances
+            )
     }
 }

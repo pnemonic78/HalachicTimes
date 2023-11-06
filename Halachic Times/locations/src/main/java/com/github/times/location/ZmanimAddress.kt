@@ -13,103 +13,77 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import static android.text.TextUtils.isEmpty;
-
-import static com.github.times.location.ZmanimLocation.ELEVATION_MAX;
-import static com.github.times.location.ZmanimLocation.ELEVATION_MIN;
-import static com.github.times.location.ZmanimLocation.LATITUDE_MAX;
-import static com.github.times.location.ZmanimLocation.LATITUDE_MIN;
-import static com.github.times.location.ZmanimLocation.LONGITUDE_MAX;
-import static com.github.times.location.ZmanimLocation.LONGITUDE_MIN;
-
-import android.location.Address;
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.util.Locale;
-
-import static android.text.TextUtils.isEmpty;
+import android.location.Address
+import android.os.Parcel
+import android.os.Parcelable
+import com.github.util.StringUtils
+import java.util.Locale
 
 /**
  * Address that is stored in the local database.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> {
+open class ZmanimAddress : Address, Comparable<ZmanimAddress> {
+    var id: Long = 0
 
-    /**
-     * Key to store the formatted address, instead of formatting it ourselves
-     * elsewhere.
-     */
-    public static final String KEY_FORMATTED = "formatted_address";
+    /** The elevation, in metres. */
+    var elevation = 0.0
+        get() {
+            if (hasElevation) {
+                return field
+            }
+            throw IllegalStateException()
+        }
+        set(value) {
+            field = value
+            hasElevation = true
+        }
+    private var hasElevation = false
+    var isFavorite = false
 
-    /**
-     * ISO 639 country code for Israel.
-     */
-    public static final String ISO639_ISRAEL = "IL";
-    /**
-     * ISO 639 country code for Palestine.
-     */
-    public static final String ISO639_PALESTINE = "PS";
-
-    /**
-     * Address field separator.
-     */
-    private static final String ADDRESS_SEPARATOR = ", ";
-    /**
-     * Double subtraction error.
-     */
-    private static final double EPSILON = 1e-6;
-
-    private long id;
-    private double elevation;
-    private boolean hasElevation;
-    private String formatted;
-    private boolean favorite;
+    /** The formatted address. */
+    private var _formatted: String? = null
+    val formatted: String get() = getFormattedAddress()
 
     /**
      * Constructs a new address.
      *
      * @param locale the locale.
      */
-    public ZmanimAddress(Locale locale) {
-        super(locale);
-    }
+    constructor(locale: Locale) : super(locale)
 
     /**
      * Constructs a new address.
      *
      * @param address the source address.
      */
-    public ZmanimAddress(Address address) {
-        super(address.getLocale());
-
-        int index = 0;
-        String line = address.getAddressLine(index);
-        while (line != null) {
-            setAddressLine(index, line);
-            index++;
-            line = address.getAddressLine(index);
+    constructor(address: Address) : super(address.locale) {
+        var index = 0
+        val maxIndex = address.maxAddressLineIndex
+        for (i in 0..maxIndex) {
+            val line = address.getAddressLine(index)
+            if (line.isNullOrEmpty()) continue
+            setAddressLine(index++, line)
         }
-        setAdminArea(address.getAdminArea());
-        setCountryCode(address.getCountryCode());
-        setCountryName(address.getCountryName());
-        setExtras(address.getExtras());
-        setFeatureName(address.getFeatureName());
-        setLatitude(address.getLatitude());
-        setLocality(address.getLocality());
-        setLongitude(address.getLongitude());
-        setPhone(address.getPhone());
-        setPostalCode(address.getPostalCode());
-        setPremises(address.getPremises());
-        setSubAdminArea(address.getSubAdminArea());
-        setSubLocality(address.getSubLocality());
-        setSubThoroughfare(address.getSubThoroughfare());
-        setThoroughfare(address.getThoroughfare());
-        setUrl(address.getUrl());
+        adminArea = address.adminArea
+        countryCode = address.countryCode
+        countryName = address.countryName
+        extras = address.extras
+        featureName = address.featureName
+        latitude = address.latitude
+        locality = address.locality
+        longitude = address.longitude
+        phone = address.phone
+        postalCode = address.postalCode
+        premises = address.premises
+        subAdminArea = address.subAdminArea
+        subLocality = address.subLocality
+        subThoroughfare = address.subThoroughfare
+        thoroughfare = address.thoroughfare
+        url = address.url
     }
 
     /**
@@ -117,103 +91,34 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
      *
      * @param address the source address.
      */
-    public ZmanimAddress(ZmanimAddress address) {
-        this((Address) address);
-        setId(address.getId());
+    constructor(address: ZmanimAddress) : this(address as Address) {
+        this.id = address.id
         if (address.hasElevation()) {
-            setElevation(address.getElevation());
+            elevation = address.elevation
         }
-        setFormatted(address.getFormatted());
-        setFavorite(address.isFavorite());
-    }
-
-    /**
-     * Get the id.
-     *
-     * @return the id
-     */
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * Set the id.
-     *
-     * @param id the id.
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
-     * Get the formatted address.
-     *
-     * @return the address
-     */
-    public String getFormatted() {
-        String formatted = this.formatted;
-        if (formatted == null) {
-            formatted = format();
-            this.formatted = formatted;
-        }
-        return formatted;
-    }
-
-    /**
-     * Set the formatted address.
-     *
-     * @param formatted the address.
-     */
-    public void setFormatted(String formatted) {
-        this.formatted = formatted;
-    }
-
-    /**
-     * Is favourite address?
-     *
-     * @return {@code true} if favourite.
-     */
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    /**
-     * Mark the address as a favourite.
-     *
-     * @param favorite is favourite?
-     */
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
-    }
-
-    /**
-     * Set the elevation.
-     *
-     * @param elevation the elevation in metres.
-     */
-    public void setElevation(double elevation) {
-        this.elevation = elevation;
-        hasElevation = true;
-    }
-
-    /**
-     * Get the elevation.
-     *
-     * @return the elevation in metres.
-     */
-    public double getElevation() {
-        if (hasElevation) {
-            return elevation;
-        }
-        throw new IllegalStateException();
+        setFormatted(address.formatted)
+        this.isFavorite = address.isFavorite
     }
 
     /**
      * Returns true if an elevation has been assigned to this Address, false
      * otherwise.
      */
-    public boolean hasElevation() {
-        return hasElevation;
+    fun hasElevation(): Boolean {
+        return hasElevation
+    }
+
+    private fun getFormattedAddress(): String {
+        var f = _formatted
+        if (f == null) {
+            f = format()
+            _formatted = f
+        }
+        return f
+    }
+
+    fun setFormatted(value: String?) {
+        _formatted = value
     }
 
     /**
@@ -221,241 +126,253 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
      *
      * @return the formatted address.
      */
-    protected String format() {
-        Bundle extras = getExtras();
-        String formatted = (extras == null) ? null : extras.getString(KEY_FORMATTED);
-        if (formatted != null)
-            return formatted;
+    protected fun format(): String {
+        val formatted = extras?.getString(KEY_FORMATTED)
+        if (formatted != null) return formatted
 
-        StringBuilder buf = new StringBuilder();
-        String feature = getFeatureName();
-        String premises = getPremises();
-        String thoroughfare = getThoroughfare();
-        int addressLinesCount = getMaxAddressLineIndex() + 1;
-        String address;
-        String subloc = getSubLocality();
-        String locality = getLocality();
-        String subadmin = getSubAdminArea();
-        String admin = getAdminArea();
-        String country = getCountryName();
+        val buf = StringBuilder()
+        val feature: String? = featureName
+        val premises: String? = premises
+        val thoroughfare: String? = thoroughfare
+        val subloc: String? = subLocality
+        val locality: String? = locality
+        val subadmin: String? = subAdminArea
+        val admin: String? = adminArea
+        val country: String? = countryName
+        val addressLinesCount = maxAddressLineIndex + 1
+        var address: String?
 
-        if (!isEmpty(feature)) {
-            if (buf.length() > 0)
-                buf.append(ADDRESS_SEPARATOR);
-            buf.append(feature);
+        if (!feature.isNullOrEmpty()) {
+            if (buf.isNotEmpty()) buf.append(ADDRESS_SEPARATOR)
+            buf.append(feature)
         }
-        if (!isEmpty(premises)
-            && !premises.equals(feature)) {
-            if (buf.length() > 0)
-                buf.append(ADDRESS_SEPARATOR);
-            buf.append(premises);
+        if (!premises.isNullOrEmpty()
+            && premises != feature
+        ) {
+            if (buf.isNotEmpty()) buf.append(ADDRESS_SEPARATOR)
+            buf.append(premises)
         }
-        if (!isEmpty(thoroughfare)
-            && !thoroughfare.equals(feature)
-            && !thoroughfare.equals(premises)) {
-            if (buf.length() > 0)
-                buf.append(ADDRESS_SEPARATOR);
-            buf.append(thoroughfare);
+        if (!thoroughfare.isNullOrEmpty()
+            && thoroughfare != feature
+            && thoroughfare != premises
+        ) {
+            if (buf.isNotEmpty()) buf.append(ADDRESS_SEPARATOR)
+            buf.append(thoroughfare)
         }
         if (addressLinesCount >= 0) {
-            for (int i = 0; i < addressLinesCount; i++) {
-                address = getAddressLine(i);
-                if (!isEmpty(address)
-                    && ((thoroughfare == null) || !address.contains(thoroughfare))
-                    && ((premises == null) || !address.contains(premises))
-                    && ((subloc == null) || !address.contains(subloc))
-                    && ((locality == null) || !address.contains(locality))
-                    && ((subadmin == null) || !address.contains(subadmin))
-                    && ((admin == null) || !address.contains(admin))
-                    && ((country == null) || !address.contains(country))) {
-                    if (buf.length() > 0)
-                        buf.append(ADDRESS_SEPARATOR);
-                    buf.append(address);
+            for (i in 0 until addressLinesCount) {
+                address = getAddressLine(i)
+                if (!address.isNullOrEmpty()
+                    && (thoroughfare == null || !address.contains(thoroughfare))
+                    && (premises == null || !address.contains(premises))
+                    && (subloc == null || !address.contains(subloc))
+                    && (locality == null || !address.contains(locality))
+                    && (subadmin == null || !address.contains(subadmin))
+                    && (admin == null || !address.contains(admin))
+                    && (country == null || !address.contains(country))
+                ) {
+                    if (buf.isNotEmpty()) buf.append(ADDRESS_SEPARATOR)
+                    buf.append(address)
                 }
             }
         }
-        if (!isEmpty(subloc)
-            && !subloc.equals(thoroughfare)
-            && !subloc.equals(feature)) {
-            if (buf.length() > 0)
-                buf.append(ADDRESS_SEPARATOR);
-            buf.append(subloc);
+        if (!subloc.isNullOrEmpty()
+            && subloc != thoroughfare
+            && subloc != feature
+        ) {
+            if (buf.isNotEmpty()) buf.append(ADDRESS_SEPARATOR)
+            buf.append(subloc)
         }
-        if (!isEmpty(locality)
-            && !locality.equals(subloc)
-            && !locality.equals(feature)) {
-            if (buf.length() > 0)
-                buf.append(ADDRESS_SEPARATOR);
-            buf.append(locality);
+        if (!locality.isNullOrEmpty()
+            && locality != subloc
+            && locality != feature
+        ) {
+            if (buf.isNotEmpty()) buf.append(ADDRESS_SEPARATOR)
+            buf.append(locality)
         }
-        if (!isEmpty(subadmin)
-            && !subadmin.equals(locality)
-            && !subadmin.equals(subloc)
-            && !subadmin.equals(feature)) {
-            if (buf.length() > 0)
-                buf.append(ADDRESS_SEPARATOR);
-            buf.append(subadmin);
+        if (!subadmin.isNullOrEmpty()
+            && subadmin != locality
+            && subadmin != subloc
+            && subadmin != feature
+        ) {
+            if (buf.isNotEmpty()) buf.append(ADDRESS_SEPARATOR)
+            buf.append(subadmin)
         }
-        if (!isEmpty(admin)
-            && !admin.equals(subadmin)
-            && !admin.equals(locality)
-            && !admin.equals(subloc)
-            && !admin.equals(feature)) {
-            if (buf.length() > 0)
-                buf.append(ADDRESS_SEPARATOR);
-            buf.append(admin);
+        if (!admin.isNullOrEmpty()
+            && admin != subadmin
+            && admin != locality
+            && admin != subloc
+            && admin != feature
+        ) {
+            if (buf.isNotEmpty()) buf.append(ADDRESS_SEPARATOR)
+            buf.append(admin)
         }
-        if (!isEmpty(country) && !country.equals(feature)) {
-            if (buf.length() > 0)
-                buf.append(ADDRESS_SEPARATOR);
-            buf.append(country);
+        if (!country.isNullOrEmpty() && country != feature) {
+            if (buf.isNotEmpty()) buf.append(ADDRESS_SEPARATOR)
+            buf.append(country)
         }
-
-        if (buf.length() == 0) {
-            Locale locale = getLocale();
-            return locale.getDisplayCountry(locale);
+        if (buf.isEmpty()) {
+            val locale = locale
+            return locale.getDisplayCountry(locale)
         }
-
-        return buf.toString();
+        return buf.toString()
     }
 
-    /**
-     * Compare two addresses by latitude and longitude only.
-     *
-     * @param a1 the first address.
-     * @param a2 the second address.
-     * @return the comparison as per {@link Comparable}.
-     */
-    public static int compare(Address a1, Address a2) {
-        if (a1 == a2) {
-            return 0;
-        }
-        if (a1 == null) {
-            return -1;
-        }
-        if (a2 == null) {
-            return 1;
-        }
+    override fun compareTo(other: ZmanimAddress): Int {
+        var c = compare(this, other)
+        if (c != 0) return c
 
-        double lat1 = a1.getLatitude();
-        double lat2 = a2.getLatitude();
-        double latD = lat1 - lat2;
-        if (latD >= EPSILON)
-            return 1;
-        if (latD <= -EPSILON)
-            return -1;
+        val format1 = formatted
+        val format2 = other.formatted
+        c = StringUtils.compareTo(format1, format2, ignoreCase = true)
+        if (c != 0) return c
 
-        double lng1 = a1.getLongitude();
-        double lng2 = a2.getLongitude();
-        double lngD = lng1 - lng2;
-        if (lngD >= EPSILON)
-            return 1;
-        if (lngD <= -EPSILON)
-            return -1;
-
-        // Don't need to compare elevation.
-        return 0;
+        val id1 = id
+        val id2 = other.id
+        return id1.compareTo(id2)
     }
 
-    @Override
-    public int compareTo(ZmanimAddress that) {
-        int c = compare(this, that);
-        if (c != 0)
-            return c;
-
-        String format1 = this.getFormatted();
-        String format2 = that.getFormatted();
-        c = format1.compareToIgnoreCase(format2);
-        if (c != 0)
-            return c;
-
-        // Long.compare since API 19+.
-        long id1 = this.getId();
-        long id2 = that.getId();
-        return (id1 < id2) ? -1 : (id1 == id2 ? 0 : 1);
+    override fun equals(other: Any?): Boolean {
+        if (other === this) {
+            return true
+        }
+        if (other is ZmanimAddress) {
+            return compareTo(other) == 0
+        }
+        return super.equals(other)
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        super.writeToParcel(parcel, flags)
+        parcel.writeLong(id)
+        if (hasElevation) {
+            parcel.writeInt(1)
+            parcel.writeDouble(elevation)
+        } else {
+            parcel.writeInt(0)
         }
-        if (obj instanceof ZmanimAddress) {
-            return compareTo((ZmanimAddress) obj) == 0;
-        }
-        return super.equals(obj);
+        parcel.writeString(formatted)
+        parcel.writeInt(if (isFavorite) 1 else 0)
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int flags) {
-        super.writeToParcel(parcel, flags);
-        parcel.writeLong(id);
-        parcel.writeDouble(elevation);
-        parcel.writeString(formatted);
-        parcel.writeInt(favorite ? 1 : 0);
+    override fun setCountryCode(countryCode: String?) {
+        var cc = countryCode
+        if (ISO639_PALESTINE == cc) {
+            cc = ISO639_ISRAEL
+            val locale = Locale(locale.language, cc)
+            countryName = locale.getDisplayCountry(locale)
+        }
+        super.setCountryCode(cc)
     }
 
-    public static final Parcelable.Creator<ZmanimAddress> CREATOR = new Parcelable.Creator<ZmanimAddress>() {
-        @Override
-        public ZmanimAddress createFromParcel(Parcel source) {
-            Address a = Address.CREATOR.createFromParcel(source);
-            ZmanimAddress za = new ZmanimAddress(a);
-            za.id = source.readLong();
-            za.elevation = source.readDouble();
-            za.formatted = source.readString();
-            za.favorite = source.readInt() != 0;
-            return za;
-        }
-
-        @Override
-        public ZmanimAddress[] newArray(int size) {
-            return new ZmanimAddress[size];
-        }
-    };
-
-    public void setCountryCode(String countryCode) {
-        if (ISO639_PALESTINE.equals(countryCode)) {
-            countryCode = ISO639_ISRAEL;
-            Locale locale = new Locale(getLocale().getLanguage(), countryCode);
-            setCountryName(locale.getDisplayCountry(locale));
-        }
-        super.setCountryCode(countryCode);
+    override fun setCountryName(countryName: String?) {
+        if (getCountryName() != null) return
+        super.setCountryName(countryName)
     }
 
-    @Override
-    public void setCountryName(String countryName) {
-        if (getCountryName() != null)
-            return;
-        super.setCountryName(countryName);
+    override fun toString(): String {
+        val formatted = this.formatted
+        if (formatted.isEmpty()) return super.toString()
+        return super.toString() + "[" + formatted + "]"
     }
 
-    @Override
-    public String toString() {
-        String formatted = this.formatted;
-        if (isEmpty(formatted))
-            return super.toString();
-        return super.toString() + "[" + formatted + "]";
-    }
+    companion object {
+        /**
+         * Key to store the formatted address, instead of formatting it ourselves
+         * elsewhere.
+         */
+        const val KEY_FORMATTED = "formatted_address"
 
-    public static boolean isValid(ZmanimAddress address) {
-        if (address == null)
-            return false;
+        /**
+         * ISO 639 country code for Israel.
+         */
+        const val ISO639_ISRAEL = "IL"
 
-        if (!address.hasLatitude()) return false;
-        final double latitude = address.getLatitude();
-        if ((latitude < LATITUDE_MIN) || (latitude > LATITUDE_MAX))
-            return false;
+        /**
+         * ISO 639 country code for Palestine.
+         */
+        const val ISO639_PALESTINE = "PS"
 
-        if (!address.hasLongitude()) return false;
-        final double longitude = address.getLongitude();
-        if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX))
-            return false;
+        /**
+         * Address field separator.
+         */
+        private const val ADDRESS_SEPARATOR = ", "
 
-        if (address.hasElevation()) {
-            final double elevation = address.getElevation();
-            return (elevation >= ELEVATION_MIN) && (elevation <= ELEVATION_MAX);
+        /**
+         * Double subtraction error.
+         */
+        private const val EPSILON = 1e-6
+
+        /**
+         * Compare two addresses by latitude and longitude only.
+         *
+         * @param a1 the first address.
+         * @param a2 the second address.
+         * @return the comparison as per [Comparable].
+         */
+        @JvmStatic
+        fun compare(a1: Address?, a2: Address?): Int {
+            if (a1 === a2) {
+                return 0
+            }
+            if (a1 == null) {
+                return -1
+            }
+            if (a2 == null) {
+                return 1
+            }
+
+            val lat1 = a1.latitude
+            val lat2 = a2.latitude
+            val latD = lat1 - lat2
+            if (latD >= EPSILON) return 1
+            if (latD <= -EPSILON) return -1
+
+            val lng1 = a1.longitude
+            val lng2 = a2.longitude
+            val lngD = lng1 - lng2
+            if (lngD >= EPSILON) return 1
+            if (lngD <= -EPSILON) return -1
+
+            // Don't compare elevation.
+            return 0
         }
 
-        return true;
+        @JvmField
+        val CREATOR: Parcelable.Creator<ZmanimAddress> =
+            object : Parcelable.Creator<ZmanimAddress> {
+                override fun createFromParcel(source: Parcel): ZmanimAddress {
+                    val address = Address.CREATOR.createFromParcel(source)
+                    return ZmanimAddress(address).apply {
+                        id = source.readLong()
+                        hasElevation = source.readInt() != 0
+                        if (hasElevation) {
+                            elevation = source.readDouble()
+                        }
+                        setFormatted(source.readString())
+                        isFavorite = source.readInt() != 0
+                    }
+                }
+
+                override fun newArray(size: Int): Array<ZmanimAddress?> {
+                    return arrayOfNulls(size)
+                }
+            }
+
+        @JvmStatic
+        fun isValid(address: ZmanimAddress?): Boolean {
+            if (address == null) return false
+            if (!address.hasLatitude()) return false
+            val latitude = address.latitude
+            if (latitude < ZmanimLocation.LATITUDE_MIN || latitude > ZmanimLocation.LATITUDE_MAX) return false
+            if (!address.hasLongitude()) return false
+            val longitude = address.longitude
+            if (longitude < ZmanimLocation.LONGITUDE_MIN || longitude > ZmanimLocation.LONGITUDE_MAX) return false
+            if (address.hasElevation()) {
+                val elevation = address.elevation
+                return elevation in ZmanimLocation.ELEVATION_MIN..ZmanimLocation.ELEVATION_MAX
+            }
+            return true
+        }
     }
 }

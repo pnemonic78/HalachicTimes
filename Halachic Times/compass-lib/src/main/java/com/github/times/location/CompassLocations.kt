@@ -13,23 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.content.Context;
+import android.content.Context
 
 /**
  * Locations provider.
  *
  * @author Moshe Waisberg
  */
-public class CompassLocations extends LocationsProvider {
-
-    /**
-     * Constructs a new provider.
-     *
-     * @param context the context.
-     */
-    public CompassLocations(Context context) {
-        super(context);
-    }
-}
+class CompassLocations(context: Context) : LocationsProvider(context)

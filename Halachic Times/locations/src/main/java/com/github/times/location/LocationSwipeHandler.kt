@@ -13,92 +13,84 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.github.times.location.LocationAdapter.LocationItemListener
+import com.github.times.location.country.Country
 
 /**
  * Swipe handler for location row item.
  *
  * @author Moshe Waisberg
  */
-class LocationSwipeHandler extends ItemTouchHelper.SimpleCallback {
+internal class LocationSwipeHandler(private val itemListener: LocationItemListener) :
+    ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.START) {
 
-    private final LocationAdapter.LocationItemListener itemListener;
-    private Drawable deleteBg = null;
+    private var deleteBg: Drawable? = null
 
-    public LocationSwipeHandler(@NonNull LocationAdapter.LocationItemListener itemListener) {
-        super(0, ItemTouchHelper.START);
-        this.itemListener = itemListener;
+    override fun isLongPressDragEnabled(): Boolean {
+        return false
     }
 
-    @Override
-    public boolean isLongPressDragEnabled() {
-        return false;
-    }
-
-    @Override
-    public int getSwipeDirs(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-        if (viewHolder instanceof LocationViewHolder) {
-            LocationViewHolder locationViewHolder = (LocationViewHolder) viewHolder;
-            LocationAdapter.LocationItem item = locationViewHolder.getItem();
-            ZmanimAddress address = item.getAddress();
-            long id = address.getId();
-
-            if (id < 0L) {
-                return 0;
-            }
-            if (address instanceof City) {
-                return 0;
-            }
-            if (address instanceof Country) {
-                return 0;
-            }
+    override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: ViewHolder): Int {
+        if (viewHolder is LocationViewHolder) {
+            val item = viewHolder.item ?: return 0
+            val address = item.address
+            val id = address.id
+            if (id < 0L) return 0
+            if (address is City) return 0
+            if (address is Country) return 0
         }
-        return super.getSwipeDirs(recyclerView, viewHolder);
+        return super.getSwipeDirs(recyclerView, viewHolder)
     }
 
-    @Override
-    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+    override fun onMove(
+        recyclerView: RecyclerView,
+        viewHolder: ViewHolder,
+        target: ViewHolder
+    ): Boolean {
         // We don't want support moving items up/down
-        return false;
+        return false
     }
 
-    @Override
-    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-        if (viewHolder instanceof LocationViewHolder) {
-            LocationViewHolder locationViewHolder = (LocationViewHolder) viewHolder;
-            LocationAdapter.LocationItem item = locationViewHolder.getItem();
-            itemListener.onItemSwipe(item);
+    override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
+        if (viewHolder is LocationViewHolder) {
+            val item = viewHolder.item ?: return
+            itemListener.onItemSwipe(item)
         }
     }
 
-    @Override
-    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+    override fun onChildDraw(
+        c: Canvas,
+        recyclerView: RecyclerView,
+        viewHolder: ViewHolder,
+        dX: Float,
+        dY: Float,
+        actionState: Int,
+        isCurrentlyActive: Boolean
+    ) {
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 
-        final View itemView = viewHolder.itemView;
+        val itemView = viewHolder.itemView
 
         // Draw the red delete background
-        int right = itemView.getRight();
-        int top = itemView.getTop();
-        int left = (int) (right + dX);
-        int bottom = itemView.getBottom();
-        Drawable deleteBg = this.deleteBg;
-        if (deleteBg == null) {
-            final Context context = recyclerView.getContext();
-            deleteBg = ContextCompat.getDrawable(context, R.drawable.bg_swipe_delete);
-            this.deleteBg = deleteBg;
+        val right = itemView.right
+        val top = itemView.top
+        val left = (right + dX).toInt()
+        val bottom = itemView.bottom
+        var bg = deleteBg
+        if (bg == null) {
+            val context = recyclerView.context
+            bg = ContextCompat.getDrawable(context, R.drawable.bg_swipe_delete) ?: return
+            this.deleteBg = bg
         }
-        deleteBg.setBounds(left, top, right, bottom);
-        deleteBg.draw(c);
+        bg.setBounds(left, top, right, bottom)
+        bg.draw(c)
     }
 }

@@ -13,93 +13,72 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times;
+package com.github.times
 
-import android.content.Context;
-import android.os.Handler;
-import android.util.AttributeSet;
-import android.view.View;
-import android.widget.ImageView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.content.Context
+import android.os.Handler
+import android.util.AttributeSet
+import android.view.View
+import androidx.appcompat.widget.AppCompatImageView
 
 /**
  * Flicker animation for 1 candle.
  *
  * @author Moshe Waisberg
  */
-public class CandleView extends androidx.appcompat.widget.AppCompatImageView {
+class CandleView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : AppCompatImageView(context, attrs, defStyleAttr) {
+    private lateinit var handler: Handler
+    private lateinit var animation: CandleAnimation
 
-    private Handler handler;
-    private CandleAnimation animation;
-
-    public CandleView(Context context) {
-        super(context);
-        init();
+    init {
+        scaleType = ScaleType.FIT_CENTER
+        setImageResource(R.drawable.candle)
     }
 
-    public CandleView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init();
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        val handler = getHandler()!!
+        this.handler = handler
+        animation = CandleAnimation(handler, this)
     }
 
-    public CandleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    private void init() {
-        setScaleType(ScaleType.FIT_CENTER);
-        setImageResource(R.drawable.candle);
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        handler = getHandler();
-        animation = new CandleAnimation(getHandler(), this);
-    }
-
-    @Override
-    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
-        super.onVisibilityChanged(changedView, visibility);
-
-        if (visibility == View.VISIBLE) {
-            startFlicker();
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
+        if (visibility == VISIBLE) {
+            startFlicker()
         } else {
-            stopFlicker();
+            stopFlicker()
         }
     }
 
     /**
      * Start the flicker animation.
      */
-    public void startFlicker() {
-        if (handler != null) {
-            handler.post(animation);
-        }
+    private fun startFlicker() {
+        handler.post(animation)
     }
 
     /**
      * Stop the flicker animation.
      */
-    public void stopFlicker() {
-        if (handler != null) {
-            handler.removeCallbacks(animation);
-        }
+    private fun stopFlicker() {
+        handler.removeCallbacks(animation)
     }
 
     /**
      * Either start or stop the flicker animation.
      *
-     * @param enabled {@code true} to start - else stop.
+     * @param enabled `true` to start - else stop.
      */
-    public void flicker(boolean enabled) {
+    fun flicker(enabled: Boolean) {
         if (enabled) {
-            startFlicker();
+            startFlicker()
         } else {
-            stopFlicker();
+            stopFlicker()
         }
     }
 }

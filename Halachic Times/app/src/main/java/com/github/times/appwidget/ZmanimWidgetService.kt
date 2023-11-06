@@ -13,42 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.appwidget;
+package com.github.times.appwidget
 
-import android.content.Context;
-import android.content.Intent;
-import android.widget.RemoteViewsService;
-
-import com.github.app.LocaleCallbacks;
-import com.github.app.LocaleHelper;
-import com.github.preference.LocalePreferences;
+import android.content.Context
+import android.content.Intent
+import android.widget.RemoteViewsService
+import com.github.app.LocaleCallbacks
+import com.github.app.LocaleHelper
+import com.github.preference.LocalePreferences
 
 /**
- * Service that provides the list of halachic times (<em>zmanim</em>) items for
+ * Service that provides the list of halachic times (*zmanim*) items for
  * the scrollable widget.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimWidgetService extends RemoteViewsService {
+class ZmanimWidgetService : RemoteViewsService() {
+    private lateinit var localeCallbacks: LocaleCallbacks<LocalePreferences>
 
-    private LocaleCallbacks<LocalePreferences> localeCallbacks;
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleHelper<>(newBase);
-        Context context = localeCallbacks.attachBaseContext(newBase);
-        super.attachBaseContext(context);
+    override fun attachBaseContext(newBase: Context) {
+        localeCallbacks = LocaleHelper(newBase)
+        val context = localeCallbacks.attachBaseContext(newBase)
+        super.attachBaseContext(context)
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        localeCallbacks.onPreCreate(this);
+    override fun onCreate() {
+        super.onCreate()
+        localeCallbacks.onPreCreate(this)
     }
 
-    @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        final Context context = this;
-        return new ZmanimWidgetViewsFactory(context, intent);
+    override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
+        val context: Context = this
+        return ZmanimWidgetViewsFactory(context, localeCallbacks)
     }
 }

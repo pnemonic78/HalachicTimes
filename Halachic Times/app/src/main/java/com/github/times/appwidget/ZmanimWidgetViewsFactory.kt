@@ -13,348 +13,271 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.appwidget;
+package com.github.times.appwidget
 
-import static com.github.graphics.BitmapUtils.isBrightWallpaper;
-import static java.lang.System.currentTimeMillis;
-
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.text.TextUtils;
-import android.widget.RemoteViews;
-import android.widget.RemoteViewsService.RemoteViewsFactory;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.StyleRes;
-import androidx.core.content.ContextCompat;
-
-import com.github.app.LocaleHelper;
-import com.github.preference.LocalePreferences;
-import com.github.times.R;
-import com.github.times.ZmanViewHolder;
-import com.github.times.ZmanimAdapter;
-import com.github.times.ZmanimApplication;
-import com.github.times.ZmanimDays;
-import com.github.times.ZmanimItem;
-import com.github.times.ZmanimPopulater;
-import com.github.times.location.ZmanimLocations;
-import com.github.times.preference.SimpleZmanimPreferences;
-import com.github.times.preference.ZmanimPreferences;
-import com.github.util.LocaleUtils;
-import com.kosherjava.zmanim.ComplexZmanimCalendar;
-import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
-import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
-import com.kosherjava.zmanim.util.GeoLocation;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import timber.log.Timber;
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.widget.RemoteViews
+import android.widget.RemoteViewsService.RemoteViewsFactory
+import androidx.annotation.ColorInt
+import androidx.annotation.LayoutRes
+import androidx.annotation.StyleRes
+import androidx.core.content.ContextCompat
+import com.github.app.LocaleCallbacks
+import com.github.app.isBrightWallpaper
+import com.github.math.isOdd
+import com.github.preference.LocalePreferences
+import com.github.times.R
+import com.github.times.ZmanViewHolder
+import com.github.times.ZmanimAdapter
+import com.github.times.ZmanimApplication
+import com.github.times.ZmanimDays.getName
+import com.github.times.ZmanimItem
+import com.github.times.ZmanimPopulater
+import com.github.times.isNullOrEmpty
+import com.github.times.location.ZmanimLocations
+import com.github.times.preference.SimpleZmanimPreferences
+import com.github.times.preference.ZmanimPreferences
+import com.github.util.LocaleUtils.isLocaleRTL
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
+import com.kosherjava.zmanim.hebrewcalendar.JewishDate
+import java.util.Calendar
 
 /**
  * Factory to create views for list widget.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
+class ZmanimWidgetViewsFactory(
+    private var context: Context,
+    private val localeCallbacks: LocaleCallbacks<LocalePreferences>
+) : RemoteViewsFactory {
 
-    @StyleRes
-    private static final int THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark;
-    @StyleRes
-    private static final int THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light;
+    private val packageName = context.packageName
+    private val preferences: ZmanimPreferences = SimpleZmanimPreferences(context)
+    private val items = mutableListOf<ZmanimItem>()
+    private val isDirectionRTL: Boolean = isLocaleRTL(context)
 
-    /**
-     * The context.
-     */
-    private Context context;
-    /**
-     * The preferences.
-     */
-    private ZmanimPreferences preferences;
-    private final List<ZmanimItem> items = new ArrayList<>();
     @ColorInt
-    private int colorDisabled = Color.DKGRAY;
+    private var colorDisabled = Color.DKGRAY
+
     @ColorInt
-    private int colorEnabled = Color.WHITE;
+    private var colorEnabled = Color.WHITE
+
     @StyleRes
-    private int themeId = com.github.lib.R.style.Theme;
-    private final LocaleHelper<?> localeCallbacks;
-    private final boolean directionRTL;
+    private var themeId = com.github.lib.R.style.Theme
 
-    public ZmanimWidgetViewsFactory(Context context, Intent intent) {
-        this.localeCallbacks = new LocaleHelper<LocalePreferences>(context);
-        this.context = localeCallbacks.attachBaseContext(context);
-        this.directionRTL = LocaleUtils.isLocaleRTL(context);
+    override fun getCount(): Int {
+        return items.size
     }
 
-    @Override
-    public int getCount() {
-        return items.size();
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
+    override fun getLoadingView(): RemoteViews? {
+        return null
     }
 
-    @Override
-    public RemoteViews getLoadingView() {
-        return null;
-    }
-
-    @Override
-    public RemoteViews getViewAt(int position) {
-        if ((position < 0) || (position >= items.size())) {
-            return null;
+    override fun getViewAt(position: Int): RemoteViews? {
+        if (position < 0 || position >= items.size) {
+            return null
         }
-
-        final Context context = this.context;
-        final String pkg = context.getPackageName();
-
-        ZmanimItem item = items.get(position);
-        if (item == null) {
-            return null;
-        }
-
-        RemoteViews view;
-        if (item.isCategory()) {
-            view = new RemoteViews(pkg, R.layout.widget_date);
-            bindViewGrouping(view, position, item.timeLabel);
+        val item = items[position]
+        val view: RemoteViews
+        if (item.isCategory) {
+            view = RemoteViews(packageName, R.layout.widget_date)
+            bindViewGrouping(view, item.timeLabel)
         } else {
-            view = new RemoteViews(pkg, getLayoutItemId(position));
-            bindView(view, position, item);
+            view = RemoteViews(packageName, getLayoutItemId(position))
+            bindView(view, item)
         }
-        return view;
+        return view
     }
 
-    @Override
-    public int getViewTypeCount() {
+    override fun getViewTypeCount(): Int {
         // Has category rows and odd rows.
-        return 3;
+        return 3
     }
 
-    @Override
-    public boolean hasStableIds() {
-        return true;
+    override fun hasStableIds(): Boolean {
+        return true
     }
 
-    @Override
-    public void onCreate() {
+    override fun onCreate() = Unit
+
+    override fun onDataSetChanged() {
+        // Workaround to clear the asset manager cache.
+        context = localeCallbacks.attachBaseContext(context)
+        populateAdapter()
     }
 
-    @Override
-    public void onDataSetChanged() {
-        this.context = localeCallbacks.attachBaseContext(context);//Workaround to clear the asset manager cache.
-        populateAdapter();
-    }
+    override fun onDestroy() = Unit
 
-    @Override
-    public void onDestroy() {
-    }
+    private fun populateAdapter() {
+        val context = context
+        val locations = getLocations(context)
+        val gloc = locations.geoLocation ?: return
 
-    protected ZmanimPreferences getPreferences() {
-        ZmanimPreferences preferences = this.preferences;
-        if (preferences == null) {
-            preferences = new SimpleZmanimPreferences(context);
-            this.preferences = preferences;
-        }
-        return preferences;
-    }
+        populateResources(context)
 
-    private void populateAdapter() {
-        final Context context = this.context;
-
-        ZmanimLocations locations = getLocations(context);
-        GeoLocation gloc = locations.getGeoLocation();
-        if (gloc == null) {
-            return;
+        val preferences = preferences
+        val time = day
+        val adapter = ZmanimAdapter<ZmanViewHolder>(context, preferences, null)
+        ZmanimPopulater<ZmanimAdapter<*>>(context, preferences).apply {
+            setCalendar(time)
+            setGeoLocation(gloc)
+            isInIsrael = locations.isInIsrael
+            populate(adapter, false)
         }
 
-        populateResources(context);
+        val items = mutableListOf<ZmanimItem>()
+        var jcal = adapter.jewishCalendar!!
+        val itemToday = ZmanimItem(adapter.formatDate(context, jcal))
+        itemToday.jewishDate = jcal
+        items.add(itemToday)
 
-        ZmanimPreferences preferences = getPreferences();
-        long day = getDay();
-
-        ZmanimPopulater populater = new ZmanimPopulater(context, preferences);
-        populater.setCalendar(day);
-        populater.setGeoLocation(gloc);
-        populater.setInIsrael(locations.isInIsrael());
-
-        // Always create new adapter to avoid concurrency bugs.
-        ZmanimAdapter<ZmanViewHolder> adapter = new ZmanimAdapter<>(context, preferences, null);
-        populater.populate(adapter, false);
-
-        List<ZmanimItem> items = new ArrayList<>();
-
-        JewishCalendar jcal = adapter.getJewishCalendar();
-        final ZmanimItem itemToday = new ZmanimItem(adapter.formatDate(context, jcal));
-        itemToday.jewishDate = jcal;
-        items.add(itemToday);
-
-        int holidayToday = adapter.getHolidayToday();
-        int candlesToday = adapter.getCandlesTodayCount();
-        CharSequence holidayTodayName = ZmanimDays.getName(context, holidayToday, candlesToday);
+        val holidayToday = adapter.holidayToday
+        val candlesToday = adapter.candlesTodayCount
+        val holidayTodayName = getName(context, holidayToday, candlesToday)
         if (holidayTodayName != null) {
-            final ZmanimItem itemHoliday = new ZmanimItem(holidayTodayName);
-            itemHoliday.jewishDate = jcal;
-            items.add(itemHoliday);
+            ZmanimItem(holidayTodayName).apply {
+                jewishDate = jcal
+                items.add(this)
+            }
         }
 
         // Sefirat HaOmer?
-        int omer = adapter.getDayOfOmerToday();
+        var omer = adapter.dayOfOmerToday
         if (omer >= 1) {
-            CharSequence omerLabel = adapter.formatOmer(context, omer);
-            if (!TextUtils.isEmpty(omerLabel)) {
-                final ZmanimItem itemOmer = new ZmanimItem(omerLabel);
-                itemOmer.jewishDate = jcal;
-                items.add(itemOmer);
+            val omerLabel = adapter.formatOmer(context, omer)
+            if (!omerLabel.isNullOrEmpty()) {
+                ZmanimItem(omerLabel).apply {
+                    jewishDate = jcal
+                    items.add(this)
+                }
             }
         }
-
-        ZmanimItem itemTomorrow = null;
-
-        final int count = adapter.getItemCount();
+        var itemTomorrow: ZmanimItem? = null
+        val count = adapter.itemCount
         if (count > 0) {
-            JewishDate jewishDate = null;
-            ZmanimItem item;
-            for (int i = 0; i < count; i++) {
-                item = adapter.getItem(i);
-                if ((item == null) || item.isEmpty() || (item.jewishDate == null)) {
-                    continue;
+            var jewishDate: JewishDate? = null
+            var item: ZmanimItem?
+            for (i in 0 until count) {
+                item = adapter.getItem(i)
+                if (item.isNullOrEmpty() || item.jewishDate == null) {
+                    continue
                 }
                 if (jewishDate == null) {
-                    jewishDate = item.jewishDate;
-                } else if ((itemTomorrow == null) && !item.jewishDate.equals(jewishDate)) {
-                    ComplexZmanimCalendar zmanCal = adapter.getCalendar();
-                    jcal = new JewishCalendar(zmanCal.getCalendar());
-                    jcal.forward(Calendar.DATE, 1);
-
-                    itemTomorrow = new ZmanimItem(adapter.formatDate(context, jcal));
-                    itemTomorrow.jewishDate = jcal;
-                    items.add(itemTomorrow);
-
-                    int holidayTomorrow = adapter.getHolidayTomorrow();
-                    int candlesTomorrow = adapter.getCandlesCount();
-                    CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow, candlesTomorrow);
+                    jewishDate = item.jewishDate
+                } else if (itemTomorrow == null && item.jewishDate != jewishDate) {
+                    val zmanCal = adapter.calendar
+                    jcal = JewishCalendar(zmanCal.calendar)
+                    jcal.forward(Calendar.DATE, 1)
+                    itemTomorrow = ZmanimItem(adapter.formatDate(context, jcal)).apply {
+                        jewishDate = jcal
+                        items.add(this)
+                    }
+                    val holidayTomorrow = adapter.holidayTomorrow
+                    val candlesTomorrow = adapter.candlesCount
+                    val holidayTomorrowName = getName(context, holidayTomorrow, candlesTomorrow)
                     if (holidayTomorrowName != null) {
-                        final ZmanimItem labelHoliday = new ZmanimItem(holidayTomorrowName);
-                        labelHoliday.jewishDate = jcal;
-                        items.add(labelHoliday);
+                        ZmanimItem(holidayTomorrowName).apply {
+                            jewishDate = jcal
+                            items.add(this)
+                        }
                     }
 
                     // Sefirat HaOmer?
-                    omer = adapter.getDayOfOmerTomorrow();
+                    omer = adapter.dayOfOmerTomorrow
                     if (omer >= 1) {
-                        CharSequence omerLabel = adapter.formatOmer(context, omer);
-                        if (!TextUtils.isEmpty(omerLabel)) {
-                            final ZmanimItem itemOmer = new ZmanimItem(omerLabel);
-                            itemOmer.jewishDate = jcal;
-                            items.add(itemOmer);
+                        val omerLabel = adapter.formatOmer(context, omer)
+                        if (!omerLabel.isNullOrEmpty()) {
+                            ZmanimItem(omerLabel).apply {
+                                jewishDate = jcal
+                                items.add(this)
+                            }
                         }
                     }
                 }
-
-                items.add(item);
+                items.add(item)
             }
         }
-
-        this.items.clear();
-        this.items.addAll(items);
+        this.items.clear()
+        this.items.addAll(items)
     }
 
     /**
      * Bind the item to the remote view.
      *
      * @param row      the remote list row.
-     * @param position the position index.
      * @param item     the zman item.
      */
-    private void bindView(RemoteViews row, int position, ZmanimItem item) {
-        row.setTextViewText(R.id.title, item.title);
-        row.setTextViewText(R.id.time, item.timeLabel);
-        if (item.elapsed) {
+    private fun bindView(row: RemoteViews, item: ZmanimItem) {
+        row.setTextViewText(R.id.title, item.title)
+        row.setTextViewText(R.id.time, item.timeLabel)
+        if (item.isElapsed) {
             // Using {@code row.setBoolean(id, "setEnabled", enabled)} throws error.
-            row.setTextColor(R.id.title, colorDisabled);
-            row.setTextColor(R.id.time, colorDisabled);
+            row.setTextColor(R.id.title, colorDisabled)
+            row.setTextColor(R.id.time, colorDisabled)
         } else {
-            row.setTextColor(R.id.title, colorEnabled);
-            row.setTextColor(R.id.time, colorEnabled);
+            row.setTextColor(R.id.title, colorEnabled)
+            row.setTextColor(R.id.time, colorEnabled)
         }
         // Enable clicking to open the main activity.
-        row.setOnClickFillInIntent(R.id.widget_item, new Intent());
-        bindViewRowSpecial(row, position, item);
+        row.setOnClickFillInIntent(R.id.widget_item, Intent())
+        bindViewRowSpecial(row, item)
     }
 
     /**
      * Bind the date group header to a list.
      *
      * @param row      the remote list row.
-     * @param position the position index.
      * @param label    the formatted Hebrew date label.
      */
-    private void bindViewGrouping(RemoteViews row, int position, CharSequence label) {
-        row.setTextViewText(R.id.date_hebrew, label);
-        row.setTextColor(R.id.date_hebrew, colorEnabled);
+    private fun bindViewGrouping(row: RemoteViews, label: CharSequence?) {
+        if (label.isNullOrEmpty()) return
+        row.setTextViewText(R.id.date_hebrew, label)
+        row.setTextColor(R.id.date_hebrew, colorEnabled)
     }
 
-    protected void bindViewRowSpecial(RemoteViews row, int position, ZmanimItem item) {
+    private fun bindViewRowSpecial(row: RemoteViews, item: ZmanimItem) {
         if (item.titleId == R.string.candles) {
-            row.setInt(R.id.widget_item, "setBackgroundColor", ContextCompat.getColor(context, R.color.widget_candles_bg));
+            row.setInt(
+                R.id.widget_item,
+                "setBackgroundColor",
+                ContextCompat.getColor(context, R.color.widget_candles_bg)
+            )
         }
     }
 
-    @StyleRes
-    protected int getTheme() {
-        return getPreferences().getAppWidgetTheme();
-    }
+    @get:StyleRes
+    private val theme: Int
+        get() = preferences.appWidgetTheme
 
-    private void populateResources(Context context) {
-        final int themeId = getTheme();
-        if (themeId != this.themeId) {
-            this.themeId = themeId;
-
-            boolean light;
-            if (themeId == THEME_APPWIDGET_DARK) {
-                light = false;
-            } else if (themeId == THEME_APPWIDGET_LIGHT) {
-                light = true;
+    private fun populateResources(context: Context) {
+        val themeId = theme
+        if ((themeId == 0) || (themeId != this.themeId)) {
+            this.themeId = themeId
+            val isLight: Boolean = (themeId == THEME_APPWIDGET_LIGHT) || isBrightWallpaper(context)
+            if (isLight) {
+                colorEnabled = ContextCompat.getColor(context, R.color.widget_text_light)
+                colorDisabled = ContextCompat.getColor(context, R.color.widget_text_disabled_light)
             } else {
-                light = isBrightWallpaper(context);
-            }
-
-            int colorEnabledDark = Color.WHITE;
-            int colorEnabledLight = Color.BLACK;
-            int colorDisabledDark = Color.DKGRAY;
-            int colorDisabledLight = Color.DKGRAY;
-            try {
-                colorEnabledDark = ContextCompat.getColor(context, R.color.widget_text);
-                colorEnabledLight = ContextCompat.getColor(context, R.color.widget_text_light);
-                colorDisabledDark = ContextCompat.getColor(context, R.color.widget_text_disabled);
-                colorDisabledLight = ContextCompat.getColor(context, R.color.widget_text_disabled_light);
-            } catch (Exception e) {
-                Timber.e(e);
-            }
-            if (light) {
-                this.colorEnabled = colorEnabledLight;
-                this.colorDisabled = colorDisabledLight;
-            } else {
-                this.colorEnabled = colorEnabledDark;
-                this.colorDisabled = colorDisabledDark;
+                colorEnabled = ContextCompat.getColor(context, R.color.widget_text)
+                colorDisabled = ContextCompat.getColor(context, R.color.widget_text_disabled)
             }
         }
     }
 
-    private ZmanimLocations getLocations(Context context) {
-        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-        return app.getLocations();
+    private fun getLocations(context: Context): ZmanimLocations {
+        val app = context.applicationContext as ZmanimApplication
+        return app.locations
     }
 
-    private long getDay() {
-        return currentTimeMillis();
-    }
+    private val day: Long
+        get() = System.currentTimeMillis()
 
     /**
      * Get the layout for the row item.
@@ -363,10 +286,22 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
      * @return the layout id.
      */
     @LayoutRes
-    protected int getLayoutItemId(int position) {
-        if ((position & 1) == 1) {
-            return directionRTL ? R.layout.widget_item_odd_rtl : R.layout.widget_item_odd;
+    private fun getLayoutItemId(position: Int): Int {
+        return if (position.isOdd) {
+            if (isDirectionRTL) {
+                R.layout.widget_item_odd_rtl
+            } else {
+                R.layout.widget_item_odd
+            }
+        } else if (isDirectionRTL) {
+            R.layout.widget_item_rtl
+        } else {
+            R.layout.widget_item
         }
-        return directionRTL ? R.layout.widget_item_rtl : R.layout.widget_item;
+    }
+
+    companion object {
+        @StyleRes
+        private val THEME_APPWIDGET_LIGHT = ZmanimAppWidget.THEME_APPWIDGET_LIGHT
     }
 }

@@ -19,5 +19,5 @@ import com.github.preference.AbstractPreferenceFragment
 import com.github.times.R
 
 class MainPreferencesFragment : AbstractPreferenceFragment() {
-    override val preferencesXml = R.xml.preference_headers
+    override val preferencesXml: Int = R.xml.preference_headers
 }

@@ -48,7 +48,7 @@ class BingElevationResponseParser : ElevationResponseParser() {
         return try {
             val reader: Reader = InputStreamReader(data, StandardCharsets.UTF_8)
             val response = gson.fromJson(reader, BingResponse::class.java)
-            val results: MutableList<Location> = ArrayList(maxResults)
+            val results = mutableListOf<Location>()
             handleResponse(response, results, latitude, longitude, maxResults)
             results
         } catch (e: JsonIOException) {

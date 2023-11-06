@@ -13,31 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.preference;
+package com.github.times.preference
 
-import android.content.Context;
-
-import com.github.times.appwidget.ClockWidget;
-import com.github.times.appwidget.ZmanimListWidget;
-import com.github.times.appwidget.ZmanimWidget;
-
-import static com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate;
+import android.content.Context
+import androidx.preference.Preference
+import com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate
+import com.github.preference.AbstractPreferenceFragment
+import com.github.times.appwidget.ClockWidget
+import com.github.times.appwidget.ZmanimListWidget
+import com.github.times.appwidget.ZmanimWidget
 
 /**
  * This fragment shows the preferences for a header.
  */
-public abstract class AbstractPreferenceFragment extends com.github.preference.AbstractPreferenceFragment {
-
-    @Override
-    protected void notifyPreferenceChanged() {
-        super.notifyPreferenceChanged();
-        notifyAppWidgets();
+abstract class AbstractPreferenceFragment : AbstractPreferenceFragment() {
+    override fun notifyPreferenceChanged(preference: Preference) {
+        super.notifyPreferenceChanged(preference)
+        notifyAppWidgets(preference.context)
     }
 
-    protected void notifyAppWidgets() {
-        final Context context = getContext();
-        notifyAppWidgetsUpdate(context, ZmanimWidget.class);
-        notifyAppWidgetsUpdate(context, ZmanimListWidget.class);
-        notifyAppWidgetsUpdate(context, ClockWidget.class);
+    protected fun notifyAppWidgets(context: Context) {
+        notifyAppWidgetsUpdate(requireContext(), ZmanimWidget::class.java)
+        notifyAppWidgetsUpdate(context, ZmanimListWidget::class.java)
+        notifyAppWidgetsUpdate(context, ClockWidget::class.java)
     }
 }

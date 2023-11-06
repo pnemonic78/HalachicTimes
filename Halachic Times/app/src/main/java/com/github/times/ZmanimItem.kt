@@ -13,143 +13,160 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times;
+package com.github.times
 
-import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
+import androidx.annotation.StringRes
+import com.kosherjava.zmanim.hebrewcalendar.JewishDate
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
+
+typealias Zman = Long?
 
 /**
  * Time row item.
  */
-public class ZmanimItem implements Comparable<ZmanimItem> {
-
-    /**
-     * Unknown date.
-     */
-    public static final long NEVER = Long.MIN_VALUE;
-    /**
-     * Start date of the Julian calendar.
-     */
-    public static final long YEAR_1 = -62135863199554L;
-
+class ZmanimItem @JvmOverloads constructor(
     /**
      * The title id.
      */
-    public final int titleId;
+    @StringRes
+    @JvmField
+    val titleId: Int,
     /**
      * The title.
      */
-    public final CharSequence title;
-    /**
-     * The summary.
-     */
-    public CharSequence summary;
+    @JvmField
+    val title: CharSequence?,
     /**
      * The time.
      */
-    public final long time;
+    @JvmField
+    val time: Long,
+    /**
+     * The summary.
+     */
+    @JvmField
+    var summary: CharSequence? = null
+) : Comparable<ZmanimItem> {
+
     /**
      * The time label.
      */
-    public CharSequence timeLabel;
+    @JvmField
+    var timeLabel: CharSequence? = null
+    //TODO private set
+
     /**
      * Has the time elapsed?
      */
-    public boolean elapsed;
+    @JvmField
+    var isElapsed = false
+
     /**
      * Emphasize?
      */
-    public boolean emphasis;
+    @JvmField
+    var isEmphasis = false
+
     /**
      * Jewish date.
      */
-    public JewishDate jewishDate;
-    private boolean category = false;
+    @JvmField
+    var jewishDate: JewishDate? = null
+
+    @JvmField
+    var isCategory = false
+    //TODO private set
 
     /**
      * Creates a new row item.
      */
-    public ZmanimItem(int titleId, long time) {
-        this(titleId, null, time);
-    }
+    constructor(titleId: Int, time: Long) : this(titleId, null, time)
 
     /**
      * Creates a new row item.
      */
-    public ZmanimItem(int titleId, CharSequence title, long time) {
-        this.titleId = titleId;
-        this.title = title;
-        this.time = time;
-    }
-
-    /**
-     * Creates a new row item.
-     */
-    public ZmanimItem(int titleId, long time, CharSequence summary) {
-        this(titleId, null, time, summary);
-    }
-
-    /**
-     * Creates a new row item.
-     */
-    public ZmanimItem(int titleId, CharSequence title, long time, CharSequence summary) {
-        this(titleId, title, time);
-        this.summary = summary;
-    }
+    constructor(titleId: Int, time: Long, summary: CharSequence?) : this(
+        titleId,
+        null,
+        time,
+        summary
+    )
 
     /**
      * Creates a new category item.
      */
-    public ZmanimItem(CharSequence label) {
-        this(0, NEVER);
-        timeLabel = label;
-        category = true;
+    constructor(label: CharSequence?) : this(0, NEVER) {
+        timeLabel = label
+        isCategory = true
     }
 
-    @Override
-    public int compareTo(ZmanimItem that) {
-        long t1 = this.time;
-        long t2 = that.time;
-        if (t1 != t2)
-            return (t1 < t2) ? -1 : +1;
+    override fun compareTo(other: ZmanimItem): Int {
+        val t1 = time
+        val t2 = other.time
+        var c = t1.compareTo(t2)
+        if (c != 0) return c
 
-        JewishDate j1 = this.jewishDate;
-        JewishDate j2 = that.jewishDate;
-        if ((j1 != null) && (j2 != null)) {
-            return j1.compareTo(j2);
-        }
+        val j1 = jewishDate
+        val j2 = other.jewishDate
+        c = if (j1 != null && j2 != null) j1.compareTo(j2) else 0
+        if (c != 0) return c
 
-        return this.titleId - that.titleId;
+        return titleId - other.titleId
     }
 
     /**
      * Is the item empty?
      *
-     * @return {@code true} if empty.
+     * @return `true` if empty.
      */
-    public boolean isEmpty() {
-        return (time == NEVER) || (time < YEAR_1) || (timeLabel == null);
-    }
+    val isEmpty: Boolean
+        get() = time == NEVER || time < YEAR_1 || timeLabel == null
 
     /**
      * Is the item empty or elapsed?
      *
-     * @return {@code true} if either elapsed or empty.
+     * @return `true` if either elapsed or empty.
      */
-    public boolean isEmptyOrElapsed() {
-        return elapsed || isEmpty();
-    }
+    val isEmptyOrElapsed: Boolean
+        get() = isElapsed || isEmpty
 
-    public boolean isCategory() {
-        return category;
-    }
-
-    @Override
-    public String toString() {
+    override fun toString(): String {
         return "ZmanimItem{" +
-                "title=" + (title != null ? title : "(0x" + Integer.toHexString(titleId) + ")") +
-                ", summary=" + summary +
-                ", time=" + timeLabel +
-                ", empty=" + isEmptyOrElapsed() +
-                '}';
+            "title=" + (title ?: ("(0x" + Integer.toHexString(titleId) + ")")) +
+            ", summary=" + summary +
+            ", time=" + timeLabel +
+            ", empty=" + isEmptyOrElapsed +
+            '}'
     }
+
+    companion object {
+        /**
+         * Unknown date.
+         */
+        const val NEVER = Long.MIN_VALUE
+
+        /**
+         * Start date of the Julian calendar.
+         */
+        const val YEAR_1 = -62135863199554L
+    }
+}
+
+@OptIn(ExperimentalContracts::class)
+fun ZmanimItem?.isNullOrEmpty(): Boolean {
+    contract {
+        returns(false) implies (this@isNullOrEmpty != null)
+    }
+
+    return this == null || this.isEmpty
+}
+
+@OptIn(ExperimentalContracts::class)
+fun ZmanimItem?.isNullOrEmptyOrElapsed(): Boolean {
+    contract {
+        returns(false) implies (this@isNullOrEmptyOrElapsed != null)
+    }
+
+    return isNullOrEmpty() || isElapsed
 }

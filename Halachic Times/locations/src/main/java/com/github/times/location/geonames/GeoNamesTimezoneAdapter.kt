@@ -29,7 +29,7 @@ import org.geonames.Timezone
  *
  * @author Moshe Waisberg
  */
-class GeoNamesTimezoneAdapter : TypeAdapter<Timezone?>() {
+class GeoNamesTimezoneAdapter : TypeAdapter<Timezone>() {
     // TODO inject via constructor that created via factory
     private val gson = GsonBuilder()
         .setDateFormat("yyyy-MM-dd HH:mm")

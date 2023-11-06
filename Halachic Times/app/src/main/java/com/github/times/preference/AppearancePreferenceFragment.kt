@@ -13,178 +13,156 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.preference;
+package com.github.times.preference
 
-import static android.content.Intent.ACTION_LOCALE_CHANGED;
-import static android.text.TextUtils.isEmpty;
-import static com.github.app.ActivityUtils.restartActivity;
-import static com.github.preference.LocalePreferences.KEY_LOCALE;
-import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
-import static com.github.times.location.LocationPreferences.EXTRA_LOCALE;
-import static com.github.times.preference.ZmanimPreferences.KEY_EMPHASIS_SCALE;
-import static com.github.times.preference.ZmanimPreferences.KEY_THEME;
-import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET;
-import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE;
-import static com.github.util.LocaleUtils.sortByDisplay;
-
-import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Keep;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.PermissionChecker;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.preference.ListPreference;
-import androidx.preference.Preference;
-
-import com.github.times.BuildConfig;
-import com.github.times.R;
-import com.github.util.LocaleUtils;
-
-import java.util.Locale;
-
-import timber.log.Timber;
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.Keep
+import androidx.core.app.ActivityCompat
+import androidx.core.content.PermissionChecker
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import com.github.app.ActivityUtils.restartActivity
+import com.github.app.PERMISSION_WALLPAPER
+import com.github.preference.LocalePreferences
+import com.github.preference.ThemePreferences
+import com.github.times.BuildConfig
+import com.github.times.R
+import com.github.times.compass.preference.CompassPreferences
+import com.github.times.location.LocationPreferences
+import com.github.util.LocaleUtils.applyLocale
+import com.github.util.LocaleUtils.parseLocale
+import com.github.util.LocaleUtils.sortByDisplay
+import com.github.util.LocaleUtils.unique
+import java.util.Locale
+import timber.log.Timber
 
 /**
  * This fragment shows the preferences for the Appearance header.
  */
 @Keep
-public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
+class AppearancePreferenceFragment : AbstractPreferenceFragment() {
 
-    private static final String PERMISSION_WALLPAPER = Manifest.permission.READ_EXTERNAL_STORAGE;
-
-    private ListPreference widgetPreference;
-
-    private final ActivityResultLauncher<String> requestPermission = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-        Timber.i("Permission to read wallpaper: %s", isGranted);
-    });
-
-    @Override
-    protected int getPreferencesXml() {
-        return R.xml.appearance_preferences;
-    }
-
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        super.onCreatePreferences(savedInstanceState, rootKey);
-
-        initList(KEY_THEME);
-        initList(KEY_THEME_COMPASS);
-        widgetPreference = initList(KEY_THEME_WIDGET);
-        widgetPreference.setOnPreferenceClickListener(this);
-        initList(KEY_EMPHASIS_SCALE);
-        initLocaleList(KEY_LOCALE);
-        findPreference(KEY_THEME_WIDGET_RATIONALE).setOnPreferenceClickListener(this);
-    }
-
-    @Nullable
-    private ListPreference initLocaleList(String key) {
-        if (isEmpty(key)) {
-            return null;
+    private val requestPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            Timber.i("Permission to read wallpaper: %s", isGranted)
         }
 
-        Preference pref = findPreference(key);
-        if (pref instanceof ListPreference) {
-            final Context context = getContext();
-            final String[] localeNames = BuildConfig.LOCALES;
-            final Locale[] unique = LocaleUtils.unique(localeNames);
+    override val preferencesXml: Int = R.xml.appearance_preferences
 
-            final Locale[] sorted = sortByDisplay(unique);
-            final int length = sorted.length;
-            int length2 = length;
-            if (!isEmpty(sorted[0].getLanguage())) {
-                length2 = length + 1;
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
+        initList(ThemePreferences.KEY_THEME)
+        initList(CompassPreferences.KEY_THEME_COMPASS)
+        initList(ZmanimPreferences.KEY_THEME_WIDGET)?.apply {
+            setOnPreferenceClickListener {
+                val context = it.context
+                checkWallpaperPermission(context)
             }
-
-            final CharSequence[] values = new CharSequence[length2];
-            final CharSequence[] entries = new CharSequence[length2];
-            values[0] = context.getString(R.string.locale_defaultValue);
-
-            Locale locale;
-            for (int i = 0, j = length2 - length; i < length; i++, j++) {
-                locale = sorted[i];
-                values[j] = locale.toString();
-                entries[j] = locale.getDisplayName(locale);
-            }
-            if (isEmpty(entries[0])) {
-                entries[0] = context.getString(com.github.lib.R.string.locale_default);
-            }
-
-            final ListPreference list = (ListPreference) pref;
-            list.setEntryValues(values);
-            list.setEntries(entries);
-
-            list.setOnPreferenceChangeListener((preference, newValue) -> {
-                String newLocale = (newValue != null) ? newValue.toString() : "";
-                notifyConfigurationChanged(newLocale);
-                return true;
-            });
         }
-
-        return initList(key);
+        initList(ZmanimPreferences.KEY_EMPHASIS_SCALE)
+        initLocaleList(LocalePreferences.KEY_LOCALE)
+        findPreference<Preference>(ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE)?.apply {
+            setOnPreferenceClickListener {
+                val context = it.context
+                checkWallpaperPermission(context)
+            }
+        }
     }
 
-    private void notifyConfigurationChanged(String newLocale) {
-        final Context context = getContext();
+    private fun initLocaleList(key: String): ListPreference? {
+        if (key.isEmpty()) return null
+        val preference = findPreference<Preference>(key)
+        if (preference is ListPreference) {
+            val context = preference.context
+            val localeNames = BuildConfig.LOCALES
+            val unique = unique(localeNames)
+            val sorted = sortByDisplay(unique)!!
+            val length = sorted.size
+            var length2 = length
+            if (!sorted[0].language.isNullOrEmpty()) {
+                length2 = length + 1
+            }
+            val values = arrayOfNulls<CharSequence>(length2)
+            val entries = arrayOfNulls<CharSequence>(length2)
+            values[0] = context!!.getString(R.string.locale_defaultValue)
+            var locale: Locale
+            var i = 0
+            var j = length2 - length
+            while (i < length) {
+                locale = sorted[i]
+                values[j] = locale.toString()
+                entries[j] = locale.getDisplayName(locale)
+                i++
+                j++
+            }
+            if (entries[0].isNullOrEmpty()) {
+                entries[0] = context.getString(com.github.lib.R.string.locale_default)
+            }
+            preference.apply {
+                this.entryValues = values
+                this.entries = entries
+                this.setOnPreferenceChangeListener { _, newValue: Any? ->
+                    val newLocale = newValue?.toString().orEmpty()
+                    notifyConfigurationChanged(context, newLocale)
+                    true
+                }
+            }
+        }
+        return initList(key)
+    }
 
-        Locale locale = LocaleUtils.parseLocale(newLocale);
-        LocaleUtils.applyLocale(context.getApplicationContext(), locale);
-
-        Intent notification = new Intent(ACTION_LOCALE_CHANGED)
-            .setPackage(context.getPackageName())
-            .putExtra(EXTRA_LOCALE, newLocale);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(notification);
+    private fun notifyConfigurationChanged(context: Context, newLocale: String) {
+        val locale = parseLocale(newLocale)
+        applyLocale(context.applicationContext, locale)
+        val notification = Intent(Intent.ACTION_LOCALE_CHANGED)
+            .setPackage(context.packageName)
+            .putExtra(LocationPreferences.EXTRA_LOCALE, newLocale)
+        LocalBroadcastManager.getInstance(context).sendBroadcast(notification)
 
         // Restart the activity to refresh views.
-        restartActivity(getActivity());
+        restartActivity(requireActivity())
     }
 
-    @Override
-    public boolean onPreferenceClick(Preference preference) {
-        final String key = preference.getKey();
-        final Context context = preference.getContext();
-        if (preference == widgetPreference) {
-            if (checkWallpaperPermission(context)) {
-                return true;
-            }
-        } else if (KEY_THEME_WIDGET_RATIONALE.equals(key)) {
-            if (checkWallpaperPermission(context)) {
-                return true;
-            }
-        }
-        return super.onPreferenceClick(preference);
-    }
-
-    private boolean checkWallpaperPermission(Context context) {
+    private fun checkWallpaperPermission(context: Context): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             // Wallpaper colors don't need permissions.
-            return true;
+            return true
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_WALLPAPER) != PermissionChecker.PERMISSION_GRANTED) {
-                final Activity activity = getActivity();
-                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION_WALLPAPER)) {
-                    new AlertDialog.Builder(context)
+            if (PermissionChecker.checkCallingOrSelfPermission(
+                    context,
+                    PERMISSION_WALLPAPER
+                ) != PermissionChecker.PERMISSION_GRANTED
+            ) {
+                val activity: Activity = requireActivity()
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        activity,
+                        PERMISSION_WALLPAPER
+                    )
+                ) {
+                    AlertDialog.Builder(context)
                         .setTitle(R.string.appwidget_theme_title)
                         .setMessage(R.string.appwidget_theme_permission_rationale)
                         .setCancelable(true)
                         .setNegativeButton(android.R.string.cancel, null)
-                        .setPositiveButton(android.R.string.ok, (dialog, which) -> requestPermission.launch(PERMISSION_WALLPAPER))
-                        .show();
+                        .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
+                            requestPermission.launch(PERMISSION_WALLPAPER)
+                        }
+                        .show()
                 } else {
-                    requestPermission.launch(PERMISSION_WALLPAPER);
+                    requestPermission.launch(PERMISSION_WALLPAPER)
                 }
-                return true;
+                return true
             }
         }
-        return false;
+        return false
     }
 }

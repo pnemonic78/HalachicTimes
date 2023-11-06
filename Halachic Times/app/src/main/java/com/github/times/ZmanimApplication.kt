@@ -13,50 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times;
+package com.github.times
 
-import android.content.Context;
-
-import androidx.annotation.NonNull;
-
-import com.github.app.LocaleCallbacks;
-import com.github.app.LocaleHelper;
-import com.github.preference.LocalePreferences;
-import com.github.preference.ThemePreferences;
-import com.github.times.location.AddressProvider;
-import com.github.times.location.LocationApplication;
-import com.github.times.location.LocationsProviderFactory;
-import com.github.times.location.ZmanimLocations;
-import com.github.times.util.CrashlyticsTree;
-
-import timber.log.Timber;
+import android.content.Context
+import com.github.app.LocaleCallbacks
+import com.github.app.LocaleHelper
+import com.github.preference.LocalePreferences
+import com.github.preference.ThemePreferences
+import com.github.times.location.AddressProvider
+import com.github.times.location.LocationApplication
+import com.github.times.location.LocationsProviderFactory
+import com.github.times.location.ZmanimLocations
+import com.github.times.util.CrashlyticsTree
+import timber.log.Timber
 
 /**
  * Zmanim application.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimApplication extends LocationApplication<ThemePreferences, AddressProvider, ZmanimLocations> {
+class ZmanimApplication :
+    LocationApplication<ThemePreferences, AddressProvider, ZmanimLocations>() {
 
-    private LocaleCallbacks<LocalePreferences> localeCallbacks;
+    private lateinit var localeCallbacks: LocaleCallbacks<LocalePreferences>
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleHelper<>(newBase);
-        Context context = localeCallbacks.attachBaseContext(newBase);
-        super.attachBaseContext(context);
+    override fun attachBaseContext(newBase: Context) {
+        localeCallbacks = LocaleHelper(newBase)
+        val context = localeCallbacks.attachBaseContext(newBase)
+        super.attachBaseContext(context)
     }
 
-    @Override
-    public void onPreCreate() {
-        super.onPreCreate();
-        localeCallbacks.onPreCreate(this);
-        Timber.plant(new CrashlyticsTree(BuildConfig.DEBUG));
+    override fun onPreCreate() {
+        super.onPreCreate()
+        localeCallbacks.onPreCreate(this)
+        Timber.plant(CrashlyticsTree(BuildConfig.DEBUG))
     }
 
-    @NonNull
-    @Override
-    protected LocationsProviderFactory<AddressProvider, ZmanimLocations> createProviderFactory(Context context) {
-        return new ZmanimProviderFactoryImpl(context);
+    override fun createProviderFactory(context: Context): LocationsProviderFactory<AddressProvider, ZmanimLocations> {
+        return ZmanimProviderFactoryImpl(context)
     }
 }

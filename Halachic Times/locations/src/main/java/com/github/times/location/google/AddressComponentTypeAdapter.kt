@@ -26,7 +26,7 @@ import java.io.IOException
  *
  * @author Moshe Waisberg
  */
-internal class AddressComponentTypeAdapter : TypeAdapter<AddressComponentType?>() {
+internal class AddressComponentTypeAdapter : TypeAdapter<AddressComponentType>() {
     @Throws(IOException::class)
     override fun read(`in`: JsonReader): AddressComponentType? {
         val value = `in`.nextString()

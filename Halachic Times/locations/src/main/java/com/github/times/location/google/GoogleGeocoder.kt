@@ -38,7 +38,7 @@ import java.util.Locale
  *
  * @author Moshe Waisberg
  */
-class GoogleGeocoder(locale: Locale?) : GeocoderBase(locale) {
+class GoogleGeocoder(locale: Locale) : GeocoderBase(locale) {
     @Throws(IOException::class)
     override fun getFromLocation(
         latitude: Double,

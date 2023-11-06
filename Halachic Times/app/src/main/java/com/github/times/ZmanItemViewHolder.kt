@@ -24,21 +24,21 @@ class ZmanItemViewHolder(
 
     override fun bind(item: ZmanimItem?) {
         val zman = item ?: return
-        val isEnabled = !zman.elapsed
+        val isEnabled = !zman.isElapsed
 
         itemView.isEnabled = isEnabled
         itemView.setOnClickListener { listener?.onZmanClick(zman) }
 
         title.text = zman.title
         title.isEnabled = isEnabled
-        if (zman.emphasis) {
+        if (zman.isEmphasis) {
             title.setTypeface(title.typeface, Typeface.BOLD)
             title.setTextSize(TypedValue.COMPLEX_UNIT_PX, title.textSize * emphasisScale)
         }
 
         time.text = zman.timeLabel
         time.isEnabled = isEnabled
-        if (zman.emphasis) {
+        if (zman.isEmphasis) {
             time.setTypeface(time.typeface, Typeface.BOLD)
             time.setTextSize(TypedValue.COMPLEX_UNIT_PX, time.textSize * emphasisScale)
         }

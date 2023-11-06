@@ -72,16 +72,14 @@ class CompassActivity : BaseCompassActivity() {
         }
     }
 
-    override fun getLocationActivityClass(): Class<out Activity> {
-        return LocationActivity::class.java
-    }
+    override val locationActivityClass: Class<out Activity> = LocationActivity::class.java
 
     private fun startSettings() {
         val context: Context = this
         startActivity(Intent(context, CompassPreferenceActivity::class.java))
     }
 
-    override fun createCompassPreferences(context: Context?): ThemeCompassPreferences {
+    override fun createCompassPreferences(context: Context): ThemeCompassPreferences {
         return ZmanimCompassPreferences(context)
     }
 

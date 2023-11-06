@@ -94,6 +94,7 @@ class LocationsTestCase {
         temple.longitude = toDegrees(35, 14, 4, Hemisphere.EAST)
         assertLocation(temple)
         assertEquals(31.77777777, temple.latitude, 0.000001)
+
         val location = ZmanimLocation("city")
         val delta = 1f
 
@@ -254,7 +255,7 @@ class LocationsTestCase {
         assertTrue(m < 60)
         assertTrue(s >= 0)
         assertTrue(s < 60)
-        return hemisphere.sign() * (d + (m + s / 60.0) / 60.0)
+        return hemisphere.sign() * (d + (m +( s / 60.0)) / 60.0)
     }
 
     @Test
@@ -262,7 +263,7 @@ class LocationsTestCase {
         val context = ApplicationProvider.getApplicationContext<Context>()
         SimpleLocationPreferences.init(context)
         val formatter: LocationFormatter =
-            SimpleLocationFormatter(context, LocationPreferences.Values.FORMAT_DECIMAL, true)
+            SimpleLocationFormatter(context, LocationPreferences.Values.FORMAT_DECIMAL!!, true)
         assertTrue(formatter.parseLatitude("").isNaN())
         assertTrue(formatter.parseLatitude("a").isNaN())
         assertTrue(formatter.parseLatitude(",").isNaN())
@@ -285,7 +286,7 @@ class LocationsTestCase {
         val context = ApplicationProvider.getApplicationContext<Context>()
         SimpleLocationPreferences.init(context)
         val formatter: LocationFormatter =
-            SimpleLocationFormatter(context, LocationPreferences.Values.FORMAT_DECIMAL, true)
+            SimpleLocationFormatter(context, LocationPreferences.Values.FORMAT_DECIMAL!!, true)
         assertTrue(formatter.parseLongitude("").isNaN())
         assertTrue(formatter.parseLongitude("a").isNaN())
         assertTrue(formatter.parseLongitude(",").isNaN())
@@ -308,7 +309,7 @@ class LocationsTestCase {
         val context = ApplicationProvider.getApplicationContext<Context>()
         SimpleLocationPreferences.init(context)
         val formatter: LocationFormatter =
-            SimpleLocationFormatter(context, LocationPreferences.Values.FORMAT_SEXAGESIMAL, true)
+            SimpleLocationFormatter(context, LocationPreferences.Values.FORMAT_SEXAGESIMAL!!, true)
         assertTrue(formatter.parseLatitude("").isNaN())
         assertTrue(formatter.parseLatitude("a").isNaN())
         assertTrue(formatter.parseLatitude("\u00B0").isNaN())
@@ -346,7 +347,7 @@ class LocationsTestCase {
         val context = ApplicationProvider.getApplicationContext<Context>()
         SimpleLocationPreferences.init(context)
         val formatter: LocationFormatter =
-            SimpleLocationFormatter(context, LocationPreferences.Values.FORMAT_SEXAGESIMAL, true)
+            SimpleLocationFormatter(context, LocationPreferences.Values.FORMAT_SEXAGESIMAL!!, true)
         assertTrue(formatter.parseLongitude("").isNaN())
         assertTrue(formatter.parseLongitude("a").isNaN())
         assertTrue(formatter.parseLongitude("\u00B0").isNaN())

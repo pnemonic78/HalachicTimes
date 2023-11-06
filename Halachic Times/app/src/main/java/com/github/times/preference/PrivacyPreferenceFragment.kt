@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass.preference
+package com.github.times.preference
 
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Bundle
 import androidx.annotation.Keep
 import androidx.preference.Preference
-import com.github.preference.AbstractPreferenceFragment
-import com.github.times.compass.lib.R
+import com.github.times.R
 import com.github.times.location.LocationApplication
 
 /**
@@ -34,23 +33,25 @@ class PrivacyPreferenceFragment : AbstractPreferenceFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
+
         findPreference<Preference>("clear_history")?.apply {
-            setOnPreferenceClickListener {
-                it.isEnabled = false
-                deleteHistory(it.context)
-                it.isEnabled = true
+            setOnPreferenceClickListener { preference ->
+                preference.isEnabled = false
+                deleteHistory(preference.context)
+                preference.isEnabled = true
                 true
             }
         }
         findPreference<Preference>("clear_data")?.apply {
             isEnabled = true
-            setOnPreferenceClickListener {
-                it.isEnabled = false
-                deleteAppData(it.context)
-                it.isEnabled = true
+            setOnPreferenceClickListener { preference ->
+                preference.isEnabled = false
+                deleteAppData(preference.context)
+                preference.isEnabled = true
                 true
             }
         }
+
         validateIntent("location_permission")
     }
 
@@ -60,17 +61,18 @@ class PrivacyPreferenceFragment : AbstractPreferenceFragment() {
     private fun deleteHistory(context: Context) {
         val appContext = context.applicationContext
         val app = appContext as LocationApplication<*, *, *>
-        val provider = app.addresses
-        provider.deleteAddresses()
-        provider.deleteElevations()
-        provider.deleteCities()
+        app.addresses.apply {
+            deleteAddresses()
+            deleteElevations()
+            deleteCities()
+        }
     }
 
     /**
      * Clear the application data.
      */
     private fun deleteAppData(context: Context) {
-        val am = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val am = context.getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager ?: return
         am.clearApplicationUserData()
     }
 }

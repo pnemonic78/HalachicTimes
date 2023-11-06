@@ -13,47 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.preference;
+package com.github.times.preference
 
-import android.content.Context;
-import android.text.TextUtils;
-import android.util.AttributeSet;
-
-import androidx.preference.ListPreference;
+import android.content.Context
+import android.util.AttributeSet
+import androidx.preference.ListPreference
 
 /**
  * Zman reminder preference.
  */
-public class ZmanReminderPreference extends ListPreference {
+class ZmanReminderPreference @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0
+) : ListPreference(context, attrs, defStyleAttr, defStyleRes) {
 
-    public ZmanReminderPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+    override fun notifyChanged() {
+        super.notifyChanged()
+        notifyDependencyChange(shouldDisableDependents())
     }
 
-    public ZmanReminderPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    override fun shouldDisableDependents(): Boolean {
+        return super.shouldDisableDependents() || isOff
     }
 
-    public ZmanReminderPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public ZmanReminderPreference(Context context) {
-        super(context);
-    }
-
-    @Override
-    protected void notifyChanged() {
-        super.notifyChanged();
-        notifyDependencyChange(shouldDisableDependents());
-    }
-
-    @Override
-    public boolean shouldDisableDependents() {
-        return super.shouldDisableDependents() || isOff();
-    }
-
-    public boolean isOff() {
-        return TextUtils.isEmpty(getValue());
-    }
+    private val isOff: Boolean
+        get() = value.isNullOrEmpty()
 }

@@ -21,6 +21,7 @@ android {
         minSdk = BuildVersions.minSdkVersion
         targetSdk = BuildVersions.targetSdkVersion
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testApplicationId = "$namespace.test"
 
         encodeApiKey("BING_API_KEY")
         encodeApiKey("GEONAMES_USERNAME")

@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass.backup;
+package com.github.times.compass.backup
 
-import com.github.backup.SharedPreferencesBackupAgent;
+import com.github.backup.SharedPreferencesBackupAgent
 
 /**
  * Backup agent helper for the application.
  */
-public class CompassBackupAgent extends SharedPreferencesBackupAgent {
-}
+class CompassBackupAgent : SharedPreferencesBackupAgent()

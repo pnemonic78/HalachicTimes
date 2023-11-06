@@ -13,54 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.preference;
+package com.github.times.preference
 
-import android.content.Context;
-
-import com.github.times.R;
-import com.github.times.compass.preference.SimpleCompassPreferences;
-
-import static com.github.preference.ThemePreferences.Values.THEME_DARK;
-import static com.github.preference.ThemePreferences.Values.THEME_LIGHT;
-import static com.github.times.preference.ZmanimPreferences.Values.THEME_WHITE;
+import android.content.Context
+import com.github.preference.ThemePreferences.Values.THEME_DARK
+import com.github.preference.ThemePreferences.Values.THEME_LIGHT
+import com.github.times.compass.lib.R
+import com.github.times.compass.preference.SimpleCompassPreferences
+import com.github.times.preference.ZmanimPreferences.Values.THEME_WHITE
 
 /**
  * Zmanim compass preferences implementation.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimCompassPreferences extends SimpleCompassPreferences {
+class ZmanimCompassPreferences(context: Context) : SimpleCompassPreferences(context) {
 
-    /**
-     * Constructs a new settings.
-     *
-     * @param context the context.
-     */
-    public ZmanimCompassPreferences(Context context) {
-        super(context);
-        init(context);
+    init {
+        SimpleZmanimPreferences.init(context)
     }
 
-    /**
-     * Initialize. Should be called only once when application created.
-     *
-     * @param context the context.
-     */
-    public static void init(Context context) {
-        SimpleZmanimPreferences.init(context);
-    }
-
-    @Override
-    public int getTheme(String value) {
-        if (THEME_DARK.equals(value)) {
-            return com.github.times.compass.lib.R.style.Theme_CompassApp_Dark;
+    override fun getTheme(value: String?): Int {
+        return when (value) {
+            THEME_DARK -> R.style.Theme_CompassApp_Dark
+            THEME_LIGHT -> R.style.Theme_CompassApp_Light
+            THEME_WHITE -> R.style.Theme_CompassApp_Light
+            else -> R.style.Theme_CompassApp_DayNight
         }
-        if (THEME_LIGHT.equals(value)) {
-            return com.github.times.compass.lib.R.style.Theme_CompassApp_Light;
-        }
-        if (THEME_WHITE.equals(value)) {
-            return com.github.times.compass.lib.R.style.Theme_CompassApp_Light;
-        }
-        return com.github.times.compass.lib.R.style.Theme_CompassApp_DayNight;
     }
 }

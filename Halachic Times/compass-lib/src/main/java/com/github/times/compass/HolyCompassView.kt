@@ -21,7 +21,12 @@ import kotlin.math.min
  *
  * @author Moshe Waisberg
  */
-class HolyCompassView : CompassView {
+class HolyCompassView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0
+) : CompassView(context, attrs, defStyleAttr, defStyleRes) {
     private var holiest = 0f
     private var northToHoliest = 0f
     private var colorTarget = Color.TRANSPARENT
@@ -31,34 +36,6 @@ class HolyCompassView : CompassView {
     private var paintShadowHoliest = Paint(paintShadowTemplate)
     private val pathShadowHoliest = Path()
     private val pathArrowHoliest = Path()
-
-    /**
-     * Constructs a new compass view.
-     *
-     * @param context the context.
-     */
-    constructor(context: Context) : this(context, null)
-
-    /**
-     * Constructs a new compass view.
-     *
-     * @param context the context.
-     * @param attrs   the attributes.
-     */
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-
-    /**
-     * Constructs a new compass view.
-     *
-     * @param context  the context.
-     * @param attrs    the attributes.
-     * @param defStyle the default style.
-     */
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(
-        context,
-        attrs,
-        defStyle
-    )
 
     init {
         init(context)

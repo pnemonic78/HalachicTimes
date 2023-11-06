@@ -13,98 +13,81 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.content.ComponentCallbacks2;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.github.times.location.impl.LocationsProviderFactoryImpl;
-
-import androidx.annotation.NonNull;
-
-import org.jetbrains.annotations.NotNull;
-
-import timber.log.Timber;
+import android.content.ComponentCallbacks2
+import android.content.ComponentCallbacks2.TRIM_MEMORY_COMPLETE
+import android.content.res.Configuration
+import android.database.sqlite.SQLiteDatabase
+import timber.log.Timber
 
 /**
  * Holder for locations.
  *
  * @author Moshe Waisberg
  */
-public class LocationHolder<AP extends AddressProvider, LP extends LocationsProvider> implements ComponentCallbacks2 {
-
-    private final LocationsProviderFactory<AP, LP> factory;
-    /** Provider for addresses. */
-    private AP addressProvider;
-    /** Provider for locations. */
-    private LP locationsProvider;
-
-    public LocationHolder(@NonNull LocationsProviderFactory<AP, LP> factory) {
-        this.factory = factory;
-        this.addressProvider = null;
-        this.locationsProvider = null;
-    }
+class LocationHolder<AP : AddressProvider, LP : LocationsProvider>(
+    private val factory: LocationsProviderFactory<AP, LP>
+) : ComponentCallbacks2 {
+    /** Provider for addresses.  */
+    private var addressProvider: AP? = null
 
     /**
      * Get the addresses provider instance.
      *
      * @return the provider.
      */
-    public AP getAddresses() {
-        AP addressProvider = this.addressProvider;
-        if (addressProvider == null) {
-            addressProvider = factory.createAddressProvider();
-            this.addressProvider = addressProvider;
+    val addresses: AP
+        get() {
+            var addressProvider = addressProvider
+            if (addressProvider == null) {
+                addressProvider = factory.createAddressProvider()
+                this.addressProvider = addressProvider
+            }
+            return addressProvider
         }
-        return addressProvider;
-    }
+
+    /** Provider for locations.  */
+    private var locationsProvider: LP? = null
 
     /**
      * Get the locations provider instance.
      *
      * @return the provider.
      */
-    public LP getLocations() {
-        LP locationsProvider = this.locationsProvider;
-        if (locationsProvider == null) {
-            locationsProvider = factory.createLocationsProvider();
-            this.locationsProvider = locationsProvider;
+    val locations: LP
+        get() {
+            var locationsProvider = locationsProvider
+            if (locationsProvider == null) {
+                locationsProvider = factory.createLocationsProvider()
+                this.locationsProvider = locationsProvider
+            }
+            return locationsProvider
         }
-        return locationsProvider;
+
+    override fun onLowMemory() {
+        onTrimMemory(TRIM_MEMORY_COMPLETE)
     }
 
-    @Override
-    public void onLowMemory() {
-        onTrimMemory(TRIM_MEMORY_COMPLETE);
+    override fun onTrimMemory(level: Int) {
+        Timber.w("Trim memory: %d", level)
+        dispose()
     }
 
-    @Override
-    public void onTrimMemory(int level) {
-        Timber.w("Trim memory: %d", level);
-        dispose();
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        Timber.w("Configuration changed: %s", newConfig)
+        dispose()
     }
 
-    @Override
-    public void onConfigurationChanged(@NotNull Configuration newConfig) {
-        Timber.w("Configuration Changed: %s", newConfig);
-        dispose();
+    fun onTerminate() {
+        dispose()
     }
 
-    public void onTerminate() {
-        dispose();
-    }
-
-    private void dispose() {
-        if (addressProvider != null) {
-            addressProvider.close();
-            addressProvider = null;
-        }
-        if (locationsProvider != null) {
-            locationsProvider.quit();
-            locationsProvider = null;
-        }
-        SQLiteDatabase.releaseMemory();
+    private fun dispose() {
+        addressProvider?.close()
+        addressProvider = null
+        locationsProvider?.quit()
+        locationsProvider = null
+        SQLiteDatabase.releaseMemory()
     }
 }

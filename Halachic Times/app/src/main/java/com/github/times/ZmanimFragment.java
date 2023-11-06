@@ -52,7 +52,7 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimFragment<VH extends ZmanViewHolder, A extends ZmanimAdapter<VH>, P extends ZmanimPopulater<VH, A>> extends Fragment {
+public class ZmanimFragment<VH extends ZmanViewHolder, A extends ZmanimAdapter<VH>, P extends ZmanimPopulater<A>> extends Fragment {
 
     private Context context;
     private OnZmanItemClickListener onClickListener;
@@ -128,7 +128,7 @@ public class ZmanimFragment<VH extends ZmanViewHolder, A extends ZmanimAdapter<V
 
         final Context context = getContextImpl();
         if (context instanceof ZmanimActivity) {
-            preferences = ((ZmanimActivity) context).getZmanimPreferences();
+            preferences = ((ZmanimActivity) context).getPreferences();
         } else {
             preferences = new SimpleZmanimPreferences(context);
         }
@@ -188,7 +188,7 @@ public class ZmanimFragment<VH extends ZmanViewHolder, A extends ZmanimAdapter<V
     @SuppressWarnings("unchecked")
     @NonNull
     protected P createPopulater(@NonNull Context context) {
-        return (P) new ZmanimPopulater<VH, A>(context, preferences);
+        return (P) new ZmanimPopulater<A>(context, preferences);
     }
 
     /**

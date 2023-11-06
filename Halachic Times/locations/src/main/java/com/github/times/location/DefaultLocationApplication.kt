@@ -13,25 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.content.Context;
-
-import com.github.preference.ThemePreferences;
-import com.github.times.location.impl.LocationsProviderFactoryImpl;
-
-import androidx.annotation.NonNull;
+import android.content.Context
+import com.github.preference.ThemePreferences
+import com.github.times.location.impl.LocationsProviderFactoryImpl
 
 /**
  * Default location application.
  *
  * @author Moshe Waisberg
  */
-public class DefaultLocationApplication extends LocationApplication<ThemePreferences, AddressProvider, LocationsProvider> {
-
-    @NonNull
-    @Override
-    protected LocationsProviderFactory<AddressProvider, LocationsProvider> createProviderFactory(Context context) {
-        return new LocationsProviderFactoryImpl(context);
+class DefaultLocationApplication :
+    LocationApplication<ThemePreferences, AddressProvider, LocationsProvider>() {
+    override fun createProviderFactory(context: Context): LocationsProviderFactory<AddressProvider, LocationsProvider> {
+        return LocationsProviderFactoryImpl(context)
     }
 }

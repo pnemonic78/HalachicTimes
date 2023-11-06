@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass.preference;
+package com.github.times.compass.preference
 
-import com.github.preference.ThemePreferences;
+import com.github.preference.ThemePreferences
 
 /**
  * Compass preferences with theme.
  *
  * @author Moshe Waisberg
  */
-public interface ThemeCompassPreferences extends CompassPreferences, ThemePreferences {
-}
+interface ThemeCompassPreferences : CompassPreferences, ThemePreferences

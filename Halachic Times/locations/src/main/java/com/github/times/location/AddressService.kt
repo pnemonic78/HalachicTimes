@@ -13,117 +13,105 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import static com.github.times.location.ZmanimLocationListener.ACTION_ADDRESS;
-import static com.github.times.location.ZmanimLocationListener.ACTION_ELEVATION;
-
-import android.content.Context;
-import android.content.Intent;
-import android.location.Address;
-import android.location.Location;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.JobIntentService;
-
-import com.github.times.location.AddressProvider.OnFindAddressListener;
-
-import timber.log.Timber;
+import android.content.Context
+import android.content.Intent
+import android.location.Address
+import android.location.Location
+import android.os.Bundle
+import androidx.core.app.JobIntentService
+import com.github.os.getParcelableCompat
+import com.github.times.location.AddressProvider.OnFindAddressListener
+import timber.log.Timber
 
 /**
  * Service to find an address.
  *
  * @author Moshe Waisberg
  */
-public class AddressService extends JobIntentService implements OnFindAddressListener {
+class AddressService : JobIntentService(), OnFindAddressListener {
+    private var addressProvider: AddressProvider? = null
 
-    private static final int JOB_ADDRESS = 0xADD7E55; // "ADDrESS"
-
-    private static final String PARAMETER_LOCATION = ZmanimLocationListener.EXTRA_LOCATION;
-    private static final String PARAMETER_ADDRESS = ZmanimLocationListener.EXTRA_ADDRESS;
-    private static final String PARAMETER_PERSIST = ZmanimLocationListener.EXTRA_PERSIST;
-
-    private static final boolean PERSIST_DEFAULT = true;
-
-    private AddressProvider addressProvider;
-
-    public static void enqueueWork(@NonNull Context context, @NonNull Intent intent) {
-        enqueueWork(context, AddressService.class, JOB_ADDRESS, intent);
+    override fun onCreate() {
+        super.onCreate()
+        addressProvider = AddressProvider(this)
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        addressProvider = new AddressProvider(this);
-    }
-
-    @Override
-    protected void onHandleWork(@NonNull Intent intent) {
-        final Bundle extras = intent.getExtras();
-        if ((extras == null) || extras.isEmpty()) {
-            return;
-        }
-        final Location location = extras.getParcelable(PARAMETER_LOCATION);
-        if (location == null) {
-            return;
-        }
-
-        final AddressProvider provider = addressProvider;
-        if (provider == null)
-            return;
-        final String action = intent.getAction();
-        if (ACTION_ADDRESS.equals(action)) {
+    override fun onHandleWork(intent: Intent) {
+        val extras = intent.extras ?: return
+        if (extras.isEmpty) return
+        val location = extras.getParcelableCompat(PARAMETER_LOCATION, Location::class.java)
+            ?: return
+        val provider = addressProvider ?: return
+        val action = intent.action
+        if (ZmanimLocationListener.ACTION_ADDRESS == action) {
             if (extras.containsKey(PARAMETER_PERSIST)) {
-                Bundle locationExtras = location.getExtras();
+                var locationExtras = location.extras
                 if (locationExtras == null) {
-                    locationExtras = new Bundle();
+                    locationExtras = Bundle()
                 }
-                locationExtras.putBoolean(PARAMETER_PERSIST, extras.getBoolean(PARAMETER_PERSIST, PERSIST_DEFAULT));
-                location.setExtras(locationExtras);
+                locationExtras.putBoolean(
+                    PARAMETER_PERSIST,
+                    extras.getBoolean(PARAMETER_PERSIST, PERSIST_DEFAULT)
+                )
+                location.extras = locationExtras
             }
-            provider.findNearestAddress(location, this);
-        } else if (ACTION_ELEVATION.equals(action)) {
-            provider.findElevation(location, this);
+            provider.findNearestAddress(location, this)
+        } else if (ZmanimLocationListener.ACTION_ELEVATION == action) {
+            provider.findElevation(location, this)
         }
     }
 
-    @Override
-    public void onFindAddress(AddressProvider provider, Location location, Address address) {
-        ZmanimAddress addr = null;
-        if (address != null) {
-            if (address instanceof ZmanimAddress) {
-                addr = (ZmanimAddress) address;
-            } else {
-                addr = new ZmanimAddress(address);
-                if (location.hasAltitude()) {
-                    addr.setElevation(location.getAltitude());
-                }
-            }
-            Bundle extras = location.getExtras();
-            if ((extras == null) || extras.getBoolean(PARAMETER_PERSIST, PERSIST_DEFAULT)) {
-                provider.insertOrUpdateAddress(location, addr);
+    override fun onFindAddress(provider: AddressProvider, location: Location, address: Address) {
+        val addr: ZmanimAddress?
+        if (address is ZmanimAddress) {
+            addr = address
+        } else {
+            addr = ZmanimAddress(address)
+            if (location.hasAltitude()) {
+                addr.elevation = location.altitude
             }
         }
-
-        Timber.i("find address: %s %s", location, addr);
-        Intent result = new Intent(ACTION_ADDRESS)
-            .setPackage(getPackageName())
+        val extras = location.extras
+        if (extras == null || extras.getBoolean(PARAMETER_PERSIST, PERSIST_DEFAULT)) {
+            provider.insertOrUpdateAddress(location, addr)
+        }
+        Timber.i("find address: %s %s", location, addr)
+        val result = Intent(ZmanimLocationListener.ACTION_ADDRESS)
+            .setPackage(packageName)
             .putExtra(PARAMETER_LOCATION, location)
-            .putExtra(PARAMETER_ADDRESS, addr);
-        sendBroadcast(result);
+            .putExtra(PARAMETER_ADDRESS, addr)
+        sendBroadcast(result)
     }
 
-    @Override
-    public void onFindElevation(AddressProvider provider, Location location, Location elevated) {
-        if (elevated instanceof ZmanimLocation) {
-            provider.insertOrUpdateElevation((ZmanimLocation) elevated);
+    override fun onFindElevation(
+        provider: AddressProvider,
+        location: Location,
+        elevated: Location
+    ) {
+        if (elevated is ZmanimLocation) {
+            provider.insertOrUpdateElevation(elevated)
+        }
+        Timber.i("find elevation: %s %s", location, elevated)
+        val result = Intent(ZmanimLocationListener.ACTION_ELEVATION)
+            .setPackage(packageName)
+            .putExtra(PARAMETER_LOCATION, elevated)
+        sendBroadcast(result)
+    }
 
-            Timber.i("find elevation: %s %s", location, elevated);
-            Intent result = new Intent(ACTION_ELEVATION)
-                .setPackage(getPackageName())
-                .putExtra(PARAMETER_LOCATION, elevated);
-            sendBroadcast(result);
+    companion object {
+        private const val JOB_ADDRESS = 0xADD7E55 // "ADDrESS"
+
+        private const val PARAMETER_LOCATION = ZmanimLocationListener.EXTRA_LOCATION
+        private const val PARAMETER_ADDRESS = ZmanimLocationListener.EXTRA_ADDRESS
+        private const val PARAMETER_PERSIST = ZmanimLocationListener.EXTRA_PERSIST
+
+        private const val PERSIST_DEFAULT = true
+
+        @JvmStatic
+        fun enqueueWork(context: Context, intent: Intent) {
+            enqueueWork(context, AddressService::class.java, JOB_ADDRESS, intent)
         }
     }
 }

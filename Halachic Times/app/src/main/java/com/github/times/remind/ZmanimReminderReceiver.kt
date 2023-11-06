@@ -13,27 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.remind;
+package com.github.times.remind
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-
-import timber.log.Timber;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import timber.log.Timber
 
 /**
  * Receive alarm events, or date-time events, to update reminders.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimReminderReceiver extends BroadcastReceiver {
-
-    @Override
-    @SuppressWarnings("UnsafeProtectedBroadcastReceiver")
-    public void onReceive(Context context, Intent intent) {
-        Timber.i("onReceive %s", intent);
-        if (intent == null) return;
+class ZmanimReminderReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        Timber.i("onReceive $intent")
         // Delegate actions to the service.
-        ZmanimReminderService.enqueueWork(context, intent);
+        ZmanimReminderService.enqueueWork(context, intent)
     }
 }

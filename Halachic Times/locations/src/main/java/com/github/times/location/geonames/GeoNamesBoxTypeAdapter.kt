@@ -27,7 +27,7 @@ import org.geonames.BoundingBox
  *
  * @author Moshe Waisberg
  */
-class GeoNamesBoxTypeAdapter : TypeAdapter<BoundingBox?>() {
+class GeoNamesBoxTypeAdapter : TypeAdapter<BoundingBox>() {
     @Throws(IOException::class)
     override fun read(`in`: JsonReader): BoundingBox? {
         if (`in`.peek() == JsonToken.NULL) {

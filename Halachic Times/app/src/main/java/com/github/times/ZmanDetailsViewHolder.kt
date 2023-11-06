@@ -16,7 +16,7 @@ class ZmanDetailsViewHolder(binding: TimesDetailBinding) :
 
     override fun bind(item: ZmanimItem?) {
         val zman = item ?: return
-        val isEnabled = !zman.elapsed
+        val isEnabled = !zman.isElapsed
 
         itemView.isEnabled = isEnabled
 

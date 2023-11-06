@@ -42,7 +42,12 @@ import kotlin.math.min
  *
  * @author Moshe Waisberg
  */
-open class CompassView : View {
+open class CompassView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0
+) : View(context, attrs, defStyleAttr, defStyleRes) {
     protected var north = 0f
         private set
     private var colorFace = Color.TRANSPARENT
@@ -123,33 +128,6 @@ open class CompassView : View {
     //TODO add "ticks" to styleable attributes.
     var ticks = true
 
-    /**
-     * Constructs a new compass view.
-     *
-     * @param context the context.
-     */
-    constructor(context: Context) : this(context, null)
-
-    /**
-     * Constructs a new compass view.
-     *
-     * @param context the context.
-     * @param attrs   the attributes.
-     */
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-
-    /**
-     * Constructs a new compass view.
-     *
-     * @param context  the context.
-     * @param attrs    the attributes.
-     * @param defStyle the default style.
-     */
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(
-        context,
-        attrs,
-        defStyle
-    )
 
     init {
         init(context)

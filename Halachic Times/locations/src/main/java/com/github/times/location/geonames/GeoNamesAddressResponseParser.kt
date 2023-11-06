@@ -57,7 +57,7 @@ class GeoNamesAddressResponseParser : AddressResponseParser() {
         return try {
             val reader: Reader = InputStreamReader(data, StandardCharsets.UTF_8)
             val response = gson.fromJson(reader, GeoNamesResponse::class.java)
-            val results: MutableList<Address> = ArrayList(maxResults)
+            val results = mutableListOf<Address>()
             handleResponse(latitude, longitude, response, results, maxResults, locale)
             results
         } catch (e: JsonIOException) {
@@ -102,8 +102,8 @@ class GeoNamesAddressResponseParser : AddressResponseParser() {
         }
     }
 
-    private fun toAddress(response: Toponym, locale: Locale): Address {
-        return ZmanimAddress(locale).apply {
+    private fun toAddress(response: Toponym, locale: Locale): Address =
+        ZmanimAddress(locale).apply {
             latitude = response.latitude
             longitude = response.longitude
             elevation = response.elevation?.toDouble() ?: 0.0
@@ -113,20 +113,17 @@ class GeoNamesAddressResponseParser : AddressResponseParser() {
             countryName = response.countryName
             subAdminArea = response.adminName2
         }
-    }
 
     private fun toAddress(
         response: Ocean,
         locale: Locale,
         latitude: Double,
         longitude: Double
-    ): Address {
-        return ZmanimAddress(locale).apply {
-            this.latitude = latitude
-            this.longitude = longitude
-            elevation = 0.0
-            featureName = response.name
-            formatted = response.name
-        }
+    ): Address = ZmanimAddress(locale).apply {
+        this.latitude = latitude
+        this.longitude = longitude
+        elevation = 0.0
+        featureName = response.name
+        setFormatted(response.name)
     }
 }

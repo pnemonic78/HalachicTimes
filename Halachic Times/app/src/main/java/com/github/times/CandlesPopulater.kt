@@ -13,32 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times;
+package com.github.times
 
-import android.content.Context;
-
-import com.github.times.preference.ZmanimPreferences;
-import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
+import android.content.Context
+import com.github.times.preference.ZmanimPreferences
 
 /**
  * Populater for candles.
  *
  * @author Moshe Waisberg
  */
-public class CandlesPopulater extends ZmanimPopulater<ZmanViewHolder, ZmanimAdapter<ZmanViewHolder>> {
-
-    /**
-     * Creates a new populater.
-     *
-     * @param context the context.
-     */
-    public CandlesPopulater(Context context, ZmanimPreferences settings) {
-        super(context, settings);
-    }
-
-    public CandleData populateCandles(ZmanimPreferences preferences) {
-        final JewishCalendar jewishDate = getJewishCalendar();
-        final JewishCalendar jewishDateTomorrow = cloneJewishTomorrow(jewishDate);
-        return calculateCandles(jewishDate, jewishDateTomorrow, preferences);
+class CandlesPopulater(context: Context, settings: ZmanimPreferences) :
+    ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, settings) {
+    fun populateCandles(preferences: ZmanimPreferences): CandleData? {
+        val jewishDate = jewishCalendar ?: return null
+        val jewishDateTomorrow = cloneJewishTomorrow(jewishDate)
+        return calculateCandles(jewishDate, jewishDateTomorrow, preferences)
     }
 }

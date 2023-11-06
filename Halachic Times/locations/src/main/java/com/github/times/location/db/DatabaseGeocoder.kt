@@ -26,12 +26,12 @@ import android.provider.BaseColumns
 import com.github.database.CursorFilter
 import com.github.times.location.AddressResponseParser
 import com.github.times.location.City
-import com.github.times.location.Country
 import com.github.times.location.ElevationResponseParser
 import com.github.times.location.GeocoderBase
 import com.github.times.location.LocationException
 import com.github.times.location.ZmanimAddress
 import com.github.times.location.ZmanimLocation
+import com.github.times.location.country.Country
 import com.github.times.location.provider.LocationContract
 import com.github.times.location.provider.LocationContract.AddressColumns
 import com.github.times.location.provider.LocationContract.CityColumns
@@ -52,7 +52,7 @@ import timber.log.Timber
  */
 class DatabaseGeocoder(
     private val context: Context,
-    locale: Locale? = getDefaultLocale(context)
+    locale: Locale = getDefaultLocale(context)
 ) : GeocoderBase(locale), Closeable {
 
     /**
@@ -98,7 +98,7 @@ class DatabaseGeocoder(
         }
         val q = queryAddresses(filter)
         Collections.sort(q, DistanceComparator(latitude, longitude))
-        val addresses = q.subList(0, Math.min(maxResults, q.size))
+        val addresses = q.subList(0, maxResults.coerceAtMost(q.size))
         return ArrayList<Address>(addresses)
     }
 
@@ -185,7 +185,7 @@ class DatabaseGeocoder(
         val context: Context = context
         val language = locale.language
         val country = locale.country
-        val addresses: MutableList<ZmanimAddress> = ArrayList()
+        val addresses = mutableListOf<ZmanimAddress>()
         val selection = "(${AddressColumns.LANGUAGE} IS NULL) OR (${AddressColumns.LANGUAGE}=?)"
         val selectionArgs = arrayOf(language)
         val cursor = context.contentResolver.query(
@@ -201,7 +201,7 @@ class DatabaseGeocoder(
         try {
             if (cursor.moveToFirst()) {
                 var locationLanguage: String?
-                var locale: Locale?
+                var locale: Locale
                 do {
                     if (filter != null && !filter.accept(cursor)) {
                         continue
@@ -213,7 +213,7 @@ class DatabaseGeocoder(
                         Locale(locationLanguage, country)
                     }
                     val address = ZmanimAddress(locale)
-                    address.formatted = cursor.getString(INDEX_ADDRESS_ADDRESS)
+                    address.setFormatted(cursor.getString(INDEX_ADDRESS_ADDRESS))
                     address.id = cursor.getLong(INDEX_ADDRESS_ID)
                     address.latitude = cursor.getDouble(INDEX_ADDRESS_LATITUDE)
                     address.longitude = cursor.getDouble(INDEX_ADDRESS_LONGITUDE)
@@ -316,7 +316,7 @@ class DatabaseGeocoder(
      * @return the list of locations with elevations.
      */
     fun queryElevations(filter: CursorFilter?): List<ZmanimLocation> {
-        val locations: MutableList<ZmanimLocation> = ArrayList()
+        val locations = mutableListOf<ZmanimLocation>()
         val context: Context = context
         val cursor = context.contentResolver.query(
             Elevations.CONTENT_URI(context), PROJECTION_ELEVATION, null, null, null
@@ -404,7 +404,7 @@ class DatabaseGeocoder(
      */
     fun queryCities(filter: CursorFilter?): List<City> {
         val context: Context = context
-        val cities: MutableList<City> = ArrayList()
+        val cities = mutableListOf<City>()
         val cursor = context.contentResolver.query(
             LocationContract.Cities.CONTENT_URI(context), PROJECTION_CITY, null, null, null
         )

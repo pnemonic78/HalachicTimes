@@ -13,32 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times;
+package com.github.times
 
-import android.content.Context;
-
-import com.github.times.location.AddressProvider;
-import com.github.times.location.LocationsProviderFactory;
-import com.github.times.location.ZmanimLocations;
+import android.content.Context
+import com.github.times.location.AddressProvider
+import com.github.times.location.LocationsProviderFactory
+import com.github.times.location.ZmanimLocations
 
 /**
  * Factory that creates location providers.
  */
-public class ZmanimProviderFactoryImpl implements LocationsProviderFactory<AddressProvider, ZmanimLocations> {
+class ZmanimProviderFactoryImpl(context: Context) :
+    LocationsProviderFactory<AddressProvider, ZmanimLocations> {
 
-    private final Context context;
+    private val context: Context = context.applicationContext
 
-    public ZmanimProviderFactoryImpl(Context context) {
-        this.context = context.getApplicationContext();
+    override fun createAddressProvider(): AddressProvider {
+        return AddressProvider(context)
     }
 
-    @Override
-    public AddressProvider createAddressProvider() {
-        return new AddressProvider(context);
-    }
-
-    @Override
-    public ZmanimLocations createLocationsProvider() {
-        return new ZmanimLocations(context);
+    override fun createLocationsProvider(): ZmanimLocations {
+        return ZmanimLocations(context)
     }
 }

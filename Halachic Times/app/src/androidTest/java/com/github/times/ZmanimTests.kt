@@ -18,7 +18,7 @@ class ZmanimTests {
         assertNotNull(context)
         val preferences: ZmanimPreferences = SimpleZmanimPreferences(context)
         assertNotNull(preferences)
-        val populater = ZmanimPopulater<ZmanimAdapter>(context, preferences)
+        val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences)
         assertNotNull(populater)
         populater.isInIsrael = true
         assertMolad(populater, 2018, Calendar.DECEMBER, 7, 22, 29)
@@ -38,22 +38,26 @@ class ZmanimTests {
     }
 
     private fun assertMolad(
-        populater: ZmanimPopulater<ZmanimAdapter>,
+        populater: ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>,
         year: Int,
         month: Int,
         day: Int,
         hour: Int,
         minute: Int
     ) {
-        val adapter = ZmanimAdapter(populater.context, populater.settings)
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        assertNotNull(context)
+        val settings: ZmanimPreferences = SimpleZmanimPreferences(context)
+        assertNotNull(settings)
+        val adapter = ZmanimAdapter<ZmanViewHolder>(context, settings)
         assertNotNull(adapter)
-        assertEquals(0, adapter.count.toLong())
+        assertEquals(0, adapter.itemCount.toLong())
         val cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         assertNotNull(cal)
         cal[year, month] = day
         populater.setCalendar(cal)
         populater.populate(adapter, false)
-        assertNotEquals(0, adapter.count.toLong())
+        assertNotEquals(0, adapter.itemCount)
         val item = adapter.getItemById(R.string.molad)
         assertNotNull(item)
         val molad = Calendar.getInstance(cal.timeZone)
@@ -72,9 +76,9 @@ class ZmanimTests {
         assertNotNull(context)
         val preferences: ZmanimPreferences = SimpleZmanimPreferences(context)
         assertNotNull(preferences)
-        val populater: ZmanimPopulater<*> = ZmanimPopulater<ZmanimAdapter>(context, preferences)
+        val populater: ZmanimPopulater<*> = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences)
         assertNotNull(populater)
-        val complexZmanimCalendar = populater.getCalendar()
+        val complexZmanimCalendar = populater.calendar
         assertNotNull(complexZmanimCalendar)
         assertNotNull(complexZmanimCalendar.geoLocation)
         assertNotNull(complexZmanimCalendar.calendar)

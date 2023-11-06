@@ -13,22 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.location.Address;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Locale;
+import android.location.Address
+import java.io.IOException
+import java.io.InputStream
+import java.util.Locale
 
 /**
  * Handler for parsing addresses.
  *
  * @author Moshe Waisberg
  */
-public abstract class AddressResponseParser {
-
+abstract class AddressResponseParser {
     /**
      * Parse the data to extract addresses.
      *
@@ -39,8 +36,9 @@ public abstract class AddressResponseParser {
      * @throws LocationException if a location error occurs.
      * @throws IOException       if an I/O error occurs.
      */
-    public List<Address> parse(InputStream data, int maxResults, Locale locale) throws LocationException, IOException {
-        return parse(data, 0.0, 0.0, maxResults, locale);
+    @Throws(LocationException::class, IOException::class)
+    fun parse(data: InputStream, maxResults: Int, locale: Locale): List<Address> {
+        return parse(data, 0.0, 0.0, maxResults, locale)
     }
 
     /**
@@ -55,5 +53,12 @@ public abstract class AddressResponseParser {
      * @throws LocationException if a location error occurs.
      * @throws IOException       if an I/O error occurs.
      */
-    public abstract List<Address> parse(InputStream data, double latitude, double longitude, int maxResults, Locale locale) throws LocationException, IOException;
+    @Throws(LocationException::class, IOException::class)
+    abstract fun parse(
+        data: InputStream,
+        latitude: Double,
+        longitude: Double,
+        maxResults: Int,
+        locale: Locale
+    ): List<Address>
 }

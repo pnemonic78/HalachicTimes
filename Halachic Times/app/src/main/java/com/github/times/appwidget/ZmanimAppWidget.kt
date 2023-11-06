@@ -13,136 +13,100 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.appwidget;
+package com.github.times.appwidget
 
-import static android.app.PendingIntent.FLAG_IMMUTABLE;
-import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
-import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
-import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS;
-import static android.content.Context.ALARM_SERVICE;
-import static android.content.Intent.ACTION_DATE_CHANGED;
-import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
-import static android.content.Intent.ACTION_TIME_CHANGED;
-import static android.content.Intent.ACTION_WALLPAPER_CHANGED;
-import static android.text.TextUtils.isEmpty;
-import static android.text.format.DateUtils.DAY_IN_MILLIS;
-import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate;
-import static com.github.times.location.ZmanimLocationListener.ACTION_LOCATION_CHANGED;
-import static java.lang.System.currentTimeMillis;
-
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProvider;
-import android.content.Context;
-import android.content.Intent;
-import android.location.Location;
-import android.widget.RemoteViews;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.StyleRes;
-
-import com.github.app.LocaleCallbacks;
-import com.github.app.LocaleHelper;
-import com.github.appwidget.AppWidgetUtils;
-import com.github.preference.LocalePreferences;
-import com.github.times.ZmanViewHolder;
-import com.github.times.ZmanimActivity;
-import com.github.times.ZmanimAdapter;
-import com.github.times.ZmanimApplication;
-import com.github.times.ZmanimHelper;
-import com.github.times.ZmanimItem;
-import com.github.times.ZmanimPopulater;
-import com.github.times.location.ZmanimLocationListener;
-import com.github.times.location.ZmanimLocations;
-import com.github.times.preference.SimpleZmanimPreferences;
-import com.github.times.preference.ZmanimPreferences;
-import com.github.util.LocaleUtils;
-import com.kosherjava.zmanim.util.GeoLocation;
-
-import java.util.Calendar;
-import java.util.List;
-
-import timber.log.Timber;
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.Context
+import android.content.Intent
+import android.location.Location
+import android.text.format.DateUtils
+import android.widget.RemoteViews
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
+import androidx.annotation.StyleRes
+import com.github.app.LocaleCallbacks
+import com.github.app.LocaleHelper
+import com.github.appwidget.AppWidgetUtils.getAppWidgetIds
+import com.github.appwidget.AppWidgetUtils.notifyAppWidgetViewDataChanged
+import com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate
+import com.github.os.getParcelableCompat
+import com.github.preference.LocalePreferences
+import com.github.times.ZmanViewHolder
+import com.github.times.ZmanimActivity
+import com.github.times.ZmanimAdapter
+import com.github.times.ZmanimApplication
+import com.github.times.ZmanimHelper.formatDateTime
+import com.github.times.ZmanimItem
+import com.github.times.ZmanimPopulater
+import com.github.times.isNullOrEmptyOrElapsed
+import com.github.times.location.ZmanimLocationListener
+import com.github.times.location.ZmanimLocations
+import com.github.times.preference.SimpleZmanimPreferences
+import com.github.times.preference.ZmanimPreferences
+import com.github.util.LocaleUtils.isLocaleRTL
+import java.util.Calendar
+import timber.log.Timber
 
 /**
- * Halachic times (<em>zmanim</em>) widget.
+ * Halachic times (*zmanim*) widget.
  *
  * @author Moshe Waisberg
  */
-public abstract class ZmanimAppWidget extends AppWidgetProvider {
-
-    /**
-     * Id to update the widgets.
-     */
-    private static final int ID_WIDGET_UPDATE = 10;
-    /**
-     * Id to update the widgets at midnight.
-     */
-    private static final int ID_WIDGET_MIDNIGHT = 11;
-
+abstract class ZmanimAppWidget : AppWidgetProvider() {
     /**
      * The context.
      */
-    protected Context context;
+    protected lateinit var context: Context
+
     /**
      * The preferences.
      */
-    private ZmanimPreferences preferences;
-    private LocaleCallbacks<LocalePreferences> localeCallbacks;
-    protected boolean directionRTL = false;
+    protected val preferences: ZmanimPreferences by lazy { SimpleZmanimPreferences(context) }
 
-    /**
-     * Get the context.
-     *
-     * @return the context.
-     */
-    protected Context getContext() {
-        return context;
-    }
+    protected var isDirectionRTL = false
+        private set
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        Timber.v("onReceive %s %s", this, intent);
-        final String action = intent.getAction();
-        if (isEmpty(action)) {
-            return;
-        }
+    override fun onReceive(context: Context, intent: Intent) {
+        Timber.v("onReceive %s %s", this, intent)
+        val localeCallbacks: LocaleCallbacks<LocalePreferences> = LocaleHelper(context)
+        val contextLocale = localeCallbacks.attachBaseContext(context)
+        this.context = contextLocale
+        super.onReceive(contextLocale, intent)
+        isDirectionRTL = isLocaleRTL(contextLocale)
 
-        this.localeCallbacks = new LocaleHelper<>(context);
-        context = localeCallbacks.attachBaseContext(context);
-        this.context = context;
-        super.onReceive(context, intent);
-        this.directionRTL = LocaleUtils.isLocaleRTL(context);
+        val action = intent.action
+        if (action.isNullOrEmpty()) return
+        when (action) {
+            Intent.ACTION_DATE_CHANGED,
+            Intent.ACTION_TIME_CHANGED,
+            Intent.ACTION_TIMEZONE_CHANGED,
+            Intent.ACTION_WALLPAPER_CHANGED -> notifyAppWidgets(contextLocale)
 
-        switch (action) {
-            case ACTION_DATE_CHANGED:
-            case ACTION_TIME_CHANGED:
-            case ACTION_TIMEZONE_CHANGED:
-            case ACTION_WALLPAPER_CHANGED:
-                notifyAppWidgets(context);
-                break;
-            case ACTION_LOCATION_CHANGED: {
-                Location location = intent.getParcelableExtra(ZmanimLocationListener.EXTRA_LOCATION);
-                if (location != null) {
-                    onLocationChanged(location);
-                }
-                break;
+            ZmanimLocationListener.ACTION_LOCATION_CHANGED -> {
+                val location = intent.getParcelableCompat(
+                    ZmanimLocationListener.EXTRA_LOCATION,
+                    Location::class.java
+                )
+                location?.let { onLocationChanged(contextLocale) }
             }
         }
     }
 
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Timber.v("onUpdate %s", this);
-        this.localeCallbacks = new LocaleHelper<>(context);
-        context = localeCallbacks.attachBaseContext(context);
-        this.context = context;
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
-        this.directionRTL = LocaleUtils.isLocaleRTL(context);
-
-        populateTimes(context, appWidgetManager, appWidgetIds);
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
+        Timber.v("onUpdate %s", this)
+        val localeCallbacks: LocaleCallbacks<LocalePreferences> = LocaleHelper(context)
+        val contextLocale = localeCallbacks.attachBaseContext(context)
+        this.context = contextLocale
+        super.onUpdate(contextLocale, appWidgetManager, appWidgetIds)
+        isDirectionRTL = isLocaleRTL(contextLocale)
+        populateTimes(contextLocale, appWidgetManager, appWidgetIds)
     }
 
     /**
@@ -152,39 +116,47 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param appWidgetManager the widget manager.
      * @param appWidgetIds     the widget ids for which an update is needed.
      */
-    protected void populateTimes(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        if ((appWidgetIds == null) || (appWidgetIds.length == 0)) {
-            return;
+    private fun populateTimes(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray?
+    ) {
+        if (appWidgetIds == null || appWidgetIds.isEmpty()) {
+            return
         }
 
         // Pass the activity to ourselves, because starting another activity is not working.
-        final int viewId = getIntentViewId();
-        Intent activityIntent;
-        PendingIntent activityPendingIntent;
-        String packageName = context.getPackageName();
-        RemoteViews views;
-        int layoutId = getLayoutId();
-        long day = getDay();
-        ZmanimAdapter adapter = null;
+        val viewId = getIntentViewId()
+        var activityIntent: Intent
+        var activityPendingIntent: PendingIntent?
+        val packageName = context.packageName
+        var views: RemoteViews
+        val layoutId = getLayoutId()
+        val day = day
+        var adapter: ZmanimAdapter<ZmanViewHolder>? = null
 
-        for (int appWidgetId : appWidgetIds) {
-            activityIntent = new Intent(context, ZmanimActivity.class)
-                .putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            activityPendingIntent = PendingIntent.getActivity(context, appWidgetId, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
-            views = new RemoteViews(packageName, layoutId);
-
-            adapter = populateWidgetTimes(context, appWidgetId, views, activityPendingIntent, viewId, day);
-
+        for (appWidgetId in appWidgetIds) {
+            activityIntent = Intent(context, ZmanimActivity::class.java)
+                .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            activityPendingIntent = PendingIntent.getActivity(
+                context,
+                appWidgetId,
+                activityIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            views = RemoteViews(packageName, layoutId)
+            adapter =
+                populateWidgetTimes(context, appWidgetId, views, activityPendingIntent, viewId, day)
             try {
-                appWidgetManager.updateAppWidget(appWidgetId, views);
-            } catch (RuntimeException e) {
+                appWidgetManager.updateAppWidget(appWidgetId, views)
+            } catch (e: RuntimeException) {
                 // Caused by: android.os.DeadObjectException
             }
         }
-
-        scheduleNext(context, appWidgetIds, adapter);
+        if (adapter != null) {
+            scheduleNext(context, appWidgetIds, adapter)
+        }
     }
 
     /**
@@ -192,13 +164,13 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      *
      * @param context the context.
      */
-    protected void populateTimes(Context context) {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        populateTimes(context, appWidgetManager, getAppWidgetIds(context));
+    protected fun populateTimes(context: Context) {
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        populateTimes(context, appWidgetManager, getAppWidgetIds(context))
     }
 
-    public void onLocationChanged(Location location) {
-        notifyAppWidgets(context);
+    private fun onLocationChanged(context: Context) {
+        notifyAppWidgets(context)
     }
 
     /**
@@ -208,36 +180,34 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param appWidgetIds the widget ids for which an update is needed.
      * @param adapter      the adapter with zmanim.
      */
-    private void scheduleNext(Context context, int[] appWidgetIds, ZmanimAdapter<ZmanViewHolder> adapter) {
-        if (adapter == null) {
-            return;
-        }
-
-        int count = adapter.getItemCount();
+    private fun scheduleNext(
+        context: Context,
+        appWidgetIds: IntArray,
+        adapter: ZmanimAdapter<ZmanViewHolder>
+    ) {
+        val count = adapter.itemCount
         if (count == 0) {
-            return;
+            return
         }
-
-        long now = currentTimeMillis();
-        long when = Long.MAX_VALUE;
-        ZmanimItem item;
-        long time;
-
-        for (int i = 0; i < count; i++) {
-            item = adapter.getItem(i);
-            if ((item == null) || item.isEmptyOrElapsed()) {
-                continue;
+        val now = System.currentTimeMillis()
+        var whenUpdate = Long.MAX_VALUE
+        var item: ZmanimItem?
+        var time: Long
+        for (i in 0 until count) {
+            item = adapter.getItem(i)
+            if (item.isNullOrEmptyOrElapsed()) {
+                continue
             }
-            time = item.time;
-            if ((now < time) && (time < when)) {
-                when = time;
+            time = item.time
+            if (now < time && time < whenUpdate) {
+                whenUpdate = time
             }
         }
-        if (when < Long.MAX_VALUE) {
+        if (whenUpdate < Long.MAX_VALUE) {
             // Let the first visible item linger for another minute.
-            scheduleUpdate(context, appWidgetIds, when + MINUTE_IN_MILLIS);
+            scheduleUpdate(context, appWidgetIds, whenUpdate + DateUtils.MINUTE_IN_MILLIS)
         }
-        scheduleNextDay(context, appWidgetIds);
+        scheduleNextDay(context, appWidgetIds)
     }
 
     /**
@@ -248,14 +218,19 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param time         the time to update.
      * @param id           the pending intent's id.
      */
-    private void schedulePending(Context context, int[] appWidgetIds, long time, int id) {
-        Timber.i("schedulePending [%s]", ZmanimHelper.formatDateTime(time));
-        Intent alarmIntent = new Intent(context, getClass())
-            .setAction(ACTION_APPWIDGET_UPDATE)
-            .putExtra(EXTRA_APPWIDGET_IDS, appWidgetIds);
-        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT | FLAG_IMMUTABLE);
-        AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarm.set(AlarmManager.RTC, time, alarmPendingIntent);
+    private fun schedulePending(context: Context, appWidgetIds: IntArray, time: Long, id: Int) {
+        Timber.i("schedulePending [%s]", formatDateTime(time))
+        val alarmIntent = Intent(context, javaClass)
+            .setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+            .putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds)
+        val alarmPendingIntent = PendingIntent.getBroadcast(
+            context,
+            id,
+            alarmIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val alarm = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarm[AlarmManager.RTC, time] = alarmPendingIntent
     }
 
     /**
@@ -265,8 +240,8 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param appWidgetIds the widget ids for which an update is needed.
      * @param time         the time to update.
      */
-    private void scheduleUpdate(Context context, int[] appWidgetIds, long time) {
-        schedulePending(context, appWidgetIds, time, ID_WIDGET_UPDATE);
+    private fun scheduleUpdate(context: Context, appWidgetIds: IntArray, time: Long) {
+        schedulePending(context, appWidgetIds, time, ID_WIDGET_UPDATE)
     }
 
     /**
@@ -277,7 +252,12 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param adapterToday    the list adapter for today.
      * @param adapterTomorrow the list adapter for tomorrow.
      */
-    protected abstract void bindViews(Context context, RemoteViews list, ZmanimAdapter<ZmanViewHolder> adapterToday, ZmanimAdapter<ZmanViewHolder> adapterTomorrow);
+    protected abstract fun bindViews(
+        context: Context,
+        list: RemoteViews,
+        adapterToday: ZmanimAdapter<ZmanViewHolder>,
+        adapterTomorrow: ZmanimAdapter<ZmanViewHolder>
+    )
 
     /**
      * Bind the times to remote views.
@@ -286,7 +266,11 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param list    the remote views.
      * @param items   the list of items.
      */
-    protected abstract void bindViews(Context context, RemoteViews list, List<ZmanimItem> items);
+    protected abstract fun bindViews(
+        context: Context,
+        list: RemoteViews,
+        items: List<ZmanimItem>
+    )
 
     /**
      * Bind the item to remote views.
@@ -297,88 +281,83 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param positionTotal the position index relative to all rows.
      * @param item          the zmanim item.
      */
-    protected abstract void bindView(Context context, RemoteViews list, int position, int positionTotal, @Nullable ZmanimItem item);
+    protected abstract fun bindView(
+        context: Context,
+        list: RemoteViews,
+        position: Int,
+        positionTotal: Int,
+        item: ZmanimItem
+    )
 
-    /**
-     * Get the layout for the container.
-     *
-     * @return the layout id.
-     */
-    protected abstract int getLayoutId();
+    @LayoutRes
+    protected abstract fun getLayoutId(): Int
 
-    /**
-     * Get the view for the intent click.
-     *
-     * @return the view id.
-     */
-    protected abstract int getIntentViewId();
+    @IdRes
+    protected abstract fun getIntentViewId(): Int
 
-    protected void notifyAppWidgetViewDataChanged(Context context) {
-        AppWidgetUtils.notifyAppWidgetViewDataChanged(context, getClass(), android.R.id.list);
+    protected fun notifyAppWidgetViewDataChanged(context: Context) {
+        notifyAppWidgetViewDataChanged(context, javaClass, android.R.id.list)
     }
 
-    protected ZmanimPreferences getPreferences() {
-        ZmanimPreferences preferences = this.preferences;
-        if (preferences == null) {
-            preferences = new SimpleZmanimPreferences(context);
-            this.preferences = preferences;
-        }
-        return preferences;
+    protected open fun populateWidgetTimes(
+        context: Context,
+        appWidgetId: Int,
+        views: RemoteViews,
+        activityPendingIntent: PendingIntent,
+        viewId: Int,
+        day: Long
+    ): ZmanimAdapter<ZmanViewHolder>? {
+        return populateStaticTimes(context, views, activityPendingIntent, viewId, day)
     }
 
-    protected ZmanimAdapter populateWidgetTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long day) {
-        return populateStaticTimes(context, appWidgetId, views, activityPendingIntent, viewId, day);
+    private fun populateStaticTimes(
+        context: Context,
+        views: RemoteViews,
+        activityPendingIntent: PendingIntent,
+        viewId: Int,
+        day: Long
+    ): ZmanimAdapter<ZmanViewHolder>? {
+        views.setOnClickPendingIntent(viewId, activityPendingIntent)
+        val locations = getLocations(context)
+        val gloc = locations.geoLocation ?: return null
+        val preferences = preferences
+        val populater: ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>> =
+            ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences).apply {
+                this.setCalendar(day)
+                this.setGeoLocation(gloc)
+                this.isInIsrael = locations.isInIsrael
+            }
+
+        val adapter = ZmanimAdapter<ZmanViewHolder>(context, preferences)
+        populater.populate(adapter, true)
+
+        val adapterTomorrow = ZmanimAdapter<ZmanViewHolder>(context, preferences)
+        populater.setCalendar(day + DateUtils.DAY_IN_MILLIS)
+        populater.populate(adapterTomorrow, true)
+        bindViews(context, views, adapter, adapterTomorrow)
+
+        return adapter
     }
 
-    protected ZmanimAdapter populateStaticTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long day) {
-        views.setOnClickPendingIntent(viewId, activityPendingIntent);
-
-        ZmanimLocations locations = getLocations(context);
-        GeoLocation gloc = locations.getGeoLocation();
-        if (gloc == null) {
-            return null;
-        }
-
-        ZmanimPreferences preferences = getPreferences();
-
-        ZmanimPopulater populater = new ZmanimPopulater(context, preferences);
-        populater.setCalendar(day);
-        populater.setGeoLocation(gloc);
-        populater.setInIsrael(locations.isInIsrael());
-
-        ZmanimAdapter<ZmanViewHolder> adapter = new ZmanimAdapter(context, preferences);
-        populater.populate(adapter, true);
-
-        ZmanimAdapter<ZmanViewHolder> adapterTomorrow = new ZmanimAdapter(context, preferences);
-        populater.setCalendar(day + DAY_IN_MILLIS);
-        populater.populate(adapterTomorrow, true);
-
-        bindViews(context, views, adapter, adapterTomorrow);
-
-        return adapter;
+    private fun getAppWidgetIds(context: Context): IntArray? {
+        return getAppWidgetIds(context, javaClass)
     }
 
-    protected int[] getAppWidgetIds(Context context) {
-        return AppWidgetUtils.getAppWidgetIds(context, getClass());
+    @get:StyleRes
+    protected val theme: Int
+        get() = preferences.appWidgetTheme
+
+    private fun getLocations(context: Context): ZmanimLocations {
+        val app = context.applicationContext as ZmanimApplication
+        return app.locations
     }
 
-    @StyleRes
-    protected int getTheme() {
-        return getPreferences().getAppWidgetTheme();
+    private fun notifyAppWidgets(context: Context) {
+        notifyAppWidgetsUpdate(context, javaClass)
     }
 
-    private ZmanimLocations getLocations(Context context) {
-        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-        return app.getLocations();
-    }
-
-    protected void notifyAppWidgets(Context context) {
-        notifyAppWidgetsUpdate(context, getClass());
-    }
-
-    protected long getDay() {
-        return currentTimeMillis();
-    }
+    protected val day: Long
+        get() = System.currentTimeMillis()
 
     /**
      * Schedule the times to update at midnight, i.e. the next civil day.
@@ -386,14 +365,26 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param context      the context.
      * @param appWidgetIds the widget ids for which an update is needed.
      */
-    private void scheduleNextDay(Context context, int[] appWidgetIds) {
-        Calendar today = Calendar.getInstance();
-        today.add(Calendar.DAY_OF_MONTH, 1);
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE, 0);
-        today.set(Calendar.SECOND, 0);
-        today.set(Calendar.MILLISECOND, 1);
-        long time = today.getTimeInMillis();
-        schedulePending(context, appWidgetIds, time, ID_WIDGET_MIDNIGHT);
+    private fun scheduleNextDay(context: Context, appWidgetIds: IntArray) {
+        val time = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_MONTH, 1)
+            this[Calendar.HOUR_OF_DAY] = 0
+            this[Calendar.MINUTE] = 0
+            this[Calendar.SECOND] = 0
+            this[Calendar.MILLISECOND] = 1
+        }.timeInMillis
+        schedulePending(context, appWidgetIds, time, ID_WIDGET_MIDNIGHT)
+    }
+
+    companion object {
+        /**
+         * Id to update the widgets.
+         */
+        private const val ID_WIDGET_UPDATE = 10
+
+        /**
+         * Id to update the widgets at midnight.
+         */
+        private const val ID_WIDGET_MIDNIGHT = 11
     }
 }

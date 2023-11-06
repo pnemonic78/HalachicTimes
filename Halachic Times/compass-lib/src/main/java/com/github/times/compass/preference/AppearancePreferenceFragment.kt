@@ -13,36 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass.preference;
+package com.github.times.compass.preference
 
-import android.os.Bundle;
-
-import androidx.annotation.Keep;
-
-import com.github.preference.AbstractPreferenceFragment;
-import com.github.times.compass.lib.R;
-
-import static com.github.preference.ThemePreferences.KEY_THEME;
-import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
-import static com.github.times.location.LocationPreferences.KEY_COORDS_FORMAT;
+import android.os.Bundle
+import androidx.annotation.Keep
+import com.github.preference.AbstractPreferenceFragment
+import com.github.preference.ThemePreferences
+import com.github.times.compass.lib.R
+import com.github.times.location.LocationPreferences
 
 /**
  * This fragment shows the preferences for the Appearance header.
  */
 @Keep
-public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
+class AppearancePreferenceFragment : AbstractPreferenceFragment() {
+    override val preferencesXml: Int = R.xml.appearance_preferences
 
-    @Override
-    protected int getPreferencesXml() {
-        return R.xml.appearance_preferences;
-    }
-
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        super.onCreatePreferences(savedInstanceState, rootKey);
-
-        initList(KEY_COORDS_FORMAT);
-        initList(KEY_THEME);
-        initList(KEY_THEME_COMPASS);
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        super.onCreatePreferences(savedInstanceState, rootKey)
+        initList(LocationPreferences.KEY_COORDS_FORMAT)
+        initList(ThemePreferences.KEY_THEME)
+        initList(CompassPreferences.KEY_THEME_COMPASS)
     }
 }

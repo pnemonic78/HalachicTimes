@@ -13,122 +13,124 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.location.Location;
-
-import com.github.preference.SimplePreferences;
-
-import androidx.annotation.Nullable;
-
-import static com.github.times.location.LocationPreferences.Values.ELEVATION_VISIBLE_DEFAULT;
-import static com.github.times.location.LocationPreferences.Values.FORMAT_DECIMAL;
-import static com.github.times.location.LocationPreferences.Values.FORMAT_DEFAULT;
-import static com.github.times.location.LocationPreferences.Values.FORMAT_NONE;
-import static com.github.times.location.LocationPreferences.Values.FORMAT_SEXAGESIMAL;
+import android.content.Context
+import android.location.Location
+import com.github.preference.SimplePreferences
+import timber.log.Timber
 
 /**
  * Simple location preferences implementation.
  *
  * @author Moshe Waisberg
  */
-public class SimpleLocationPreferences extends SimplePreferences implements LocationPreferences {
+class SimpleLocationPreferences(context: Context) : SimplePreferences(context),
+    LocationPreferences {
 
-    /**
-     * Constructs a new settings.
-     *
-     * @param context
-     *         the context.
-     */
-    public SimpleLocationPreferences(Context context) {
-        super(context);
-        init(context);
+    init {
+        init(context)
     }
 
-    /**
-     * Initialize. Should be called only once when application created.
-     *
-     * @param context
-     *         the context.
-     */
-    public static void init(Context context) {
-        final Resources res = context.getResources();
-
-        FORMAT_DEFAULT = res.getString(R.string.coords_format_defaultValue);
-        FORMAT_NONE = res.getString(R.string.coords_format_value_none);
-        FORMAT_DECIMAL = res.getString(R.string.coords_format_value_decimal);
-        FORMAT_SEXAGESIMAL = res.getString(R.string.coords_format_value_sexagesimal);
-
-        ELEVATION_VISIBLE_DEFAULT = res.getBoolean(R.bool.coords_elevation_visible_defaultValue);
-    }
-
-    @Override
-    public Location getLocation() {
-        if (!preferences.contains(KEY_LATITUDE) || !preferences.contains(KEY_LONGITUDE)) {
-            return null;
+    override val location: Location?
+        get() {
+            if (!preferences.contains(LocationPreferences.KEY_LATITUDE)
+                || !preferences.contains(LocationPreferences.KEY_LONGITUDE)
+            ) {
+                return null
+            }
+            val latitude: Double
+            val longitude: Double
+            val elevation: Double
+            try {
+                latitude = preferences.getString(LocationPreferences.KEY_LATITUDE, "0")!!.toDouble()
+                longitude =
+                    preferences.getString(LocationPreferences.KEY_LONGITUDE, "0")!!.toDouble()
+                elevation =
+                    preferences.getString(LocationPreferences.KEY_ELEVATION, "0")!!.toDouble()
+            } catch (nfe: NumberFormatException) {
+                Timber.e(nfe)
+                return null
+            }
+            val provider = preferences.getString(LocationPreferences.KEY_PROVIDER, "")
+            val location = Location(provider)
+            location.latitude = latitude
+            location.longitude = longitude
+            location.altitude = elevation
+            location.time = preferences.getLong(LocationPreferences.KEY_TIME, 0L)
+            return location
         }
-        double latitude;
-        double longitude;
-        double elevation;
-        try {
-            latitude = Double.parseDouble(preferences.getString(KEY_LATITUDE, "0"));
-            longitude = Double.parseDouble(preferences.getString(KEY_LONGITUDE, "0"));
-            elevation = Double.parseDouble(preferences.getString(KEY_ELEVATION, "0"));
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-            return null;
-        }
-        String provider = preferences.getString(KEY_PROVIDER, "");
-        Location location = new Location(provider);
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        location.setAltitude(elevation);
-        location.setTime(preferences.getLong(KEY_TIME, 0L));
-        return location;
-    }
 
-    @Override
-    public void putLocation(@Nullable Location location) {
-        SharedPreferences.Editor editor = preferences.edit();
+    override fun putLocation(location: Location?) {
+        val editor = preferences.edit()
         if (location != null) {
-            editor.putString(KEY_PROVIDER, location.getProvider());
-            editor.putString(KEY_LATITUDE, Double.toString(location.getLatitude()));
-            editor.putString(KEY_LONGITUDE, Double.toString(location.getLongitude()));
-            editor.putString(KEY_ELEVATION, Double.toString(location.hasAltitude() ? location.getAltitude() : 0));
-            editor.putLong(KEY_TIME, location.getTime());
+            editor.putString(LocationPreferences.KEY_PROVIDER, location.provider)
+            editor.putString(
+                LocationPreferences.KEY_LATITUDE,
+                location.latitude.toString()
+            )
+            editor.putString(
+                LocationPreferences.KEY_LONGITUDE,
+                location.longitude.toString()
+            )
+            editor.putString(
+                LocationPreferences.KEY_ELEVATION,
+                (if (location.hasAltitude()) location.altitude else 0.0).toString()
+            )
+            editor.putLong(LocationPreferences.KEY_TIME, location.time)
         } else {
-            editor.remove(KEY_PROVIDER);
-            editor.remove(KEY_LATITUDE);
-            editor.remove(KEY_LONGITUDE);
-            editor.remove(KEY_ELEVATION);
-            editor.remove(KEY_TIME);
+            editor.remove(LocationPreferences.KEY_PROVIDER)
+            editor.remove(LocationPreferences.KEY_LATITUDE)
+            editor.remove(LocationPreferences.KEY_LONGITUDE)
+            editor.remove(LocationPreferences.KEY_ELEVATION)
+            editor.remove(LocationPreferences.KEY_TIME)
         }
-        editor.apply();
+        editor.apply()
     }
 
     /**
      * Are coordinates visible?
      *
-     * @return {@code true} to show coordinates.
+     * @return `true` to show coordinates.
      */
-    public boolean isCoordinatesVisible() {
-        return !FORMAT_NONE.equals(getCoordinatesFormat());
-    }
+    override val isCoordinatesVisible: Boolean
+        get() = LocationPreferences.Values.FORMAT_NONE != coordinatesFormat
 
     /**
      * Get the notation of latitude and longitude.
      *
      * @return the format.
      */
-    public String getCoordinatesFormat() {
-        return preferences.getString(KEY_COORDS_FORMAT, FORMAT_DEFAULT);
-    }
+    override val coordinatesFormat: String
+        get() = preferences.getString(
+            LocationPreferences.KEY_COORDS_FORMAT,
+            LocationPreferences.Values.FORMAT_DEFAULT
+        ).orEmpty()
 
-    @Override
-    public boolean isElevationVisible() {
-        return preferences.getBoolean(KEY_COORDS_ELEVATION, ELEVATION_VISIBLE_DEFAULT);
+    override val isElevationVisible: Boolean
+        get() = preferences.getBoolean(
+            LocationPreferences.KEY_COORDS_ELEVATION,
+            LocationPreferences.Values.ELEVATION_VISIBLE_DEFAULT
+        )
+
+    companion object {
+        /**
+         * Initialize. Should be called only once when application created.
+         *
+         * @param context The context.
+         */
+        fun init(context: Context) {
+            val res = context.resources
+            LocationPreferences.Values.FORMAT_DEFAULT =
+                res.getString(R.string.coords_format_defaultValue)
+            LocationPreferences.Values.FORMAT_NONE =
+                res.getString(R.string.coords_format_value_none)
+            LocationPreferences.Values.FORMAT_DECIMAL =
+                res.getString(R.string.coords_format_value_decimal)
+            LocationPreferences.Values.FORMAT_SEXAGESIMAL =
+                res.getString(R.string.coords_format_value_sexagesimal)
+            LocationPreferences.Values.ELEVATION_VISIBLE_DEFAULT =
+                res.getBoolean(R.bool.coords_elevation_visible_defaultValue)
+        }
     }
 }

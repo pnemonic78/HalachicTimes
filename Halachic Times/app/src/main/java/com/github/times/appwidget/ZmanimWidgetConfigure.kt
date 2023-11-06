@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
+import com.github.app.PERMISSION_WALLPAPER
 import com.github.times.R
 import timber.log.Timber
 
@@ -69,9 +70,5 @@ class ZmanimWidgetConfigure : AppCompatActivity() {
                 requestPermission.launch(PERMISSION_WALLPAPER)
             }
         }
-    }
-
-    companion object {
-        private const val PERMISSION_WALLPAPER = Manifest.permission.READ_EXTERNAL_STORAGE
     }
 }

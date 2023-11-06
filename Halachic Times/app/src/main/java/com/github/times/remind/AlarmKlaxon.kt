@@ -11,7 +11,7 @@ import android.text.format.DateUtils
 import com.github.app.ActivityUtils
 import com.github.media.RingtoneManager
 import com.github.os.VibratorCompat
-import com.github.times.preference.RingtonePreference.PERMISSION_RINGTONE
+import com.github.times.preference.RingtonePreference.Companion.PERMISSION_RINGTONE
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
 import java.io.IOException

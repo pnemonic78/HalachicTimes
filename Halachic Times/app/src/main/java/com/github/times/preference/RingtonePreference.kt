@@ -13,82 +13,73 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.preference;
+package com.github.times.preference
 
-import android.Manifest;
-import android.content.Context;
-import android.os.Build;
-import android.util.AttributeSet;
-
-import androidx.core.content.PermissionChecker;
-import androidx.fragment.app.Fragment;
-import androidx.preference.Preference;
-
-import com.github.app.ActivityUtils;
-import com.github.media.RingtoneManager;
+import android.content.Context
+import android.os.Build
+import android.util.AttributeSet
+import androidx.core.content.PermissionChecker
+import androidx.fragment.app.Fragment
+import com.github.app.ActivityUtils.isPermissionGranted
+import com.github.media.RingtoneManager
+import com.github.preference.RingtonePreference
 
 /**
- * A {@link Preference} that allows the user to choose a ringtone from those on the device.
+ * A [androidx.preference.Preference] that allows the user to choose a ringtone from those on the device.
  * The chosen ringtone's URI will be persisted as a string.
  * Requests a user's permissions to read external media.
  *
  * @author Moshe Waisberg
  */
-public class RingtonePreference extends com.github.preference.RingtonePreference {
+class RingtonePreference @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0
+) : RingtonePreference(context, attrs, defStyleAttr, defStyleRes) {
+    private var requestPermissionsFragment: Fragment? = null
+    private var requestPermissionsCode = 0
+    private var requestPermissions = false
 
-    public static final String PERMISSION_RINGTONE = RingtoneManager.Companion.getPERMISSION_RINGTONE();
-
-    private Fragment requestPermissionsFragment;
-    private int requestPermissionsCode;
-    private boolean requestPermissions = false;
-
-    public RingtonePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    public RingtonePreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    public RingtonePreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public RingtonePreference(Context context) {
-        super(context);
-    }
-
-    @Override
-    protected void onClick() {
+    override fun onClick() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            final Context context = getContext();
+            val context = context
             if (requestPermissions) {
-                if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_RINGTONE) != PermissionChecker.PERMISSION_GRANTED) {
-                    final Fragment owner = requestPermissionsFragment;
-                    final int requestCode = requestPermissionsCode;
+                if (PermissionChecker.checkCallingOrSelfPermission(
+                        context,
+                        PERMISSION_RINGTONE
+                    ) != PermissionChecker.PERMISSION_GRANTED
+                ) {
+                    val owner = requestPermissionsFragment
+                    val requestCode = requestPermissionsCode
                     if (owner != null) {
-                        owner.requestPermissions(new String[]{PERMISSION_RINGTONE}, requestCode);
-                        return;
+                        owner.requestPermissions(arrayOf(PERMISSION_RINGTONE), requestCode)
+                        return
                     }
                 }
             }
         }
-        super.onClick();
+        super.onClick()
     }
 
-    public void setRequestPermissionsCode(Fragment owner, int requestPermissionsCode) {
-        this.requestPermissionsFragment = owner;
-        this.requestPermissionsCode = requestPermissionsCode;
-        this.requestPermissions = true;
+    fun setRequestPermissionsCode(owner: Fragment?, requestPermissionsCode: Int) {
+        this.requestPermissionsFragment = owner
+        this.requestPermissionsCode = requestPermissionsCode
+        this.requestPermissions = true
     }
 
-    public void onRequestPermissionsResult(String[] permissions, int[] grantResults) {
+    fun onRequestPermissionsResult(permissions: Array<String>, grantResults: IntArray) {
         // Rebuild the list to include allowed tones.
-        if (ActivityUtils.isPermissionGranted(PERMISSION_RINGTONE, permissions, grantResults)) {
-            setRingtoneType(getRingtoneType(), true);
+        if (isPermissionGranted(PERMISSION_RINGTONE, permissions, grantResults)) {
+            setRingtoneType(ringtoneType, true)
         }
         // Show the list anyway.
-        requestPermissions = false;
-        onClick();
+        requestPermissions = false
+        onClick()
+    }
+
+    companion object {
+        @JvmField
+        val PERMISSION_RINGTONE = RingtoneManager.PERMISSION_RINGTONE
     }
 }

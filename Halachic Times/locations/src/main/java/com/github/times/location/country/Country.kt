@@ -13,57 +13,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location
+package com.github.times.location.country
 
 import android.location.Address
 import android.os.Parcel
 import android.os.Parcelable
-import com.github.times.location.country.CountryPolygon
+import com.github.times.location.ZmanimAddress
 import java.util.Locale
-import java.util.TimeZone
 import kotlin.math.round
 
 /**
- * City that is stored in the application binary.
+ * Country that is stored in the application binary.
  *
  * @author Moshe Waisberg
  */
-class City : ZmanimAddress {
-
+class Country : ZmanimAddress {
     constructor(locale: Locale) : super(locale)
     constructor(address: Address) : super(address)
     constructor(address: ZmanimAddress) : super(address)
 
-    var timeZone: TimeZone = TimeZone.getDefault()
-
     companion object {
-        /**
-         * Factor to convert a fixed-point integer to double.
-         */
+        /** Factor to convert a fixed-point integer to double.  */
         private const val RATIO = CountryPolygon.RATIO
 
         @JvmField
-        val CREATOR: Parcelable.Creator<City> = object : Parcelable.Creator<City> {
-            override fun createFromParcel(source: Parcel): City {
+        val CREATOR: Parcelable.Creator<Country> = object : Parcelable.Creator<Country> {
+            override fun createFromParcel(source: Parcel): Country {
                 val a = ZmanimAddress.CREATOR.createFromParcel(source)
-                return City(a)
+                return Country(a)
             }
 
-            override fun newArray(size: Int): Array<City?> {
+            override fun newArray(size: Int): Array<Country?> {
                 return arrayOfNulls(size)
             }
         }
 
         @JvmStatic
-        fun generateCityId(city: City): Long {
-            return generateCityId(city.latitude, city.longitude)
+        fun generateCountryId(country: Country): Long {
+            return generateCountryId(country.latitude, country.longitude)
         }
 
         @JvmStatic
-        fun generateCityId(latitude: Double, longitude: Double): Long {
+        fun generateCountryId(latitude: Double, longitude: Double): Long {
             val fixedPointLatitude = round(latitude * RATIO).toLong() and 0x7FFFFFFFL
             val fixedPointLongitude = round(longitude * RATIO).toLong() and 0xFFFFFFFFL
-            return (fixedPointLatitude shl 31) or fixedPointLongitude
+            return -((fixedPointLatitude shl 31) or fixedPointLongitude)
         }
     }
 }
