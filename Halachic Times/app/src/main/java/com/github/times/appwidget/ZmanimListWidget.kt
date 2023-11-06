@@ -13,64 +13,64 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.appwidget;
+package com.github.times.appwidget
 
-import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
-import static com.github.graphics.BitmapUtils.isBrightWallpaper;
-
-import android.app.PendingIntent;
-import android.appwidget.AppWidgetManager;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.widget.RemoteViews;
-
-import androidx.annotation.StyleRes;
-
-import com.github.times.R;
-import com.github.times.ZmanimAdapter;
+import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.widget.RemoteViews
+import androidx.annotation.StyleRes
+import com.github.graphics.BitmapUtils.isBrightWallpaper
+import com.github.times.R
+import com.github.times.ZmanimAdapter
 
 /**
- * Shows a scrollable list of halachic times (<em>zmanim</em>) for prayers in a widget.
+ * Shows a scrollable list of halachic times (*zmanim*) for prayers in a widget.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimListWidget extends ZmanimWidget {
-
-    @StyleRes
-    private static final int THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark;
-    @StyleRes
-    private static final int THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light;
-
-    @Override
-    protected int getLayoutId() {
-        int theme = getTheme();
-        if (theme == THEME_APPWIDGET_DARK) {
-            return R.layout.widget_list;
-        } else if (theme == THEME_APPWIDGET_LIGHT) {
-            return R.layout.widget_list_light;
+class ZmanimListWidget : ZmanimWidget() {
+    override fun getLayoutId(): Int {
+        val theme = this.theme
+        return when {
+            theme == THEME_APPWIDGET_DARK -> R.layout.widget_list
+            theme == THEME_APPWIDGET_LIGHT -> R.layout.widget_list_light
+            isBrightWallpaper(getContext()) -> R.layout.widget_list_light
+            else -> R.layout.widget_list
         }
-        if (isBrightWallpaper(getContext())) {
-            return R.layout.widget_list_light;
-        }
-        return R.layout.widget_list;
     }
 
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
-        notifyAppWidgetViewDataChanged(context);
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+        notifyAppWidgetViewDataChanged(context)
     }
 
-    @Override
-    protected ZmanimAdapter populateWidgetTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long day) {
-        populateScrollableTimes(context, appWidgetId, views, activityPendingIntent);
-        return null;
+    override fun populateWidgetTimes(
+        context: Context,
+        appWidgetId: Int,
+        views: RemoteViews,
+        activityPendingIntent: PendingIntent,
+        viewId: Int,
+        day: Long
+    ): ZmanimAdapter<*>? {
+        populateScrollableTimes(context, appWidgetId, views, activityPendingIntent)
+        return null
     }
 
-    protected void populateScrollableTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent) {
-        views.setPendingIntentTemplate(android.R.id.list, activityPendingIntent);
-        bindListView(context, appWidgetId, views);
+    private fun populateScrollableTimes(
+        context: Context,
+        appWidgetId: Int,
+        views: RemoteViews,
+        activityPendingIntent: PendingIntent?
+    ) {
+        views.setPendingIntentTemplate(android.R.id.list, activityPendingIntent)
+        bindListView(context, appWidgetId, views)
     }
 
     /**
@@ -80,10 +80,18 @@ public class ZmanimListWidget extends ZmanimWidget {
      * @param appWidgetId the app widget id.
      * @param list        the remote list.
      */
-    protected void bindListView(Context context, int appWidgetId, RemoteViews list) {
-        Intent adapter = new Intent(context, ZmanimWidgetService.class)
-            .putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
-        adapter.setData(Uri.parse(adapter.toUri(Intent.URI_INTENT_SCHEME)));
-        list.setRemoteAdapter(android.R.id.list, adapter);
+    private fun bindListView(context: Context, appWidgetId: Int, list: RemoteViews) {
+        val adapter = Intent(context, ZmanimWidgetService::class.java)
+            .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+        adapter.data = Uri.parse(adapter.toUri(Intent.URI_INTENT_SCHEME))
+        list.setRemoteAdapter(android.R.id.list, adapter)
+    }
+
+    companion object {
+        @StyleRes
+        private val THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark
+
+        @StyleRes
+        private val THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light
     }
 }

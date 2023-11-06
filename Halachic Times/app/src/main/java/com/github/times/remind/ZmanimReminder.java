@@ -500,7 +500,6 @@ public class ZmanimReminder {
     private PendingIntent createCancelIntent(Context context) {
         Intent intent = new Intent(context, getReceiverClass())
             .setAction(ACTION_CANCEL);
-
         return PendingIntent.getBroadcast(context, ID_ALARM_CANCEL, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 
@@ -512,7 +511,6 @@ public class ZmanimReminder {
     private PendingIntent createDismissIntent(Context context) {
         Intent intent = new Intent(context, ZmanimReminderService.class)
             .setAction(ACTION_DISMISS);
-
         return PendingIntent.getService(context, ID_ALARM_DISMISS, intent, FLAGS_UPDATE);
     }
 
@@ -832,7 +830,6 @@ public class ZmanimReminder {
         Intent intent = new Intent(context, getReceiverClass())
             .setAction(ACTION_SILENCE);
         item.put(intent);
-
         return PendingIntent.getBroadcast(context, ID_ALARM_SILENT, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 

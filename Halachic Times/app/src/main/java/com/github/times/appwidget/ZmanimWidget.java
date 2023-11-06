@@ -211,7 +211,8 @@ public class ZmanimWidget extends ZmanimAppWidget {
         int theme = getTheme();
         if (theme == THEME_APPWIDGET_DARK) {
             return R.layout.widget_static;
-        } else if (theme == THEME_APPWIDGET_LIGHT) {
+        }
+        if (theme == THEME_APPWIDGET_LIGHT) {
             return R.layout.widget_static_light;
         }
         if (isBrightWallpaper(getContext())) {

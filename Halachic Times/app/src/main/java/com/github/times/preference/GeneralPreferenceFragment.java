@@ -15,6 +15,18 @@
  */
 package com.github.times.preference;
 
+import static android.os.Build.VERSION;
+import static android.os.Build.VERSION_CODES;
+import static android.text.TextUtils.isEmpty;
+import static com.github.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
+import static com.github.times.location.LocationPreferences.KEY_COORDS_FORMAT;
+import static com.github.times.preference.ZmanimPreferences.KEY_NOTIFICATION_UPCOMING;
+import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_RINGTONE;
+import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_SETTINGS;
+import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_STREAM;
+import static com.github.times.preference.ZmanimPreferences.KEY_YEAR_FINAL;
+import static com.github.util.LocaleUtils.isLocaleRTL;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -31,18 +43,6 @@ import androidx.preference.SwitchPreference;
 
 import com.github.times.R;
 import com.github.times.remind.ZmanimReminder;
-
-import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES;
-import static android.text.TextUtils.isEmpty;
-import static com.github.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
-import static com.github.times.location.LocationPreferences.KEY_COORDS_FORMAT;
-import static com.github.times.preference.ZmanimPreferences.KEY_NOTIFICATION_UPCOMING;
-import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_RINGTONE;
-import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_SETTINGS;
-import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_STREAM;
-import static com.github.times.preference.ZmanimPreferences.KEY_YEAR_FINAL;
-import static com.github.util.LocaleUtils.isLocaleRTL;
 
 /**
  * This fragment shows the preferences for the General header.
@@ -75,8 +75,8 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
                 preference.setEnabled(true);
                 preference.setOnPreferenceClickListener(pref -> {
                     final Context context = pref.getContext();
-                    Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
-                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                    Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
                     startActivity(intent);
                     return true;
                 });

@@ -12,6 +12,7 @@
     <dimen name="widget_minHeight">@dimen/widget_cell_1</dimen>
     <dimen name="widget_minResizeWidth">@dimen/widget_minWidth</dimen>
     <dimen name="widget_minResizeHeight">@dimen/widget_minHeight</dimen>
+    <dimen name="widget_radius">5dp</dimen>
 
     <dimen name="clock_widget_minWidth">@dimen/widget_cell_3</dimen>
     <dimen name="clock_widget_minHeight">@dimen/widget_cell_1</dimen>

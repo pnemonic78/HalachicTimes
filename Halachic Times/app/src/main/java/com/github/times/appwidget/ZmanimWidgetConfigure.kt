@@ -1,67 +1,77 @@
-package com.github.times.appwidget;
+package com.github.times.appwidget
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.PermissionChecker;
-
-import com.github.times.R;
-
-import timber.log.Timber;
+import android.Manifest
+import android.annotation.TargetApi
+import android.app.AlertDialog
+import android.appwidget.AppWidgetManager
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.PermissionChecker
+import com.github.times.R
+import timber.log.Timber
 
 /**
  * Shows a configuration activity for app widgets.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimWidgetConfigure extends AppCompatActivity {
+class ZmanimWidgetConfigure : AppCompatActivity() {
+    private val requestPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            Timber.i("Permission to read wallpaper: %s", isGranted)
+        }
 
-    private static final String PERMISSION_WALLPAPER = Manifest.permission.READ_EXTERNAL_STORAGE;
-
-    private final ActivityResultLauncher<String> requestPermission = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-        Timber.i("Permission to read wallpaper: %s", isGranted);
-    });
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.widget_configure_activity);
-        checkWallpaperPermission(this);
-        setResult(RESULT_OK, getIntent());
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.widget_configure_activity)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkWallpaperPermission(this)
+        }
+        val appWidgetId = intent.extras?.getInt(
+            AppWidgetManager.EXTRA_APPWIDGET_ID,
+            AppWidgetManager.INVALID_APPWIDGET_ID
+        ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
+        val result = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+        setResult(RESULT_OK, result)
     }
 
     /**
      * @see com.github.times.preference.AppearancePreferenceFragment
      */
-    private boolean checkWallpaperPermission(Context context) {
+    @TargetApi(Build.VERSION_CODES.M)
+    private fun checkWallpaperPermission(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             // Wallpaper colors don't need permissions.
-            return true;
+            return
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_WALLPAPER) != PermissionChecker.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISSION_WALLPAPER)) {
-                    new AlertDialog.Builder(context)
-                            .setTitle(R.string.title_widget_zmanim)
-                            .setMessage(R.string.appwidget_theme_permission_rationale)
-                            .setCancelable(true)
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .setPositiveButton(android.R.string.ok, (dialog, which) -> requestPermission.launch(PERMISSION_WALLPAPER))
-                            .show();
-                } else {
-                    requestPermission.launch(PERMISSION_WALLPAPER);
-                }
-                return true;
+        if (PermissionChecker.checkCallingOrSelfPermission(
+                context,
+                PERMISSION_WALLPAPER
+            ) != PermissionChecker.PERMISSION_GRANTED
+        ) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISSION_WALLPAPER)) {
+                AlertDialog.Builder(context)
+                    .setTitle(R.string.title_widget_zmanim)
+                    .setMessage(R.string.appwidget_theme_permission_rationale)
+                    .setCancelable(true)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
+                        requestPermission.launch(PERMISSION_WALLPAPER)
+                    }
+                    .show()
+            } else {
+                requestPermission.launch(PERMISSION_WALLPAPER)
             }
         }
-        return false;
+    }
+
+    companion object {
+        private const val PERMISSION_WALLPAPER = Manifest.permission.READ_EXTERNAL_STORAGE
     }
 }

@@ -105,16 +105,17 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         Timber.v("onReceive %s %s", this, intent);
+        final String action = intent.getAction();
+        if (isEmpty(action)) {
+            return;
+        }
+
         this.localeCallbacks = new LocaleHelper<>(context);
         context = localeCallbacks.attachBaseContext(context);
         this.context = context;
         super.onReceive(context, intent);
         this.directionRTL = LocaleUtils.isLocaleRTL(context);
 
-        final String action = intent.getAction();
-        if (isEmpty(action)) {
-            return;
-        }
         switch (action) {
             case ACTION_DATE_CHANGED:
             case ACTION_TIME_CHANGED:
@@ -168,7 +169,8 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
 
         for (int appWidgetId : appWidgetIds) {
             activityIntent = new Intent(context, ZmanimActivity.class)
-                .putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
+                .putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             activityPendingIntent = PendingIntent.getActivity(context, appWidgetId, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             views = new RemoteViews(packageName, layoutId);
