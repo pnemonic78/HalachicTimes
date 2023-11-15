@@ -87,6 +87,7 @@ dependencies {
 
     // Maps
     implementation("com.google.maps:google-maps-services:2.1.0")
+    implementation("androidx.cardview:cardview:1.0.0")
 
     // Testing
     testImplementation("junit:junit:${BuildVersions.junitVersion}")

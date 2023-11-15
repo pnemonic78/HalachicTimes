@@ -206,13 +206,11 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
         val itemListener: LocationItemListener = this
         val filterListener: LocationAdapter.FilterListener = this
         val swipeHandler = LocationSwipeHandler(this)
-        val decoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
 
         var adapter = LocationAdapter(context, items, itemListener)
         adapterAll = adapter
         var list: RecyclerView = binding.list
         list.adapter = adapter
-        list.addItemDecoration(decoration)
         var itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(list)
 
@@ -220,7 +218,6 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
         adapterHistory = adapter
         list = binding.listHistory
         list.adapter = adapter
-        list.addItemDecoration(decoration)
         itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(list)
 
@@ -228,7 +225,6 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
         adapterFavorites = adapter
         list = binding.listFavorites
         list.adapter = adapter
-        list.addItemDecoration(decoration)
         itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(list)
     }
