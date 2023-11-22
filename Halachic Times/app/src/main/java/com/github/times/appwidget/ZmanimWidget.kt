@@ -42,6 +42,9 @@ open class ZmanimWidget : ZmanimAppWidget() {
     @ColorInt
     private var colorEnabled = Color.WHITE
 
+    @ColorInt
+    private var colorOdd = Color.TRANSPARENT
+
     @StyleRes
     private var themeId = com.github.lib.R.style.Theme
 
@@ -220,7 +223,7 @@ open class ZmanimWidget : ZmanimAppWidget() {
         row.setTextViewText(R.id.time, item.timeLabel)
         row.setTextColor(R.id.title, colorEnabled)
         row.setTextColor(R.id.time, colorEnabled)
-        bindViewRowSpecial(context, row, item)
+        bindViewRowSpecial(context, row, position, item)
         list.addView(android.R.id.list, row)
     }
 
@@ -267,9 +270,10 @@ open class ZmanimWidget : ZmanimAppWidget() {
         return if (isDirectionRTL) R.layout.widget_item_rtl else R.layout.widget_item
     }
 
-    protected fun bindViewRowSpecial(
+    private fun bindViewRowSpecial(
         context: Context,
         row: RemoteViews,
+        position: Int,
         item: ZmanimItem
     ) {
         if (item.titleId == R.string.candles) {
@@ -278,6 +282,8 @@ open class ZmanimWidget : ZmanimAppWidget() {
                 "setBackgroundColor",
                 ContextCompat.getColor(context, R.color.widget_candles_bg)
             )
+        } else if (position.isOdd) {
+            row.setInt(R.id.widget_item, "setBackgroundColor", colorOdd)
         }
     }
 
@@ -288,8 +294,10 @@ open class ZmanimWidget : ZmanimAppWidget() {
             val isLight: Boolean = (themeId == THEME_APPWIDGET_LIGHT) || isBrightWallpaper(context)
             if (isLight) {
                 colorEnabled = ContextCompat.getColor(context, R.color.widget_text_light)
+                colorOdd = ContextCompat.getColor(context, R.color.widget_odd_light)
             } else {
                 colorEnabled = ContextCompat.getColor(context, R.color.widget_text)
+                colorOdd = ContextCompat.getColor(context, R.color.widget_odd)
             }
         }
     }
