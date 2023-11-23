@@ -38,8 +38,8 @@ class ZmanimWidgetService : RemoteViewsService() {
     }
 
     override fun onCreate() {
-        super.onCreate()
         localeCallbacks.onPreCreate(this)
+        super.onCreate()
     }
 
     override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {

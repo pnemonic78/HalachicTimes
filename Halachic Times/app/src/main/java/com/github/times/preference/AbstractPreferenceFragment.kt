@@ -33,7 +33,7 @@ abstract class AbstractPreferenceFragment : AbstractPreferenceFragment() {
     }
 
     protected fun notifyAppWidgets(context: Context) {
-        notifyAppWidgetsUpdate(requireContext(), ZmanimWidget::class.java)
+        notifyAppWidgetsUpdate(context, ZmanimWidget::class.java)
         notifyAppWidgetsUpdate(context, ZmanimListWidget::class.java)
         notifyAppWidgetsUpdate(context, ClockWidget::class.java)
     }

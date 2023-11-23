@@ -15,11 +15,14 @@
  */
 package com.github.times
 
+import android.annotation.TargetApi
 import android.content.Context
+import android.os.Build
 import com.github.app.LocaleCallbacks
 import com.github.app.LocaleHelper
 import com.github.preference.LocalePreferences
 import com.github.preference.ThemePreferences
+import com.github.times.appwidget.ZmanimWallpaperHelper
 import com.github.times.location.AddressProvider
 import com.github.times.location.LocationApplication
 import com.github.times.location.LocationsProviderFactory
@@ -37,6 +40,9 @@ class ZmanimApplication :
 
     private lateinit var localeCallbacks: LocaleCallbacks<LocalePreferences>
 
+    @TargetApi(Build.VERSION_CODES.O_MR1)
+    private val wallpaperHelper = ZmanimWallpaperHelper(this)
+
     override fun attachBaseContext(newBase: Context) {
         localeCallbacks = LocaleHelper(newBase)
         val context = localeCallbacks.attachBaseContext(newBase)
@@ -51,5 +57,19 @@ class ZmanimApplication :
 
     override fun createProviderFactory(context: Context): LocationsProviderFactory<AddressProvider, ZmanimLocations> {
         return ZmanimProviderFactoryImpl(context)
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            wallpaperHelper.onCreate()
+        }
+    }
+
+    override fun onTerminate() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            wallpaperHelper.onDestroy()
+        }
+        super.onTerminate()
     }
 }

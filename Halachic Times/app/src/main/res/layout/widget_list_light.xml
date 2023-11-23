@@ -6,4 +6,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/widget_margin"
-    tools:listitem="@layout/widget_item_light" />
+    tools:listitem="@layout/widget_item" />

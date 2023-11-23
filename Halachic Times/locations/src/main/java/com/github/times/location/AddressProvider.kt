@@ -39,9 +39,8 @@ import timber.log.Timber
  * @author Moshe Waisberg
  */
 class AddressProvider @JvmOverloads constructor(
-    private val context: Context, private val locale: Locale = getDefaultLocale(
-        context
-    )
+    private val context: Context,
+    private val locale: Locale = getDefaultLocale(context)
 ) {
     interface OnFindAddressListener {
         /**
@@ -66,8 +65,7 @@ class AddressProvider @JvmOverloads constructor(
     /**
      * The list of countries.
      */
-    private val geocoderCountries: CountriesGeocoder =
-        CountriesGeocoder(context, locale)
+    private val geocoderCountries: CountriesGeocoder = CountriesGeocoder(context, locale)
     private val geocoderDatabase: DatabaseGeocoder = DatabaseGeocoder(context, locale)
     private var geocoder: Geocoder? = null
     private var geocoderGoogle: GoogleGeocoder? = null

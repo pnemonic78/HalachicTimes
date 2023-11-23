@@ -35,6 +35,7 @@ abstract class LocationApplication<TP : ThemePreferences, AP : AddressProvider, 
 
     private val themeCallbacks: ThemeCallbacks<TP> = SimpleThemeCallbacks(this)
     private var locationHolder: LocationHolder<AP, LP>? = null
+
     private val localeReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action

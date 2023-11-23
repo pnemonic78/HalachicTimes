@@ -34,6 +34,7 @@ import com.github.appwidget.AppWidgetUtils.notifyAppWidgetViewDataChanged
 import com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate
 import com.github.os.getParcelableCompat
 import com.github.preference.LocalePreferences
+import com.github.times.R
 import com.github.times.ZmanViewHolder
 import com.github.times.ZmanimActivity
 import com.github.times.ZmanimAdapter
@@ -296,7 +297,7 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
     protected abstract fun getIntentViewId(): Int
 
     protected fun notifyAppWidgetViewDataChanged(context: Context) {
-        notifyAppWidgetViewDataChanged(context, javaClass, android.R.id.list)
+        notifyAppWidgetViewDataChanged(context, javaClass, ID_LIST)
     }
 
     protected open fun populateWidgetTimes(
@@ -386,5 +387,17 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
          * Id to update the widgets at midnight.
          */
         private const val ID_WIDGET_MIDNIGHT = 11
+
+        @JvmStatic
+        @StyleRes
+        internal val THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark
+
+        @JvmStatic
+        @StyleRes
+        internal val THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light
+
+        @JvmStatic
+        @IdRes
+        protected val ID_LIST = android.R.id.list
     }
 }

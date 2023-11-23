@@ -56,7 +56,7 @@ class ZmanimWidgetViewsFactory(
 
     private val packageName = context.packageName
     private val preferences: ZmanimPreferences = SimpleZmanimPreferences(context)
-    private val items = mutableListOf<ZmanimItem>()
+    private val items: MutableList<ZmanimItem> = ArrayList()
     private val isDirectionRTL: Boolean = isLocaleRTL(context)
 
     @ColorInt
@@ -132,7 +132,7 @@ class ZmanimWidgetViewsFactory(
             populate(adapter, false)
         }
 
-        val items = mutableListOf<ZmanimItem>()
+        val items: MutableList<ZmanimItem> = ArrayList()
         var jcal = adapter.jewishCalendar!!
         val itemToday = ZmanimItem(adapter.formatDate(context, jcal))
         itemToday.jewishDate = jcal

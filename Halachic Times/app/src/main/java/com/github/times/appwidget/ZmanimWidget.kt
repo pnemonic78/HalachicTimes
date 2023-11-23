@@ -54,7 +54,7 @@ open class ZmanimWidget : ZmanimAppWidget() {
         adapterToday: ZmanimAdapter<ZmanViewHolder>,
         adapterTomorrow: ZmanimAdapter<ZmanViewHolder>
     ) {
-        list.removeAllViews(android.R.id.list)
+        list.removeAllViews(ID_LIST)
         populateResources(context)
 
         val jewishDateToday: JewishDate = adapterToday.jewishCalendar ?: return
@@ -224,7 +224,7 @@ open class ZmanimWidget : ZmanimAppWidget() {
         row.setTextColor(R.id.title, colorEnabled)
         row.setTextColor(R.id.time, colorEnabled)
         bindViewRowSpecial(context, row, position, item)
-        list.addView(android.R.id.list, row)
+        list.addView(ID_LIST, row)
     }
 
     override fun getLayoutId(): Int {
@@ -238,7 +238,7 @@ open class ZmanimWidget : ZmanimAppWidget() {
     }
 
     override fun getIntentViewId(): Int {
-        return android.R.id.list
+        return ID_LIST
     }
 
     /**
@@ -253,7 +253,7 @@ open class ZmanimWidget : ZmanimAppWidget() {
         val row = RemoteViews(pkg, R.layout.widget_date)
         row.setTextViewText(R.id.date_hebrew, label)
         row.setTextColor(R.id.date_hebrew, colorEnabled)
-        list.addView(android.R.id.list, row)
+        list.addView(ID_LIST, row)
     }
 
     /**
@@ -289,7 +289,7 @@ open class ZmanimWidget : ZmanimAppWidget() {
 
     private fun populateResources(context: Context) {
         val themeId = theme
-        if (themeId != this.themeId) {
+        if ((themeId == 0) || (themeId != this.themeId)) {
             this.themeId = themeId
             val isLight: Boolean = (themeId == THEME_APPWIDGET_LIGHT) || isBrightWallpaper(context)
             if (isLight) {
@@ -300,13 +300,5 @@ open class ZmanimWidget : ZmanimAppWidget() {
                 colorOdd = ContextCompat.getColor(context, R.color.widget_odd)
             }
         }
-    }
-
-    companion object {
-        @StyleRes
-        private val THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark
-
-        @StyleRes
-        private val THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light
     }
 }
