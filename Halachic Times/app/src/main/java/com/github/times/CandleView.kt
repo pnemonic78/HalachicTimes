@@ -31,19 +31,11 @@ class CandleView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
-    private lateinit var handler: Handler
-    private lateinit var animation: CandleAnimation
+    private val animation: CandleAnimation by lazy { CandleAnimation(handler, this) }
 
     init {
         scaleType = ScaleType.FIT_CENTER
         setImageResource(R.drawable.candle)
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        val handler = getHandler()!!
-        this.handler = handler
-        animation = CandleAnimation(handler, this)
     }
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
@@ -59,14 +51,14 @@ class CandleView @JvmOverloads constructor(
      * Start the flicker animation.
      */
     private fun startFlicker() {
-        handler.post(animation)
+        handler?.post(animation)
     }
 
     /**
      * Stop the flicker animation.
      */
     private fun stopFlicker() {
-        handler.removeCallbacks(animation)
+        handler?.removeCallbacks(animation)
     }
 
     /**

@@ -13,17 +13,4 @@ class ZmanDetailsViewHolder(binding: TimesDetailBinding) :
 
     override val title: TextView = binding.title
     override val time: TextView = binding.time
-
-    override fun bind(item: ZmanimItem?) {
-        val zman = item ?: return
-        val isEnabled = !zman.isElapsed
-
-        itemView.isEnabled = isEnabled
-
-        title.text = zman.title
-        title.isEnabled = isEnabled
-
-        time.text = zman.timeLabel
-        time.isEnabled = isEnabled
-    }
 }

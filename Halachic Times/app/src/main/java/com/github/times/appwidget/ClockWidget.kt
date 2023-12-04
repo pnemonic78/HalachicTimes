@@ -30,6 +30,7 @@ import com.github.times.R
 import com.github.times.ZmanViewHolder
 import com.github.times.ZmanimAdapter
 import com.github.times.ZmanimItem
+import com.github.times.isNullOrEmptyOrElapsed
 import com.github.util.LocaleUtils.getDefaultLocale
 import com.github.util.TimeUtils.roundUp
 import java.text.DateFormat
@@ -77,7 +78,7 @@ class ClockWidget : ZmanimAppWidget() {
         var position = 0
         while (position < count) {
             item = adapter.getItem(position)
-            if (item == null || item.isEmptyOrElapsed) {
+            if (item.isNullOrEmptyOrElapsed()) {
                 position++
                 continue
             }
@@ -90,7 +91,7 @@ class ClockWidget : ZmanimAppWidget() {
             position = 0
             while (position < count) {
                 item = adapter.getItem(position)
-                if (item == null || item.isEmptyOrElapsed) {
+                if (item.isNullOrEmptyOrElapsed()) {
                     position++
                     continue
                 }

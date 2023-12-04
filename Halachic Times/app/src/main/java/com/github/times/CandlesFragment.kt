@@ -51,19 +51,16 @@ class CandlesFragment : Fragment() {
     /**
      * The preferences.
      */
-    private lateinit var preferences: ZmanimPreferences
-
-    private var _binding: CandlesFragmentBinding? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val preferences: ZmanimPreferences by lazy {
         val context = requireContext()
-        preferences = if (context is ZmanimActivity) {
+        if (context is ZmanimActivity) {
             context.preferences
         } else {
             SimpleZmanimPreferences(context)
         }
     }
+
+    private var _binding: CandlesFragmentBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,

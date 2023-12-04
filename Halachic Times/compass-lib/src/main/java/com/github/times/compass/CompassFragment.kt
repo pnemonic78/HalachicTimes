@@ -90,7 +90,14 @@ open class CompassFragment : Fragment(), SensorEventListener {
     /**
      * The preferences.
      */
-    protected lateinit var preferences: CompassPreferences
+    protected val preferences: CompassPreferences by lazy {
+        val context = requireContext()
+        if (context is BaseCompassActivity) {
+            context.compassPreferences
+        } else {
+            SimpleCompassPreferences(context)
+        }
+    }
 
     /**
      * The location's geomagnetic field.
@@ -125,20 +132,11 @@ open class CompassFragment : Fragment(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val context = requireContext()
-        preferences = getPreferences(context)
         val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as? SensorManager
         this.sensorManager = sensorManager
         if (sensorManager != null) {
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
             magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-        }
-    }
-
-    private fun getPreferences(context: Context): CompassPreferences {
-        return if (context is BaseCompassActivity) {
-            context.compassPreferences
-        } else {
-            SimpleCompassPreferences(context)
         }
     }
 

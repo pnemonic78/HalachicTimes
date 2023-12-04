@@ -22,6 +22,7 @@ abstract class ZmanViewHolder(
         val zman = item ?: return
         val isEnabled = !zman.isElapsed
 
+        itemView.setTag(TAG_ITEM, zman)
         itemView.isEnabled = isEnabled
 
         title.text = zman.title
@@ -29,5 +30,9 @@ abstract class ZmanViewHolder(
 
         time.text = zman.timeLabel
         time.isEnabled = isEnabled
+    }
+
+    companion object {
+        val TAG_ITEM = R.id.time
     }
 }

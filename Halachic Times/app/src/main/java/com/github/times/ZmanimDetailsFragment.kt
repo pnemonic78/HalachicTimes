@@ -63,6 +63,7 @@ class ZmanimDetailsFragment<A : ZmanimDetailsAdapter, P : ZmanimDetailsPopulater
     }
 
     private fun applyBackground(id: Int) {
+        val list = list ?: return
         when (preferences.theme) {
             R.style.Theme_Zmanim_Dark -> setBackgroundColorDark(id, list)
             R.style.Theme_Zmanim_Light -> setBackgroundColorLight(id, list)
