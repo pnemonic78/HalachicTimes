@@ -115,8 +115,9 @@ abstract class LocatedActivity<P : ThemePreferences> : AppCompatActivity(),
         val location = intent.getParcelableCompat<Location>(EXTRA_LOCATION, Location::class.java)
         if (location != null) {
             locations.setLocation(location)
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            initLocationPermissions()
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            initPermissions()
         }
     }
 
@@ -225,9 +226,18 @@ abstract class LocatedActivity<P : ThemePreferences> : AppCompatActivity(),
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    private fun initLocationPermissions() {
+    protected fun initPermissions() {
+        val permissions = mutableSetOf<String>()
+        checkPermissions(permissions)
+        if (permissions.isNotEmpty()) {
+            requestPermissions(permissions.toTypedArray(), ACTIVITY_PERMISSIONS)
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    protected open fun checkPermissions(permissions: MutableCollection<String>) {
         if (hasNoLocationPermission(this)) {
-            requestPermissions(LocationsProvider.PERMISSIONS, ACTIVITY_PERMISSIONS)
+            permissions.addAll(LocationsProvider.PERMISSIONS)
         }
     }
 

@@ -62,8 +62,8 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
     ZmanimLocationListener,
     LocationAdapter.FilterListener {
 
-    private var _themeCallbacks: ThemeCallbacks<P>? = null
     private val themeCallbacks: ThemeCallbacks<P> by lazy { createThemeCallbacks(this) }
+
     override val themePreferences: P
         get() = themeCallbacks.themePreferences
 

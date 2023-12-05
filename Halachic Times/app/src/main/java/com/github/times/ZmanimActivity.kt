@@ -56,7 +56,6 @@ import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferenceActivity
 import com.github.times.preference.ZmanimPreferences
 import com.github.times.remind.ZmanimReminder
-import com.github.times.remind.ZmanimReminder.Companion.checkPermissions
 import com.github.times.remind.ZmanimReminderService.Companion.enqueueWork
 import com.github.util.LocaleUtils.isLocaleRTL
 import com.github.view.animation.ConstraintLayoutWeightAnimation
@@ -831,8 +830,9 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    private fun initPermissions() {
-        checkPermissions(this)
+    override fun checkPermissions(permissions: MutableCollection<String>) {
+        super.checkPermissions(permissions)
+        ZmanimReminder.checkPermissions(this, permissions)
     }
 
     companion object {

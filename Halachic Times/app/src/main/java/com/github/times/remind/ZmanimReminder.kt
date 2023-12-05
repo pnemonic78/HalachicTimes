@@ -1002,9 +1002,7 @@ class ZmanimReminder(private val context: Context) {
 
         @RequiresApi(api = Build.VERSION_CODES.M)
         @JvmStatic
-        fun checkPermissions(activity: Activity) {
-            val context: Context = activity
-            val permissions = mutableListOf<String>()
+        fun checkPermissions(context: Context, permissions: MutableCollection<String>) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 val nm =
                     context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -1016,9 +1014,19 @@ class ZmanimReminder(private val context: Context) {
                     permissions.add(PERMISSION_NOTIFICATIONS)
                 }
             }
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @JvmStatic
+        fun checkPermissions(activity: Activity) {
+            val context: Context = activity
+            val permissions = mutableSetOf<String>()
+            checkPermissions(context, permissions)
             if (permissions.isNotEmpty()) {
                 activity.requestPermissions(permissions.toTypedArray(), ACTIVITY_PERMISSIONS)
             }
+
+            // Also check for exact alarm.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 val alarms = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 if (!alarms.canScheduleExactAlarms()) {
