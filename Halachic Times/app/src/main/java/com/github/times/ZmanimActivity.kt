@@ -211,6 +211,7 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             initPermissions()
         }
+        handleIntent(intent)
     }
 
     override fun onPreCreate() {
@@ -265,11 +266,6 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
             selectedId = itemId
         }
         super.onPause()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        handleIntent(intent)
     }
 
     override fun onStop() {
@@ -362,8 +358,10 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
             // Bad Gregorian dates cause problems for the Jewish dates.
             return
         }
-        calendar.timeZone = timeZone
-        calendar.timeInMillis = date
+        calendar.apply {
+            this.timeZone = timeZone
+            this.timeInMillis = date
+        }
         showDate()
         scheduleNextDay()
         populateFragments(calendar)
@@ -381,11 +379,13 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
             // Bad Gregorian dates cause problems for the Jewish dates.
             return
         }
-        calendar.timeZone = timeZone
-        calendar.timeInMillis = System.currentTimeMillis()
-        calendar[Calendar.YEAR] = year
-        calendar[Calendar.MONTH] = monthOfYear
-        calendar[Calendar.DAY_OF_MONTH] = dayOfMonth
+        calendar.apply {
+            this.timeZone = timeZone
+            this.timeInMillis = System.currentTimeMillis()
+            this[Calendar.YEAR] = year
+            this[Calendar.MONTH] = monthOfYear
+            this[Calendar.DAY_OF_MONTH] = dayOfMonth
+        }
         showDate()
         scheduleNextDay()
         populateFragments(calendar)
