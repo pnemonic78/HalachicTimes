@@ -18,11 +18,14 @@ package com.github.times.preference
 import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
+import androidx.annotation.AttrRes
+import androidx.annotation.StyleRes
 import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
 import com.github.app.ActivityUtils.isPermissionGranted
 import com.github.media.RingtoneManager
 import com.github.preference.RingtonePreference
+import com.github.util.TypedValueUtils
 
 /**
  * A [androidx.preference.Preference] that allows the user to choose a ringtone from those on the device.
@@ -34,8 +37,12 @@ import com.github.preference.RingtonePreference
 class RingtonePreference @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-    defStyleRes: Int = 0
+    @AttrRes defStyleAttr: Int = TypedValueUtils.getAttr(
+        context,
+        androidx.preference.R.attr.dialogPreferenceStyle,
+        android.R.attr.ringtonePreferenceStyle
+    ),
+    @StyleRes defStyleRes: Int = 0
 ) : RingtonePreference(context, attrs, defStyleAttr, defStyleRes) {
     private var requestPermissionsFragment: Fragment? = null
     private var requestPermissionsCode = 0

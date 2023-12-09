@@ -17,7 +17,10 @@ package com.github.times.preference
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.annotation.AttrRes
+import androidx.annotation.StyleRes
 import androidx.preference.ListPreference
+import com.github.util.TypedValueUtils
 
 /**
  * Zman reminder preference.
@@ -25,8 +28,12 @@ import androidx.preference.ListPreference
 class ZmanReminderPreference @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-    defStyleRes: Int = 0
+    @AttrRes defStyleAttr: Int = TypedValueUtils.getAttr(
+        context,
+        androidx.preference.R.attr.dialogPreferenceStyle,
+        android.R.attr.dialogPreferenceStyle
+    ),
+    @StyleRes defStyleRes: Int = 0
 ) : ListPreference(context, attrs, defStyleAttr, defStyleRes) {
 
     override fun notifyChanged() {
