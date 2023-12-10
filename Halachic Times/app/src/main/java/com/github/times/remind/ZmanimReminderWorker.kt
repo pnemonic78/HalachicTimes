@@ -54,12 +54,10 @@ class ZmanimReminderWorker(context: Context, params: WorkerParameters) : Worker(
                 val all = mutableMapOf<String, Any>()
                 for (key in extras.keySet()) {
                     val value = extras[key] ?: continue
-                    if (value is CharSequence) {
-                        data.putString(key, value.toString())
-                    } else if (value is Parcelable) {
-                        putParcelable(data, key, value)
-                    } else {
-                        all[key] = value
+                    when (value) {
+                        is CharSequence -> data.putString(key, value.toString())
+                        is Parcelable -> putParcelable(data, key, value)
+                        else -> all[key] = value
                     }
                 }
                 data.putAll(all)

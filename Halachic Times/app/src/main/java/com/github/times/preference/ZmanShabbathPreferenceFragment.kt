@@ -46,21 +46,21 @@ class ZmanShabbathPreferenceFragment : ZmanPreferenceFragment() {
             }
         sunsetPreference =
             addDefaultOption(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_SUNSET).apply {
-                setOnPreferenceChangeListener { _, newValue: Any? ->
+                setOnPreferenceChangeListener { _, _: Any? ->
                     onMinutesChanged(R.string.sunset)
                     true
                 }
             }
         twilightPreference =
             addDefaultOption(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_TWILIGHT).apply {
-                setOnPreferenceChangeListener { _, newValue: Any? ->
+                setOnPreferenceChangeListener { _, _: Any? ->
                     onMinutesChanged(R.string.twilight)
                     true
                 }
             }
         nightfallPreference =
             addDefaultOption(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL).apply {
-                setOnPreferenceChangeListener { _, newValue: Any? ->
+                setOnPreferenceChangeListener { _, _: Any? ->
                     onMinutesChanged(R.string.nightfall)
                     true
                 }

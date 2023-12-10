@@ -92,7 +92,7 @@ class AppearancePreferenceFragment : AbstractPreferenceFragment() {
             }
             val values = arrayOfNulls<CharSequence>(length2)
             val entries = arrayOfNulls<CharSequence>(length2)
-            values[0] = context!!.getString(R.string.locale_defaultValue)
+            values[0] = context.getString(R.string.locale_defaultValue)
             var locale: Locale
             var i = 0
             var j = length2 - length

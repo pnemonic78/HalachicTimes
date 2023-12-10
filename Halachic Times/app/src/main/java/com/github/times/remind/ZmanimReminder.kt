@@ -816,13 +816,11 @@ class ZmanimReminder(private val context: Context) {
         }
     }
 
-    private val receiverClass: Class<out BroadcastReceiver?>
-        /**
-         * Get the broadcast receiver that will then start the reminder service.
-         *
-         * @return the receiver class.
-         */
-        private get() = ZmanimReminderReceiver::class.java
+    /**
+     * The broadcast receiver that will then start the reminder service.
+     */
+    private val receiverClass: Class<out BroadcastReceiver>
+        get() = ZmanimReminderReceiver::class.java
 
     /**
      * Alarm screen now.
