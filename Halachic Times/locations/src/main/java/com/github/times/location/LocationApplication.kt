@@ -16,11 +16,7 @@
 package com.github.times.location
 
 import android.app.Application
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.github.app.SimpleThemeCallbacks
 import com.github.app.ThemeCallbacks
 import com.github.preference.ThemePreferences
@@ -35,16 +31,6 @@ abstract class LocationApplication<TP : ThemePreferences, AP : AddressProvider, 
 
     private val themeCallbacks: ThemeCallbacks<TP> = SimpleThemeCallbacks(this)
     private var locationHolder: LocationHolder<AP, LP>? = null
-
-    private val localeReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.action
-            if (Intent.ACTION_LOCALE_CHANGED == action) {
-                val newConfig = context.resources.configuration
-                onConfigurationChanged(newConfig)
-            }
-        }
-    }
 
     override fun onCreate() {
         onPreCreate()
@@ -65,10 +51,6 @@ abstract class LocationApplication<TP : ThemePreferences, AP : AddressProvider, 
             holder = LocationHolder(createProviderFactory(context))
             locationHolder = holder
             registerComponentCallbacks(holder)
-
-            val intentFilter = IntentFilter(Intent.ACTION_LOCALE_CHANGED)
-            LocalBroadcastManager.getInstance(context)
-                .registerReceiver(localeReceiver, intentFilter)
         }
         return holder
     }

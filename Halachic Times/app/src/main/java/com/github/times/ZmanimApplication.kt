@@ -51,8 +51,9 @@ class ZmanimApplication :
 
     override fun onPreCreate() {
         super.onPreCreate()
-        localeCallbacks.onPreCreate(this)
         Timber.plant(CrashlyticsTree(BuildConfig.DEBUG))
+        localeCallbacks.onPreCreate(this)
+        LocaleHelper.registerReceiver(this)
     }
 
     override fun createProviderFactory(context: Context): LocationsProviderFactory<AddressProvider, ZmanimLocations> {

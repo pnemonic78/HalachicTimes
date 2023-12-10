@@ -100,8 +100,5 @@ interface LocationPreferences {
 
         /** Preference name for the co-ordinates with elevation/altitude.  */
         const val KEY_COORDS_ELEVATION = "coords.elevation"
-
-        /** Name for the locale in an intent.  */
-        const val EXTRA_LOCALE = "locale"
     }
 }

@@ -26,19 +26,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.Keep
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.ListPreference
 import androidx.preference.Preference
-import com.github.app.ActivityUtils.restartActivity
+import com.github.app.LocaleHelper
 import com.github.app.PERMISSION_WALLPAPER
+import com.github.app.restart
 import com.github.preference.LocalePreferences
 import com.github.preference.ThemePreferences
 import com.github.times.BuildConfig
 import com.github.times.R
 import com.github.times.compass.preference.CompassPreferences
-import com.github.times.location.LocationPreferences
-import com.github.util.LocaleUtils.applyLocale
-import com.github.util.LocaleUtils.parseLocale
 import com.github.util.LocaleUtils.sortByDisplay
 import com.github.util.LocaleUtils.unique
 import java.util.Locale
@@ -120,15 +117,9 @@ class AppearancePreferenceFragment : AbstractPreferenceFragment() {
     }
 
     private fun notifyConfigurationChanged(context: Context, newLocale: String) {
-        val locale = parseLocale(newLocale)
-        applyLocale(context.applicationContext, locale)
-        val notification = Intent(Intent.ACTION_LOCALE_CHANGED)
-            .setPackage(context.packageName)
-            .putExtra(LocationPreferences.EXTRA_LOCALE, newLocale)
-        LocalBroadcastManager.getInstance(context).sendBroadcast(notification)
-
+        LocaleHelper.sendLocaleChanged(context, newLocale)
         // Restart the activity to refresh views.
-        restartActivity(requireActivity())
+        requireActivity().restart()
     }
 
     private fun checkWallpaperPermission(context: Context): Boolean {
