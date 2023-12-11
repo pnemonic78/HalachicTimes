@@ -840,7 +840,6 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     companion object {
         private const val TAG = "LocationProvider"
 
-        @JvmField
         val PERMISSIONS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
 
         /**
@@ -960,7 +959,6 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         const val LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN
         const val LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX
 
-        @JvmStatic
         fun hasNoLocationPermission(context: Context): Boolean {
             return PermissionChecker.checkCallingOrSelfPermission(
                 context,

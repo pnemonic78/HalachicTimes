@@ -48,12 +48,10 @@ class Country : ZmanimAddress {
             }
         }
 
-        @JvmStatic
         fun generateCountryId(country: Country): Long {
             return generateCountryId(country.latitude, country.longitude)
         }
 
-        @JvmStatic
         fun generateCountryId(latitude: Double, longitude: Double): Long {
             val fixedPointLatitude = round(latitude * RATIO).toLong() and 0x7FFFFFFFL
             val fixedPointLongitude = round(longitude * RATIO).toLong() and 0xFFFFFFFFL

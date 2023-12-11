@@ -40,7 +40,6 @@ class ZmanCandlesSummaryProvider private constructor() : Preference.SummaryProvi
          * @return a singleton instance of this simple
          * [androidx.preference.Preference.SummaryProvider] implementation
          */
-        @JvmStatic
         fun getInstance(): ZmanCandlesSummaryProvider {
             var provider = providerInstance
             if (provider == null) {

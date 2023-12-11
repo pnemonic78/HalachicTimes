@@ -31,7 +31,6 @@ import kotlin.math.min
  * @author Moshe Waisberg
  */
 class CountryPolygon @JvmOverloads constructor(
-    @JvmField
     val countryCode: String,
     /**
      * The total number of points.
@@ -244,7 +243,6 @@ class CountryPolygon @JvmOverloads constructor(
          * @see [Distance
          * from a point to a line](http://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line)
          */
-        @JvmStatic
         fun pointToLineDistance(a: Point, b: Point, p: Point): Double {
             return pointToLineDistance(
                 a.x.toDouble(),
@@ -266,7 +264,6 @@ class CountryPolygon @JvmOverloads constructor(
          * @see [Distance
          * from a point to a line](http://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line)
          */
-        @JvmStatic
         fun pointToLineDistance(a: PointF, b: PointF, p: PointF): Double {
             return pointToLineDistance(
                 a.x.toDouble(),
@@ -291,7 +288,6 @@ class CountryPolygon @JvmOverloads constructor(
          * @see [Distance
          * from a point to a line](http://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line)
          */
-        @JvmStatic
         fun pointToLineDistance(
             ax: Double,
             ay: Double,

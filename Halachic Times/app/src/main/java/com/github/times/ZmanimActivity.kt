@@ -646,7 +646,7 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
         if (gestureDetector.onTouchEvent(event)) {
             return true
         }
-        return super.dispatchTouchEvent(event)
+        return super.onTouchEvent(event)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

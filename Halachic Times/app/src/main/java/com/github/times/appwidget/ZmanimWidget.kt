@@ -237,9 +237,7 @@ open class ZmanimWidget : ZmanimAppWidget() {
         }
     }
 
-    override fun getIntentViewId(): Int {
-        return ID_LIST
-    }
+    override fun getIntentViewId(): Int = ID_LIST
 
     /**
      * Bind the date group header to a list.

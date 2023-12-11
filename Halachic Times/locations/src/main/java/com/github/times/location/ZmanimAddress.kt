@@ -46,6 +46,7 @@ open class ZmanimAddress : Address, Comparable<ZmanimAddress> {
 
     /** The formatted address. */
     private var _formatted: String? = null
+
     val formatted: String get() = getFormattedAddress()
 
     /**
@@ -310,7 +311,6 @@ open class ZmanimAddress : Address, Comparable<ZmanimAddress> {
          * @param a2 the second address.
          * @return the comparison as per [Comparable].
          */
-        @JvmStatic
         fun compare(a1: Address?, a2: Address?): Int {
             if (a1 === a2) {
                 return 0
@@ -359,7 +359,6 @@ open class ZmanimAddress : Address, Comparable<ZmanimAddress> {
                 }
             }
 
-        @JvmStatic
         fun isValid(address: ZmanimAddress?): Boolean {
             if (address == null) return false
             if (!address.hasLatitude()) return false

@@ -34,13 +34,9 @@ import timber.log.Timber
  * @author Moshe Waisberg
  */
 class ZmanimReminderItem(
-    @JvmField
     val id: Int,
-    @JvmField
     val title: CharSequence?,
-    @JvmField
     val text: CharSequence?,
-    @JvmField
     val time: Long
 ) : Parcelable {
 
@@ -126,14 +122,12 @@ class ZmanimReminderItem(
                 }
             }
 
-        @JvmStatic
         fun from(item: ZmanimItem?): ZmanimReminderItem? {
             return if (item != null) {
                 ZmanimReminderItem(item.titleId, item.title, item.summary, item.time)
             } else null
         }
 
-        @JvmStatic
         fun from(context: Context, extras: Bundle?): ZmanimReminderItem? {
             if (extras == null) {
                 return null
@@ -160,7 +154,6 @@ class ZmanimReminderItem(
             return null
         }
 
-        @JvmStatic
         fun from(context: Context, intent: Intent?): ZmanimReminderItem? {
             return if (intent != null) from(context, intent.extras) else null
         }

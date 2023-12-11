@@ -23,7 +23,6 @@ object LocationData {
     private val DATA_SPEED_ACCURACY_METERSPERSECOND = DATA_PREFIX + "SpeedAccuracyMetersPerSecond"
     private val DATA_BEARING_ACCURACY_DEGREES = DATA_PREFIX + "BearingAccuracyDegrees"
 
-    @JvmStatic
     fun writeToData(data: Data.Builder, key: String, location: Location) {
         data.putString(key + DATA_KEY_SUFFIX, key)
         data.putString(key + DATA_PROVIDER, location.provider)
@@ -51,7 +50,6 @@ object LocationData {
         }
     }
 
-    @JvmStatic
     fun readFromData(data: Data, dataKey: String, keysToRemove: MutableCollection<String>): Location? {
         if (!dataKey.endsWith(DATA_KEY_SUFFIX)) return null
         val value = data.getString(dataKey)
@@ -103,7 +101,6 @@ object LocationData {
         return location
     }
 
-    @JvmStatic
     fun getKey(key: String?): String? {
         if (key.isNullOrEmpty()) return null
         val index = key.indexOf(DATA_KEY_SUFFIX)

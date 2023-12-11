@@ -138,7 +138,6 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
      * @param jewishDate the Jewish date.
      * @param remote     hide elapsed times for remote view?
      */
-    @JvmOverloads
     fun add(
         @StringRes titleId: Int,
         @StringRes summaryId: Int,
@@ -163,7 +162,6 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
      * @param remote     hide elapsed times for remote view?
      * @param hour       format as hour?
      */
-    @JvmOverloads
     fun add(
         @StringRes titleId: Int,
         summary: CharSequence?,
@@ -199,7 +197,6 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
      * @param summaryId the summary label id.
      * @param time      the time in milliseconds.
      */
-    @JvmOverloads
     fun addHour(
         @StringRes titleId: Int,
         @StringRes summaryId: Int,

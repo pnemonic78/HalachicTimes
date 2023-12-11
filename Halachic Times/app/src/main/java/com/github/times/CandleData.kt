@@ -3,21 +3,13 @@ package com.github.times
 import com.github.times.ZmanimDays.NO_HOLIDAY
 
 data class CandleData(
-    @JvmField
     val holidayToday: Int = NO_HOLIDAY,
-    @JvmField
     val countToday: Int = CANDLES_NONE,
-    @JvmField
     val holidayTomorrow: Int = NO_HOLIDAY,
-    @JvmField
     val countTomorrow: Int = CANDLES_NONE,
-    @JvmField
     val whenCandles: Int = BEFORE_SUNSET,
-    @JvmField
     val candlesOffset: Int = 0,
-    @JvmField
     val omerToday: Int = 0,
-    @JvmField
     val omerTomorrow: Int = 0
 ) {
     companion object {

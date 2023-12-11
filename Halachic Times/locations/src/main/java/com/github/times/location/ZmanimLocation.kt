@@ -128,7 +128,6 @@ class ZmanimLocation : Location {
          * @param destination the destination location.
          * @return the bearing in degrees.
          */
-        @JvmStatic
         fun angleTo(location: Location, destination: Location): Float {
             return computeRhumbBearing(
                 location.latitude,
@@ -149,7 +148,6 @@ class ZmanimLocation : Location {
          * @param longitude2 the destination latitude, in degrees.
          * @return teh bearing in degrees.
          */
-        @JvmStatic
         private fun computeRhumbBearing(
             latitude1: Double,
             longitude1: Double,
@@ -199,7 +197,6 @@ class ZmanimLocation : Location {
          * @param l2 the second location.
          * @return the comparison as per [Comparable].
          */
-        @JvmStatic
         fun compare(l1: Location?, l2: Location?): Int {
             if (l1 === l2) return 0
             if (l1 == null) return -1
@@ -227,7 +224,6 @@ class ZmanimLocation : Location {
          * @param l2 the second location.
          * @return the comparison as per [Comparable].
          */
-        @JvmStatic
         fun compareAll(l1: Location?, l2: Location?): Int {
             if (l1 === l2) return 0
             if (l1 == null) return -1
@@ -247,7 +243,6 @@ class ZmanimLocation : Location {
             return t1.compareTo(t2)
         }
 
-        @JvmStatic
         fun toDecimal(degrees: Int, minutes: Int, seconds: Double): Double {
             return degrees + minutes / 60.0 + seconds / 3600.0
         }
@@ -258,7 +253,6 @@ class ZmanimLocation : Location {
          * @param location the location to check.
          * @return `false` if location is invalid.
          */
-        @JvmStatic
         fun isValid(location: Location?): Boolean {
             if (location == null) return false
             val latitude = location.latitude
@@ -269,14 +263,12 @@ class ZmanimLocation : Location {
             return elevation in ELEVATION_MIN..ELEVATION_MAX
         }
 
-        @JvmStatic
         fun distanceBetween(startLocation: Location, endLocation: Location): Double {
             val distances = FloatArray(1)
             distanceBetween(startLocation, endLocation, distances)
             return distances[0].toDouble()
         }
 
-        @JvmStatic
         fun distanceBetween(startLocation: Location, endLocation: Location, distances: FloatArray) =
             distanceBetween(
                 startLocation.latitude,

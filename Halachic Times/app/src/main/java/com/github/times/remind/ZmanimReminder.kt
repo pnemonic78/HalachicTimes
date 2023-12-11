@@ -987,7 +987,6 @@ class ZmanimReminder(private val context: Context) {
         private const val WAKE_TAG = "ZmanimReminder:wake"
 
         @TargetApi(Build.VERSION_CODES.TIRAMISU)
-        @JvmField
         val PERMISSION_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS
 
         /**
@@ -999,7 +998,6 @@ class ZmanimReminder(private val context: Context) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
 
         @RequiresApi(api = Build.VERSION_CODES.M)
-        @JvmStatic
         fun checkPermissions(context: Context, permissions: MutableCollection<String>) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 val nm =
@@ -1015,7 +1013,6 @@ class ZmanimReminder(private val context: Context) {
         }
 
         @RequiresApi(api = Build.VERSION_CODES.M)
-        @JvmStatic
         fun checkPermissions(activity: Activity) {
             val context: Context = activity
             val permissions = mutableSetOf<String>()

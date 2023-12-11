@@ -40,9 +40,7 @@ open class DefaultLocationFormatter(
      * @see com.github.times.location.LocationPreferences.Values.FORMAT_DECIMAL
      * @see com.github.times.location.LocationPreferences.Values.FORMAT_SEXAGESIMAL
      */
-    @JvmField
     protected val notation: String,
-    @JvmField
     protected val isElevationVisible: Boolean
 ) : LocationFormatter {
     /**

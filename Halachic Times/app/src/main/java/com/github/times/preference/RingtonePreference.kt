@@ -86,7 +86,6 @@ class RingtonePreference @JvmOverloads constructor(
     }
 
     companion object {
-        @JvmField
         val PERMISSION_RINGTONE = RingtoneManager.PERMISSION_RINGTONE
     }
 }

@@ -109,7 +109,6 @@ class AddressService : JobIntentService(), OnFindAddressListener {
 
         private const val PERSIST_DEFAULT = true
 
-        @JvmStatic
         fun enqueueWork(context: Context, intent: Intent) {
             enqueueWork(context, AddressService::class.java, JOB_ADDRESS, intent)
         }

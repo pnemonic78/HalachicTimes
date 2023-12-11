@@ -152,7 +152,6 @@ class ZmanimReminderService : Service() {
         private var reminderBusy: String? = ""
         private var reminderBusyTime: Long = 0
 
-        @JvmStatic
         fun enqueueWork(context: Context, intent: Intent) {
             val action = intent.action
             if (action.isNullOrEmpty()) return

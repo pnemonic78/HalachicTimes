@@ -28,13 +28,11 @@ import android.provider.BaseColumns
  */
 object LocationContract {
     /** The authority for the addresses provider  */
-    @JvmStatic
     fun AUTHORITY(context: Context): String {
         return context.packageName + ".locations"
     }
 
     /** A content:// style uri to the authority for the addresses provider  */
-    @JvmStatic
     fun AUTHORITY_URI(context: Context): Uri {
         return Uri.parse("content://" + AUTHORITY(context))
     }
@@ -116,7 +114,6 @@ object LocationContract {
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        @JvmStatic
         fun CONTENT_URI(context: Context): Uri {
             return Uri.withAppendedPath(AUTHORITY_URI(context), ADDRESS)
         }
@@ -182,7 +179,6 @@ object LocationContract {
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        @JvmStatic
         fun CONTENT_URI(context: Context): Uri {
             return Uri.withAppendedPath(AUTHORITY_URI(context), ELEVATION)
         }
@@ -233,7 +229,6 @@ object LocationContract {
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        @JvmStatic
         fun CONTENT_URI(context: Context): Uri {
             return Uri.withAppendedPath(AUTHORITY_URI(context), CITY)
         }

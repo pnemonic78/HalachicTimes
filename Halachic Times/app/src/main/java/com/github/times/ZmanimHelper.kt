@@ -18,7 +18,6 @@ object ZmanimHelper {
      * @param time the time to format.
      * @return the formatted time.
      */
-    @JvmStatic
     fun formatDateTime(time: Date): String {
         return dateFormat.format(time)
     }
@@ -29,7 +28,6 @@ object ZmanimHelper {
      * @param time the time to format.
      * @return the formatted time.
      */
-    @JvmStatic
     fun formatDateTime(time: Long): String {
         if (time == NEVER) return "never"
         return formatDateTime(Date(time))

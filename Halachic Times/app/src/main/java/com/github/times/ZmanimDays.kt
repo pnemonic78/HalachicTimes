@@ -46,18 +46,15 @@ object ZmanimDays {
     }
 
     @StringRes
-    @JvmStatic
     fun getNameId(day: Int): Int {
         if (day < 0) return ID_NONE
         return names[day] ?: ID_NONE
     }
 
-    @JvmStatic
     fun getName(context: Context, day: Int): CharSequence? {
         return getName(context, day, 0)
     }
 
-    @JvmStatic
     fun getName(context: Context, day: Int, count: Int): CharSequence? {
         val nameId = getNameId(day)
         if (nameId == ID_NONE) return null

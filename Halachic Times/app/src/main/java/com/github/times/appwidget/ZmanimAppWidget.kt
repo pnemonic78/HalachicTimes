@@ -388,16 +388,13 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
          */
         private const val ID_WIDGET_MIDNIGHT = 11
 
-        @JvmStatic
         @StyleRes
         internal val THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark
 
-        @JvmStatic
         @StyleRes
         internal val THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light
 
-        @JvmStatic
         @IdRes
-        protected val ID_LIST = android.R.id.list
+        internal val ID_LIST = android.R.id.list
     }
 }

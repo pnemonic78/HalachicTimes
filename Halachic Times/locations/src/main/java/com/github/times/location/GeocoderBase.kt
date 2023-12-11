@@ -32,9 +32,7 @@ import java.util.Locale
  * @param locale the locale.
  * @author Moshe Waisberg
  */
-abstract class GeocoderBase(@JvmField protected val locale: Locale) {
-
-    private var _addressResponseParser: AddressResponseParser? = null
+abstract class GeocoderBase(protected val locale: Locale) {
 
     /**
      * Get a parser for addresses.
@@ -43,17 +41,7 @@ abstract class GeocoderBase(@JvmField protected val locale: Locale) {
      * @throws LocationException if a location error occurs.
      */
     @get:Throws(LocationException::class)
-    internal val addressResponseParser: AddressResponseParser
-        get() {
-            var p = _addressResponseParser
-            if (p == null) {
-                p = createAddressResponseParser()
-                _addressResponseParser = p
-            }
-            return p
-        }
-
-    private var _elevationResponseParser: ElevationResponseParser? = null
+    internal val addressResponseParser: AddressResponseParser by lazy { createAddressResponseParser() }
 
     /**
      * Get a parser for elevations.
@@ -62,15 +50,7 @@ abstract class GeocoderBase(@JvmField protected val locale: Locale) {
      * @throws LocationException if a location error occurs.
      */
     @get:Throws(LocationException::class)
-    internal val elevationResponseParser: ElevationResponseParser
-        get() {
-            var p = _elevationResponseParser
-            if (p == null) {
-                p = createElevationResponseParser()
-                _elevationResponseParser = p
-            }
-            return p
-        }
+    internal val elevationResponseParser: ElevationResponseParser by lazy { createElevationResponseParser() }
 
     /**
      * Returns an array of Addresses that are known to describe the area
@@ -275,7 +255,7 @@ abstract class GeocoderBase(@JvmField protected val locale: Locale) {
         if (data == null || data.available() <= 2) {
             return null
         }
-        val parser = elevationResponseParser ?: return null
+        val parser = elevationResponseParser
         val results = parser.parse(data, latitude, longitude, 1)
         return if (results.isEmpty()) null else results[0]
     }
@@ -367,8 +347,7 @@ abstract class GeocoderBase(@JvmField protected val locale: Locale) {
         const val LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN
         const val LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX
 
-        @JvmStatic
-        protected fun decodeApiKey(encoded: String?): String {
+        internal fun decodeApiKey(encoded: String): String {
             val bytes = Base64.decode(encoded, Base64.DEFAULT)
             return String(bytes, StandardCharsets.UTF_8)
         }

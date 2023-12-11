@@ -1794,7 +1794,6 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
          * @param jewishDateTomorrow the Jewish calendar for tomorrow.
          * @return the candle data.
          */
-        @JvmStatic
         fun calculateCandles(
             jewishDateToday: JewishCalendar?,
             jewishDateTomorrow: JewishCalendar?,
@@ -1891,8 +1890,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             )
         }
 
-        @JvmStatic
-        protected fun cloneJewishTomorrow(jcal: JewishCalendar): JewishCalendar {
+        internal fun cloneJewishTomorrow(jcal: JewishCalendar): JewishCalendar {
             val jcalTomorrow = jcal.clone() as JewishCalendar
             jcalTomorrow.forward(Calendar.DATE, 1)
             return jcalTomorrow

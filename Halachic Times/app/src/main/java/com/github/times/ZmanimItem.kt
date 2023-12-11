@@ -30,22 +30,18 @@ class ZmanimItem @JvmOverloads constructor(
      * The title id.
      */
     @StringRes
-    @JvmField
     val titleId: Int,
     /**
      * The title.
      */
-    @JvmField
     val title: CharSequence?,
     /**
      * The time.
      */
-    @JvmField
     val time: Long,
     /**
      * The summary.
      */
-    @JvmField
     var summary: CharSequence? = null
 ) : Comparable<ZmanimItem> {
 
