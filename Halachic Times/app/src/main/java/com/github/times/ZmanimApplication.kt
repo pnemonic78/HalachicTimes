@@ -41,7 +41,11 @@ class ZmanimApplication :
     private lateinit var localeCallbacks: LocaleCallbacks<LocalePreferences>
 
     @TargetApi(Build.VERSION_CODES.O_MR1)
-    private val wallpaperHelper = ZmanimWallpaperHelper(this)
+    private val wallpaperHelper: ZmanimWallpaperHelper? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+        ZmanimWallpaperHelper(this)
+    } else {
+        null
+    }
 
     override fun attachBaseContext(newBase: Context) {
         localeCallbacks = LocaleHelper(newBase)
@@ -63,13 +67,13 @@ class ZmanimApplication :
     override fun onCreate() {
         super.onCreate()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            wallpaperHelper.onCreate()
+            wallpaperHelper?.onCreate()
         }
     }
 
     override fun onTerminate() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            wallpaperHelper.onDestroy()
+            wallpaperHelper?.onDestroy()
         }
         super.onTerminate()
     }
