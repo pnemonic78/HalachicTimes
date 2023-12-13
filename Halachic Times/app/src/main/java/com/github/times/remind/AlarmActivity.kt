@@ -15,9 +15,11 @@
  */
 package com.github.times.remind
 
+import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -29,6 +31,7 @@ import android.text.style.RelativeSizeSpan
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.PermissionChecker
 import com.github.app.LocaleCallbacks
 import com.github.app.LocaleHelper
 import com.github.app.SimpleThemeCallbacks
@@ -39,6 +42,7 @@ import com.github.times.BuildConfig
 import com.github.times.ZmanimHelper.formatDateTime
 import com.github.times.ZmanimItem
 import com.github.times.databinding.AlarmActivityBinding
+import com.github.times.preference.RingtonePreference
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
 import com.github.times.remind.ZmanimReminderItem.Companion.from
@@ -109,6 +113,10 @@ class AlarmActivity<P : ZmanimPreferences> : AppCompatActivity(), ThemeCallbacks
             timeFormatGranularity = DateUtils.MINUTE_IN_MILLIS
         }
         handleIntent(intent)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkPermissions()
+        }
     }
 
     override fun onPreCreate() {
@@ -163,7 +171,7 @@ class AlarmActivity<P : ZmanimPreferences> : AppCompatActivity(), ThemeCallbacks
         val binding = binding ?: return
         val timeLabel: CharSequence = timeFormat.format(roundUp(item.time, timeFormatGranularity))
         val spans = SpannableStringBuilder.valueOf(timeLabel)
-        val indexMinutes = timeLabel.indexOf( ':')
+        val indexMinutes = timeLabel.indexOf(':')
         if (indexMinutes >= 0) {
             // Regular "sans-serif" is like bold for "sans-serif-thin".
             spans.setSpan(
@@ -255,10 +263,24 @@ class AlarmActivity<P : ZmanimPreferences> : AppCompatActivity(), ThemeCallbacks
         return stopService(intent)
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
+    private fun checkPermissions() {
+        val context: Context = this
+        if (PermissionChecker.checkCallingOrSelfPermission(
+                context,
+                RingtonePreference.PERMISSION_RINGTONE
+            ) != PermissionChecker.PERMISSION_GRANTED
+        ) {
+            requestPermissions(arrayOf(RingtonePreference.PERMISSION_RINGTONE), REQUEST_PERMISSIONS)
+        }
+    }
+
     companion object {
         /**
          * Extras name to silence to alarm.
          */
         const val EXTRA_SILENCE_TIME = BuildConfig.APPLICATION_ID + ".SILENCE_TIME"
+
+        private const val REQUEST_PERMISSIONS = 0xA1A7 // ALARM
     }
 }

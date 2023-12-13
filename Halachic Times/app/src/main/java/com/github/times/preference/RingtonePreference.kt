@@ -50,8 +50,8 @@ class RingtonePreference @JvmOverloads constructor(
 
     override fun onClick() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val context = context
             if (requestPermissions) {
+                val context = context
                 if (PermissionChecker.checkCallingOrSelfPermission(
                         context,
                         PERMISSION_RINGTONE
@@ -69,7 +69,7 @@ class RingtonePreference @JvmOverloads constructor(
         super.onClick()
     }
 
-    fun setRequestPermissionsCode(owner: Fragment?, requestPermissionsCode: Int) {
+    fun setRequestPermissionsCode(owner: Fragment, requestPermissionsCode: Int) {
         this.requestPermissionsFragment = owner
         this.requestPermissionsCode = requestPermissionsCode
         this.requestPermissions = true

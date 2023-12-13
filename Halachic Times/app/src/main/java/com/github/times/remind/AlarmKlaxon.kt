@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.text.format.DateUtils
 import com.github.app.ActivityUtils
+import com.github.app.ActivityUtils.isPermissionGranted
 import com.github.media.RingtoneManager
 import com.github.os.VibratorCompat
 import com.github.times.preference.RingtonePreference.Companion.PERMISSION_RINGTONE
@@ -31,7 +32,7 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
         grantResults: IntArray
     ) {
         if (requestCode == REQUEST_PERMISSIONS) {
-            if (ActivityUtils.isPermissionGranted(PERMISSION_RINGTONE, permissions, grantResults)) {
+            if (isPermissionGranted(PERMISSION_RINGTONE, permissions, grantResults)) {
                 startNoise()
             }
         }
@@ -63,7 +64,7 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
         try {
             ringtone.stop()
         } catch (e: IllegalStateException) {
-            Timber.e(e, "error stopping sound: %s", e.localizedMessage)
+            Timber.e(e, "error stopping sound: %s", e.message)
         }
     }
 
@@ -73,27 +74,27 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
             val prefRingtone: Uri? = preferences.reminderRingtone
             if (prefRingtone != null) {
                 val uri = RingtoneManager.resolveUri(context, prefRingtone) ?: return null
-                ringtone = MediaPlayer()
                 try {
-                    ringtone.setDataSource(context, uri)
                     val audioStreamType: Int = preferences.reminderStream
                     val audioAttributes = AudioAttributes.Builder()
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                         .setLegacyStreamType(audioStreamType)
                         .setUsage(AudioAttributes.USAGE_ALARM)
                         .build()
-                    ringtone.setAudioAttributes(audioAttributes)
-                    ringtone.isLooping = audioStreamType == AudioManager.STREAM_ALARM
-                    ringtone.prepare()
+                    ringtone = MediaPlayer().apply {
+                        setDataSource(context, uri)
+                        setAudioAttributes(audioAttributes)
+                        isLooping = audioStreamType == AudioManager.STREAM_ALARM
+                        prepare()
+                    }
                 } catch (e: IOException) {
                     Timber.e(
                         e,
                         "error preparing ringtone: %s for %s ~ %s",
-                        e.localizedMessage,
+                        e.message,
                         prefRingtone,
                         uri
                     )
-                    ringtone = null
                 }
                 this.ringtone = ringtone
             }

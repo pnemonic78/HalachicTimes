@@ -253,11 +253,11 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
             try {
                 return locationManager.getLastKnownLocation(LocationManager.FUSED_PROVIDER)
             } catch (e: IllegalArgumentException) {
-                Timber.e(e, "Fused: %s", e.localizedMessage)
+                Timber.e(e, "Fused: %s", e.message)
             } catch (e: SecurityException) {
-                Timber.e(e, "Fused: %s", e.localizedMessage)
+                Timber.e(e, "Fused: %s", e.message)
             } catch (e: NullPointerException) {
-                Timber.e(e, "Fused: %s", e.localizedMessage)
+                Timber.e(e, "Fused: %s", e.message)
             }
             return null
         }
@@ -276,11 +276,11 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
             try {
                 return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             } catch (e: IllegalArgumentException) {
-                Timber.e(e, "GPS: %s", e.localizedMessage)
+                Timber.e(e, "GPS: %s", e.message)
             } catch (e: SecurityException) {
-                Timber.e(e, "GPS: %s", e.localizedMessage)
+                Timber.e(e, "GPS: %s", e.message)
             } catch (e: NullPointerException) {
-                Timber.e(e, "GPS: %s", e.localizedMessage)
+                Timber.e(e, "GPS: %s", e.message)
             }
             return null
         }
@@ -299,11 +299,11 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
             try {
                 return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
             } catch (e: IllegalArgumentException) {
-                Timber.e(e, "Network: %s", e.localizedMessage)
+                Timber.e(e, "Network: %s", e.message)
             } catch (e: SecurityException) {
-                Timber.e(e, "Network: %s", e.localizedMessage)
+                Timber.e(e, "Network: %s", e.message)
             } catch (e: NullPointerException) {
-                Timber.e(e, "Network: %s", e.localizedMessage)
+                Timber.e(e, "Network: %s", e.message)
             }
             return null
         }
@@ -322,11 +322,11 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
             try {
                 return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
             } catch (e: IllegalArgumentException) {
-                Timber.e(e, "Passive: %s", e.localizedMessage)
+                Timber.e(e, "Passive: %s", e.message)
             } catch (e: SecurityException) {
-                Timber.e(e, "Passive: %s", e.localizedMessage)
+                Timber.e(e, "Passive: %s", e.message)
             } catch (e: NullPointerException) {
-                Timber.e(e, "Passive: %s", e.localizedMessage)
+                Timber.e(e, "Passive: %s", e.message)
             }
             return null
         }

@@ -222,7 +222,7 @@ class DatabaseGeocoder(
                 } while (cursor.moveToNext())
             }
         } catch (e: SQLiteException) {
-            Timber.e(e, "Query addresses: %s", e.localizedMessage)
+            Timber.e(e, "Query addresses: %s", e.message)
         } finally {
             cursor.close()
         }
@@ -340,7 +340,7 @@ class DatabaseGeocoder(
                 } while (cursor.moveToNext())
             }
         } catch (e: SQLiteException) {
-            Timber.e(e, "Query elevations: %s", e.localizedMessage)
+            Timber.e(e, "Query elevations: %s", e.message)
         } finally {
             cursor.close()
         }
@@ -383,7 +383,7 @@ class DatabaseGeocoder(
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/elevation
             Timber.e(
                 e,
-                "Error inserting elevation at " + location.latitude + "," + location.longitude + ": " + e.localizedMessage
+                "Error inserting elevation at " + location.latitude + "," + location.longitude + ": " + e.message
             )
         }
     }
@@ -424,7 +424,7 @@ class DatabaseGeocoder(
                 } while (cursor.moveToNext())
             }
         } catch (e: SQLiteException) {
-            Timber.e(e, "Query cities: %s", e.localizedMessage)
+            Timber.e(e, "Query cities: %s", e.message)
         } finally {
             cursor.close()
         }
@@ -463,7 +463,7 @@ class DatabaseGeocoder(
             }
         } catch (e: Exception) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/city
-            Timber.e(e, "Error inserting city for " + city.formatted + ": " + e.localizedMessage)
+            Timber.e(e, "Error inserting city for " + city.formatted + ": " + e.message)
         }
     }
 
@@ -505,7 +505,7 @@ class DatabaseGeocoder(
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
             Timber.e(
                 e,
-                "Error deleting address " + address.id + " at " + address.latitude + "," + address.longitude + ": " + e.localizedMessage
+                "Error deleting address " + address.id + " at " + address.latitude + "," + address.longitude + ": " + e.message
             )
         }
         return false
