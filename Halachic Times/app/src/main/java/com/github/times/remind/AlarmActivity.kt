@@ -40,7 +40,6 @@ import com.github.lib.R
 import com.github.text.style.TypefaceSpan
 import com.github.times.BuildConfig
 import com.github.times.ZmanimHelper.formatDateTime
-import com.github.times.ZmanimItem
 import com.github.times.databinding.AlarmActivityBinding
 import com.github.times.preference.RingtonePreference
 import com.github.times.preference.SimpleZmanimPreferences
@@ -50,7 +49,6 @@ import com.github.util.LocaleUtils.getDefaultLocale
 import com.github.util.TimeUtils.roundUp
 import java.text.Format
 import java.text.SimpleDateFormat
-import java.util.Date
 import timber.log.Timber
 
 /**
@@ -151,8 +149,8 @@ class AlarmActivity<P : ZmanimPreferences> : AppCompatActivity(), ThemeCallbacks
         } else {
             notifyNow(item)
             if (extras.containsKey(EXTRA_SILENCE_TIME)) {
-                val triggerAt = extras.getLong(EXTRA_SILENCE_TIME)
-                silenceFuture(triggerAt)
+                val silenceAt = extras.getLong(EXTRA_SILENCE_TIME)
+                silenceFuture(silenceAt)
             }
         }
     }
@@ -194,20 +192,6 @@ class AlarmActivity<P : ZmanimPreferences> : AppCompatActivity(), ThemeCallbacks
         binding.title.text = item.title
     }
 
-    /**
-     * Format the date and time with seconds.
-     *
-     * @param time the time to format.
-     * @return the formatted time.
-     */
-    private fun formatDateTime(time: Long): String {
-        return if (time == ZmanimItem.NEVER) {
-            "NEVER"
-        } else {
-            formatDateTime(Date(time))
-        }
-    }
-
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         // User must explicitly cancel the reminder.
@@ -241,7 +225,7 @@ class AlarmActivity<P : ZmanimPreferences> : AppCompatActivity(), ThemeCallbacks
      * @param triggerAt when to silence.
      */
     private fun silenceFuture(triggerAt: Long) {
-        Timber.i("silence future at [" + formatDateTime(triggerAt) + "]")
+        Timber.i("silence future at [%s] %d", formatDateTime(triggerAt), triggerAt)
         var silenceRunnable = silenceRunnable
         if (silenceRunnable == null) {
             silenceRunnable = Runnable { stopLock() }

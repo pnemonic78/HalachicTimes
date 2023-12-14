@@ -29,14 +29,12 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.github.times.BuildConfig
-import com.github.times.ZmanimHelper
-import com.github.times.ZmanimItem
+import com.github.times.ZmanimHelper.formatDateTime
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
 import com.github.times.remind.ZmanimReminder.Companion.ACTION_CANCEL
 import com.github.times.remind.ZmanimReminder.Companion.ACTION_DISMISS
 import com.github.times.remind.ZmanimReminder.Companion.ACTION_REMIND
-import java.util.Date
 import timber.log.Timber
 
 /**
@@ -91,11 +89,11 @@ class ZmanimReminderService : Service() {
         klaxon.stop()
     }
 
-    private fun showNotification(context: Context, item: ZmanimReminderItem) {
+    private fun showNotification(context: Context, item: ZmanimReminderItem, silenceAt: Long) {
         val settings = this.settings
         val reminder = ZmanimReminder(context)
         reminder.initNotifications()
-        val notification = reminder.createAlarmServiceNotification(settings, item)
+        val notification = reminder.createAlarmServiceNotification(settings, item, silenceAt)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             startForeground(
                 ID_NOTIFY,
@@ -113,12 +111,10 @@ class ZmanimReminderService : Service() {
      * @param triggerAt when to silence.
      */
     private fun silenceFuture(triggerAt: Long) {
-        Timber.i("silence future at [%s]", formatDateTime(triggerAt))
+        Timber.i("silence future at [%s] %d", formatDateTime(triggerAt), triggerAt)
         var silenceRunnable: Runnable? = this.silenceRunnable
         if (silenceRunnable == null) {
-            silenceRunnable = Runnable {
-                stopSelf()
-            }
+            silenceRunnable = Runnable { stopSelf() }
             this.silenceRunnable = silenceRunnable
         }
         val now = System.currentTimeMillis()
@@ -126,25 +122,16 @@ class ZmanimReminderService : Service() {
         handler.postDelayed(silenceRunnable, delayMillis)
     }
 
-    /**
-     * Format the date and time with seconds.
-     *
-     * @param time the time to format.
-     * @return the formatted time.
-     */
-    private fun formatDateTime(time: Long): String {
-        return if (time == ZmanimItem.NEVER) {
-            "NEVER"
-        } else {
-            ZmanimHelper.formatDateTime(Date(time))
-        }
-    }
-
     companion object {
         /**
          * Extras name to silence to alarm.
          */
         const val EXTRA_SILENCE_TIME = BuildConfig.APPLICATION_ID + ".SILENCE_TIME"
+
+        /**
+         * How much time to wait for the notification sound once entered into a day not allowed to disturb.
+         */
+        private const val STOP_NOTIFICATION_AFTER = ZmanimReminder.STOP_NOTIFICATION_AFTER
 
         private const val ID_NOTIFY = 0x1111
         private const val BUSY_TIMEOUT = 10 * DateUtils.SECOND_IN_MILLIS
@@ -198,14 +185,14 @@ class ZmanimReminderService : Service() {
             stopSelf()
             return
         }
-        showNotification(context, item)
-        startAlarm()
-
+        var silenceAt = item.time + STOP_NOTIFICATION_AFTER
         val extras = intent.extras
         if ((extras != null) && extras.containsKey(EXTRA_SILENCE_TIME)) {
-            val silenceWhen = extras.getLong(EXTRA_SILENCE_TIME)
-            silenceFuture(silenceWhen)
+            silenceAt = extras.getLong(EXTRA_SILENCE_TIME, silenceAt)
         }
+        showNotification(context, item, silenceAt)
+        startAlarm()
+        silenceFuture(silenceAt)
     }
 
     private fun handleDismiss() {

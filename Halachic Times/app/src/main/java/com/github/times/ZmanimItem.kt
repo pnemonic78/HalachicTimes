@@ -20,7 +20,8 @@ import com.kosherjava.zmanim.hebrewcalendar.JewishDate
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
-typealias Zman = Long?
+typealias TimeMillis = Long
+typealias Zman = TimeMillis?
 
 /**
  * Time row item.
@@ -38,7 +39,7 @@ class ZmanimItem @JvmOverloads constructor(
     /**
      * The time.
      */
-    val time: Long,
+    val time: TimeMillis,
     /**
      * The summary.
      */
@@ -77,12 +78,12 @@ class ZmanimItem @JvmOverloads constructor(
     /**
      * Creates a new row item.
      */
-    constructor(titleId: Int, time: Long) : this(titleId, null, time)
+    constructor(titleId: Int, time: TimeMillis) : this(titleId, null, time)
 
     /**
      * Creates a new row item.
      */
-    constructor(titleId: Int, time: Long, summary: CharSequence?) : this(
+    constructor(titleId: Int, time: TimeMillis, summary: CharSequence?) : this(
         titleId,
         null,
         time,
@@ -140,7 +141,7 @@ class ZmanimItem @JvmOverloads constructor(
         /**
          * Unknown date.
          */
-        const val NEVER = Long.MIN_VALUE
+        const val NEVER = TimeMillis.MIN_VALUE
 
         /**
          * Start date of the Julian calendar.
