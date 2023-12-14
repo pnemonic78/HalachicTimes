@@ -49,29 +49,24 @@ class ZmanimItem @JvmOverloads constructor(
     /**
      * The time label.
      */
-    @JvmField
     var timeLabel: CharSequence? = null
     //TODO private set
 
     /**
      * Has the time elapsed?
      */
-    @JvmField
     var isElapsed = false
 
     /**
      * Emphasize?
      */
-    @JvmField
     var isEmphasis = false
 
     /**
      * Jewish date.
      */
-    @JvmField
     var jewishDate: JewishDate? = null
 
-    @JvmField
     var isCategory = false
     //TODO private set
 
