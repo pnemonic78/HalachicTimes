@@ -111,7 +111,7 @@ class ZmanimReminderService : Service() {
      * @param triggerAt when to silence.
      */
     private fun silenceFuture(triggerAt: Long) {
-        Timber.i("silence future at [%s] %d", formatDateTime(triggerAt), triggerAt)
+        Timber.i("silence future at [%s]", formatDateTime(triggerAt))
         var silenceRunnable: Runnable? = this.silenceRunnable
         if (silenceRunnable == null) {
             silenceRunnable = Runnable { stopSelf() }
