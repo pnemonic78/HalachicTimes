@@ -214,6 +214,7 @@
 
     <!-- Reminder -->
     <string name="reminder">Påminnelse</string>
+    <string name="reminder_silence">Stillhet etter påminnelse</string>
     <string name="reminder_stream_title">Type påminnelse</string>
     <string name="reminder_tone">Ringetone påminnelse</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Alarm"</string>

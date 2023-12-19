@@ -214,6 +214,7 @@
 
     <!-- Reminder -->
     <string name="reminder">Muistutus</string>
+    <string name="reminder_silence">Hiljaisuus muistutuksen jälkeen</string>
     <string name="reminder_stream_title">Tyyppi muistutus</string>
     <string name="reminder_tone">Soittoäänen muistutus</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Hälytys"</string>

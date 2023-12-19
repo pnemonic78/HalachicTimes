@@ -214,6 +214,7 @@
 
     <!-- Reminder -->
     <string name="reminder">תזכורת</string>
+    <string name="reminder_silence">שתיקה אחרי תזכורת</string>
     <string name="reminder_stream_title">סוג תזכורת</string>
     <string name="reminder_tone">רינגטון תזכורת</string>
     <string name="alarm_volume_title">אזעקה</string>

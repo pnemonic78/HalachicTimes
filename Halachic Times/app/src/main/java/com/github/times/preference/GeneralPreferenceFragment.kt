@@ -23,8 +23,10 @@ import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.provider.Settings
 import androidx.annotation.Keep
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreference
+import com.github.preference.NumberPickerPreference
 import com.github.times.R
 import com.github.times.compass.preference.CompassPreferences
 import com.github.times.location.LocationPreferences
@@ -76,7 +78,7 @@ class GeneralPreferenceFragment : AbstractPreferenceFragment() {
                 setRequestPermissionsCode(this@GeneralPreferenceFragment, REQUEST_PERMISSIONS)
             }
 
-        initList(ZmanimPreferences.KEY_REMINDER_STREAM)?.apply {
+        findPreference<ListPreference>(ZmanimPreferences.KEY_REMINDER_STREAM)?.apply {
             setOnPreferenceChangeListener { _, newValue: Any? ->
                 val value = newValue?.toString().orEmpty()
                 val audioStreamType =
@@ -90,8 +92,9 @@ class GeneralPreferenceFragment : AbstractPreferenceFragment() {
                 true
             }
         }
-        initList(LocationPreferences.KEY_COORDS_FORMAT)
-        initList(CompassPreferences.KEY_COMPASS_BEARING)
+        findPreference<NumberPickerPreference>(ZmanimPreferences.KEY_REMINDER_SILENCE)?.apply {
+            summaryProvider = ReminderSilenceSummaryProvider.instance
+        }
         validateIntent("date_time_settings")
     }
 

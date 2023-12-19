@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/opinion">
         <ListPreference
@@ -9,7 +10,8 @@
             android:entryValues="@array/midday_values"
             android:icon="@drawable/ic_settings_opinion"
             android:key="@string/opinion_name_midday"
-            android:title="@string/opinion" />
+            android:title="@string/opinion"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/reminder">
         <com.github.times.preference.ZmanReminderPreference
@@ -19,7 +21,8 @@
             android:entryValues="@array/reminder_values"
             android:icon="@drawable/ic_settings_alarm"
             android:key="midday.reminder"
-            android:title="@string/reminder" />
+            android:title="@string/reminder"
+            app:useSimpleSummaryProvider="true" />
         <SwitchPreference
             android:defaultValue="@bool/reminder_day_1_defaultValue"
             android:dependency="midday.reminder"

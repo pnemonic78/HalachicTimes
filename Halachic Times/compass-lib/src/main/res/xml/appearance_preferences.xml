@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListPreference
         android:defaultValue="@string/coords_format_defaultValue"
         android:entries="@array/coords_format_entries"
         android:entryValues="@array/coords_format_values"
         android:key="coords.format"
-        android:title="@string/coords_format_title"/>
+        android:title="@string/coords_format_title"
+        app:useSimpleSummaryProvider="true" />
     <SwitchPreference
         android:defaultValue="@bool/summaries_visible_defaultValue"
         android:key="summaries.visible"
-        android:title="@string/summaries_title"/>
+        android:title="@string/summaries_title" />
     <ListPreference
         android:defaultValue="@string/theme_defaultValue"
         android:entries="@array/list_theme_entries"
         android:entryValues="@array/list_theme_values"
         android:icon="@drawable/ic_settings_theme"
         android:key="theme"
-        android:title="@string/theme_title"/>
+        android:title="@string/theme_title"
+        app:useSimpleSummaryProvider="true" />
     <ListPreference
         android:defaultValue="@string/compass_theme_defaultValue"
         android:entries="@array/compass_theme_entries"
         android:entryValues="@array/compass_theme_values"
         android:icon="@drawable/ic_settings_theme"
         android:key="theme.compass"
-        android:title="@string/compass_theme_title"/>
+        android:title="@string/compass_theme_title"
+        app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>

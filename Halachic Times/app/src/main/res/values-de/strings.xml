@@ -214,6 +214,7 @@
 
     <!-- Reminder -->
     <string name="reminder">Erinnerung</string>
+    <string name="reminder_silence">Schweigen nach Erinnerung</string>
     <string name="reminder_stream_title">Art der Erinnerung</string>
     <string name="reminder_tone">Erinnerung Klingelton</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Wecker"</string>

@@ -106,6 +106,7 @@
     <string name="midnight_defaultValue" translatable="false">@string/opinion_value_solar</string>
     <string name="mincha_defaultValue" translatable="false">@string/opinion_value_default</string>
     <string name="nightfall_defaultValue" translatable="false">@string/opinion_value_8</string>
+    <integer name="reminder_silence_defaultValue" translatable="false">1</integer>
     <string name="shabbath_ends_after_defaultValue" translatable="false">@string/opinion_value_nightfall</string>
     <string name="shabbath_ends_nightfall_defaultValue" translatable="false">@string/opinion_value_none</string>
     <string name="shabbath_ends_sunset_defaultValue" translatable="false">@string/opinion_value_none</string>

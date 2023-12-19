@@ -214,6 +214,7 @@
 
     <!-- Reminder -->
     <string name="reminder">Memento</string>
+    <string name="reminder_silence">Tăcere după memento</string>
     <string name="reminder_stream_title">Tipul de memento</string>
     <string name="reminder_tone">Ton de apel memento</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Alarmă"</string>

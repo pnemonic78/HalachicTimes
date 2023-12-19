@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/reminder">
         <com.github.preference.TimePreference
@@ -7,7 +8,8 @@
             android:dialogIcon="@drawable/ic_settings_alarm"
             android:icon="@drawable/ic_settings_alarm"
             android:key="molad.reminder"
-            android:title="@string/reminder" />
+            android:title="@string/reminder"
+            app:useSimpleSummaryProvider="true" />
         <SwitchPreference
             android:defaultValue="@bool/reminder_day_1_defaultValue"
             android:dependency="molad.reminder"

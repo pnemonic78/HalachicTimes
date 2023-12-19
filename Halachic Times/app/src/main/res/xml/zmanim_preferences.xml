@@ -1,315 +1,316 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/hour">
         <extra
             android:name="xml"
-            android:value="zman_hour_preferences"/>
+            android:value="zman_hour_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_hour"/>
+            android:value="@string/opinion_name_hour" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/dawn">
         <extra
             android:name="xml"
-            android:value="zman_dawn_preferences"/>
+            android:value="zman_dawn_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_dawn"/>
+            android:value="@string/opinion_name_dawn" />
         <extra
             android:name="reminder"
-            android:value="dawn.reminder"/>
+            android:value="dawn.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/tallis">
         <extra
             android:name="xml"
-            android:value="zman_tallis_preferences"/>
+            android:value="zman_tallis_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_tallis"/>
+            android:value="@string/opinion_name_tallis" />
         <extra
             android:name="reminder"
-            android:value="tallis.reminder"/>
+            android:value="tallis.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/sunrise">
         <extra
             android:name="xml"
-            android:value="zman_sunrise_preferences"/>
+            android:value="zman_sunrise_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_sunrise"/>
+            android:value="@string/opinion_name_sunrise" />
         <extra
             android:name="reminder"
-            android:value="sunrise.reminder"/>
+            android:value="sunrise.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/shema">
         <extra
             android:name="xml"
-            android:value="zman_shema_preferences"/>
+            android:value="zman_shema_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_shema"/>
+            android:value="@string/opinion_name_shema" />
         <extra
             android:name="reminder"
-            android:value="shema.reminder"/>
+            android:value="shema.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/prayers">
         <extra
             android:name="xml"
-            android:value="zman_prayers_preferences"/>
+            android:value="zman_prayers_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_prayers"/>
+            android:value="@string/opinion_name_prayers" />
         <extra
             android:name="reminder"
-            android:value="prayers.reminder"/>
+            android:value="prayers.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/midday">
         <extra
             android:name="xml"
-            android:value="zman_midday_preferences"/>
+            android:value="zman_midday_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_midday"/>
+            android:value="@string/opinion_name_midday" />
         <extra
             android:name="reminder"
-            android:value="midday.reminder"/>
+            android:value="midday.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/earliest_mincha">
         <extra
             android:name="xml"
-            android:value="zman_earliest_mincha_preferences"/>
+            android:value="zman_earliest_mincha_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_earliest_mincha"/>
+            android:value="@string/opinion_name_earliest_mincha" />
         <extra
             android:name="reminder"
-            android:value="earliest_mincha.reminder"/>
+            android:value="earliest_mincha.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/mincha">
         <extra
             android:name="xml"
-            android:value="zman_mincha_preferences"/>
+            android:value="zman_mincha_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_mincha"/>
+            android:value="@string/opinion_name_mincha" />
         <extra
             android:name="reminder"
-            android:value="mincha.reminder"/>
+            android:value="mincha.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/plug_hamincha">
         <extra
             android:name="xml"
-            android:value="zman_plug_hamincha_preferences"/>
+            android:value="zman_plug_hamincha_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_plug_hamincha"/>
+            android:value="@string/opinion_name_plug_hamincha" />
         <extra
             android:name="reminder"
-            android:value="plug_hamincha.reminder"/>
+            android:value="plug_hamincha.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanCandlesPreferenceFragment"
         android:title="@string/candles">
         <extra
             android:name="xml"
-            android:value="zman_candles_preferences"/>
+            android:value="zman_candles_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_candles_chanukka"/>
+            android:value="@string/opinion_name_candles_chanukka" />
         <extra
             android:name="reminder"
-            android:value="candles.reminder"/>
+            android:value="candles.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/sunset">
         <extra
             android:name="xml"
-            android:value="zman_sunset_preferences"/>
+            android:value="zman_sunset_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_sunset"/>
+            android:value="@string/opinion_name_sunset" />
         <extra
             android:name="reminder"
-            android:value="sunset.reminder"/>
+            android:value="sunset.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/twilight">
         <extra
             android:name="xml"
-            android:value="zman_twilight_preferences"/>
+            android:value="zman_twilight_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_twilight"/>
+            android:value="@string/opinion_name_twilight" />
         <extra
             android:name="reminder"
-            android:value="twilight.reminder"/>
+            android:value="twilight.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/nightfall">
         <extra
             android:name="xml"
-            android:value="zman_nightfall_preferences"/>
+            android:value="zman_nightfall_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_nightfall"/>
+            android:value="@string/opinion_name_nightfall" />
         <extra
             android:name="reminder"
-            android:value="nightfall.reminder"/>
+            android:value="nightfall.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanShabbathPreferenceFragment"
         android:title="@string/shabbath_ends">
         <extra
             android:name="xml"
-            android:value="zman_shabbath_preferences"/>
+            android:value="zman_shabbath_preferences" />
         <extra
             android:name="opinion"
-            android:value="shabbath_ends.after;shabbath_ends.sunset;shabbath_ends.twilight;shabbath_ends.nightfall;shabbath_ends.minutes"/>
+            android:value="shabbath_ends.after;shabbath_ends.sunset;shabbath_ends.twilight;shabbath_ends.nightfall;shabbath_ends.minutes" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/midnight">
         <extra
             android:name="xml"
-            android:value="zman_midnight_preferences"/>
+            android:value="zman_midnight_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_midnight"/>
+            android:value="@string/opinion_name_midnight" />
         <extra
             android:name="reminder"
-            android:value="midnight.reminder"/>
+            android:value="midnight.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/midnight_guard">
         <extra
             android:name="xml"
-            android:value="zman_midnight_guard_preferences"/>
+            android:value="zman_midnight_guard_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_guards"/>
+            android:value="@string/opinion_name_guards" />
         <extra
             android:name="reminder"
-            android:value="midnight_guard.reminder"/>
+            android:value="midnight_guard.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/morning_guard">
         <extra
             android:name="xml"
-            android:value="zman_morning_guard_preferences"/>
+            android:value="zman_morning_guard_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_guards"/>
+            android:value="@string/opinion_name_guards" />
         <extra
             android:name="reminder"
-            android:value="morning_guard.reminder"/>
+            android:value="morning_guard.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/molad">
         <extra
             android:name="xml"
-            android:value="zman_molad_preferences"/>
+            android:value="zman_molad_preferences" />
         <extra
             android:name="reminder"
-            android:value="molad.reminder"/>
+            android:value="molad.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/levana_earliest">
         <extra
             android:name="xml"
-            android:value="zman_levana_earliest_preferences"/>
+            android:value="zman_levana_earliest_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_levana_earliest"/>
+            android:value="@string/opinion_name_levana_earliest" />
         <extra
             android:name="reminder"
-            android:value="levana_earliest.reminder"/>
+            android:value="levana_earliest.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/levana_latest">
         <extra
             android:name="xml"
-            android:value="zman_levana_latest_preferences"/>
+            android:value="zman_levana_latest_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_levana_latest"/>
+            android:value="@string/opinion_name_levana_latest" />
         <extra
             android:name="reminder"
-            android:value="levana_latest.reminder"/>
+            android:value="levana_latest.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/fast_begins">
         <extra
             android:name="xml"
-            android:value="zman_fast_begins_preferences"/>
+            android:value="zman_fast_begins_preferences" />
         <extra
             android:name="reminder"
-            android:value="fast_begins.reminder"/>
+            android:value="fast_begins.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/fast_ends">
         <extra
             android:name="xml"
-            android:value="zman_fast_ends_preferences"/>
+            android:value="zman_fast_ends_preferences" />
         <extra
             android:name="reminder"
-            android:value="fast_ends.reminder"/>
+            android:value="fast_ends.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/eat_chametz">
         <extra
             android:name="xml"
-            android:value="zman_eat_chametz_preferences"/>
+            android:value="zman_eat_chametz_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_eat_chametz"/>
+            android:value="@string/opinion_name_eat_chametz" />
         <extra
             android:name="reminder"
-            android:value="eat_chametz.reminder"/>
+            android:value="eat_chametz.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:title="@string/burn_chametz">
         <extra
             android:name="xml"
-            android:value="zman_chametz_preferences"/>
+            android:value="zman_chametz_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_burn_chametz"/>
+            android:value="@string/opinion_name_burn_chametz" />
         <extra
             android:name="reminder"
-            android:value="burn_chametz.reminder"/>
+            android:value="burn_chametz.reminder" />
     </PreferenceScreen>
 
     <ListPreference
@@ -317,6 +318,7 @@
         android:entries="@array/omer_entries"
         android:entryValues="@array/omer_values"
         android:key="@string/opinion_name_omer"
-        android:title="@string/omer"/>
+        android:title="@string/omer"
+        app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>

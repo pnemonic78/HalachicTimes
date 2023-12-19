@@ -214,6 +214,7 @@
 
     <!-- Reminder -->
     <string name="reminder">Напоминание</string>
+    <string name="reminder_silence">Тишина после напоминания</string>
     <string name="reminder_stream_title">Тип напоминания</string>
     <string name="reminder_tone">Мелодия напоминания</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Будильник"</string>

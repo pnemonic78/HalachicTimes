@@ -214,6 +214,7 @@
 
     <!-- Reminder -->
     <string name="reminder">Emlékeztető</string>
+    <string name="reminder_silence">Emlékeztető után csend</string>
     <string name="reminder_stream_title">Emlékeztető típusát</string>
     <string name="reminder_tone">Emlékeztető csengőhang</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Ébresztő"</string>

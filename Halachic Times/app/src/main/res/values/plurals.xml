@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Candle lighting -->
+    <plurals name="candles_summary" translatable="false">
+        <item quantity="zero">@string/candles_summary_zero</item>
+        <item quantity="one">@string/candles_summary_one</item>
+        <item quantity="two">@string/candles_summary_two</item>
+        <item quantity="few">@string/candles_summary_few</item>
+        <item quantity="many">@string/candles_summary_many</item>
+        <item quantity="other">@string/candles_summary_other</item>
+    </plurals>
+    <plurals name="candles_chanukka" translatable="false">
+        <item quantity="zero">@string/candles_chanukka_zero</item>
+        <item quantity="one">@string/candles_chanukka_one</item>
+        <item quantity="two">@string/candles_chanukka_two</item>
+        <item quantity="few">@string/candles_chanukka_few</item>
+        <item quantity="many">@string/candles_chanukka_many</item>
+        <item quantity="other">@string/candles_chanukka_other</item>
+    </plurals>
+
+    <!-- Shabbath. -->
+    <plurals name="shabbath_ends_summary" translatable="false">
+        <item quantity="zero">@string/minutes_after_zero</item>
+        <item quantity="one">@string/minutes_after_one</item>
+        <item quantity="two">@string/minutes_after_two</item>
+        <item quantity="few">@string/minutes_after_few</item>
+        <item quantity="many">@string/minutes_after_many</item>
+        <item quantity="other">@string/minutes_after_other</item>
+    </plurals>
+    <plurals name="shabbath_ends_specific_summary" translatable="false">
+        <item quantity="zero">@string/minutes_after_specific_zero</item>
+        <item quantity="one">@string/minutes_after_specific_one</item>
+        <item quantity="two">@string/minutes_after_specific_two</item>
+        <item quantity="few">@string/minutes_after_specific_few</item>
+        <item quantity="many">@string/minutes_after_specific_many</item>
+        <item quantity="other">@string/minutes_after_specific_other</item>
+    </plurals>
+
+    <!-- Reminder -->
+    <plurals name="reminder_silence_minutes" translatable="false">
+        <item quantity="zero">@string/minutes_after_zero</item>
+        <item quantity="one">@string/minutes_after_one</item>
+        <item quantity="two">@string/minutes_after_two</item>
+        <item quantity="few">@string/minutes_after_few</item>
+        <item quantity="many">@string/minutes_after_many</item>
+        <item quantity="other">@string/minutes_after_other</item>
+    </plurals>
+</resources>

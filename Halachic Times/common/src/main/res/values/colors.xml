@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Text. -->
     <color name="bright_foreground_dark">@android:color/background_light</color>
     <color name="bright_foreground_light">@android:color/background_dark</color>
@@ -9,4 +8,6 @@
     <color name="bright_foreground_dark_inverse">@color/bright_foreground_light</color>
     <color name="bright_foreground_light_inverse">@color/bright_foreground_dark</color>
 
+    <!-- Icons. -->
+    <color name="icon_tint">?colorControlNormal</color>
 </resources>

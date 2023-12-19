@@ -15,7 +15,6 @@
  */
 package com.github.times.preference
 
-import android.os.Bundle
 import androidx.annotation.Keep
 import com.github.preference.AbstractPreferenceFragment
 import com.github.times.R
@@ -26,9 +25,4 @@ import com.github.times.R
 @Keep
 class ZmanimPreferenceFragment : AbstractPreferenceFragment() {
     override val preferencesXml: Int = R.xml.zmanim_preferences
-
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        super.onCreatePreferences(savedInstanceState, rootKey)
-        initList(ZmanimPreferences.KEY_OPINION_OMER)
-    }
 }

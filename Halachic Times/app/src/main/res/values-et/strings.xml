@@ -214,6 +214,7 @@
 
     <!-- Reminder -->
     <string name="reminder">Meeldetuletus</string>
+    <string name="reminder_silence">Vaikus pärast meeldetuletust</string>
     <string name="reminder_stream_title">Tüüp meeldetuletus</string>
     <string name="reminder_tone">Meeldetuletus helin</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Äratus"</string>

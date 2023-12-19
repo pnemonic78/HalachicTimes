@@ -29,6 +29,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.github.times.BuildConfig
+import com.github.times.TimeMillis
 import com.github.times.ZmanimHelper.formatDateTime
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
@@ -89,7 +90,7 @@ class ZmanimReminderService : Service() {
         klaxon.stop()
     }
 
-    private fun showNotification(context: Context, item: ZmanimReminderItem, silenceAt: Long) {
+    private fun showNotification(context: Context, item: ZmanimReminderItem, silenceAt: TimeMillis) {
         val settings = this.settings
         val reminder = ZmanimReminder(context)
         reminder.initNotifications()
@@ -108,17 +109,17 @@ class ZmanimReminderService : Service() {
     /**
      * Set timer to silence the alert.
      *
-     * @param triggerAt when to silence.
+     * @param silenceAt when to silence.
      */
-    private fun silenceFuture(triggerAt: Long) {
-        Timber.i("silence future at [%s]", formatDateTime(triggerAt))
+    private fun silenceFuture(silenceAt: TimeMillis) {
+        Timber.i("silence future at [%s]", formatDateTime(silenceAt))
         var silenceRunnable: Runnable? = this.silenceRunnable
         if (silenceRunnable == null) {
             silenceRunnable = Runnable { stopSelf() }
             this.silenceRunnable = silenceRunnable
         }
         val now = System.currentTimeMillis()
-        val delayMillis = triggerAt - now
+        val delayMillis = silenceAt - now
         handler.postDelayed(silenceRunnable, delayMillis)
     }
 
@@ -128,16 +129,11 @@ class ZmanimReminderService : Service() {
          */
         const val EXTRA_SILENCE_TIME = BuildConfig.APPLICATION_ID + ".SILENCE_TIME"
 
-        /**
-         * How much time to wait for the notification sound once entered into a day not allowed to disturb.
-         */
-        private const val STOP_NOTIFICATION_AFTER = ZmanimReminder.STOP_NOTIFICATION_AFTER
-
         private const val ID_NOTIFY = 0x1111
         private const val BUSY_TIMEOUT = 10 * DateUtils.SECOND_IN_MILLIS
 
         private var reminderBusy: String? = ""
-        private var reminderBusyTime: Long = 0
+        private var reminderBusyTime: TimeMillis = 0
 
         fun enqueueWork(context: Context, intent: Intent) {
             val action = intent.action
@@ -185,7 +181,7 @@ class ZmanimReminderService : Service() {
             stopSelf()
             return
         }
-        var silenceAt = item.time + STOP_NOTIFICATION_AFTER
+        var silenceAt = item.time + (settings.reminderSilenceOffset * DateUtils.MINUTE_IN_MILLIS)
         val extras = intent.extras
         if ((extras != null) && extras.containsKey(EXTRA_SILENCE_TIME)) {
             silenceAt = extras.getLong(EXTRA_SILENCE_TIME, silenceAt)

@@ -25,6 +25,7 @@ import android.os.Bundle
 import androidx.annotation.Keep
 import androidx.annotation.XmlRes
 import androidx.core.content.PermissionChecker
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import androidx.preference.TwoStatePreference
@@ -79,24 +80,24 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
             return xmlId
         }
 
-    private fun initOpinion(opinionKey: String?) {
-        if (!opinionKey.isNullOrEmpty()) {
-            if (opinionKey.indexOf(';') > 0) {
-                val tokens =
-                    opinionKey.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                for (token in tokens) {
-                    initOpinionPreference(token)
-                }
-            } else {
-                initOpinionPreference(opinionKey)
+    private fun initOpinion(key: String?) {
+        if (key.isNullOrEmpty()) return
+        if (key.indexOf(';') > 0) {
+            val tokens =
+                key.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            for (token in tokens) {
+                initOpinionPreference(token)
             }
+        } else {
+            initOpinionPreference(key)
         }
     }
 
-    private fun initReminder(reminderKey: String?) {
-        var preference: Preference? = initList(reminderKey)
+    private fun initReminder(key: String?) {
+        if (key.isNullOrEmpty()) return
+        var preference: Preference? = findPreference<ListPreference>(key)
         if (preference == null) {
-            preference = initTime(reminderKey)
+            preference = initTime(key)
         }
         if (preference != null) {
             val context = preference.context
@@ -110,10 +111,11 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
         }
     }
 
-    private fun initOpinionPreference(key: String?): Preference? {
+    private fun initOpinionPreference(key: String): Preference? {
         var preference: Preference?
-        preference = initList(key)
-        if (preference != null) {
+
+        preference = findPreference(key)
+        if (preference is ListPreference) {
             val context = preference.context
             preference.setOnPreferenceChangeListener { _: Preference, newValue: Any? ->
                 maybeChooseMultipleOpinions(context, newValue)

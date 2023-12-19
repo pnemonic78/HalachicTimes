@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/opinion">
         <ListPreference
@@ -9,7 +10,8 @@
             android:entryValues="@array/shabbath_ends_after_values"
             android:icon="@drawable/ic_settings_opinion"
             android:key="shabbath_ends.after"
-            android:title="@string/opinion" />
+            android:title="@string/opinion"
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="@string/shabbath_ends_sunset_defaultValue"
             android:dependency="shabbath_ends.after"
@@ -19,7 +21,8 @@
             android:entryValues="@array/sunset_values"
             android:icon="@drawable/ic_settings_opinion"
             android:key="shabbath_ends.sunset"
-            android:title="@string/sunset" />
+            android:title="@string/sunset"
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="@string/shabbath_ends_twilight_defaultValue"
             android:dependency="shabbath_ends.after"
@@ -29,7 +32,8 @@
             android:entryValues="@array/twilight_values"
             android:icon="@drawable/ic_settings_opinion"
             android:key="shabbath_ends.twilight"
-            android:title="@string/twilight" />
+            android:title="@string/twilight"
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="@string/shabbath_ends_nightfall_defaultValue"
             android:dependency="shabbath_ends.after"
@@ -39,7 +43,8 @@
             android:entryValues="@array/nightfall_values"
             android:icon="@drawable/ic_settings_opinion"
             android:key="shabbath_ends.nightfall"
-            android:title="@string/nightfall" />
+            android:title="@string/nightfall"
+            app:useSimpleSummaryProvider="true" />
         <com.github.preference.NumberPickerPreference
             android:defaultValue="@integer/shabbath_ends_defaultValue"
             android:dependency="shabbath_ends.after"
@@ -49,7 +54,8 @@
             android:max="120"
             android:negativeButtonText="@string/cancel"
             android:positiveButtonText="@string/ok"
-            android:title="@string/opinion" />
+            android:title="@string/opinion"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_appearance_title">
         <SwitchPreference

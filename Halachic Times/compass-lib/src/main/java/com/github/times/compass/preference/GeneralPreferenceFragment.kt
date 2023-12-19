@@ -15,7 +15,6 @@
  */
 package com.github.times.compass.preference
 
-import android.os.Bundle
 import androidx.annotation.Keep
 import com.github.preference.AbstractPreferenceFragment
 import com.github.times.compass.lib.R
@@ -26,9 +25,4 @@ import com.github.times.compass.lib.R
 @Keep
 class GeneralPreferenceFragment : AbstractPreferenceFragment() {
     override val preferencesXml: Int = R.xml.general_preferences
-
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        super.onCreatePreferences(savedInstanceState, rootKey)
-        initList(CompassPreferences.KEY_COMPASS_BEARING)
-    }
 }

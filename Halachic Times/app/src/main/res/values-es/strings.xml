@@ -214,6 +214,7 @@
 
     <!-- Reminder -->
     <string name="reminder">Recordatorio</string>
+    <string name="reminder_silence">Silencio tras recordatorio</string>
     <string name="reminder_stream_title">Tipo de recordatorio</string>
     <string name="reminder_tone">Tono de recordatorio</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Alarma"</string>

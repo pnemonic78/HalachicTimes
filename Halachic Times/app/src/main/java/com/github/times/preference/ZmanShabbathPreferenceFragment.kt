@@ -65,7 +65,7 @@ class ZmanShabbathPreferenceFragment : ZmanPreferenceFragment() {
                     true
                 }
             }
-        afterPreference = initList(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER)!!.apply {
+        afterPreference = findPreference<ListPreference>(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER)!!.apply {
             setOnPreferenceChangeListener { _, newValue: Any? ->
                 val shabbathAfterId = preferences.toId(newValue?.toString())
                 onMinutesChanged(shabbathAfterId)
@@ -133,22 +133,30 @@ class ZmanShabbathPreferenceFragment : ZmanPreferenceFragment() {
     }
 
     private fun onMinutesChanged(shabbathAfterId: Int, minutes: Int = minutesPreference.value) {
-        if (shabbathAfterId == R.string.sunset) {
-            sunsetPreference.isEnabled = true
-            twilightPreference.isEnabled = false
-            nightfallPreference.isEnabled = false
-        } else if (shabbathAfterId == R.string.twilight) {
-            sunsetPreference.isEnabled = false
-            twilightPreference.isEnabled = true
-            nightfallPreference.isEnabled = false
-        } else if (shabbathAfterId == R.string.nightfall) {
-            sunsetPreference.isEnabled = false
-            twilightPreference.isEnabled = false
-            nightfallPreference.isEnabled = true
-        } else {
-            sunsetPreference.isEnabled = false
-            twilightPreference.isEnabled = false
-            nightfallPreference.isEnabled = false
+        when (shabbathAfterId) {
+            R.string.sunset -> {
+                sunsetPreference.isEnabled = true
+                twilightPreference.isEnabled = false
+                nightfallPreference.isEnabled = false
+            }
+
+            R.string.twilight -> {
+                sunsetPreference.isEnabled = false
+                twilightPreference.isEnabled = true
+                nightfallPreference.isEnabled = false
+            }
+
+            R.string.nightfall -> {
+                sunsetPreference.isEnabled = false
+                twilightPreference.isEnabled = false
+                nightfallPreference.isEnabled = true
+            }
+
+            else -> {
+                sunsetPreference.isEnabled = false
+                twilightPreference.isEnabled = false
+                nightfallPreference.isEnabled = false
+            }
         }
         minutesPreference.summary = getMinutesSummary(shabbathAfterId, minutes)
     }

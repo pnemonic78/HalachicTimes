@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/opinion">
         <ListPreference
@@ -9,7 +10,8 @@
             android:entryValues="@array/hour_values"
             android:icon="@drawable/ic_settings_opinion"
             android:key="@string/opinion_name_hour"
-            android:title="@string/opinion" />
+            android:title="@string/opinion"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_appearance_title">
         <SwitchPreference

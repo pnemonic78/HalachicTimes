@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListPreference
         android:defaultValue="@string/compass_bearing_defaultValue"
@@ -7,6 +8,7 @@
         android:entryValues="@array/compass_bearing_values"
         android:icon="@android:drawable/ic_menu_compass"
         android:key="compass.bearing"
-        android:title="@string/compass_bearing"/>
+        android:title="@string/compass_bearing"
+        app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>

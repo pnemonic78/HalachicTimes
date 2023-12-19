@@ -214,6 +214,7 @@
 
     <!-- Reminder -->
     <string name="reminder">Připomenutí</string>
+    <string name="reminder_silence">Ticho po připomenutí</string>
     <string name="reminder_stream_title">Typ připomenutí</string>
     <string name="reminder_tone">Připomenutí vyzváněcí tón</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Budík"</string>

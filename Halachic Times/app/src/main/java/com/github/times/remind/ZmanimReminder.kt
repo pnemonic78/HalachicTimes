@@ -172,7 +172,7 @@ class ZmanimReminder(private val context: Context) {
                         notifyNow(settings, item)
                         nextDay = false
                     }
-                    if (now < whenRemind && whenRemind < whenFirst) {
+                    if (whenRemind in (now + 1)..<whenFirst) {
                         itemFirst = item
                         whenFirst = whenRemind
                     }
@@ -196,7 +196,8 @@ class ZmanimReminder(private val context: Context) {
                 formatDateTime(whenFirst),
                 formatDateTime(item.time)
             )
-            notifyFuture(item, whenFirst)
+            val silenceAt = whenFirst + getSilenceOffsetMillis(settings)
+            notifyFuture(item, whenFirst, silenceAt)
         }
         itemUpcoming?.let { notifyUpcoming(it) }
     }
@@ -219,12 +220,10 @@ class ZmanimReminder(private val context: Context) {
     private fun cancelNotification() {
         Timber.i("cancelNotification")
         alarmManager?.let { alarms ->
-            val alarmIntent = createAlarmIntent(null as ZmanimItem?, NEVER)
+            val alarmIntent = createAlarmIntent(null as ZmanimItem?, 0L)
             alarms.cancel(alarmIntent)
         }
-        notificationManager?.let { nm ->
-            nm.cancel(ID_NOTIFY)
-        }
+        notificationManager?.cancel(ID_NOTIFY)
     }
 
     private fun cancelUpcoming() {
@@ -233,9 +232,7 @@ class ZmanimReminder(private val context: Context) {
             val upcomingIntent = createUpcomingIntent()
             alarms.cancel(upcomingIntent)
         }
-        notificationManager?.let { nm ->
-            nm.cancel(ID_NOTIFY_UPCOMING)
-        }
+        notificationManager?.cancel(ID_NOTIFY_UPCOMING)
     }
 
     /**
@@ -261,6 +258,7 @@ class ZmanimReminder(private val context: Context) {
     fun notifyNow(settings: ZmanimPreferences, item: ZmanimReminderItem) {
         Timber.i("notify now [%s] for [%s]", item.title, formatDateTime(item.time))
         val now = System.currentTimeMillis()
+        val silenceAt = now + getSilenceOffsetMillis(settings)
 
         // Wake up the device to notify the user.
         val pm = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
@@ -269,13 +267,14 @@ class ZmanimReminder(private val context: Context) {
             wake.acquire(5000L) // enough time to also hear a tone
         }
         when (settings.reminderType) {
-            RingtoneManager.TYPE_ALARM -> alarmNow(item, now + STOP_NOTIFICATION_AFTER)
+            RingtoneManager.TYPE_ALARM -> alarmNow(item, silenceAt)
+
             RingtoneManager.TYPE_NOTIFICATION -> {
                 val contentIntent = createActivityIntent()
                 val notification =
                     createReminderNotification(settings, item, contentIntent)
                 showReminderNotification(notification)
-                silenceFuture(item, now + STOP_NOTIFICATION_AFTER)
+                silenceFuture(item, silenceAt)
             }
 
             else -> {
@@ -283,7 +282,7 @@ class ZmanimReminder(private val context: Context) {
                 val notification =
                     createReminderNotification(settings, item, contentIntent)
                 showReminderNotification(notification)
-                silenceFuture(item, now + STOP_NOTIFICATION_AFTER)
+                silenceFuture(item, silenceAt)
             }
         }
 
@@ -294,10 +293,23 @@ class ZmanimReminder(private val context: Context) {
     /**
      * Set alarm manager to alert us for the next reminder.
      *
+     * @param settings the preferences.
      * @param item      the zmanim item to notify about.
-     * @param triggerAt the upcoming reminder.
+     * @param triggerAt the upcoming reminder, in milliseconds.
      */
-    fun notifyFuture(item: ZmanimItem, triggerAt: TimeMillis) {
+    fun notifyFuture(settings: ZmanimPreferences, item: ZmanimItem, triggerAt: TimeMillis) {
+        val silenceAt = triggerAt + getSilenceOffsetMillis(settings)
+        notifyFuture(item, triggerAt, silenceAt)
+    }
+
+    /**
+     * Set alarm manager to alert us for the next reminder.
+     *
+     * @param item      the zmanim item to notify about.
+     * @param triggerAt the upcoming reminder, in milliseconds.
+     * @param silenceAt when to silence the reminder, in milliseconds.
+     */
+    fun notifyFuture(item: ZmanimItem, triggerAt: TimeMillis, silenceAt: TimeMillis) {
         val alarms = alarmManager ?: return
         val contentTitle = item.title
         Timber.i(
@@ -306,7 +318,7 @@ class ZmanimReminder(private val context: Context) {
             formatDateTime(triggerAt),
             formatDateTime(item.time)
         )
-        val alarmIntent = createAlarmIntent(item, triggerAt)
+        val alarmIntent = createAlarmIntent(item, silenceAt)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (!alarms.canScheduleExactAlarms()) {
                 AlarmManagerCompat.setAndAllowWhileIdle(
@@ -342,11 +354,11 @@ class ZmanimReminder(private val context: Context) {
         return PendingIntent.getActivity(context, ID_NOTIFY, intent, FLAGS_UPDATE)
     }
 
-    private fun createAlarmIntent(item: ZmanimItem?, triggerAt: TimeMillis): PendingIntent {
+    private fun createAlarmIntent(item: ZmanimItem?, silenceAt: TimeMillis): PendingIntent {
         if (isAlarmService) {
-            val reminderItem = from(item)
-            val intent = createAlarmServiceIntent(reminderItem, triggerAt + STOP_NOTIFICATION_AFTER)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val reminderItem = from(item)
+                val intent = createAlarmServiceIntent(reminderItem, silenceAt)
                 return PendingIntent.getForegroundService(
                     context,
                     ID_ALARM_REMINDER,
@@ -533,7 +545,7 @@ class ZmanimReminder(private val context: Context) {
             val canvas = Canvas(largeIcon)
             val layerBottom = ContextCompat.getDrawable(
                 context,
-                com.github.times.common.R.drawable.ic_alarm_black
+                com.github.times.common.R.drawable.ic_alarm
             )
             if (layerBottom != null) {
                 layerBottom.bounds = largeIconRect
@@ -615,13 +627,13 @@ class ZmanimReminder(private val context: Context) {
     /**
      * Set alarm manager to cancel alert reminders.
      *
-     * @param triggerAt when to stop.
+     * @param silenceAt when to cancel.
      */
-    private fun cancelFuture(triggerAt: TimeMillis) {
+    private fun cancelFuture(silenceAt: TimeMillis) {
         val alarms = alarmManager ?: return
-        Timber.i("cancel future at [%s]", formatDateTime(triggerAt))
+        Timber.i("cancel future at [%s]", formatDateTime(silenceAt))
         val alarmIntent = createCancelIntent()
-        alarms[AlarmManager.RTC, triggerAt] = alarmIntent
+        alarms[AlarmManager.RTC, silenceAt] = alarmIntent
     }
 
     private fun createUpcomingNotification(
@@ -692,16 +704,16 @@ class ZmanimReminder(private val context: Context) {
      * Silence the notification at some time in the future.
      *
      * @param item      the item to show.
-     * @param triggerAt when to silence.
+     * @param silenceAt when to silence.
      */
-    private fun silenceFuture(item: ZmanimReminderItem?, triggerAt: TimeMillis) {
-        Timber.i("silence future at [%s]", formatDateTime(triggerAt))
+    private fun silenceFuture(item: ZmanimReminderItem?, silenceAt: TimeMillis) {
+        Timber.i("silence future at [%s]", formatDateTime(silenceAt))
         if (item == null) {
-            cancelFuture(triggerAt)
+            cancelFuture(silenceAt)
             return
         }
         val alarms = alarmManager ?: return
-        alarms[AlarmManager.RTC, triggerAt] = createSilenceIntent(item)
+        alarms[AlarmManager.RTC, silenceAt] = createSilenceIntent(item)
     }
 
     /**
@@ -903,6 +915,9 @@ class ZmanimReminder(private val context: Context) {
         return SimpleZmanimPreferences(context)
     }
 
+    private fun getSilenceOffsetMillis(settings: ZmanimPreferences): TimeMillis =
+        settings.reminderSilenceOffset * DateUtils.MINUTE_IN_MILLIS
+
     companion object {
         /**
          * Id for reminder notifications.<br></br>
@@ -978,12 +993,6 @@ class ZmanimReminder(private val context: Context) {
          * Action to dismiss alarms.
          */
         const val ACTION_DISMISS = BuildConfig.APPLICATION_ID + ".action.DISMISS"
-
-        /**
-         * How much time to wait for the notification sound once entered into a day not allowed to disturb.
-         */
-        // TODO put as user settings.
-        internal const val STOP_NOTIFICATION_AFTER = DateUtils.MINUTE_IN_MILLIS
 
         private const val CHANNEL_ALARM = "channel_alarm"
         private const val CHANNEL_REMINDER = "channel_reminder"

@@ -461,7 +461,7 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
      *
      * @param id   the zman id.
      * @param time the zman time.
-     * @return the reminder in milliseconds - `#NEVER` when no reminder.
+     * @return the reminder in milliseconds - `NEVER` when no reminder.
      */
     fun getReminder(id: Int, time: Long): Long
 
@@ -492,6 +492,14 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
      * @return the ringtone type. One of [RingtoneManager.TYPE_ALARM] or [RingtoneManager.TYPE_NOTIFICATION].
      */
     val reminderType: Int
+
+    /**
+     * Get the offset in minutes after a reminder to stop the reminder.
+     * How much time to wait for the notification sound once entered into a day not allowed to disturb.
+     *
+     * @return the number of minutes.
+     */
+    val reminderSilenceOffset: Int
 
     /**
      * Is the time emphasized?
@@ -619,6 +627,9 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
 
         /** Preference name for the reminder notification channel settings.  */
         const val KEY_REMINDER_SETTINGS = "reminder.settings"
+
+        /** Preference name for silence offset.  */
+        const val KEY_REMINDER_SILENCE = "reminder.silence"
 
         /** Preference name for the temporal hour visibility.  */
         const val KEY_HOUR = "hour.visible"

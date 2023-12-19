@@ -15,12 +15,9 @@
  */
 package com.github.times.compass.preference
 
-import android.os.Bundle
 import androidx.annotation.Keep
 import com.github.preference.AbstractPreferenceFragment
-import com.github.preference.ThemePreferences
 import com.github.times.compass.lib.R
-import com.github.times.location.LocationPreferences
 
 /**
  * This fragment shows the preferences for the Appearance header.
@@ -28,11 +25,4 @@ import com.github.times.location.LocationPreferences
 @Keep
 class AppearancePreferenceFragment : AbstractPreferenceFragment() {
     override val preferencesXml: Int = R.xml.appearance_preferences
-
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        super.onCreatePreferences(savedInstanceState, rootKey)
-        initList(LocationPreferences.KEY_COORDS_FORMAT)
-        initList(ThemePreferences.KEY_THEME)
-        initList(CompassPreferences.KEY_THEME_COMPASS)
-    }
 }

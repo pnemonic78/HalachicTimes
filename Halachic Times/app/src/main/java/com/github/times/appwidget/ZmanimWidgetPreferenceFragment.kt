@@ -46,7 +46,7 @@ class ZmanimWidgetPreferenceFragment : AbstractPreferenceFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
-        widgetPreference = initList(ZmanimPreferences.KEY_THEME_WIDGET)?.apply {
+        widgetPreference = findPreference<ListPreference>(ZmanimPreferences.KEY_THEME_WIDGET)?.apply {
             onPreferenceClickListener = this@ZmanimWidgetPreferenceFragment
             onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { preference: Preference, _: Any? ->

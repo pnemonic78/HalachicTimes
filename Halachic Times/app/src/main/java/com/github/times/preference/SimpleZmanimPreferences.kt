@@ -251,25 +251,25 @@ class SimpleZmanimPreferences(context: Context) : SimplePreferences(context), Zm
                 ShaahZmanis.ATERET
             } else ShaahZmanis.GRA
         }
- 
+
     override val dawn: String?
         get() = preferences.getString(
             ZmanimPreferences.KEY_OPINION_DAWN,
             context.getString(R.string.dawn_defaultValue)
         )
-  
+
     override val tallis: String?
         get() = preferences.getString(
             ZmanimPreferences.KEY_OPINION_TALLIS,
             context.getString(R.string.tallis_defaultValue)
         )
-  
+
     override val sunrise: String?
         get() = preferences.getString(
             ZmanimPreferences.KEY_OPINION_SUNRISE,
             context.getString(R.string.sunrise_defaultValue)
         )
-  
+
     override val lastShema: String?
         get() = preferences.getString(
             ZmanimPreferences.KEY_OPINION_SHEMA,
@@ -281,43 +281,43 @@ class SimpleZmanimPreferences(context: Context) : SimplePreferences(context), Zm
             ZmanimPreferences.KEY_OPINION_TFILA,
             context.getString(R.string.prayers_defaultValue)
         )
-  
+
     override val eatChametz: String?
         get() = preferences.getString(
             ZmanimPreferences.KEY_OPINION_EAT,
             context.getString(R.string.eat_chametz_defaultValue)
         )
-  
+
     override val burnChametz: String?
         get() = preferences.getString(
             ZmanimPreferences.KEY_OPINION_BURN,
             context.getString(R.string.burn_chametz_defaultValue)
         )
- 
+
     override val midday: String?
         get() = preferences.getString(
             ZmanimPreferences.KEY_OPINION_NOON,
             context.getString(R.string.midday_defaultValue)
         )
- 
+
     override val earliestMincha: String?
         get() = preferences.getString(
             ZmanimPreferences.KEY_OPINION_EARLIEST_MINCHA,
             context.getString(R.string.earliest_mincha_defaultValue)
         )
-  
+
     override val mincha: String?
         get() = preferences.getString(
             ZmanimPreferences.KEY_OPINION_MINCHA,
             context.getString(R.string.mincha_defaultValue)
         )
- 
+
     override val plugHamincha: String?
         get() = preferences.getString(
             ZmanimPreferences.KEY_OPINION_PLUG_MINCHA,
             context.getString(R.string.plug_hamincha_defaultValue)
         )
- 
+
     override val sunset: String?
         get() = preferences.getString(
             ZmanimPreferences.KEY_OPINION_SUNSET,
@@ -448,14 +448,17 @@ class SimpleZmanimPreferences(context: Context) : SimplePreferences(context), Zm
         )?.toInt() ?: RingtoneManager.TYPE_ALARM
 
     override val reminderType: Int
-        get() {
-            val audioStreamType = reminderStream
-            return if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
-                RingtoneManager.TYPE_NOTIFICATION
-            } else {
-                RingtoneManager.TYPE_ALARM
-            }
+        get() = if (reminderStream == AudioManager.STREAM_NOTIFICATION) {
+            RingtoneManager.TYPE_NOTIFICATION
+        } else {
+            RingtoneManager.TYPE_ALARM
         }
+
+    override val reminderSilenceOffset: Int
+        get() = preferences.getInt(
+            ZmanimPreferences.KEY_REMINDER_SILENCE,
+            context.resources.getInteger(R.integer.reminder_silence_defaultValue)
+        )
 
     override fun isEmphasis(id: Int): Boolean {
         val key = toKey(id)
@@ -477,7 +480,7 @@ class SimpleZmanimPreferences(context: Context) : SimplePreferences(context), Zm
             R.string.candles -> ZmanimPreferences.KEY_OPINION_CANDLES
             R.string.chanukka -> ZmanimPreferences.KEY_OPINION_CANDLES_CHANUKKA
             R.string.chanukka_count -> ZmanimPreferences.KEY_OPINION_CANDLES_CHANUKKA
-            R.string.dawn ->  ZmanimPreferences.KEY_OPINION_DAWN
+            R.string.dawn -> ZmanimPreferences.KEY_OPINION_DAWN
             R.string.earliest_mincha -> ZmanimPreferences.KEY_OPINION_EARLIEST_MINCHA
             R.string.eat_chametz -> ZmanimPreferences.KEY_OPINION_EAT
             R.string.fast_begins -> ZmanimPreferences.KEY_OPINION_FAST_BEGINS
@@ -503,7 +506,7 @@ class SimpleZmanimPreferences(context: Context) : SimplePreferences(context), Zm
             R.string.tallis -> ZmanimPreferences.KEY_OPINION_TALLIS
             R.string.tallis_only -> ZmanimPreferences.KEY_OPINION_TALLIS
             R.string.twilight -> ZmanimPreferences.KEY_OPINION_TWILIGHT
-            else ->  null
+            else -> null
         }
     }
 

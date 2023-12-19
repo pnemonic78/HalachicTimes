@@ -214,6 +214,7 @@
 
     <!-- Reminder -->
     <string name="reminder">Promemoria</string>
+    <string name="reminder_silence">Silenzio dopo il promemoria</string>
     <string name="reminder_stream_title">Tipo promemoria</string>
     <string name="reminder_tone">Suoneria promemoria</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Sveglia"</string>

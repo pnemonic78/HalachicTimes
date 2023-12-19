@@ -214,6 +214,7 @@
 
     <!-- Reminder -->
     <string name="reminder">Priminimas</string>
+    <string name="reminder_silence">Tyla po priminimo</string>
     <string name="reminder_stream_title">Tipas priminimas</string>
     <string name="reminder_tone">Skambėjimo tonas priminimas</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Signalas"</string>

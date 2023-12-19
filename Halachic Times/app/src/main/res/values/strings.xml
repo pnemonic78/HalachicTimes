@@ -177,14 +177,6 @@
     <string name="candles_summary_few">@string/candles_summary_other</string>
     <string name="candles_summary_many">@string/candles_summary_other</string>
     <string name="candles_summary_other">%1$d minutes before sunset</string>
-    <plurals name="candles_summary" translatable="false">
-        <item quantity="zero">@string/candles_summary_zero</item>
-        <item quantity="one">@string/candles_summary_one</item>
-        <item quantity="two">@string/candles_summary_two</item>
-        <item quantity="few">@string/candles_summary_few</item>
-        <item quantity="many">@string/candles_summary_many</item>
-        <item quantity="other">@string/candles_summary_other</item>
-    </plurals>
 
     <string name="chanukka"><i>Chanukka</i></string>
     <string name="chanukka_count"><i>Chanukka %1$d</i></string>
@@ -195,14 +187,6 @@
     <string name="candles_chanukka_few">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_many">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_other">%1$d Chanukka candles</string>
-    <plurals name="candles_chanukka" translatable="false">
-        <item quantity="zero">@string/candles_chanukka_zero</item>
-        <item quantity="one">@string/candles_chanukka_one</item>
-        <item quantity="two">@string/candles_chanukka_two</item>
-        <item quantity="few">@string/candles_chanukka_few</item>
-        <item quantity="many">@string/candles_chanukka_many</item>
-        <item quantity="other">@string/candles_chanukka_other</item>
-    </plurals>
 
     <!-- Sunset -->
     <string name="sunset">Sunset</string>
@@ -259,28 +243,12 @@
     <string name="minutes_after_few">@string/minutes_after_other</string>
     <string name="minutes_after_many">@string/minutes_after_other</string>
     <string name="minutes_after_other">%1$d minutes after %2$s</string>
-    <plurals name="shabbath_ends_summary" translatable="false">
-        <item quantity="zero">@string/minutes_after_zero</item>
-        <item quantity="one">@string/minutes_after_one</item>
-        <item quantity="two">@string/minutes_after_two</item>
-        <item quantity="few">@string/minutes_after_few</item>
-        <item quantity="many">@string/minutes_after_many</item>
-        <item quantity="other">@string/minutes_after_other</item>
-    </plurals>
     <string name="minutes_after_specific_zero">@string/minutes_after_specific_other</string>
     <string name="minutes_after_specific_one">%1$d minute after %2$s (%3$s)</string>
     <string name="minutes_after_specific_two">@string/minutes_after_specific_other</string>
     <string name="minutes_after_specific_few">@string/minutes_after_specific_other</string>
     <string name="minutes_after_specific_many">@string/minutes_after_specific_other</string>
     <string name="minutes_after_specific_other">%1$d minutes after %2$s (%3$s)</string>
-    <plurals name="shabbath_ends_specific_summary" translatable="false">
-        <item quantity="zero">@string/minutes_after_specific_zero</item>
-        <item quantity="one">@string/minutes_after_specific_one</item>
-        <item quantity="two">@string/minutes_after_specific_two</item>
-        <item quantity="few">@string/minutes_after_specific_few</item>
-        <item quantity="many">@string/minutes_after_specific_many</item>
-        <item quantity="other">@string/minutes_after_specific_other</item>
-    </plurals>
     <string name="festival_ends">Festival ends</string>
 
     <!-- Midnight -->
@@ -384,6 +352,7 @@
 
     <!-- Reminder -->
     <string name="reminder">Reminder</string>
+    <string name="reminder_silence">Silence after reminder</string>
     <string name="reminder_stream_title">Reminder type</string>
     <string name="reminder_tone">Reminder ringtone</string>
     <string name="alarm_volume_title">Alarm</string>
@@ -429,4 +398,5 @@
     <string name="day_yom_haatzmaut">Independence Day</string>
     <string name="day_yom_yerushalayim">Jerusalem Day</string>
     <string name="day_shabbath">Shabbath</string>
+
 </resources>

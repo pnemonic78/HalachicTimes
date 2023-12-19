@@ -15,6 +15,7 @@
  */
 package com.github.times.remind
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
@@ -39,6 +40,7 @@ import com.github.app.ThemeCallbacks
 import com.github.lib.R
 import com.github.text.style.TypefaceSpan
 import com.github.times.BuildConfig
+import com.github.times.TimeMillis
 import com.github.times.ZmanimHelper.formatDateTime
 import com.github.times.databinding.AlarmActivityBinding
 import com.github.times.preference.RingtonePreference
@@ -192,6 +194,7 @@ class AlarmActivity<P : ZmanimPreferences> : AppCompatActivity(), ThemeCallbacks
         binding.title.text = item.title
     }
 
+    @SuppressLint("MissingSuperCall")
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         // User must explicitly cancel the reminder.
@@ -222,17 +225,17 @@ class AlarmActivity<P : ZmanimPreferences> : AppCompatActivity(), ThemeCallbacks
     /**
      * Set timer to silence the alert.
      *
-     * @param triggerAt when to silence.
+     * @param silenceAt when to silence.
      */
-    private fun silenceFuture(triggerAt: Long) {
-        Timber.i("silence future at [%s]", formatDateTime(triggerAt))
+    private fun silenceFuture(silenceAt: TimeMillis) {
+        Timber.i("silence future at [%s]", formatDateTime(silenceAt))
         var silenceRunnable = silenceRunnable
         if (silenceRunnable == null) {
             silenceRunnable = Runnable { stopLock() }
             this.silenceRunnable = silenceRunnable
         }
         val now = System.currentTimeMillis()
-        val delayMillis = triggerAt - now
+        val delayMillis = silenceAt - now
         handler.postDelayed(silenceRunnable, delayMillis)
     }
 

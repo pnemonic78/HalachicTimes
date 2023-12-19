@@ -19,7 +19,6 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -32,10 +31,8 @@ import com.github.app.LocaleHelper
 import com.github.app.PERMISSION_WALLPAPER
 import com.github.app.restart
 import com.github.preference.LocalePreferences
-import com.github.preference.ThemePreferences
 import com.github.times.BuildConfig
 import com.github.times.R
-import com.github.times.compass.preference.CompassPreferences
 import com.github.util.LocaleUtils.sortByDisplay
 import com.github.util.LocaleUtils.unique
 import java.util.Locale
@@ -56,15 +53,12 @@ class AppearancePreferenceFragment : AbstractPreferenceFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
-        initList(ThemePreferences.KEY_THEME)
-        initList(CompassPreferences.KEY_THEME_COMPASS)
-        initList(ZmanimPreferences.KEY_THEME_WIDGET)?.apply {
+        findPreference<ListPreference>(ZmanimPreferences.KEY_THEME_WIDGET)?.apply {
             setOnPreferenceClickListener {
                 val context = it.context
                 checkWallpaperPermission(context)
             }
         }
-        initList(ZmanimPreferences.KEY_EMPHASIS_SCALE)
         initLocaleList(LocalePreferences.KEY_LOCALE)
         findPreference<Preference>(ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE)?.apply {
             setOnPreferenceClickListener {
@@ -112,8 +106,9 @@ class AppearancePreferenceFragment : AbstractPreferenceFragment() {
                     true
                 }
             }
+            return preference
         }
-        return initList(key)
+        return null
     }
 
     private fun notifyConfigurationChanged(context: Context, newLocale: String) {

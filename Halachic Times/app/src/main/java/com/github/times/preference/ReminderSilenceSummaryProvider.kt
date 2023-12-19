@@ -20,13 +20,13 @@ import androidx.preference.Preference
 import com.github.preference.NumberPickerPreference
 import com.github.times.R
 
-class ZmanCandlesSummaryProvider private constructor() : Preference.SummaryProvider<NumberPickerPreference> {
+class ReminderSilenceSummaryProvider private constructor() : Preference.SummaryProvider<NumberPickerPreference> {
 
     override fun provideSummary(preference: NumberPickerPreference): CharSequence? {
         val context = preference.context
         val newValue = preference.value
         if (newValue < 0) return null
-        return context.resources.getQuantityString(R.plurals.candles_summary, newValue, newValue)
+        return context.resources.getQuantityString(R.plurals.reminder_silence_minutes, newValue, newValue, "")
     }
 
     companion object {
@@ -34,6 +34,6 @@ class ZmanCandlesSummaryProvider private constructor() : Preference.SummaryProvi
          * Retrieve a singleton instance of this simple
          * [androidx.preference.Preference.SummaryProvider] implementation.
          */
-        val instance: ZmanCandlesSummaryProvider by lazy { ZmanCandlesSummaryProvider() }
+        val instance: ReminderSilenceSummaryProvider by lazy { ReminderSilenceSummaryProvider() }
     }
 }

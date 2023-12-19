@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/pref_appearance_title">
         <ListPreference
@@ -8,7 +9,8 @@
             android:entryValues="@array/appwidget_theme_values"
             android:icon="@drawable/ic_settings_theme"
             android:key="theme.appwidget"
-            android:title="@string/appwidget_theme_title" />
+            android:title="@string/appwidget_theme_title"
+            app:useSimpleSummaryProvider="true" />
         <Preference
             android:key="theme.appwidget.rationale"
             android:summary="@string/appwidget_theme_permission_rationale" />
