@@ -218,10 +218,11 @@
     <string name="reminder_tone">רינגטון תזכורת</string>
     <string name="alarm_volume_title">אזעקה</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"התראה"</string>
-    <string name="reminder_sunday">תזכיר ביום ראשון</string>
-    <string name="reminder_monday">תזכיר ביום שני</string>
+    <string name="reminder_on_time">בזמן</string>
     <string name="reminder_friday">תזכיר ביום שישי</string>
+    <string name="reminder_monday">תזכיר ביום שני</string>
     <string name="reminder_saturday">תזכיר בשבת ובחגים</string>
+    <string name="reminder_sunday">תזכיר ביום ראשון</string>
     <string name="reminder_thursday">תזכיר ביום חמישי</string>
     <string name="reminder_tuesday">תזכיר ביום שלישי</string>
     <string name="reminder_wednesday">תזכיר ביום רביעי</string>

@@ -2,8 +2,8 @@
 <resources>
 
     <string-array name="reminder_entries">
-        <item>@string/off</item>
-        <item>Õigel ajal</item>
+        <item>@string/reminder_off</item>
+        <item>@string/reminder_on_time</item>
         <item>1 minut enne</item>
         <item>5 minutit enne</item>
         <item>10 minutit enne</item>

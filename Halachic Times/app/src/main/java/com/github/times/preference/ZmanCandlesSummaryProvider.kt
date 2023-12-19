@@ -31,22 +31,10 @@ class ZmanCandlesSummaryProvider private constructor() : Preference.SummaryProvi
     }
 
     companion object {
-        private var providerInstance: ZmanCandlesSummaryProvider? = null
-
         /**
          * Retrieve a singleton instance of this simple
          * [androidx.preference.Preference.SummaryProvider] implementation.
-         *
-         * @return a singleton instance of this simple
-         * [androidx.preference.Preference.SummaryProvider] implementation
          */
-        fun getInstance(): ZmanCandlesSummaryProvider {
-            var provider = providerInstance
-            if (provider == null) {
-                provider = ZmanCandlesSummaryProvider()
-                providerInstance = provider
-            }
-            return provider
-        }
+        val instance: ZmanCandlesSummaryProvider by lazy { ZmanCandlesSummaryProvider() }
     }
 }

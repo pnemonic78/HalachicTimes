@@ -2,8 +2,8 @@
 <resources>
 
     <string-array name="reminder_entries">
-        <item>@string/off</item>
-        <item>Вчасно</item>
+        <item>@string/reminder_off</item>
+        <item>@string/reminder_on_time</item>
         <item>1 хвилина до</item>
         <item>5 хвилин до</item>
         <item>10 хвилин до</item>

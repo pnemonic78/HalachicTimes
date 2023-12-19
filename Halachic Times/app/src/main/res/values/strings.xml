@@ -390,6 +390,8 @@
     <string name="notification_volume_title">Notification</string>
     <string name="reminder_stream_alarm" translatable="false">@string/alarm_volume_title</string>
     <string name="reminder_stream_notification" translatable="false">@string/notification_volume_title</string>
+    <string name="reminder_off" translatable="false">@string/off</string>
+    <string name="reminder_on_time">On time</string>
     <string name="reminder_friday">Remind on Friday</string>
     <string name="reminder_monday">Remind on Monday</string>
     <string name="reminder_saturday">Remind on Saturday and Yom Tov</string>

@@ -450,8 +450,8 @@
         <item>60</item>
     </string-array>
     <string-array name="reminder_entries">
-        <item>@string/off</item>
-        <item>On time</item>
+        <item>@string/reminder_off</item>
+        <item>@string/reminder_on_time</item>
         <item>1 minute before</item>
         <item>5 minutes before</item>
         <item>10 minutes before</item>

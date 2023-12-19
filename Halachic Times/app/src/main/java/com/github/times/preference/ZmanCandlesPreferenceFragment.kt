@@ -18,7 +18,6 @@ package com.github.times.preference
 import android.os.Bundle
 import androidx.annotation.Keep
 import com.github.preference.NumberPickerPreference
-import com.github.times.preference.ZmanCandlesSummaryProvider.Companion.getInstance
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_CANDLES
 
 /**
@@ -29,7 +28,7 @@ class ZmanCandlesPreferenceFragment : ZmanPreferenceFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
         findPreference<NumberPickerPreference>(KEY_OPINION_CANDLES)!!.apply {
-            summaryProvider = getInstance()
+            summaryProvider = ZmanCandlesSummaryProvider.instance
             onPreferenceChange(this, value)
         }
     }

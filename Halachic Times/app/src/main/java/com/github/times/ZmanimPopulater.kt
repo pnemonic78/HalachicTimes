@@ -1622,11 +1622,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         return midnight + (sunrise - midnight shr 1)
     }
 
-    protected fun getSofZmanBiurChametz(
-        cal: ComplexZmanimCalendar?,
-        startOfDay: Long,
-        shaahZmanis: Long
-    ): Long {
+    protected fun getSofZmanBiurChametz(startOfDay: Long, shaahZmanis: Long): Long {
         return AstronomicalCalendar.getTimeOffset(startOfDay, shaahZmanis * 5)
     }
 

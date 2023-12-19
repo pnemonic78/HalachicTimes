@@ -44,7 +44,6 @@
             android:defaultValue="@integer/shabbath_ends_defaultValue"
             android:dependency="shabbath_ends.after"
             android:dialogIcon="@drawable/ic_settings_opinion"
-            android:dialogTitle="@string/opinion"
             android:icon="@drawable/ic_settings_opinion"
             android:key="shabbath_ends.minutes"
             android:max="120"

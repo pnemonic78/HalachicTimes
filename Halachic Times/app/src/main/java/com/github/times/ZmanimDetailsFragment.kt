@@ -57,7 +57,6 @@ class ZmanimDetailsFragment<A : ZmanimDetailsAdapter, P : ZmanimDetailsPopulater
         if (!isAdded) return null
         applyBackground(id)
 
-        val populater = populater ?: return null
         populater.itemId = id
         return super.populateTimes(date)
     }
