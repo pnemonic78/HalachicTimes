@@ -4,6 +4,7 @@
 
     <ListPreference
         android:defaultValue="@string/compass_bearing_defaultValue"
+        android:dialogIcon="@android:drawable/ic_menu_compass"
         android:entries="@array/compass_bearing_entries"
         android:entryValues="@array/compass_bearing_values"
         android:icon="@android:drawable/ic_menu_compass"

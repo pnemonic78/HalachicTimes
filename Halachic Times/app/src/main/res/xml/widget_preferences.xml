@@ -5,6 +5,7 @@
     <PreferenceCategory android:title="@string/pref_appearance_title">
         <ListPreference
             android:defaultValue="@string/appwidget_theme_defaultValue"
+            android:dialogIcon="@drawable/ic_settings_theme"
             android:entries="@array/appwidget_theme_entries"
             android:entryValues="@array/appwidget_theme_values"
             android:icon="@drawable/ic_settings_theme"
