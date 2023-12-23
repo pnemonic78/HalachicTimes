@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Icons. -->
+    <color name="icon_tint">@color/white_xC0</color>
+</resources>

@@ -9,5 +9,5 @@
     <color name="bright_foreground_light_inverse">@color/bright_foreground_dark</color>
 
     <!-- Icons. -->
-    <color name="icon_tint">?colorControlNormal</color>
+    <color name="icon_tint">@color/black_xC0</color>
 </resources>
