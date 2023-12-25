@@ -25,7 +25,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.EditText
 import android.widget.NumberPicker
 import android.widget.Spinner
@@ -53,7 +52,6 @@ import kotlin.math.floor
  */
 open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
     ThemeCallbacks<P>,
-    OnItemSelectedListener,
     ZmanimLocationListener {
     private val themeCallbacks: ThemeCallbacks<P> by lazy { createThemeCallbacks(this) }
     private lateinit var coordsFormatSpinner: Spinner
@@ -158,7 +156,28 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
 
     private fun initView(binding: LocationAddBinding) {
         coordsFormatSpinner = binding.coordsFormat
-        coordsFormatSpinner.onItemSelectedListener = this
+        coordsFormatSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (coordsFormatSpinnerSelectedFirst) {
+                    coordsFormatSpinnerSelectedFirst = false
+                    return
+                }
+                if (position == FORMAT_DECIMAL) {
+                    convertToDecimal()
+                } else {
+                    convertFromDecimal()
+                }
+                latitudeSwitcher.displayedChild = position
+                longitudeSwitcher.displayedChild = position
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) = Unit
+        }
         coordsFormatSpinnerSelectedFirst = true
         latitudeSwitcher = binding.latitude.latitudeSwitch
         latitudeDegreesEdit = binding.latitude.latitudeDegreesEdit
@@ -260,22 +279,6 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-    override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-        if (coordsFormatSpinnerSelectedFirst) {
-            coordsFormatSpinnerSelectedFirst = false
-            return
-        }
-        if (position == FORMAT_DECIMAL) {
-            convertToDecimal()
-        } else {
-            convertFromDecimal()
-        }
-        latitudeSwitcher.displayedChild = position
-        longitudeSwitcher.displayedChild = position
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>) = Unit
 
     private fun saveLocation(location: Location, coordsFormat: Int): Boolean {
         var latitude: Double
