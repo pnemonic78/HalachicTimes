@@ -89,12 +89,12 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     /**
      * The handler thread.
      */
-    private val handlerThread: HandlerThread = HandlerThread(TAG)
+    private val handlerThread: HandlerThread by lazy { HandlerThread(TAG).apply { start() } }
 
     /**
      * The handler.
      */
-    private lateinit var handler: Handler
+    private val handler: Handler by lazy { UpdatesHandler(handlerThread.looper) }
 
     /**
      * The next time to start update locations.
@@ -824,9 +824,6 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         } else {
             context.registerReceiver(broadcastReceiver, filter)
         }
-
-        handlerThread.start()
-        handler = UpdatesHandler(handlerThread.looper)
     }
 
     private fun sendEmptyMessage(what: Int): Boolean {
