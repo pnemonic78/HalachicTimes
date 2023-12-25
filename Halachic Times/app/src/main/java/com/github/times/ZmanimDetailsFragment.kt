@@ -16,11 +16,11 @@
 package com.github.times
 
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Color
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import com.github.content.isNightMode
 import java.util.Calendar
 
 /**
@@ -65,15 +65,13 @@ class ZmanimDetailsFragment<A : ZmanimDetailsAdapter, P : ZmanimDetailsPopulater
         val list = list ?: return
         when (preferences.theme) {
             R.style.Theme_Zmanim_Dark -> setBackgroundColorDark(id, list)
+
             R.style.Theme_Zmanim_Light -> setBackgroundColorLight(id, list)
-            R.style.Theme_Zmanim_DayNight -> {
-                val context = list.context
-                val nightMode =
-                    context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-                when (nightMode) {
-                    Configuration.UI_MODE_NIGHT_NO -> setBackgroundColorLight(id, list)
-                    Configuration.UI_MODE_NIGHT_YES -> setBackgroundColorDark(id, list)
-                }
+
+            R.style.Theme_Zmanim_DayNight -> if (list.context.isNightMode) {
+                setBackgroundColorDark(id, list)
+            } else {
+                setBackgroundColorLight(id, list)
             }
 
             else -> list.setBackgroundColor(Color.TRANSPARENT)

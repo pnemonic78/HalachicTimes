@@ -4,18 +4,10 @@
     <style name="Theme.Zmanim" parent="Theme.AppCompat" />
 
     <style name="Theme.Zmanim.Dark" parent="Theme.AppCompat.Dark">
-        <item name="android:textColor">@android:color/primary_text_dark</item>
-        <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
-        <item name="android:textColorSecondary">@android:color/secondary_text_dark</item>
-
         <item name="listZmanim">@style/Widget.ListView.Dark</item>
     </style>
 
     <style name="Theme.Zmanim.Light" parent="Theme.AppCompat.Light">
-        <item name="android:textColor">@android:color/primary_text_light</item>
-        <item name="android:textColorPrimary">@android:color/primary_text_light</item>
-        <item name="android:textColorSecondary">@android:color/secondary_text_light</item>
-
         <item name="listZmanim">@style/Widget.ListView.Light</item>
     </style>
 

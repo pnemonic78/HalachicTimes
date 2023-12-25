@@ -16,11 +16,11 @@
 package com.github.times.preference
 
 import android.content.Context
-import android.content.res.Configuration
 import android.media.AudioManager
 import android.net.Uri
 import android.text.format.DateUtils
 import androidx.annotation.StyleRes
+import com.github.content.isNightMode
 import com.github.media.RingtoneManager
 import com.github.preference.LocalePreferences
 import com.github.preference.SimpleLocalePreferences
@@ -145,35 +145,33 @@ class SimpleZmanimPreferences(context: Context) : SimplePreferences(context), Zm
         get() = themePreferences.themeValue
 
     override fun getTheme(value: String?): Int {
-        if (value.isNullOrEmpty() || THEME_NONE == value) {
+        if (value.isNullOrEmpty()) {
             return R.style.Theme_Zmanim_NoGradient
         }
-        if (THEME_DARK == value) {
-            return R.style.Theme_Zmanim_Dark
+        return when (value) {
+            THEME_NONE -> R.style.Theme_Zmanim_NoGradient
+            THEME_DARK -> R.style.Theme_Zmanim_Dark
+            THEME_LIGHT -> R.style.Theme_Zmanim_Light
+            THEME_WHITE -> R.style.Theme_Zmanim_White
+            else -> R.style.Theme_Zmanim_DayNight
         }
-        if (THEME_LIGHT == value) {
-            return R.style.Theme_Zmanim_Light
-        }
-        return if (THEME_WHITE == value) R.style.Theme_Zmanim_White else R.style.Theme_Zmanim_DayNight
     }
 
     override val theme: Int
         get() = getTheme(themeValue)
 
-    override fun isDarkTheme(value: String?): Boolean {
-        if (THEME_LIGHT == value || THEME_WHITE == value) {
-            return false
+    override fun isDarkTheme(@StyleRes themeId: Int): Boolean {
+        return when (themeId) {
+            R.style.Theme_Zmanim_NoGradient -> true
+            R.style.Theme_Zmanim_Dark -> true
+            R.style.Theme_Zmanim_Light -> false
+            R.style.Theme_Zmanim_White -> false
+            else -> context.isNightMode
         }
-        if (THEME_DEFAULT == value) {
-            val nightMode =
-                context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-            return (nightMode == Configuration.UI_MODE_NIGHT_YES)
-        }
-        return true
     }
 
     override val isDarkTheme: Boolean
-        get() = isDarkTheme(themeValue)
+        get() = isDarkTheme(theme)
 
     override val isHour: Boolean
         get() = preferences.getBoolean(
