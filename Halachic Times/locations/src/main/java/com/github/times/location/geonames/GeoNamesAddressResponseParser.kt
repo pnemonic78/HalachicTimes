@@ -64,6 +64,8 @@ class GeoNamesAddressResponseParser : AddressResponseParser() {
             throw IOException(e)
         } catch (e: JsonSyntaxException) {
             throw LocationException(e)
+        } catch (e: RuntimeException) {
+            throw LocationException(e)
         }
     }
 

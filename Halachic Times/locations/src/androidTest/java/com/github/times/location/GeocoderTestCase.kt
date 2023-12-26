@@ -20,10 +20,12 @@ import android.location.Address
 import android.location.Location
 import androidx.test.core.app.ApplicationProvider
 import com.github.times.location.bing.BingGeocoder
+import com.github.times.location.bing.BingResponse
 import com.github.times.location.country.CountriesGeocoder
 import com.github.times.location.geonames.GeoNamesGeocoder
 import com.github.times.location.google.GoogleGeocoder
 import com.github.times.location.test.R
+import com.google.gson.internal.UnsafeAllocator
 import java.io.InputStream
 import java.util.Locale
 import org.junit.Assert.assertEquals
@@ -248,6 +250,28 @@ class GeocoderTestCase {
         assertEquals(32.04984, location.latitude, DELTA)
         assertEquals(34.95382, location.longitude, DELTA)
         assertEquals(30.0, location.altitude, DELTA)
+    }
+
+    /**
+     * Test Bing POJO response class.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test
+    @Throws(Exception::class)
+    fun testBingResponseClass() {
+        val classResponse = BingResponse::class
+        assertFalse(classResponse.isAbstract)
+        assertFalse(classResponse.isData)
+        assertTrue(classResponse.isFinal)
+
+        val rawType: Class<BingResponse> = BingResponse::class.java
+        val unsafeAllocator = UnsafeAllocator.create()
+        assertNotNull(unsafeAllocator)
+        val newInstance = unsafeAllocator.newInstance(rawType)
+        assertNotNull(newInstance)
+        assertTrue(newInstance is BingResponse)
+        assertEquals(0, newInstance.statusCode)
     }
 
     /**

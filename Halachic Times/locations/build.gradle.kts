@@ -95,4 +95,5 @@ dependencies {
     androidTestImplementation("androidx.test:rules:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test.ext:junit:${BuildVersions.junitExt}")
+    androidTestImplementation(kotlin("reflect"))
 }

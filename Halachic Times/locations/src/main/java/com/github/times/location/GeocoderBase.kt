@@ -296,11 +296,7 @@ abstract class GeocoderBase(protected val locale: Locale) {
     ): Location? {
         val url = URL(queryUrl)
         read(url, HTTPReader.CONTENT_JSON).use { data ->
-            return parseElevation(
-                latitude,
-                longitude,
-                data
-            )
+            return parseElevation(latitude, longitude, data)
         }
     }
 
