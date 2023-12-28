@@ -64,7 +64,7 @@ class LocationsTestCase {
         assertNotNull(locations)
         val ids = TimeZone.getAvailableIDs()
         assertNotNull(ids)
-        assertNotEquals(0, ids.size.toLong())
+        assertNotEquals(0, ids.size)
         var tz: TimeZone?
         var location: Location?
         var latitude: Double

@@ -16,20 +16,16 @@
 package com.github.times.location.bing
 
 import android.location.Location
-import android.net.Uri
-import com.github.json.UriAdapter
+import com.github.json.JsonIgnore
 import com.github.times.location.ElevationResponseParser
 import com.github.times.location.GeocoderBase
 import com.github.times.location.LocationException
 import com.github.times.location.ZmanimLocation
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonIOException
-import com.google.gson.JsonSyntaxException
 import java.io.IOException
 import java.io.InputStream
-import java.io.InputStreamReader
-import java.io.Reader
-import java.nio.charset.StandardCharsets
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.decodeFromStream
 
 /**
  * Handler for parsing the Bing response for elevations.
@@ -37,23 +33,19 @@ import java.nio.charset.StandardCharsets
  * @author Moshe Waisberg
  */
 class BingElevationResponseParser : ElevationResponseParser() {
-    private val gson = GsonBuilder()
-        .registerTypeAdapter(Uri::class.java, UriAdapter())
-        .create()
-
+    @OptIn(ExperimentalSerializationApi::class)
     @Throws(LocationException::class, IOException::class)
     override fun parse(
         data: InputStream, latitude: Double, longitude: Double, maxResults: Int
     ): List<Location> {
         return try {
-            val reader: Reader = InputStreamReader(data, StandardCharsets.UTF_8)
-            val response = gson.fromJson(reader, BingResponse::class.java)
+            val response = JsonIgnore.decodeFromStream<BingResponse>(data)
             val results = mutableListOf<Location>()
             handleResponse(response, results, latitude, longitude, maxResults)
             results
-        } catch (e: JsonIOException) {
-            throw IOException(e)
-        } catch (e: JsonSyntaxException) {
+        } catch (e: IllegalArgumentException) {
+            throw LocationException(e)
+        } catch (e: SerializationException) {
             throw LocationException(e)
         } catch (e: RuntimeException) {
             throw LocationException(e)

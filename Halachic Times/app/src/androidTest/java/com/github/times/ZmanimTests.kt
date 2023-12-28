@@ -51,7 +51,7 @@ class ZmanimTests {
         assertNotNull(settings)
         val adapter = ZmanimAdapter<ZmanViewHolder>(context, settings)
         assertNotNull(adapter)
-        assertEquals(0, adapter.itemCount.toLong())
+        assertEquals(0, adapter.itemCount)
         val cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         assertNotNull(cal)
         cal[year, month] = day
@@ -63,11 +63,11 @@ class ZmanimTests {
         val molad = Calendar.getInstance(cal.timeZone)
         assertNotNull(molad)
         molad.timeInMillis = item!!.time
-        assertEquals(year.toLong(), molad[Calendar.YEAR].toLong())
-        assertEquals(month.toLong(), molad[Calendar.MONTH].toLong())
-        assertEquals(day.toLong(), molad[Calendar.DAY_OF_MONTH].toLong())
-        assertEquals(hour.toLong(), molad[Calendar.HOUR_OF_DAY].toLong())
-        assertEquals(minute.toLong(), molad[Calendar.MINUTE].toLong())
+        assertEquals(year, molad[Calendar.YEAR])
+        assertEquals(month, molad[Calendar.MONTH])
+        assertEquals(day, molad[Calendar.DAY_OF_MONTH])
+        assertEquals(hour, molad[Calendar.HOUR_OF_DAY])
+        assertEquals(minute, molad[Calendar.MINUTE])
     }
 
     @Test

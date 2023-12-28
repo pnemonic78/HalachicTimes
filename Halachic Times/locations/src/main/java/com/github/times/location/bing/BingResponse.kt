@@ -16,40 +16,43 @@
 package com.github.times.location.bing
 
 import android.net.Uri
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Root object for Bing address JSON response.
  *
  * @author Moshe Waisberg
  */
+@Serializable
 class BingResponse {
-    @SerializedName("authenticationResultCode")
+    @SerialName("authenticationResultCode")
     var authenticationResultCode: String? = null
 
-    @SerializedName("brandLogoUri")
-    var brandLogoUri: Uri? = null
+    @SerialName("brandLogoUri")
+    var brandLogoUri: String? = null
 
-    @SerializedName("copyright")
+    @SerialName("copyright")
     var copyright: String? = null
 
-    @SerializedName("resourceSets")
+    @SerialName("resourceSets")
     var resourceSets: List<ResourceSet>? = null
 
-    @SerializedName("statusCode")
+    @SerialName("statusCode")
     var statusCode = 0
 
-    @SerializedName("statusDescription")
+    @SerialName("statusDescription")
     var statusDescription: String? = null
 
-    @SerializedName("traceId")
+    @SerialName("traceId")
     var traceId: String? = null
 
+    @Serializable
     class ResourceSet {
-        @SerializedName("estimatedTotal")
+        @SerialName("estimatedTotal")
         var estimatedTotal = 0
 
-        @SerializedName("resources")
+        @SerialName("resources")
         var resources: List<BingResource>? = null
     }
 

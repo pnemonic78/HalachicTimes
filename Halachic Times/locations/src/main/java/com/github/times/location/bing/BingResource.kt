@@ -15,44 +15,46 @@
  */
 package com.github.times.location.bing
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Resource object for Bing address JSON response.
  *
  * @author Moshe Waisberg
  */
+@Serializable
 class BingResource {
-    @SerializedName("__type")
+    @SerialName("__type")
     var type: String? = null
 
-    @SerializedName("bbox")
-    var boundingBox: Array<Double>? = null
+    @SerialName("bbox")
+    var boundingBox: List<Double>? = null
 
-    @SerializedName("name")
+    @SerialName("name")
     var name: String? = null
 
-    @SerializedName("point")
+    @SerialName("point")
     var point: BingPoint? = null
 
-    @SerializedName("address")
+    @SerialName("address")
     var address: BingAddress? = null
 
-    @SerializedName("confidence")
+    @SerialName("confidence")
     var confidence: String? = null
 
-    @SerializedName("elevations")
-    var elevations: Array<Double>? = null
+    @SerialName("elevations")
+    var elevations: List<Double>? = null
 
-    @SerializedName("entityType")
+    @SerialName("entityType")
     var entityType: String? = null
 
-    @SerializedName("geocodePoints")
-    var geocodePoints: List<Any>? = null
+    @SerialName("geocodePoints")
+    var geocodePoints: List<BingPoint>? = null
 
-    @SerializedName("matchCodes")
-    var matchCodes: List<Any>? = null
+    @SerialName("matchCodes")
+    var matchCodes: List<String>? = null
 
-    @SerializedName("zoomLevel")
+    @SerialName("zoomLevel")
     var zoomLevel: Double? = null
 }

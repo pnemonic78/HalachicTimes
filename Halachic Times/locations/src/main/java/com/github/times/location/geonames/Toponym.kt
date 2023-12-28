@@ -15,7 +15,8 @@
  */
 package com.github.times.location.geonames
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import org.geonames.BoundingBox
 import org.geonames.FeatureClass
 import org.geonames.Timezone
@@ -25,82 +26,89 @@ import org.geonames.Timezone
  *
  * @author Moshe Waisberg
  */
+@Serializable
 class Toponym {
-    @SerializedName("geonameId")
+    @SerialName("geonameId")
     var geoNameId: Long = 0
 
-    @SerializedName("name")
+    @SerialName("toponymName")
+    var toponymName: String? = null
+
+    @SerialName("name")
     var name: String? = null
 
-    @SerializedName("alternateNames")
+    @SerialName("alternateNames")
     var alternateNames: String? = null
 
-    @SerializedName("continentCode")
+    @SerialName("continentCode")
     var continentCode: String? = null
 
-    @SerializedName("countryCode")
+    @SerialName("countryCode")
     var countryCode: String? = null
 
-    @SerializedName("countryName")
+    @SerialName("countryId")
+    var countryId: String? = null
+
+    @SerialName("countryName")
     var countryName: String? = null
 
-    @SerializedName("population")
+    @SerialName("population")
     var population: Long? = null
 
-    @SerializedName("elevation")
+    @SerialName("elevation")
     var elevation: Int? = null
 
-    @SerializedName("fcl")
+    @SerialName("fcl")
     var featureClass: FeatureClass? = null
 
-    @SerializedName("fclName")
+    @SerialName("fclName")
     var featureClassName: String? = null
 
-    @SerializedName("fcode")
+    @SerialName("fcode")
     var featureCode: String? = null
 
-    @SerializedName("fCodeName")
+    @SerialName("fcodeName")
     var featureCodeName: String? = null
 
-    @SerializedName("lat")
+    @SerialName("lat")
     var latitude: Double = 0.0
 
-    @SerializedName("lng")
+    @SerialName("lng")
     var longitude: Double = 0.0
 
-    @SerializedName("adminCode1")
+    @SerialName("adminCode1")
     var adminCode1: String? = null
 
-    @SerializedName("adminName1")
+    @SerialName("adminName1")
     var adminName1: String? = null
 
-    @SerializedName("adminCode2")
+    @SerialName("adminCode2")
     var adminCode2: String? = null
 
-    @SerializedName("adminName2")
+    @SerialName("adminName2")
     var adminName2: String? = null
 
-    @SerializedName("adminCode3")
+    @SerialName("adminCode3")
     var adminCode3: String? = null
 
-    @SerializedName("adminName3")
+    @SerialName("adminName3")
     var adminName3: String? = null
 
-    @SerializedName("adminCode4")
+    @SerialName("adminCode4")
     var adminCode4: String? = null
 
-    @SerializedName("adminName4")
+    @SerialName("adminName4")
     var adminName4: String? = null
 
-    @SerializedName("adminCode5")
+    @SerialName("adminCode5")
     var adminCode5: String? = null
 
-    @SerializedName("adminName5")
+    @SerialName("adminName5")
     var adminName5: String? = null
 
-    @SerializedName("timezone")
+    @SerialName("timezone")
     var timezone: Timezone? = null
 
-    @SerializedName("bbox")
+    @SerialName("bbox")
     var boundingBox: BoundingBox? = null
 }

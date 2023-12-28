@@ -15,20 +15,22 @@
  */
 package com.github.times.location.geonames
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Root object for GeoNames address JSON response.
  *
  * @author Moshe Waisberg
  */
+@Serializable
 class GeoNamesResponse {
-    @SerializedName("geonames")
+    @SerialName("geonames")
     var records: List<Toponym>? = null
 
-    @SerializedName("status")
+    @SerialName("status")
     var status: GeoNamesStatus? = null
 
-    @SerializedName("ocean")
+    @SerialName("ocean")
     var ocean: Ocean? = null
 }

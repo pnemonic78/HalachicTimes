@@ -15,30 +15,35 @@
  */
 package com.github.times.location.google
 
-import com.google.gson.annotations.SerializedName
+import com.github.times.location.google.json.ElevationResultSerializer
 import com.google.maps.errors.ApiException
 import com.google.maps.internal.ApiResponse
 import com.google.maps.model.ElevationResult
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Elevation response.
  *
  * @author Moshe Waisberg
  */
+@Serializable
 class ElevationResponse : ApiResponse<ElevationResult> {
-    @SerializedName("status")
+    @SerialName("status")
     var status: String? = null
-    @SerializedName("errorMessage")
+
+    @SerialName("errorMessage")
     var errorMessage: String? = null
-    @SerializedName("results")
-    var results: List<ElevationResult>? = null
+
+    @SerialName("results")
+    var results: List<@Serializable(ElevationResultSerializer::class) ElevationResult>? = null
 
     override fun successful(): Boolean {
         return "OK" == status
     }
 
-    override fun getResult(): ElevationResult {
-        return results!![0]
+    override fun getResult(): ElevationResult? {
+        return results?.get(0)
     }
 
     override fun getError(): ApiException? {

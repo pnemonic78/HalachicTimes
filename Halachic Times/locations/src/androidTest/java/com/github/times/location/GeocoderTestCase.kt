@@ -25,7 +25,6 @@ import com.github.times.location.country.CountriesGeocoder
 import com.github.times.location.geonames.GeoNamesGeocoder
 import com.github.times.location.google.GoogleGeocoder
 import com.github.times.location.test.R
-import com.google.gson.internal.UnsafeAllocator
 import java.io.InputStream
 import java.util.Locale
 import org.junit.Assert.assertEquals
@@ -58,7 +57,7 @@ class GeocoderTestCase {
         results = parser.parse(input, maxResults, locale)
         assertNotNull(results)
         assertTrue(maxResults >= results.size)
-        assertEquals(9, results.size.toLong())
+        assertEquals(9, results.size)
         var address: Address? = results[0]
         assertNotNull(address)
         assertTrue(address is ZmanimAddress)
@@ -75,7 +74,7 @@ class GeocoderTestCase {
         results = parser.parse(input, maxResults, locale)
         assertNotNull(results)
         assertTrue(maxResults >= results.size)
-        assertEquals(6, results.size.toLong())
+        assertEquals(6, results.size)
         address = results[0]
         assertNotNull(address)
         assertTrue(address is ZmanimAddress)
@@ -92,7 +91,7 @@ class GeocoderTestCase {
         results = parser.parse(input, maxResults, locale)
         assertNotNull(results)
         assertTrue(maxResults >= results.size)
-        assertEquals(9, results.size.toLong())
+        assertEquals(9, results.size)
         address = results[0]
         assertNotNull(address)
         assertTrue(address is ZmanimAddress)
@@ -121,7 +120,7 @@ class GeocoderTestCase {
         results = parser.parse(input, maxResults, locale)
         assertNotNull(results)
         assertTrue(maxResults >= results.size)
-        assertEquals(0, results.size.toLong())
+        assertEquals(0, results.size)
     }
 
     /**
@@ -148,7 +147,7 @@ class GeocoderTestCase {
         assertNotNull(input)
         results = parser.parse(input, 0.0, 0.0, 1)
         assertNotNull(results)
-        assertEquals(1, results.size.toLong())
+        assertEquals(1, results.size)
         val location = results[0]
         assertNotNull(location)
         assertEquals(32.0629985, location.latitude, DELTA)
@@ -179,7 +178,7 @@ class GeocoderTestCase {
         results = parser.parse(input, maxResults, locale)
         assertNotNull(results)
         assertTrue(maxResults >= results.size)
-        assertEquals(5, results.size.toLong())
+        assertEquals(5, results.size)
         var address = results[4]
         assertNotNull(address)
         assertEquals(32.04984, address.latitude, DELTA)
@@ -193,7 +192,7 @@ class GeocoderTestCase {
         results = parser.parse(input, maxResults, locale)
         assertNotNull(results)
         assertTrue(maxResults >= results.size)
-        assertEquals(6, results.size.toLong())
+        assertEquals(6, results.size)
         address = results[5]
         assertNotNull(address)
         assertEquals(32.06948, address.latitude, DELTA)
@@ -207,7 +206,7 @@ class GeocoderTestCase {
         results = parser.parse(input, 89.89511, -36.3637, maxResults, locale)
         assertNotNull(results)
         assertTrue(maxResults >= results.size)
-        assertEquals(1, results.size.toLong())
+        assertEquals(1, results.size)
         address = results[0]
         assertNotNull(address)
         assertEquals(89.89511, address.latitude, DELTA)
@@ -220,7 +219,7 @@ class GeocoderTestCase {
         results = parser.parse(input, maxResults, locale)
         assertNotNull(results)
         assertTrue(maxResults >= results.size)
-        assertEquals(0, results.size.toLong())
+        assertEquals(0, results.size)
     }
 
     /**
@@ -244,7 +243,7 @@ class GeocoderTestCase {
         assertNotNull(input)
         results = parser.parse(input, 32.04984, 34.95382, 1)
         assertNotNull(results)
-        assertEquals(1, results.size.toLong())
+        assertEquals(1, results.size)
         val location = results[0]
         assertNotNull(location)
         assertEquals(32.04984, location.latitude, DELTA)
@@ -264,14 +263,6 @@ class GeocoderTestCase {
         assertFalse(classResponse.isAbstract)
         assertFalse(classResponse.isData)
         assertTrue(classResponse.isFinal)
-
-        val rawType: Class<BingResponse> = BingResponse::class.java
-        val unsafeAllocator = UnsafeAllocator.create()
-        assertNotNull(unsafeAllocator)
-        val newInstance = unsafeAllocator.newInstance(rawType)
-        assertNotNull(newInstance)
-        assertTrue(newInstance is BingResponse)
-        assertEquals(0, newInstance.statusCode)
     }
 
     /**
@@ -297,7 +288,7 @@ class GeocoderTestCase {
         results = parser.parse(input, maxResults, locale)
         assertNotNull(results)
         assertTrue(maxResults >= results.size)
-        assertEquals(5, results.size.toLong())
+        assertEquals(5, results.size)
         var address = results[0]
         assertNotNull(address)
         assertTrue(address is ZmanimAddress)
@@ -314,7 +305,7 @@ class GeocoderTestCase {
         results = parser.parse(input, maxResults, locale)
         assertNotNull(results)
         assertTrue(maxResults >= results.size)
-        assertEquals(1, results.size.toLong())
+        assertEquals(1, results.size)
         address = results[0]
         assertNotNull(address)
         assertTrue(address is ZmanimAddress)
@@ -347,7 +338,7 @@ class GeocoderTestCase {
         assertNotNull(input)
         results = parser.parse(input, 32.0236, 34.776698, 1)
         assertNotNull(results)
-        assertEquals(1, results.size.toLong())
+        assertEquals(1, results.size)
         val location = results[0]
         assertNotNull(location)
         assertEquals(32.0236, location.latitude, DELTA)
@@ -368,7 +359,7 @@ class GeocoderTestCase {
         val results = createInternalGeocoderAddresses()
         assertNotNull(results)
         assertTrue(maxResults >= results.size)
-        assertEquals(5, results.size.toLong())
+        assertEquals(5, results.size)
         val address = results[0]
         assertNotNull(address)
         assertFalse(address is ZmanimAddress)

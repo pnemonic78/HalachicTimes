@@ -16,19 +16,16 @@
 package com.github.times.location.google
 
 import android.location.Location
+import com.github.json.JsonIgnore
 import com.github.times.location.ElevationResponseParser
 import com.github.times.location.GeocoderBase
 import com.github.times.location.LocationException
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonIOException
-import com.google.gson.JsonSyntaxException
 import com.google.maps.model.ElevationResult
 import java.io.IOException
 import java.io.InputStream
-import java.io.InputStreamReader
-import java.io.Reader
-import java.nio.charset.StandardCharsets
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.decodeFromStream
 
 /**
  * Handler for parsing an elevation from a Google XML response.
@@ -36,10 +33,7 @@ import java.nio.charset.StandardCharsets
  * @author Moshe Waisberg
  */
 internal class GoogleElevationResponseParser : ElevationResponseParser() {
-    private val gson = GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .create()
-
+    @OptIn(ExperimentalSerializationApi::class)
     @Throws(LocationException::class, IOException::class)
     override fun parse(
         data: InputStream,
@@ -48,14 +42,13 @@ internal class GoogleElevationResponseParser : ElevationResponseParser() {
         maxResults: Int
     ): List<Location> {
         return try {
-            val reader: Reader = InputStreamReader(data, StandardCharsets.UTF_8)
-            val response = gson.fromJson(reader, ElevationResponse::class.java)
+            val response = JsonIgnore.decodeFromStream<ElevationResponse>(data)
             val results = mutableListOf<Location>()
             handleResponse(response, results, maxResults)
             results
-        } catch (e: JsonIOException) {
-            throw IOException(e)
-        } catch (e: JsonSyntaxException) {
+        } catch (e: IllegalArgumentException) {
+            throw LocationException(e)
+        } catch (e: SerializationException) {
             throw LocationException(e)
         } catch (e: RuntimeException) {
             throw LocationException(e)
@@ -72,7 +65,7 @@ internal class GoogleElevationResponseParser : ElevationResponseParser() {
         if (!response.successful()) {
             throw LocationException(response.errorMessage)
         }
-        val geocoderResult = response.result
+        val geocoderResult = response.result ?: return
         val location = toLocation(geocoderResult)
         results.add(location)
     }

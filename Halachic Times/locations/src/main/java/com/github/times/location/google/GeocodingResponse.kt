@@ -15,30 +15,33 @@
  */
 package com.github.times.location.google
 
-import com.google.gson.annotations.SerializedName
+import com.github.times.location.google.json.GeocodingResultSerializer
 import com.google.maps.errors.ApiException
 import com.google.maps.internal.ApiResponse
 import com.google.maps.model.GeocodingResult
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Geocoder response.
  *
  * @author Moshe Waisberg
  */
+@Serializable
 class GeocodingResponse : ApiResponse<List<GeocodingResult>> {
-    @SerializedName("status")
+    @SerialName("status")
     var status: String? = null
-    @SerializedName("errorMessage")
+    @SerialName("errorMessage")
     var errorMessage: String? = null
-    @SerializedName("results")
-    var results: List<GeocodingResult>? = null
+    @SerialName("results")
+    var results: List<@Serializable(GeocodingResultSerializer::class) GeocodingResult>? = null
 
     override fun successful(): Boolean {
         return "OK" == status || "ZERO_RESULTS" == status
     }
 
     override fun getResult(): List<GeocodingResult> {
-        return results!!
+        return results ?: emptyList()
     }
 
     override fun getError(): ApiException? {

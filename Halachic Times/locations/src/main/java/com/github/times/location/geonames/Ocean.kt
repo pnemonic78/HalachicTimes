@@ -15,17 +15,19 @@
  */
 package com.github.times.location.geonames
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * GeoNames ocean.
  *
  * @author Moshe Waisberg
  */
+@Serializable
 class Ocean {
-    @SerializedName("distance")
+    @SerialName("distance")
     var distance: Double = 0.0
 
-    @SerializedName("name")
+    @SerialName("name")
     var name: String? = null
 }

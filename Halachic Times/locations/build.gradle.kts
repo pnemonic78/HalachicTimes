@@ -4,6 +4,7 @@ import java.util.Base64
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("plugin.serialization") version BuildVersions.kotlinVersion
 }
 
 fun LibraryDefaultConfig.encodeApiKey(name: String) {

@@ -16,20 +16,16 @@
 package com.github.times.location.bing
 
 import android.location.Address
-import android.net.Uri
-import com.github.json.UriAdapter
+import com.github.json.JsonIgnore
 import com.github.times.location.AddressResponseParser
 import com.github.times.location.LocationException
 import com.github.times.location.ZmanimAddress
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonIOException
-import com.google.gson.JsonSyntaxException
 import java.io.IOException
 import java.io.InputStream
-import java.io.InputStreamReader
-import java.io.Reader
-import java.nio.charset.StandardCharsets
 import java.util.Locale
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.decodeFromStream
 
 /**
  * Handler for parsing the JSON response for addresses.
@@ -37,10 +33,7 @@ import java.util.Locale
  * @author Moshe Waisberg
  */
 class BingAddressResponseParser : AddressResponseParser() {
-    private val gson = GsonBuilder()
-        .registerTypeAdapter(Uri::class.java, UriAdapter())
-        .create()
-
+    @OptIn(ExperimentalSerializationApi::class)
     @Throws(LocationException::class, IOException::class)
     override fun parse(
         data: InputStream,
@@ -50,14 +43,13 @@ class BingAddressResponseParser : AddressResponseParser() {
         locale: Locale
     ): List<Address> {
         return try {
-            val reader: Reader = InputStreamReader(data, StandardCharsets.UTF_8)
-            val response = gson.fromJson(reader, BingResponse::class.java)
+            val response = JsonIgnore.decodeFromStream<BingResponse>(data)
             val results = mutableListOf<Address>()
             handleResponse(response, results, maxResults, locale)
             results
-        } catch (e: JsonIOException) {
-            throw IOException(e)
-        } catch (e: JsonSyntaxException) {
+        } catch (e: IllegalArgumentException) {
+            throw LocationException(e)
+        } catch (e: SerializationException) {
             throw LocationException(e)
         } catch (e: RuntimeException) {
             throw LocationException(e)

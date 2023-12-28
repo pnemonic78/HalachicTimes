@@ -14,55 +14,77 @@
  * limitations under the License.
  *
  */
-package org.geonames;
+package org.geonames
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Enumeration for the GeoNames feature classes A,H,L,P,R,S,T,U,V
  *
  * @author marc
  */
-public enum FeatureClass {
+@Serializable
+enum class FeatureClass {
     /**
      * Administrative Boundary Features
      */
+    @SerialName("A")
     A,
+
     /**
      * Hydrographic Features
      */
+    @SerialName("H")
     H,
+
     /**
      * Area Features
      */
+    @SerialName("L")
     L,
+
     /**
      * Populated Place Features
      */
+    @SerialName("P")
     P,
+
     /**
      * Road / Railroad Features
      */
+    @SerialName("R")
     R,
+
     /**
      * Spot Features
      */
+    @SerialName("S")
     S,
+
     /**
      * Hypsographic Features
      */
+    @SerialName("T")
     T,
+
     /**
      * Undersea Features
      */
+    @SerialName("U")
     U,
+
     /**
      * Vegetation Features
      */
+    @SerialName("V")
     V;
 
-    public static FeatureClass fromValue(String value) {
-        if (value == null || "".equals(value)) {
-            return null;
+    companion object {
+        fun fromValue(value: String?): FeatureClass? {
+            return if (value == null || "" == value) {
+                null
+            } else valueOf(value)
         }
-        return valueOf(value);
     }
 }

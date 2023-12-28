@@ -15,32 +15,34 @@
  */
 package com.github.times.location.bing
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Address object for Bing address JSON response.
  *
  * @author Moshe Waisberg
  */
+@Serializable
 class BingAddress {
-    @SerializedName("addressLine")
+    @SerialName("addressLine")
     var addressLine: String? = null
 
-    @SerializedName("adminDistrict")
+    @SerialName("adminDistrict")
     var adminDistrict: String? = null
 
-    @SerializedName("adminDistrict2")
+    @SerialName("adminDistrict2")
     var adminDistrict2: String? = null
 
-    @SerializedName("countryRegion")
+    @SerialName("countryRegion")
     var countryRegion: String? = null
 
-    @SerializedName("formattedAddress")
+    @SerialName("formattedAddress")
     var formattedAddress: String? = null
 
-    @SerializedName("locality")
+    @SerialName("locality")
     var locality: String? = null
 
-    @SerializedName("postalCode")
+    @SerialName("postalCode")
     var postalCode: String? = null
 }

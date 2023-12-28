@@ -15,17 +15,25 @@
  */
 package com.github.times.location.bing
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * Point object for Bing address JSON response.
  *
  * @author Moshe Waisberg
  */
+@Serializable
 class BingPoint {
-    @SerializedName("type")
+    @SerialName("type")
     var type: String? = null
 
-    @SerializedName("coordinates")
-    var coordinates: Array<Double>? = null
+    @SerialName("coordinates")
+    var coordinates: List<Double>? = null
+
+    @SerialName("calculationMethod")
+    var calculationMethod: String? = null
+
+    @SerialName("usageTypes")
+    var usageTypes: List<String>? = null
 }

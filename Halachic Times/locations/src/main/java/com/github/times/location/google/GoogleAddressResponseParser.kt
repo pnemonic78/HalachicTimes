@@ -16,21 +16,18 @@
 package com.github.times.location.google
 
 import android.location.Address
+import com.github.json.JsonIgnore
 import com.github.times.location.AddressResponseParser
 import com.github.times.location.LocationException
 import com.github.times.location.ZmanimAddress
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonIOException
-import com.google.gson.JsonSyntaxException
 import com.google.maps.model.AddressComponentType
 import com.google.maps.model.GeocodingResult
 import java.io.IOException
 import java.io.InputStream
-import java.io.InputStreamReader
-import java.io.Reader
-import java.nio.charset.StandardCharsets
 import java.util.Locale
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.decodeFromStream
 
 /**
  * Handler for parsing the JSON response for addresses.
@@ -38,11 +35,7 @@ import java.util.Locale
  * @author Moshe Waisberg
  */
 internal class GoogleAddressResponseParser : AddressResponseParser() {
-    private val gson = GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .registerTypeAdapter(AddressComponentType::class.java, AddressComponentTypeAdapter())
-        .create()
-
+    @OptIn(ExperimentalSerializationApi::class)
     @Throws(LocationException::class, IOException::class)
     override fun parse(
         data: InputStream,
@@ -52,14 +45,13 @@ internal class GoogleAddressResponseParser : AddressResponseParser() {
         locale: Locale
     ): List<Address> {
         return try {
-            val reader: Reader = InputStreamReader(data, StandardCharsets.UTF_8)
-            val response = gson.fromJson(reader, GeocodingResponse::class.java)
+            val response = JsonIgnore.decodeFromStream<GeocodingResponse>(data)
             val results = mutableListOf<Address>()
             handleResponse(response, results, maxResults, locale)
             results
-        } catch (e: JsonIOException) {
-            throw IOException(e)
-        } catch (e: JsonSyntaxException) {
+        } catch (e: IllegalArgumentException) {
+            throw LocationException(e)
+        } catch (e: SerializationException) {
             throw LocationException(e)
         } catch (e: RuntimeException) {
             throw LocationException(e)
@@ -77,8 +69,8 @@ internal class GoogleAddressResponseParser : AddressResponseParser() {
         if (!response.successful()) {
             throw LocationException(response.errorMessage)
         }
-        val responseResults = response.results
-        if (responseResults.isNullOrEmpty()) {
+        val responseResults = response.result
+        if (responseResults.isEmpty()) {
             return
         }
         var geocoderResult: GeocodingResult
