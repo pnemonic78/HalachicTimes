@@ -55,7 +55,7 @@
             android:negativeButtonText="@string/cancel"
             android:positiveButtonText="@string/ok"
             android:title="@string/opinion"
-            app:useSimpleSummaryProvider="true" />
+            app:useSimpleSummaryProvider="false" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_appearance_title">
         <SwitchPreference
