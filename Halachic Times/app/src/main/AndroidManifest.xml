@@ -106,7 +106,7 @@
             android:configChanges="orientation|keyboardHidden|keyboard|navigation"
             android:exported="true"
             android:label="@string/title_activity_alarm"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleTop" />
         <activity
             android:name="com.github.times.appwidget.ZmanimWidgetConfigure"
             android:exported="false"

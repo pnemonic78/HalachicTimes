@@ -862,8 +862,10 @@ class ZmanimReminder(private val context: Context) {
     ): Intent {
         val intent = Intent(context, AlarmActivity::class.java)
             .putExtra(AlarmActivity.EXTRA_SILENCE_TIME, silenceAt)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION)
+            .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
         putReminderItem(item, intent)
         return intent
     }
