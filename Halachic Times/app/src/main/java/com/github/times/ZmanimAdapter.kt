@@ -87,7 +87,6 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
 
     init {
         val time24 = DateFormat.is24HourFormat(context)
-        val patternSeasonalHour: String
         val locale = getDefaultLocale(context)
         if (settings.isSeconds) {
             val pattern = if (time24) {
@@ -97,13 +96,12 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
             }
             timeFormat = SimpleDateFormat(pattern, locale)
             timeFormatGranularity = DateUtils.SECOND_IN_MILLIS
-            patternSeasonalHour = context.getString(R.string.hour_format_seconds)
+            timeFormatSeasonalHour = SimpleDateFormat(context.getString(R.string.hour_format_seconds), locale)
         } else {
             timeFormat = DateFormat.getTimeFormat(context)
             timeFormatGranularity = DateUtils.MINUTE_IN_MILLIS
-            patternSeasonalHour = context.getString(R.string.hour_format)
+            timeFormatSeasonalHour = SimpleDateFormat(context.getString(R.string.hour_format), locale)
         }
-        timeFormatSeasonalHour = SimpleDateFormat(patternSeasonalHour, locale)
     }
 
     /**
