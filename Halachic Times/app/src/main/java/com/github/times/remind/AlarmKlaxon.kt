@@ -1,42 +1,24 @@
 package com.github.times.remind
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Build
 import android.text.format.DateUtils
-import com.github.app.ActivityUtils
-import com.github.app.ActivityUtils.isPermissionGranted
 import com.github.media.RingtoneManager
 import com.github.os.VibratorCompat
-import com.github.times.preference.RingtonePreference.Companion.PERMISSION_RINGTONE
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
 import java.io.IOException
 import timber.log.Timber
 
-class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
+class AlarmKlaxon(private val context: Context, private val preferences: ZmanimPreferences) {
 
     constructor(context: Context) : this(context, SimpleZmanimPreferences(context))
 
     private var ringtone: MediaPlayer? = null
     private val vibrator = VibratorCompat(context)
-
-    @TargetApi(Build.VERSION_CODES.M)
-    fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == REQUEST_PERMISSIONS) {
-            if (isPermissionGranted(PERMISSION_RINGTONE, permissions, grantResults)) {
-                startNoise()
-            }
-        }
-    }
 
     private fun startNoise() {
         Timber.v("start noise")
@@ -51,9 +33,9 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
     }
 
     private fun playSound(context: Context) {
-        val ringtone = getRingtone(context) ?: return
-        Timber.v("play sound")
-        if (!ringtone.isPlaying) {
+        val ringtone = getRingtone(context)
+        Timber.v("play sound %s", ringtone)
+        if ((ringtone != null) && !ringtone.isPlaying) {
             ringtone.start()
         }
     }
@@ -108,6 +90,7 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
      * @param isVibrate `true` to start vibrating - `false` to stop.
      */
     private fun vibrate(isVibrate: Boolean) {
+        Timber.v("vibrate $isVibrate")
         if (isVibrate) {
             vibrator.vibrate(VIBRATE_DURATION, VibratorCompat.USAGE_ALARM)
         } else {
@@ -116,10 +99,12 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
     }
 
     fun start() {
+        Timber.v("start")
         startNoise()
     }
 
     fun stop() {
+        Timber.v("stop")
         stopNoise()
         val ringtone = ringtone
         if (ringtone != null) {

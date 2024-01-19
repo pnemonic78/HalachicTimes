@@ -213,7 +213,7 @@ class ZmanimReminder(private val context: Context) {
     }
 
     private fun cancelAlarm() {
-        val service = createAlarmServiceIntent(null, NEVER)
+        val service = createAlarmServiceIntent(null)
         context.stopService(service)
     }
 
@@ -358,7 +358,7 @@ class ZmanimReminder(private val context: Context) {
         if (isAlarmService) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val reminderItem = from(item)
-                val intent = createAlarmServiceIntent(reminderItem, silenceAt)
+                val intent = createAlarmServiceIntent(reminderItem)
                 return PendingIntent.getForegroundService(
                     context,
                     ID_ALARM_REMINDER,
@@ -387,13 +387,9 @@ class ZmanimReminder(private val context: Context) {
         )
     }
 
-    private fun createAlarmServiceIntent(
-        item: ZmanimReminderItem?,
-        silenceAt: TimeMillis
-    ): Intent {
+    private fun createAlarmServiceIntent(item: ZmanimReminderItem?): Intent {
         val intent = Intent(context, ZmanimReminderService::class.java)
             .setAction(ACTION_REMIND)
-            .putExtra(ZmanimReminderService.EXTRA_SILENCE_TIME, silenceAt)
         putReminderItem(item, intent)
         return intent
     }
@@ -848,7 +844,7 @@ class ZmanimReminder(private val context: Context) {
     private fun alarmNow(item: ZmanimReminderItem, silenceAt: TimeMillis) {
         Timber.i("alarm now [%s] for [%s]", item.title, formatDateTime(item.time))
         if (isAlarmService) {
-            startAlarmService(item, silenceAt)
+            startAlarmService(item)
         } else {
             startAlarmActivity(item, silenceAt)
         }
@@ -888,8 +884,8 @@ class ZmanimReminder(private val context: Context) {
     }
 
     @TargetApi(Build.VERSION_CODES.Q)
-    private fun startAlarmService(item: ZmanimReminderItem, silenceAt: TimeMillis) {
-        val intent = createAlarmServiceIntent(item, silenceAt)
+    private fun startAlarmService(item: ZmanimReminderItem) {
+        val intent = createAlarmServiceIntent(item)
         context.startForegroundService(intent)
     }
 

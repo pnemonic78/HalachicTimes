@@ -177,8 +177,10 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
      */
     private class ActivityHandler(activity: ZmanimActivity) : Handler(Looper.getMainLooper()) {
         private val activityWeakReference = WeakReference(activity)
+        var isPaused = false
 
         override fun handleMessage(msg: Message) {
+            if (isPaused) return
             val activity = activityWeakReference.get() ?: return
             val context: Context = activity
             when (msg.what) {

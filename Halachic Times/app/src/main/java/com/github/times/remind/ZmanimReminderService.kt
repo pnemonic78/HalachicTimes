@@ -28,7 +28,6 @@ import android.text.format.DateUtils
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
-import com.github.times.BuildConfig
 import com.github.times.TimeMillis
 import com.github.times.ZmanimHelper.formatDateTime
 import com.github.times.preference.SimpleZmanimPreferences
@@ -45,21 +44,12 @@ import timber.log.Timber
  */
 class ZmanimReminderService : Service() {
 
-    private lateinit var settings: ZmanimPreferences
-    private lateinit var klaxon: AlarmKlaxon
+    private val settings: ZmanimPreferences by lazy { SimpleZmanimPreferences(this) }
+    private val klaxon: AlarmKlaxon by lazy { AlarmKlaxon(this) }
     private var silenceRunnable: Runnable? = null
-    private val handler = Handler(Looper.getMainLooper())
+    private val handler by lazy { Handler(Looper.getMainLooper()) }
 
-    override fun onBind(intent: Intent): IBinder? {
-        return null
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        val context: Context = this
-        settings = SimpleZmanimPreferences(context)
-        klaxon = AlarmKlaxon(context)
-    }
+    override fun onBind(intent: Intent): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Timber.i("onStartCommand %s", intent)
@@ -83,14 +73,21 @@ class ZmanimReminderService : Service() {
     }
 
     private fun startAlarm() {
+        Timber.i("start alarm")
         klaxon.start()
     }
 
     private fun stopAlarm() {
+        Timber.i("stop alarm")
         klaxon.stop()
     }
 
-    private fun showNotification(context: Context, item: ZmanimReminderItem, silenceAt: TimeMillis) {
+    private fun showNotification(
+        context: Context,
+        item: ZmanimReminderItem,
+        silenceAt: TimeMillis
+    ) {
+        Timber.i("show notification [%s], silence at [%s]", item, formatDateTime(silenceAt))
         val settings = this.settings
         val reminder = ZmanimReminder(context)
         reminder.initNotifications()
@@ -111,8 +108,8 @@ class ZmanimReminderService : Service() {
      *
      * @param silenceAt when to silence.
      */
-    private fun silenceFuture(silenceAt: TimeMillis) {
-        Timber.i("silence future at [%s]", formatDateTime(silenceAt))
+    private fun silence(silenceAt: TimeMillis) {
+        Timber.i("silence at [%s]", formatDateTime(silenceAt))
         var silenceRunnable: Runnable? = this.silenceRunnable
         if (silenceRunnable == null) {
             silenceRunnable = Runnable { stopSelf() }
@@ -124,11 +121,6 @@ class ZmanimReminderService : Service() {
     }
 
     companion object {
-        /**
-         * Extras name to silence to alarm.
-         */
-        const val EXTRA_SILENCE_TIME = BuildConfig.APPLICATION_ID + ".SILENCE_TIME"
-
         private const val ID_NOTIFY = 0x1111
         private const val BUSY_TIMEOUT = 10 * DateUtils.SECOND_IN_MILLIS
 
@@ -181,18 +173,18 @@ class ZmanimReminderService : Service() {
             stopSelf()
             return
         }
-        var silenceAt = item.time + (settings.reminderSilenceOffset * DateUtils.MINUTE_IN_MILLIS)
-        val extras = intent.extras
-        if ((extras != null) && extras.containsKey(EXTRA_SILENCE_TIME)) {
-            silenceAt = extras.getLong(EXTRA_SILENCE_TIME, silenceAt)
-        }
+        val now = System.currentTimeMillis()
+        val silenceAt = now + getSilenceOffsetMillis(settings)
         showNotification(context, item, silenceAt)
         startAlarm()
-        silenceFuture(silenceAt)
+        silence(silenceAt)
     }
 
     private fun handleDismiss() {
         val now = System.currentTimeMillis()
-        silenceFuture(now)
+        silence(now)
     }
+
+    private fun getSilenceOffsetMillis(settings: ZmanimPreferences): TimeMillis =
+        settings.reminderSilenceOffset * DateUtils.MINUTE_IN_MILLIS
 }
