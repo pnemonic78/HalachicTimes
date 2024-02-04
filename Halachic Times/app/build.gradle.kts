@@ -126,7 +126,7 @@ dependencies {
     implementation(project(":compass-lib"))
 
     // Background tasks
-    implementation("androidx.work:work-runtime:2.8.1")
+    implementation("androidx.work:work-runtime:2.9.0")
 
     // Testing
     testImplementation("junit:junit:${BuildVersions.junitVersion}")
@@ -135,5 +135,5 @@ dependencies {
     androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test.ext:junit:${BuildVersions.junitExt}")
     /// Declare the dependencies for the Crashlytics and Analytics libraries
-    implementation("com.google.firebase:firebase-crashlytics:18.5.0")
+    implementation("com.google.firebase:firebase-crashlytics:18.6.1")
 }
