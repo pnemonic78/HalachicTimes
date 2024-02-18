@@ -167,7 +167,7 @@ class ZmanimReminderService : Service() {
 
     private fun handleRemind(intent: Intent) {
         val context: Context = this
-        val item = ZmanimReminderItem.from(context, intent)
+        val item = ZmanimReminderItemData.from(context, intent)
         if (item == null) {
             Timber.w("no item to remind!")
             stopSelf()

@@ -17,15 +17,19 @@ package com.github.times.remind
 
 import android.content.Context
 import android.content.Intent
-import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.work.Data
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.github.times.location.LocationData
+import com.github.times.location.ZmanimLocationListener
+import com.github.times.location.ZmanimLocationListener.Companion.ACTION_LOCATION_CHANGED
+import com.github.times.remind.ZmanimReminder.Companion.ACTION_REMIND
+import com.github.times.remind.ZmanimReminder.Companion.ACTION_SILENCE
+import com.github.times.remind.ZmanimReminderItem.Companion.EXTRA_ITEM
 import java.io.Serializable
-import timber.log.Timber
 
 /**
  * Background worker for reminders.
@@ -36,8 +40,7 @@ import timber.log.Timber
  */
 class ZmanimReminderWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
     override fun doWork(): Result {
-        val data = inputData
-        val intent = toIntent(data) ?: return Result.failure()
+        val intent = toIntent(inputData)
         val reminder = ZmanimReminder(applicationContext)
         reminder.process(intent)
         return Result.success()
@@ -48,35 +51,40 @@ class ZmanimReminderWorker(context: Context, params: WorkerParameters) : Worker(
         private const val DATA_DATA = "android.intent.data"
 
         fun toWorkData(intent: Intent): Data {
-            val extras = intent.extras
             val data = Data.Builder()
-            if (extras != null && !extras.isEmpty) {
-                val all = mutableMapOf<String, Any>()
-                for (key in extras.keySet()) {
-                    val value = extras[key] ?: continue
-                    when (value) {
-                        is CharSequence -> data.putString(key, value.toString())
-                        is Parcelable -> putParcelable(data, key, value)
-                        else -> all[key] = value
-                    }
-                }
-                data.putAll(all)
-            }
             data.putString(DATA_ACTION, intent.action)
             data.putString(DATA_DATA, intent.dataString)
+
+            val extras = intent.extras
+            if (extras != null && !extras.isEmpty) {
+                when (intent.action) {
+                    ACTION_LOCATION_CHANGED -> putExtrasLocation(extras, data)
+                    ACTION_REMIND -> putExtrasRemind(extras, data)
+                    ACTION_SILENCE -> putExtrasSilence(extras, data)
+                }
+            }
             return data.build()
         }
 
-        private fun putParcelable(data: Data.Builder, key: String, parcelable: Parcelable) {
-            if (parcelable is Location) {
-                LocationData.writeToData(data, key, parcelable)
-            } else {
-                Timber.w("Unknown parcelable: %s", parcelable)
+        private fun putExtrasLocation(extras: Bundle, data: Data.Builder) {
+            LocationData.from(extras, ZmanimLocationListener.EXTRA_LOCATION)?.also {
+                LocationData.writeToData(data, ZmanimLocationListener.EXTRA_LOCATION, it)
             }
         }
 
-        fun toIntent(data: Data?): Intent? {
-            if (data == null) return null
+        private fun putExtrasRemind(extras: Bundle, data: Data.Builder) {
+            ZmanimReminderItemData.from(extras)?.also {
+                data.putReminder(EXTRA_ITEM, it)
+            }
+        }
+
+        private fun putExtrasSilence(extras: Bundle, data: Data.Builder) {
+            ZmanimReminderItemData.from(extras)?.also {
+                data.putReminder(EXTRA_ITEM, it)
+            }
+        }
+
+        fun toIntent(data: Data): Intent {
             val extras = Bundle()
             val action = data.getString(DATA_ACTION)
             val dataString = data.getString(DATA_DATA)
@@ -84,13 +92,23 @@ class ZmanimReminderWorker(context: Context, params: WorkerParameters) : Worker(
             val keysToRemove = mutableSetOf<String>()
 
             for (key in all.keys) {
+                if (keysToRemove.contains(key)) continue
                 val value = all[key] ?: continue
+
                 val location = LocationData.readFromData(data, key, keysToRemove)
                 if (location != null) {
-                    val locationKey = LocationData.getKey(key)
+                    val locationKey = LocationData.getKey(key) ?: continue
                     extras.putParcelable(locationKey, location)
                     continue
                 }
+
+                val reminderItem = ZmanimReminderItemData.readFromData(data, key, keysToRemove)
+                if (reminderItem != null) {
+                    val reminderItemKey = ZmanimReminderItemData.getKey(key) ?: continue
+                    ZmanimReminderItemData.put(extras, reminderItemKey, reminderItem)
+                    continue
+                }
+
                 if (value is String) {
                     extras.putString(key, value)
                 } else if (value is Boolean) {
@@ -131,8 +149,10 @@ class ZmanimReminderWorker(context: Context, params: WorkerParameters) : Worker(
                     extras.putShortArray(key, value)
                 } else if (value is Array<*>) {
                     if (value.isArrayOf<String>()) {
+                        @Suppress("UNCHECKED_CAST")
                         extras.putStringArray(key, value as Array<String?>)
                     } else if (value.isArrayOf<Parcelable>()) {
+                        @Suppress("UNCHECKED_CAST")
                         extras.putParcelableArray(key, value as Array<Parcelable?>)
                     }
                 } else if (value is Parcelable) {
@@ -142,11 +162,11 @@ class ZmanimReminderWorker(context: Context, params: WorkerParameters) : Worker(
                 }
             }
 
+            extras.remove(DATA_ACTION)
+            extras.remove(DATA_DATA)
             for (key in keysToRemove) {
                 extras.remove(key)
             }
-            extras.remove(DATA_ACTION)
-            extras.remove(DATA_DATA)
 
             val intent = Intent(action)
                 .putExtras(extras)

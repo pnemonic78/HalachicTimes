@@ -90,6 +90,9 @@ dependencies {
     implementation("com.google.maps:google-maps-services:2.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
 
+    // Background tasks
+    implementation("androidx.work:work-runtime:2.9.0")
+
     // Testing
     testImplementation("junit:junit:${BuildVersions.junitVersion}")
     androidTestImplementation("androidx.test:core:${BuildVersions.androidTestVersion}")

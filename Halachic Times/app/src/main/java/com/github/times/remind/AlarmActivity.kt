@@ -46,7 +46,6 @@ import com.github.times.databinding.AlarmActivityBinding
 import com.github.times.preference.RingtonePreference
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
-import com.github.times.remind.ZmanimReminderItem.Companion.from
 import com.github.util.LocaleUtils.getDefaultLocale
 import com.github.util.TimeUtils.roundUp
 import java.text.Format
@@ -145,11 +144,11 @@ class AlarmActivity<P : ZmanimPreferences> : AppCompatActivity(), ThemeCallbacks
     private fun handleIntent(intent: Intent) {
         val context: Context = this
         val extras = intent.extras ?: return
-        val item = from(context, extras)
-        if (item.isNullOrEmpty()) {
+        val reminderItem = ZmanimReminderItemData.from(context, extras)
+        if (reminderItem.isNullOrEmpty()) {
             close()
         } else {
-            notifyNow(item)
+            notifyNow(reminderItem)
             if (extras.containsKey(EXTRA_SILENCE_TIME)) {
                 val silenceAt = extras.getLong(EXTRA_SILENCE_TIME)
                 silenceFuture(silenceAt)

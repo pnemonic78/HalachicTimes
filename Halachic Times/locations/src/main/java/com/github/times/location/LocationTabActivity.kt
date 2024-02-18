@@ -37,7 +37,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.github.app.SimpleThemeCallbacks
 import com.github.app.ThemeCallbacks
-import com.github.os.getParcelableCompat
 import com.github.preference.ThemePreferences
 import com.github.times.location.LocationAdapter.LocationItem
 import com.github.times.location.LocationAdapter.LocationItemListener
@@ -290,8 +289,7 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_ADD && resultCode == RESULT_OK) {
-            val location =
-                data?.getParcelableCompat(AddLocationActivity.EXTRA_LOCATION, Location::class.java)
+            val location = LocationData.from(data, AddLocationActivity.EXTRA_LOCATION)
             if (location != null) {
                 addLocation(location)
             } else {
@@ -331,7 +329,6 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
     }
 
     private fun fetchAddress(location: Location) {
-        val locations = locations
         locations.findAddress(location, true)
     }
 

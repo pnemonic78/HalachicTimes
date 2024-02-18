@@ -23,13 +23,11 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.github.app.SimpleThemeCallbacks
 import com.github.app.ThemeCallbacks
-import com.github.os.getParcelableCompat
 import com.github.preference.ThemePreferences
 import com.github.times.location.LocationsProvider.Companion.hasNoLocationPermission
 import com.github.times.location.ZmanimLocation.Companion.compare
@@ -112,7 +110,7 @@ abstract class LocatedActivity<P : ThemePreferences> : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         onPreCreate()
         super.onCreate(savedInstanceState)
-        val location = intent.getParcelableCompat<Location>(EXTRA_LOCATION, Location::class.java)
+        val location = LocationData.from(intent, EXTRA_LOCATION)
         if (location != null) {
             locations.setLocation(location)
         }
@@ -190,10 +188,7 @@ abstract class LocatedActivity<P : ThemePreferences> : AppCompatActivity(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ACTIVITY_LOCATIONS) {
             if (resultCode == RESULT_OK) {
-                val location = data?.getParcelableCompat(
-                    LocationManager.KEY_LOCATION_CHANGED,
-                    Location::class.java
-                )
+                val location = LocationData.from(data, LocationManager.KEY_LOCATION_CHANGED)
                 locations.setLocation(location)
                 return
             }

@@ -117,9 +117,8 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
         val args = intent.extras
         var location: Location = location
         if (args != null) {
-            if (args.containsKey(EXTRA_LOCATION)) {
-                location = args.getParcelableCompat(EXTRA_LOCATION, Location::class.java)
-                    ?: Location(GeocoderBase.USER_PROVIDER)
+            LocationData.from(args, EXTRA_LOCATION)?.let {
+                location = it
             }
             if (args.containsKey(EXTRA_LATITUDE)) {
                 location.latitude = args.getDouble(EXTRA_LATITUDE)
@@ -258,9 +257,10 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
 
             R.id.menu_location_add -> {
                 if (saveLocation(location, coordsFormatSpinner.selectedItemPosition)) {
-                    val data = Intent()
-                        .putExtra(EXTRA_LOCATION, location)
-                    setResult(RESULT_OK, data)
+                    Intent().apply {
+                        put(EXTRA_LOCATION, location)
+                        setResult(RESULT_OK, this)
+                    }
                     finish()
                 }
                 true
@@ -363,7 +363,7 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         location = savedInstanceState.getParcelableCompat(SAVE_STATE_LOCATION, Location::class.java)
-            ?: Location(GeocoderBase.USER_PROVIDER)
+            ?: location
         address =
             savedInstanceState.getParcelableCompat(SAVE_STATE_ADDRESS, ZmanimAddress::class.java)
     }

@@ -39,6 +39,7 @@ import com.github.times.location.AddressService.Companion.enqueueWork
 import com.github.times.location.ZmanimLocation.Companion.compare
 import com.github.times.location.ZmanimLocation.Companion.compareAll
 import com.github.times.location.ZmanimLocation.Companion.distanceBetween
+import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_LOCATION
 import com.github.times.location.country.CountriesGeocoder
 import java.util.TimeZone
 import java.util.concurrent.CopyOnWriteArrayList
@@ -196,7 +197,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     private fun broadcastLocationChanged(location: Location) {
         val intent = Intent(ZmanimLocationListener.ACTION_LOCATION_CHANGED)
             .setPackage(context.packageName)
-            .putExtra(ZmanimLocationListener.EXTRA_LOCATION, location)
+            .putExtra(EXTRA_LOCATION, location)
         context.sendBroadcast(intent)
     }
 
@@ -701,10 +702,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
                 WHAT_ADDRESS -> if (msg.obj != null) {
                     if (msg.obj is ZmanimAddress) {
                         address = msg.obj as ZmanimAddress
-                        location = address.extras.getParcelableCompat(
-                            ZmanimLocationListener.EXTRA_LOCATION,
-                            Location::class.java
-                        )
+                        location = LocationData.from(address.extras, EXTRA_LOCATION)
                     } else if (msg.obj is Location) {
                         location = msg.obj as Location
                     }
@@ -724,14 +722,14 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     @JvmOverloads
     fun findAddress(location: Location, persist: Boolean = true) {
         val findAddress = Intent(ZmanimLocationListener.ACTION_ADDRESS)
-            .putExtra(ZmanimLocationListener.EXTRA_LOCATION, location)
+            .putExtra(EXTRA_LOCATION, location)
             .putExtra(ZmanimLocationListener.EXTRA_PERSIST, persist)
         enqueueWork(context, findAddress)
     }
 
     fun findElevation(location: Location) {
         val findElevation = Intent(ZmanimLocationListener.ACTION_ELEVATION)
-            .putExtra(ZmanimLocationListener.EXTRA_LOCATION, location)
+            .putExtra(EXTRA_LOCATION, location)
         enqueueWork(context, findElevation)
     }
 
@@ -775,10 +773,8 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
                         return
                     }
                     if (intentExtras != null) {
-                        location = intentExtras.getParcelableCompat(
-                            ZmanimLocationListener.EXTRA_LOCATION,
-                            Location::class.java
-                        )
+                        location =
+                            LocationData.from(intentExtras, EXTRA_LOCATION)
                         address = intentExtras.getParcelableCompat(
                             ZmanimLocationListener.EXTRA_ADDRESS,
                             ZmanimAddress::class.java
@@ -786,7 +782,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
                     }
                     if (address != null) {
                         val extras = address.extras ?: Bundle()
-                        extras.putParcelable(ZmanimLocationListener.EXTRA_LOCATION, location)
+                        extras.putParcelable(EXTRA_LOCATION, location)
                         address.extras = extras
                         handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget()
                     } else {
@@ -799,10 +795,8 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
                         return
                     }
                     if (intentExtras != null) {
-                        location = intentExtras.getParcelableCompat(
-                            ZmanimLocationListener.EXTRA_LOCATION,
-                            Location::class.java
-                        )
+                        location =
+                            LocationData.from(intentExtras, EXTRA_LOCATION)
                     }
                     handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget()
                 }

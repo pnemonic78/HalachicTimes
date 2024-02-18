@@ -21,7 +21,6 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
-import android.location.Location
 import android.text.format.DateUtils
 import android.widget.RemoteViews
 import androidx.annotation.IdRes
@@ -32,7 +31,6 @@ import com.github.app.LocaleHelper
 import com.github.appwidget.AppWidgetUtils.getAppWidgetIds
 import com.github.appwidget.AppWidgetUtils.notifyAppWidgetViewDataChanged
 import com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate
-import com.github.os.getParcelableCompat
 import com.github.preference.LocalePreferences
 import com.github.times.R
 import com.github.times.ZmanViewHolder
@@ -43,6 +41,7 @@ import com.github.times.ZmanimHelper.formatDateTime
 import com.github.times.ZmanimItem
 import com.github.times.ZmanimPopulater
 import com.github.times.isNullOrEmptyOrElapsed
+import com.github.times.location.LocationData
 import com.github.times.location.ZmanimLocationListener
 import com.github.times.location.ZmanimLocations
 import com.github.times.preference.SimpleZmanimPreferences
@@ -87,11 +86,9 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
             Intent.ACTION_WALLPAPER_CHANGED -> notifyAppWidgets(contextLocale)
 
             ZmanimLocationListener.ACTION_LOCATION_CHANGED -> {
-                val location = intent.getParcelableCompat(
-                    ZmanimLocationListener.EXTRA_LOCATION,
-                    Location::class.java
-                )
-                location?.let { onLocationChanged(contextLocale) }
+                LocationData.from(intent, ZmanimLocationListener.EXTRA_LOCATION)?.let {
+                    onLocationChanged(contextLocale)
+                }
             }
         }
     }

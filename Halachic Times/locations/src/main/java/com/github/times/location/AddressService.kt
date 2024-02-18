@@ -21,7 +21,6 @@ import android.location.Address
 import android.location.Location
 import android.os.Bundle
 import androidx.core.app.JobIntentService
-import com.github.os.getParcelableCompat
 import com.github.times.location.AddressProvider.OnFindAddressListener
 import timber.log.Timber
 
@@ -41,8 +40,7 @@ class AddressService : JobIntentService(), OnFindAddressListener {
     override fun onHandleWork(intent: Intent) {
         val extras = intent.extras ?: return
         if (extras.isEmpty) return
-        val location = extras.getParcelableCompat(PARAMETER_LOCATION, Location::class.java)
-            ?: return
+        val location = LocationData.from(extras, PARAMETER_LOCATION) ?: return
         val provider = addressProvider ?: return
         val action = intent.action
         if (ZmanimLocationListener.ACTION_ADDRESS == action) {

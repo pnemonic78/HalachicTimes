@@ -62,6 +62,7 @@ import com.github.times.ZmanimPopulater
 import com.github.times.isNullOrEmptyOrElapsed
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
+import com.github.times.remind.ZmanimReminderItem.Companion.EXTRA_ITEM
 import com.github.times.remind.ZmanimReminderItem.Companion.from
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
 import java.util.Calendar
@@ -220,7 +221,7 @@ class ZmanimReminder(private val context: Context) {
     private fun cancelNotification() {
         Timber.i("cancelNotification")
         alarmManager?.let { alarms ->
-            val alarmIntent = createAlarmIntent(null as ZmanimItem?, 0L)
+            val alarmIntent = createAlarmIntent(null as ZmanimItem?)
             alarms.cancel(alarmIntent)
         }
         notificationManager?.cancel(ID_NOTIFY)
@@ -318,7 +319,7 @@ class ZmanimReminder(private val context: Context) {
             formatDateTime(triggerAt),
             formatDateTime(item.time)
         )
-        val alarmIntent = createAlarmIntent(item, silenceAt)
+        val alarmIntent = createAlarmIntent(item)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (!alarms.canScheduleExactAlarms()) {
                 AlarmManagerCompat.setAndAllowWhileIdle(
@@ -354,10 +355,10 @@ class ZmanimReminder(private val context: Context) {
         return PendingIntent.getActivity(context, ID_NOTIFY, intent, FLAGS_UPDATE)
     }
 
-    private fun createAlarmIntent(item: ZmanimItem?, silenceAt: TimeMillis): PendingIntent {
+    private fun createAlarmIntent(item: ZmanimItem?): PendingIntent {
+        val reminderItem = from(item)
         if (isAlarmService) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val reminderItem = from(item)
                 val intent = createAlarmServiceIntent(reminderItem)
                 return PendingIntent.getForegroundService(
                     context,
@@ -369,7 +370,7 @@ class ZmanimReminder(private val context: Context) {
         }
         val intent = Intent(context, receiverClass)
             .setAction(ACTION_REMIND)
-        putReminderItem(item, intent)
+            .put(EXTRA_ITEM, reminderItem)
         return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, FLAGS_UPDATE)
     }
 
@@ -378,7 +379,6 @@ class ZmanimReminder(private val context: Context) {
         silenceAt: TimeMillis
     ): PendingIntent {
         val intent = createAlarmActivity(item, silenceAt)
-        putReminderItem(item, intent)
         return PendingIntent.getActivity(
             context,
             ID_ALARM_REMINDER,
@@ -388,10 +388,9 @@ class ZmanimReminder(private val context: Context) {
     }
 
     private fun createAlarmServiceIntent(item: ZmanimReminderItem?): Intent {
-        val intent = Intent(context, ZmanimReminderService::class.java)
+        return Intent(context, ZmanimReminderService::class.java)
             .setAction(ACTION_REMIND)
-        putReminderItem(item, intent)
-        return intent
+            .put(EXTRA_ITEM, item)
     }
 
     /**
@@ -428,17 +427,22 @@ class ZmanimReminder(private val context: Context) {
         }
         val action = intent.action ?: return
         var update = false
-        val extras: Bundle?
+        val extras: Bundle? = intent.extras
         when (action) {
-            Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_DATE_CHANGED, Intent.ACTION_LOCALE_CHANGED, Intent.ACTION_TIMEZONE_CHANGED, Intent.ACTION_TIME_CHANGED, Intent.ACTION_MY_PACKAGE_REPLACED, ACTION_UPDATE -> update =
-                true
+            Intent.ACTION_BOOT_COMPLETED,
+            Intent.ACTION_DATE_CHANGED,
+            Intent.ACTION_LOCALE_CHANGED,
+            Intent.ACTION_TIMEZONE_CHANGED,
+            Intent.ACTION_TIME_CHANGED,
+            Intent.ACTION_MY_PACKAGE_REPLACED,
+            ACTION_UPDATE -> update = true
 
             ACTION_CANCEL -> cancel()
+
             ACTION_REMIND -> {
-                extras = intent.extras
                 if (extras != null) {
-                    val reminderItem = from(context, extras)
-                    if (reminderItem != null) {
+                    val reminderItem = ZmanimReminderItemData.from(context, extras)
+                    if (!reminderItem.isNullOrEmpty()) {
                         val settings = createPreferences()
                         notifyNow(settings, reminderItem)
                     }
@@ -447,14 +451,13 @@ class ZmanimReminder(private val context: Context) {
             }
 
             ACTION_SILENCE -> {
-                extras = intent.extras
                 if (extras != null) {
-                    val reminderItem = from(context, extras)
-                    if (reminderItem != null) {
+                    val reminderItem = ZmanimReminderItemData.from(context, extras)
+                    if (reminderItem.isNullOrEmpty()) {
+                        cancelNotification()
+                    } else {
                         val settings = createPreferences()
                         silence(settings, reminderItem)
-                    } else {
-                        cancelNotification()
                     }
                     update = true
                 } else {
@@ -720,7 +723,7 @@ class ZmanimReminder(private val context: Context) {
     private fun createSilenceIntent(item: ZmanimReminderItem): PendingIntent {
         val intent = Intent(context, receiverClass)
             .setAction(ACTION_SILENCE)
-        item.put(intent)
+            .put(EXTRA_ITEM, item)
         return PendingIntent.getBroadcast(
             context,
             ID_ALARM_SILENT,
@@ -856,25 +859,13 @@ class ZmanimReminder(private val context: Context) {
         item: ZmanimReminderItem,
         silenceAt: TimeMillis
     ): Intent {
-        val intent = Intent(context, AlarmActivity::class.java)
+        return Intent(context, AlarmActivity::class.java)
             .putExtra(AlarmActivity.EXTRA_SILENCE_TIME, silenceAt)
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             .addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION)
             .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-        putReminderItem(item, intent)
-        return intent
-    }
-
-    private fun putReminderItem(item: ZmanimItem?, intent: Intent) {
-        if (item != null) {
-            val reminderItem = from(item)
-            putReminderItem(reminderItem, intent)
-        }
-    }
-
-    private fun putReminderItem(reminderItem: ZmanimReminderItem?, intent: Intent) {
-        reminderItem?.put(intent)
+            .put(EXTRA_ITEM, item)
     }
 
     private fun startAlarmActivity(item: ZmanimReminderItem, silenceAt: TimeMillis) {
