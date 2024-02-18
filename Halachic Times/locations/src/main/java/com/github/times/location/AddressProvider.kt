@@ -102,7 +102,7 @@ class AddressProvider @JvmOverloads constructor(
         addresses = findNearestCountry(location)
         best = findBestAddress(location, addresses, GeocoderBase.SAME_PLANET)
         if (best != null) {
-            listener.onFindAddress(this, location, best)
+            notifyAddressFound(listener, location, best)
         }
         val bestCountry = best
 
@@ -110,7 +110,7 @@ class AddressProvider @JvmOverloads constructor(
         addresses = findNearestCity(location)
         best = findBestAddress(location, addresses, GeocoderBase.SAME_CITY)
         if (best != null) {
-            listener.onFindAddress(this, location, best)
+            notifyAddressFound(listener, location, best)
         }
         var bestCity = best
 
@@ -120,13 +120,13 @@ class AddressProvider @JvmOverloads constructor(
         if (best != null) {
             bestPlateau = best
             bestCached = best
-            listener.onFindAddress(this, location, best)
+            notifyAddressFound(listener, location, best)
         }
         best = findBestAddress(location, addresses, GeocoderBase.SAME_CITY)
         if (best != null && best !== bestPlateau) {
             bestCity = best
             bestCached = best
-            listener.onFindAddress(this, location, best)
+            notifyAddressFound(listener, location, best)
         }
 
         // Find the best city from some Geocoder provider.
@@ -135,11 +135,11 @@ class AddressProvider @JvmOverloads constructor(
             best = findBestAddress(location, addresses, GeocoderBase.SAME_PLATEAU)
             if (best != null && compare(best, bestCached) != 0) {
                 bestPlateau = best
-                listener.onFindAddress(this, location, best)
+                notifyAddressFound(listener, location, best)
             }
             best = findBestAddress(location, addresses, GeocoderBase.SAME_CITY)
             if (best != null && best !== bestPlateau && compare(best, bestCached) != 0) {
-                listener.onFindAddress(this, location, best)
+                notifyAddressFound(listener, location, best)
             }
         }
 
@@ -158,12 +158,12 @@ class AddressProvider @JvmOverloads constructor(
                 best = findBestAddress(location, addresses, GeocoderBase.SAME_PLATEAU)
                 if (best != null && compare(best, bestCached) != 0) {
                     bestPlateau = best
-                    listener.onFindAddress(this, location, best)
+                    notifyAddressFound(listener, location, best)
                 }
                 best = findBestAddress(location, addresses, GeocoderBase.SAME_CITY)
                 if (best != null) {
                     if (best !== bestPlateau && compare(best, bestCached) != 0) {
-                        listener.onFindAddress(this, location, best)
+                        notifyAddressFound(listener, location, best)
                     }
                     break
                 }
@@ -179,6 +179,14 @@ class AddressProvider @JvmOverloads constructor(
             }
         }
         return best
+    }
+
+    private fun notifyAddressFound(
+        listener: OnFindAddressListener,
+        location: Location,
+        address: Address
+    ) {
+        listener.onFindAddress(this, location, address)
     }
 
     /**

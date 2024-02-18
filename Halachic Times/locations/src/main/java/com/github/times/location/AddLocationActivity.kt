@@ -18,7 +18,6 @@ package com.github.times.location
 import android.content.Context
 import android.content.Intent
 import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.Menu
@@ -119,10 +118,8 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
         var location: Location = location
         if (args != null) {
             if (args.containsKey(EXTRA_LOCATION)) {
-                location =
-                    args.getParcelableCompat(EXTRA_LOCATION, Location::class.java) ?: Location(
-                        GeocoderBase.USER_PROVIDER
-                    )
+                location = args.getParcelableCompat(EXTRA_LOCATION, Location::class.java)
+                    ?: Location(GeocoderBase.USER_PROVIDER)
             }
             if (args.containsKey(EXTRA_LATITUDE)) {
                 location.latitude = args.getDouble(EXTRA_LATITUDE)
@@ -482,7 +479,7 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
         /**
          * The location parameter.
          */
-        const val EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED
+        const val EXTRA_LOCATION = ZmanimLocationListener.EXTRA_LOCATION
 
         /**
          * The location's latitude parameter.

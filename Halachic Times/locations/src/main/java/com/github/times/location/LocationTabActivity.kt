@@ -33,7 +33,6 @@ import android.widget.SearchView
 import android.widget.TabHost
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.github.app.SimpleThemeCallbacks
@@ -295,6 +294,8 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
                 data?.getParcelableCompat(AddLocationActivity.EXTRA_LOCATION, Location::class.java)
             if (location != null) {
                 addLocation(location)
+            } else {
+                Timber.w("add empty location")
             }
         }
     }
@@ -322,11 +323,7 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
      *
      * @param location the new location.
      */
-    private fun addLocation(location: Location?) {
-        if (location == null) {
-            Timber.w("add empty location")
-            return
-        }
+    private fun addLocation(location: Location) {
         fetchAddress(location)
         val formatter: LocationFormatter = locations
         val query: CharSequence = formatter.formatLongitude(abs(location.longitude))
@@ -335,7 +332,7 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
 
     private fun fetchAddress(location: Location) {
         val locations = locations
-        locations.findAddress(location)
+        locations.findAddress(location, true)
     }
 
     override fun onAddressChanged(location: Location, address: ZmanimAddress) {

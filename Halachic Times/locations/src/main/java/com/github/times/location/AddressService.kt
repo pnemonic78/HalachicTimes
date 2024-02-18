@@ -47,10 +47,7 @@ class AddressService : JobIntentService(), OnFindAddressListener {
         val action = intent.action
         if (ZmanimLocationListener.ACTION_ADDRESS == action) {
             if (extras.containsKey(PARAMETER_PERSIST)) {
-                var locationExtras = location.extras
-                if (locationExtras == null) {
-                    locationExtras = Bundle()
-                }
+                val locationExtras = location.extras ?: Bundle()
                 locationExtras.putBoolean(
                     PARAMETER_PERSIST,
                     extras.getBoolean(PARAMETER_PERSIST, PERSIST_DEFAULT)
@@ -74,7 +71,7 @@ class AddressService : JobIntentService(), OnFindAddressListener {
             }
         }
         val extras = location.extras
-        if (extras == null || extras.getBoolean(PARAMETER_PERSIST, PERSIST_DEFAULT)) {
+        if (extras?.getBoolean(PARAMETER_PERSIST, PERSIST_DEFAULT) ?: PERSIST_DEFAULT) {
             provider.insertOrUpdateAddress(location, addr)
         }
         Timber.i("find address: %s %s", location, addr)

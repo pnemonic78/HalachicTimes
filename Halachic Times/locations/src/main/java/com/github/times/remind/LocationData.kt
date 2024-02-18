@@ -2,7 +2,6 @@ package com.github.times.remind
 
 import android.location.Location
 import android.os.Build
-import androidx.work.Data
 
 object LocationData {
     private val DATA_LOCATION = Location::class.java.name
@@ -23,7 +22,7 @@ object LocationData {
     private val DATA_SPEED_ACCURACY_METERSPERSECOND = DATA_PREFIX + "SpeedAccuracyMetersPerSecond"
     private val DATA_BEARING_ACCURACY_DEGREES = DATA_PREFIX + "BearingAccuracyDegrees"
 
-    fun writeToData(data: Data.Builder, key: String, location: Location) {
+    fun writeToData(data: androidx.work.Data.Builder, key: String, location: Location) {
         data.putString(key + DATA_KEY_SUFFIX, key)
         data.putString(key + DATA_PROVIDER, location.provider)
         data.putLong(key + DATA_TIME, location.time)
@@ -50,7 +49,7 @@ object LocationData {
         }
     }
 
-    fun readFromData(data: Data, dataKey: String, keysToRemove: MutableCollection<String>): Location? {
+    fun readFromData(data: androidx.work.Data, dataKey: String, keysToRemove: MutableCollection<String>): Location? {
         if (!dataKey.endsWith(DATA_KEY_SUFFIX)) return null
         val value = data.getString(dataKey)
         val key = getKey(dataKey)
