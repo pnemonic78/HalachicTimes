@@ -19,6 +19,7 @@ import android.location.Address
 import android.os.Parcel
 import android.os.Parcelable
 import com.github.times.location.ZmanimAddress
+import com.github.times.location.country.CountryPolygon.Companion.toFixedPoint
 import java.util.Locale
 import kotlin.math.round
 
@@ -33,9 +34,6 @@ class Country : ZmanimAddress {
     constructor(address: ZmanimAddress) : super(address)
 
     companion object {
-        /** Factor to convert a fixed-point integer to double.  */
-        private const val RATIO = CountryPolygon.RATIO
-
         @JvmField
         val CREATOR: Parcelable.Creator<Country> = object : Parcelable.Creator<Country> {
             override fun createFromParcel(source: Parcel): Country {
@@ -53,8 +51,8 @@ class Country : ZmanimAddress {
         }
 
         fun generateCountryId(latitude: Double, longitude: Double): Long {
-            val fixedPointLatitude = round(latitude * RATIO).toLong() and 0x7FFFFFFFL
-            val fixedPointLongitude = round(longitude * RATIO).toLong() and 0xFFFFFFFFL
+            val fixedPointLatitude = toFixedPoint(latitude).toLong() and 0x7FFFFFFFL
+            val fixedPointLongitude = toFixedPoint(longitude).toLong() and 0xFFFFFFFFL
             return -((fixedPointLatitude shl 31) or fixedPointLongitude)
         }
     }

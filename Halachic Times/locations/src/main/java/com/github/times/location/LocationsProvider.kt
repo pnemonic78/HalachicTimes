@@ -17,6 +17,7 @@ package com.github.times.location
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -34,11 +35,13 @@ import android.os.Message
 import android.text.format.DateUtils
 import androidx.annotation.RequiresApi
 import androidx.core.content.PermissionChecker
-import com.github.os.getParcelableCompat
 import com.github.times.location.AddressService.Companion.enqueueWork
 import com.github.times.location.ZmanimLocation.Companion.compare
 import com.github.times.location.ZmanimLocation.Companion.compareAll
 import com.github.times.location.ZmanimLocation.Companion.distanceBetween
+import com.github.times.location.ZmanimLocationListener.Companion.ACTION_ADDRESS
+import com.github.times.location.ZmanimLocationListener.Companion.ACTION_ELEVATION
+import com.github.times.location.ZmanimLocationListener.Companion.ACTION_LOCATION_CHANGED
 import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_LOCATION
 import com.github.times.location.country.CountriesGeocoder
 import java.util.TimeZone
@@ -177,7 +180,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         }
         if (keepLocation) {
             this.locationLocal = locationNew
-            preferences.putLocation(locationNew)
+            preferences.location = locationNew
         }
         notifyLocationChanged(locationNew)
         if (findElevation && !locationNew.hasAltitude()) {
@@ -195,7 +198,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     }
 
     private fun broadcastLocationChanged(location: Location) {
-        val intent = Intent(ZmanimLocationListener.ACTION_LOCATION_CHANGED)
+        val intent = Intent(ACTION_LOCATION_CHANGED)
             .setPackage(context.packageName)
             .putExtra(EXTRA_LOCATION, location)
         context.sendBroadcast(intent)
@@ -345,7 +348,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
      *
      * @return the location - `null` otherwise.
      */
-    val locationTZ: Location?
+    val locationTZ: Location
         get() = getLocationTZ(timeZone)
 
     /**
@@ -354,7 +357,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
      * @param timeZone the time zone.
      * @return the location - `null` otherwise.
      */
-    fun getLocationTZ(timeZone: TimeZone?): Location? {
+    fun getLocationTZ(timeZone: TimeZone): Location {
         return countriesGeocoder.findLocation(timeZone)
     }
 
@@ -366,7 +369,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     fun getLocation(): Location? {
         var location = locationLocal
         if (isValid(location)) return location
-        location = this.locationSaved
+        location = locationSaved
         if (isValid(location)) return location
         location = locationGPS
         if (isValid(location)) return location
@@ -374,6 +377,10 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         if (isValid(location)) return location
         location = locationPassive
         if (isValid(location)) return location
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            location = locationFused
+            if (isValid(location)) return location
+        }
         location = locationTZ
         if (isValid(location)) return location
         return null
@@ -382,7 +389,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     /**
      * Load available locations.
      */
-    private fun findLocations() {
+    private fun loadLocation() {
         var location = locationLocal
         if (isValid(location)) {
             handleLocationChanged(location)
@@ -471,7 +478,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
 
         // Give the listener our latest known location and address.
         if (locationLocal == null) {
-            findLocations()
+            loadLocation()
         } else {
             val location = getLocation()
             if (location != null) {
@@ -594,7 +601,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     fun setLocation(location: Location?) {
         this.locationLocal = null
         isManualLocation = location != null
-        preferences.putLocation(null)
+        preferences.location = null
         if (location == null) {
             sendEmptyMessage(WHAT_START)
         } else {
@@ -634,21 +641,30 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         startTaskDelay = UPDATE_INTERVAL_MAX.coerceAtMost(startTaskDelay shl 1)
     }
 
-    @Suppress("DEPRECATION")
     private fun getBestProvider(locationManager: LocationManager): String? {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            val providers = locationManager.getProviders(true)
-            val providerGPS = providers.firstOrNull { provider ->
-                val props =
-                    locationManager.getProviderProperties(provider) ?: return@firstOrNull false
-                return@firstOrNull props.hasSatelliteRequirement()
-            }
-            if (providerGPS != null) return providerGPS
-            if (providers.contains(LocationManager.FUSED_PROVIDER)) {
-                return LocationManager.FUSED_PROVIDER
-            }
-            return providers.firstOrNull()
+            return getBestProvider34(locationManager)
         }
+        return getBestProviderCriteria(locationManager)
+    }
+
+    @TargetApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    private fun getBestProvider34(locationManager: LocationManager): String? {
+        val providers = locationManager.getProviders(true)
+        val providerGPS = providers.firstOrNull { provider ->
+            val props =
+                locationManager.getProviderProperties(provider) ?: return@firstOrNull false
+            return@firstOrNull props.hasSatelliteRequirement()
+        }
+        if (providerGPS != null) return providerGPS
+        if (providers.contains(LocationManager.FUSED_PROVIDER)) {
+            return LocationManager.FUSED_PROVIDER
+        }
+        return providers.firstOrNull()
+    }
+
+    @Suppress("DEPRECATION")
+    private fun getBestProviderCriteria(locationManager: LocationManager): String? {
         val criteria = Criteria().apply {
             accuracy = Criteria.ACCURACY_COARSE
             isCostAllowed = true
@@ -719,16 +735,15 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         }
     }
 
-    @JvmOverloads
     fun findAddress(location: Location, persist: Boolean = true) {
-        val findAddress = Intent(ZmanimLocationListener.ACTION_ADDRESS)
+        val findAddress = Intent(ACTION_ADDRESS)
             .putExtra(EXTRA_LOCATION, location)
             .putExtra(ZmanimLocationListener.EXTRA_PERSIST, persist)
         enqueueWork(context, findAddress)
     }
 
     fun findElevation(location: Location) {
-        val findElevation = Intent(ZmanimLocationListener.ACTION_ELEVATION)
+        val findElevation = Intent(ACTION_ELEVATION)
             .putExtra(EXTRA_LOCATION, location)
         enqueueWork(context, findElevation)
     }
@@ -768,36 +783,29 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
             val handler = this@LocationsProvider.handler
 
             when (action) {
-                ZmanimLocationListener.ACTION_ADDRESS -> {
+                ACTION_ADDRESS -> {
                     if (intentPackage.isNullOrEmpty() || intentPackage != context.packageName) {
                         return
                     }
+                    location = LocationData.from(intentExtras, EXTRA_LOCATION)
                     if (intentExtras != null) {
-                        location =
-                            LocationData.from(intentExtras, EXTRA_LOCATION)
-                        address = intentExtras.getParcelableCompat(
-                            ZmanimLocationListener.EXTRA_ADDRESS,
-                            ZmanimAddress::class.java
-                        )
+                        address = intentExtras.getAddress(ZmanimLocationListener.EXTRA_ADDRESS)
                     }
                     if (address != null) {
-                        val extras = address.extras ?: Bundle()
-                        extras.putParcelable(EXTRA_LOCATION, location)
-                        address.extras = extras
+                        address.extras = (address.extras ?: Bundle()).apply {
+                            putParcelable(EXTRA_LOCATION, location)
+                        }
                         handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget()
                     } else {
                         handler.obtainMessage(WHAT_ADDRESS, location).sendToTarget()
                     }
                 }
 
-                ZmanimLocationListener.ACTION_ELEVATION -> {
+                ACTION_ELEVATION -> {
                     if (intentPackage.isNullOrEmpty() || intentPackage != context.packageName) {
                         return
                     }
-                    if (intentExtras != null) {
-                        location =
-                            LocationData.from(intentExtras, EXTRA_LOCATION)
-                    }
+                    location = LocationData.from(intentExtras, EXTRA_LOCATION)
                     handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget()
                 }
 
@@ -807,10 +815,11 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     }
 
     init {
-        val filter = IntentFilter()
-        filter.addAction(ZmanimLocationListener.ACTION_ADDRESS)
-        filter.addAction(ZmanimLocationListener.ACTION_ELEVATION)
-        filter.addAction(Intent.ACTION_TIMEZONE_CHANGED)
+        val filter = IntentFilter().apply {
+            addAction(ACTION_ADDRESS)
+            addAction(ACTION_ELEVATION)
+            addAction(Intent.ACTION_TIMEZONE_CHANGED)
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context.registerReceiver(broadcastReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

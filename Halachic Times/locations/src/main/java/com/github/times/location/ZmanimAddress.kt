@@ -15,9 +15,12 @@
  */
 package com.github.times.location
 
+import android.content.Intent
 import android.location.Address
+import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import com.github.os.getParcelableCompat
 import com.github.util.StringUtils
 import java.util.Locale
 
@@ -277,6 +280,10 @@ open class ZmanimAddress : Address, Comparable<ZmanimAddress> {
         return super.toString() + "[" + formatted + "]"
     }
 
+    override fun hashCode(): Int {
+        return super.hashCode()
+    }
+
     companion object {
         /**
          * Key to store the formatted address, instead of formatting it ourselves
@@ -374,4 +381,21 @@ open class ZmanimAddress : Address, Comparable<ZmanimAddress> {
             return true
         }
     }
+}
+
+fun Bundle.put(key: String, address: Address) {
+    putParcelable(key, address)
+}
+
+fun Intent.put(key: String, address: Address): Intent {
+    putExtra(key, address)
+    return this
+}
+
+fun Bundle.getAddress(key: String): ZmanimAddress? {
+    return getParcelableCompat(key, ZmanimAddress::class.java)
+}
+
+fun Intent.getAddress(key: String): ZmanimAddress? {
+    return getParcelableCompat(key, ZmanimAddress::class.java)
 }

@@ -373,8 +373,8 @@ open class CompassView @JvmOverloads constructor(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         val res = resources
-        val w2 = w / 2f
-        val h2 = h / 2f
+        val w2 = w  * 0.5f
+        val h2 = h * 0.5f
         val boundary =
             res.getDimension(R.dimen.padding) + res.getDimension(R.dimen.circle_thickness)
         val r = max(0f, min(w2, h2) - boundary * 2f)
@@ -450,7 +450,7 @@ open class CompassView @JvmOverloads constructor(
         val frameInnerThickness = paintFrameInner.strokeWidth
         rectFill.set(w2 - r5, h2 - r5, w2 + r5, h2 + r5)
         paintFill.strokeWidth = r - frameThickness - frameInnerThickness
-        val frameThicknessHalf = frameThickness / 2f
+        val frameThicknessHalf = frameThickness * 0.5f
         rectFrameOuter.set(
             w2 - r - frameThicknessHalf,
             h2 - r - frameThicknessHalf,

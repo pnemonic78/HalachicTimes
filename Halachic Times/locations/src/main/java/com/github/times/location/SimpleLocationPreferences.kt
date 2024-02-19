@@ -32,7 +32,7 @@ class SimpleLocationPreferences(context: Context) : SimplePreferences(context),
         init(context)
     }
 
-    override val location: Location?
+    override var location: Location?
         get() {
             if (!preferences.contains(LocationPreferences.KEY_LATITUDE)
                 || !preferences.contains(LocationPreferences.KEY_LONGITUDE)
@@ -60,30 +60,31 @@ class SimpleLocationPreferences(context: Context) : SimplePreferences(context),
             location.time = preferences.getLong(LocationPreferences.KEY_TIME, 0L)
             return location
         }
+        set(value) = putLocation(value)
 
-    override fun putLocation(location: Location?) {
+    private fun putLocation(location: Location?) {
         val editor = preferences.edit()
         if (location != null) {
             editor.putString(LocationPreferences.KEY_PROVIDER, location.provider)
-            editor.putString(
-                LocationPreferences.KEY_LATITUDE,
-                location.latitude.toString()
-            )
-            editor.putString(
-                LocationPreferences.KEY_LONGITUDE,
-                location.longitude.toString()
-            )
-            editor.putString(
-                LocationPreferences.KEY_ELEVATION,
-                (if (location.hasAltitude()) location.altitude else 0.0).toString()
-            )
-            editor.putLong(LocationPreferences.KEY_TIME, location.time)
+                .putString(
+                    LocationPreferences.KEY_LATITUDE,
+                    location.latitude.toString()
+                )
+                .putString(
+                    LocationPreferences.KEY_LONGITUDE,
+                    location.longitude.toString()
+                )
+                .putString(
+                    LocationPreferences.KEY_ELEVATION,
+                    (if (location.hasAltitude()) location.altitude else 0.0).toString()
+                )
+                .putLong(LocationPreferences.KEY_TIME, location.time)
         } else {
             editor.remove(LocationPreferences.KEY_PROVIDER)
-            editor.remove(LocationPreferences.KEY_LATITUDE)
-            editor.remove(LocationPreferences.KEY_LONGITUDE)
-            editor.remove(LocationPreferences.KEY_ELEVATION)
-            editor.remove(LocationPreferences.KEY_TIME)
+                .remove(LocationPreferences.KEY_LATITUDE)
+                .remove(LocationPreferences.KEY_LONGITUDE)
+                .remove(LocationPreferences.KEY_ELEVATION)
+                .remove(LocationPreferences.KEY_TIME)
         }
         editor.apply()
     }

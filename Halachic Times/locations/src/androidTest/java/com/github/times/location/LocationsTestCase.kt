@@ -75,7 +75,7 @@ class LocationsTestCase {
             assertNotNull(tz)
             location = locations.getLocationTZ(tz)
             assertNotNull(location)
-            latitude = location!!.latitude
+            latitude = location.latitude
             assertTrue("$id $latitude", latitude >= ZmanimLocation.LATITUDE_MIN)
             assertTrue("$id $latitude", latitude <= ZmanimLocation.LATITUDE_MAX)
             longitude = location.longitude

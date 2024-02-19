@@ -131,7 +131,7 @@ public class CountryCanvas extends JComponent {
         g.drawOval(cx - 2, cy - 2, 5, 5);
 
         final double sweepAngle = (2f * Math.PI) / BORDER_VERTICES;
-        double angleStart = -(sweepAngle / 2f);
+        double angleStart = -(sweepAngle * 0.5f);
         double angleEnd;
         int x2, y2;
         int r = 2500;

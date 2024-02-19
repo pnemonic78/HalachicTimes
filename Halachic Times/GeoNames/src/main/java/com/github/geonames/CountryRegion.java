@@ -111,7 +111,7 @@ public class CountryRegion extends Polygon {
         double cy = ((double) ty) / n;
 
         final double sweepAngle = (2f * Math.PI) / vertexCount;
-        double angleStart = -(sweepAngle / 2f);
+        double angleStart = -(sweepAngle * 0.5f);
         double angleEnd;
         double x, y, a, d;
         int farIndex;

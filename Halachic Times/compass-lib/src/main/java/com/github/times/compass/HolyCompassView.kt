@@ -98,8 +98,8 @@ class HolyCompassView @JvmOverloads constructor(
         val res = resources
         val boundary =
             res.getDimension(R.dimen.padding) + res.getDimension(R.dimen.circle_thickness)
-        val w2 = w / 2f
-        val h2 = h / 2f
+        val w2 = w * 0.5f
+        val h2 = h * 0.5f
         val r = max(0f, min(w2, h2) - boundary * 2f)
         val r1 = r * 0.1f
         val r6 = r * 0.6f

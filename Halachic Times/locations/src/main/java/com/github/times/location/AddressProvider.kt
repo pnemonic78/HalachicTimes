@@ -19,6 +19,7 @@ import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.location.Location.distanceBetween
 import com.github.database.CursorFilter
 import com.github.times.location.City.Companion.generateCityId
 import com.github.times.location.ZmanimAddress.Companion.compare
@@ -99,7 +100,7 @@ class AddressProvider @JvmOverloads constructor(
         var bestCached: Address? = null
 
         // Find the best country.
-        addresses = findNearestCountry(location)
+        addresses = findNearestCountries(location)
         best = findBestAddress(location, addresses, GeocoderBase.SAME_PLANET)
         if (best != null) {
             notifyAddressFound(listener, location, best)
@@ -280,7 +281,7 @@ class AddressProvider @JvmOverloads constructor(
         val near = mutableListOf<Address>()
         for (a in addresses) {
             if (!a.hasLatitude() || !a.hasLongitude()) continue
-            Location.distanceBetween(latitude, longitude, a.latitude, a.longitude, distances)
+            distanceBetween(latitude, longitude, a.latitude, a.longitude, distances)
             if (distances[0] <= radius) {
                 near.add(a)
                 if (distances[0] <= distanceMin) {
@@ -355,14 +356,14 @@ class AddressProvider @JvmOverloads constructor(
     }
 
     /**
-     * Find the nearest country to the latitude and longitude.
+     * Find the nearest countries to the latitude and longitude.
      *
      * Uses the pre-compiled array of countries from GeoNames.
      *
      * @param location the location.
      * @return the list of addresses with at most 1 entry.
      */
-    private fun findNearestCountry(location: Location): List<Address>? {
+    private fun findNearestCountries(location: Location): List<Address>? {
         val country: Address? = geocoderCountries.findCountry(location)
         if (country != null) {
             return listOf(country)

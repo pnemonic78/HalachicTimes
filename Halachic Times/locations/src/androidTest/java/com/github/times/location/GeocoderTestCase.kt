@@ -451,7 +451,6 @@ class GeocoderTestCase {
         val country = geocoder.findCountry(HOLIEST_LATITUDE, HOLIEST_LONGITUDE)
         assertNotNull(country)
         assertEquals("IL", country!!.countryCode)
-//        assertEquals("Asia/Jerusalem", country.)
     }
 
     /**

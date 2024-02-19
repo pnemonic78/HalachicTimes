@@ -22,6 +22,8 @@ import android.location.Location
 import android.os.Bundle
 import androidx.core.app.JobIntentService
 import com.github.times.location.AddressProvider.OnFindAddressListener
+import com.github.times.location.ZmanimLocationListener.Companion.ACTION_ADDRESS
+import com.github.times.location.ZmanimLocationListener.Companion.ACTION_ELEVATION
 import timber.log.Timber
 
 /**
@@ -42,23 +44,30 @@ class AddressService : JobIntentService(), OnFindAddressListener {
         if (extras.isEmpty) return
         val location = LocationData.from(extras, PARAMETER_LOCATION) ?: return
         val provider = addressProvider ?: return
-        val action = intent.action
-        if (ZmanimLocationListener.ACTION_ADDRESS == action) {
-            if (extras.containsKey(PARAMETER_PERSIST)) {
-                val locationExtras = location.extras ?: Bundle()
-                locationExtras.putBoolean(
-                    PARAMETER_PERSIST,
-                    extras.getBoolean(PARAMETER_PERSIST, PERSIST_DEFAULT)
-                )
-                location.extras = locationExtras
+        when (intent.action) {
+            ACTION_ADDRESS -> {
+                if (extras.containsKey(PARAMETER_PERSIST)) {
+                    location.extras = (location.extras ?: Bundle()).apply {
+                        putBoolean(
+                            PARAMETER_PERSIST,
+                            extras.getBoolean(PARAMETER_PERSIST, PERSIST_DEFAULT)
+                        )
+                    }
+                }
+                provider.findNearestAddress(location, this)
             }
-            provider.findNearestAddress(location, this)
-        } else if (ZmanimLocationListener.ACTION_ELEVATION == action) {
-            provider.findElevation(location, this)
+
+            ACTION_ELEVATION -> {
+                provider.findElevation(location, this)
+            }
         }
     }
 
-    override fun onFindAddress(provider: AddressProvider, location: Location, address: Address) {
+    override fun onFindAddress(
+        provider: AddressProvider,
+        location: Location,
+        address: Address
+    ) {
         val addr: ZmanimAddress?
         if (address is ZmanimAddress) {
             addr = address

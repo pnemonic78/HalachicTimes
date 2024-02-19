@@ -35,7 +35,9 @@ import com.github.app.ThemeCallbacks
 import com.github.os.getParcelableCompat
 import com.github.preference.ThemePreferences
 import com.github.text.method.RangeInputFilter
+import com.github.times.location.ZmanimLocation.Companion.distanceBetween
 import com.github.times.location.ZmanimLocation.Companion.toDecimal
+import com.github.times.location.country.Country
 import com.github.times.location.databinding.LocationAddBinding
 import com.github.times.location.text.LatitudeInputFilter
 import com.github.times.location.text.LongitudeInputFilter
@@ -77,6 +79,7 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
     private var location: Location = Location(GeocoderBase.USER_PROVIDER)
     private var address: ZmanimAddress? = null
     private var locationForConvert: Location? = null
+    private var shouldFinish = false
 
     /**
      * Formatter for for displaying the current value.
@@ -261,14 +264,16 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
                         put(EXTRA_LOCATION, location)
                         setResult(RESULT_OK, this)
                     }
-                    finish()
+                    shouldFinish = true
+                    // TODO force fetch from remote even if cached in db.
+                    fetchAddress(location, true)
                 }
                 true
             }
 
             R.id.menu_location_show -> {
                 if (saveLocation(location, coordsFormatSpinner.selectedItemPosition)) {
-                    fetchAddress(location)
+                    fetchAddress(location, false)
                 }
                 true
             }
@@ -326,10 +331,10 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
         return true
     }
 
-    private fun fetchAddress(location: Location) {
+    private fun fetchAddress(location: Location, persist: Boolean) {
         addressView.setText(R.string.location_unknown)
         val locations = locations
-        locations.findAddress(location, false)
+        locations.findAddress(location, persist)
     }
 
     override fun onAddressChanged(location: Location, address: ZmanimAddress) {
@@ -340,6 +345,14 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
         this.address = address
         runOnUiThread {
             addressView.text = address.formatted
+        }
+        if (shouldFinish && isNear(location, address)) {
+            Intent().apply {
+                put(EXTRA_LOCATION, location)
+                put(EXTRA_ADDRESS, address)
+                setResult(RESULT_OK, this)
+            }
+            finish()
         }
     }
 
@@ -364,8 +377,7 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
         super.onRestoreInstanceState(savedInstanceState)
         location = savedInstanceState.getParcelableCompat(SAVE_STATE_LOCATION, Location::class.java)
             ?: location
-        address =
-            savedInstanceState.getParcelableCompat(SAVE_STATE_ADDRESS, ZmanimAddress::class.java)
+        address = savedInstanceState.getAddress(SAVE_STATE_ADDRESS)
     }
 
     private fun convertFromDecimal() {
@@ -475,6 +487,14 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
         longitudeSecondsEdit.setFormatter(formatter)
     }
 
+    private fun isNear(location: Location, address: ZmanimAddress): Boolean {
+        if (address.id < 0L) return false
+        if (address is Country) return false
+        if (address is City) return false
+        val distance = distanceBetween(location, address)
+        return distance <= GeocoderBase.SAME_HOOD
+    }
+
     companion object {
         /**
          * The location parameter.
@@ -490,6 +510,11 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
          * The location's longitude parameter.
          */
         const val EXTRA_LONGITUDE = "longitude"
+
+        /**
+         * The address result.
+         */
+        const val EXTRA_ADDRESS = ZmanimLocationListener.EXTRA_ADDRESS
 
         /**
          * The location state.

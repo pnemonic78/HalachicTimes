@@ -33,7 +33,6 @@ import com.github.util.LocaleUtils.getDefaultLocale
 import java.io.IOException
 import java.util.Locale
 import java.util.TimeZone
-import kotlin.math.round
 
 /**
  * Maintains the lists of countries.
@@ -68,16 +67,15 @@ class CountriesGeocoder @JvmOverloads constructor(
             val longitudes = res.getIntArray(R.array.longitudes)
             val verticesCounts = res.getIntArray(R.array.vertices_count)
 
-            val countriesCount = countryCodes.size
-            var i = 0
-            borders = Array(countriesCount) { c ->
-                val verticesCount = verticesCounts[c]
-                val country = CountryPolygon(countryCodes[c])
-                for (v in 0 until verticesCount) {
-                    country.addPoint(latitudes[i], longitudes[i])
-                    i++
+            var p = 0
+            borders = Array(countryCodes.size) { i ->
+                val verticesCount = verticesCounts[i]
+                CountryPolygon(countryCodes[i], 0).apply {
+                    for (v in 0 until verticesCount) {
+                        addPoint(latitudes[p], longitudes[p])
+                        p++
+                    }
                 }
-                country
             }
             immutableCountryBorders = borders
         }
@@ -100,7 +98,7 @@ class CountriesGeocoder @JvmOverloads constructor(
         var latitudes = immutableCitiesLatitudes
         if (latitudes == null) {
             val latitudesRes = res.getIntArray(R.array.cities_latitudes)
-            latitudes = DoubleArray(citiesCount) { latitudesRes[it] / RATIO }
+            latitudes = DoubleArray(citiesCount) { CountryPolygon.toDouble(latitudesRes[it]) }
             immutableCitiesLatitudes = latitudes
         }
         citiesLatitudes = latitudes
@@ -108,7 +106,7 @@ class CountriesGeocoder @JvmOverloads constructor(
         var longitudes = immutableCitiesLongitudes
         if (longitudes == null) {
             val longitudesRes = res.getIntArray(R.array.cities_longitudes)
-            longitudes = DoubleArray(citiesCount) { longitudesRes[it] / RATIO }
+            longitudes = DoubleArray(citiesCount) { CountryPolygon.toDouble(longitudesRes[it]) }
             immutableCitiesLongitudes = longitudes
         }
         citiesLongitudes = longitudes
@@ -155,10 +153,12 @@ class CountriesGeocoder @JvmOverloads constructor(
             return null
         }
         countryIndex = countryIndex.coerceAtMost(countryBorders.size - 1)
-        val locale = Locale(language, countryBorders[countryIndex].countryCode)
+        val borders = countryBorders[countryIndex]
+        val locale = Locale(language, borders.countryCode)
+        val middle = borders.centre()
         return Country(locale).apply {
-            this.latitude = latitude
-            this.longitude = longitude
+            this.latitude = CountryPolygon.toDouble(middle.x)
+            this.longitude = CountryPolygon.toDouble(middle.y)
             this.countryCode = locale.country
             this.countryName = locale.getDisplayCountry(locale)
             this.id = generateCountryId(this)
@@ -184,8 +184,8 @@ class CountriesGeocoder @JvmOverloads constructor(
         var country: CountryPolygon?
         val matches = IntArray(MAX_COUNTRIES_OVERLAP)
         var matchesCount = 0
-        val fixedPointLatitude = round(latitude * RATIO).toInt()
-        val fixedPointLongitude = round(longitude * RATIO).toInt()
+        val fixedPointLatitude = CountryPolygon.toFixedPointInt(latitude)
+        val fixedPointLongitude = CountryPolygon.toFixedPointInt(longitude)
         var c = 0
         while (c < countriesSize && matchesCount < MAX_COUNTRIES_OVERLAP) {
             country = borders[c]
@@ -266,13 +266,12 @@ class CountriesGeocoder @JvmOverloads constructor(
     /**
      * Find the first corresponding location for the time zone.
      *
-     * @param tz the time zone.
+     * @param timeZone the time zone.
      * @return the location - `null` otherwise.
      */
-    fun findLocation(tz: TimeZone?): Location? {
-        if (tz == null) return null
-        val tzId = tz.id
-        val offsetMillis = tz.rawOffset.toLong()
+    fun findLocation(timeZone: TimeZone): Location {
+        val tzId = timeZone.id
+        val offsetMillis = timeZone.rawOffset.toLong()
         var longitudeTZ = (TZ_HOUR * offsetMillis) / DateUtils.HOUR_IN_MILLIS
         if (longitudeTZ > ZmanimLocation.LONGITUDE_MAX) {
             longitudeTZ -= LONGITUDE_GLOBE
@@ -649,9 +648,6 @@ class CountriesGeocoder @JvmOverloads constructor(
 
         /** Middle of a time zone, in degrees.  */
         private const val TZ_HOUR_HALF = TZ_HOUR * 0.5
-
-        /** Factor to convert a fixed-point integer to double.  */
-        private const val RATIO = CountryPolygon.RATIO
 
         /**
          * Not physically possible for more than 20 countries to overlap each other.

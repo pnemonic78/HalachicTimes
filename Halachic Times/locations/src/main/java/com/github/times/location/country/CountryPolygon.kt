@@ -21,6 +21,7 @@ import kotlin.math.abs
 import kotlin.math.hypot
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.round
 
 /**
  * Country borders as a simplified polygon.<br/>
@@ -32,50 +33,35 @@ import kotlin.math.min
  */
 class CountryPolygon @JvmOverloads constructor(
     val countryCode: String,
-    /**
-     * The total number of points.
-     */
     npoints: Int = MIN_LENGTH,
-    /**
-     * The array of latitudes (Y coordinates).
-     */
     latitudes: IntArray = IntArray(npoints),
-    /**
-     * The array of longitudes (X coordinates).
-     */
     longitudes: IntArray = IntArray(npoints),
 ) {
     /**
      * The total number of points.
      */
-    @JvmField
     var npoints: Int = npoints
-    //TODO private set
+        private set
 
     /**
      * The array of latitudes (Y coordinates).
      */
-    @JvmField
-    var latitudes: IntArray = latitudes
-    //TODO private set
+    var latitudes: IntArray = latitudes.copyOfRange(0, npoints)
+        private set
 
     /**
      * The array of longitudes (X coordinates).
      */
-    @JvmField
-    var longitudes: IntArray = longitudes
-    //TODO private set
+    var longitudes: IntArray = longitudes.copyOfRange(0, npoints)
+        private set
 
-    private var minLatitude = Int.MAX_VALUE
-    private var minLongitude = Int.MAX_VALUE
-    private var maxLatitude = Int.MIN_VALUE
-    private var maxLongitude = Int.MIN_VALUE
+    private var latitudeMin = Int.MAX_VALUE
+    private var longitudeMin = Int.MAX_VALUE
+    private var latitudeMax = Int.MIN_VALUE
+    private var longitudeMax = Int.MIN_VALUE
 
     init {
-        this.npoints = npoints
-        this.latitudes = latitudes
-        this.longitudes = longitudes
-        require(npoints > 0)
+        require(npoints >= 0)
         require(npoints <= latitudes.size)
         require(npoints <= longitudes.size)
     }
@@ -90,7 +76,7 @@ class CountryPolygon @JvmOverloads constructor(
      * boundary; `false` otherwise.
      */
     fun containsBox(latitude: Int, longitude: Int): Boolean {
-        return (latitude in minLatitude..maxLatitude) && (longitude in minLongitude..maxLongitude)
+        return (latitude in latitudeMin..latitudeMax) && (longitude in longitudeMin..longitudeMax)
     }
 
     /**
@@ -102,10 +88,10 @@ class CountryPolygon @JvmOverloads constructor(
      * boundary; `false` otherwise.
      */
     fun containsBox(other: CountryPolygon): Boolean {
-        return other.minLatitude >= minLatitude
-            && other.minLongitude >= minLongitude
-            && other.maxLatitude <= maxLatitude
-            && other.maxLongitude <= maxLongitude
+        return other.latitudeMin >= latitudeMin
+            && other.longitudeMin >= longitudeMin
+            && other.latitudeMax <= latitudeMax
+            && other.longitudeMax <= longitudeMax
     }
 
     /**
@@ -175,10 +161,10 @@ class CountryPolygon @JvmOverloads constructor(
      * @param longitude the longitude.
      */
     private fun updateBounds(latitude: Int, longitude: Int) {
-        minLatitude = min(minLatitude, latitude)
-        minLongitude = min(minLongitude, longitude)
-        maxLatitude = max(maxLatitude, latitude)
-        maxLongitude = max(maxLongitude, longitude)
+        latitudeMin = min(latitudeMin, latitude)
+        longitudeMin = min(longitudeMin, longitude)
+        latitudeMax = max(latitudeMax, latitude)
+        longitudeMax = max(longitudeMax, longitude)
     }
 
     /**
@@ -222,11 +208,17 @@ class CountryPolygon @JvmOverloads constructor(
         return buf.toString()
     }
 
+    fun centre(): Point {
+        val latitude = (latitudeMin + latitudeMax) / 2
+        val longitude = (longitudeMin + longitudeMax) / 2
+        return Point(latitude, longitude)
+    }
+
     companion object {
         /**
          * Factor to convert a fixed-point integer to double.
          */
-        const val RATIO = 1e+5
+        private const val RATIO = 1e+5
 
         /**
          * Default length for latitudes and longitudes.
@@ -300,6 +292,22 @@ class CountryPolygon @JvmOverloads constructor(
             val dyAB = by - ay
             val normalLength = hypot(dxAB, dyAB)
             return abs((px - ax) * dyAB - (py - ay) * dxAB) / normalLength
+        }
+
+        fun toDouble(degrees: Int): Double {
+            return degrees / RATIO
+        }
+
+        fun toDouble(degrees: Double): Double {
+            return degrees / RATIO
+        }
+
+        fun toFixedPoint(degrees: Double): Double {
+            return round(degrees * RATIO)
+        }
+
+        fun toFixedPointInt(degrees: Double): Int {
+            return toFixedPoint(degrees).toInt()
         }
     }
 }

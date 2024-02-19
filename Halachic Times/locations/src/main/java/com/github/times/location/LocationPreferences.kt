@@ -47,16 +47,9 @@ interface LocationPreferences {
     }
 
     /**
-     * Get the location.
-     *
-     * @return the location - `null` otherwise.
+     * The location.
      */
-    val location: Location?
-
-    /**
-     * Set the location.
-     */
-    fun putLocation(location: Location?)
+    var location: Location?
 
     /**
      * Are coordinates visible?

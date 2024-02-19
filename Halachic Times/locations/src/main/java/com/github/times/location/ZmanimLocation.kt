@@ -15,6 +15,7 @@
  */
 package com.github.times.location
 
+import android.location.Address
 import android.location.Location
 import android.os.Parcel
 import android.os.Parcelable
@@ -159,8 +160,8 @@ class ZmanimLocation : Location {
             val lat2 = latitude2.toRadians()
             val lng2 = longitude2.toRadians()
 
-            val phi1 = tan(RADIANS_45 + (lat1 / 2))
-            val phi2 = tan(RADIANS_45 + (lat2 / 2))
+            val phi1 = tan(RADIANS_45 + (lat1 * 0.5f))
+            val phi2 = tan(RADIANS_45 + (lat2 * 0.5f))
             val dPhi = ln(phi2 / phi1)
             var dLon = lng2 - lng1
 
@@ -277,5 +278,17 @@ class ZmanimLocation : Location {
                 endLocation.longitude,
                 distances
             )
+
+        fun distanceBetween(startLocation: Location, endAddress: Address): Double {
+            val distances = FloatArray(1)
+            distanceBetween(
+                startLocation.latitude,
+                startLocation.longitude,
+                endAddress.latitude,
+                endAddress.longitude,
+                distances
+            )
+            return distances[0].toDouble()
+        }
     }
 }

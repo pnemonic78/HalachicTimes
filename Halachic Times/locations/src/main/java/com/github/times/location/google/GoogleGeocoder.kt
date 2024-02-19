@@ -87,8 +87,8 @@ class GoogleGeocoder(locale: Locale) : GeocoderBase(locale) {
             language,
             API_KEY
         )
-        val latitude = (lowerLeftLatitude + upperRightLatitude) / 2
-        val longitude = (lowerLeftLongitude + upperRightLongitude) / 2
+        val latitude = (lowerLeftLatitude + upperRightLatitude) * 0.5
+        val longitude = (lowerLeftLongitude + upperRightLongitude) * 0.5
         return getJsonAddressesFromURL(latitude, longitude, queryUrl, maxResults)
     }
 

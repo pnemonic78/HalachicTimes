@@ -37,11 +37,6 @@ class City : ZmanimAddress {
     var timeZone: TimeZone = TimeZone.getDefault()
 
     companion object {
-        /**
-         * Factor to convert a fixed-point integer to double.
-         */
-        private const val RATIO = CountryPolygon.RATIO
-
         @JvmField
         val CREATOR: Parcelable.Creator<City> = object : Parcelable.Creator<City> {
             override fun createFromParcel(source: Parcel): City {
@@ -59,8 +54,8 @@ class City : ZmanimAddress {
         }
 
         fun generateCityId(latitude: Double, longitude: Double): Long {
-            val fixedPointLatitude = round(latitude * RATIO).toLong() and 0x7FFFFFFFL
-            val fixedPointLongitude = round(longitude * RATIO).toLong() and 0xFFFFFFFFL
+            val fixedPointLatitude = CountryPolygon.toFixedPoint(latitude).toLong() and 0x7FFFFFFFL
+            val fixedPointLongitude = CountryPolygon.toFixedPoint(longitude).toLong() and 0xFFFFFFFFL
             return (fixedPointLatitude shl 31) or fixedPointLongitude
         }
     }

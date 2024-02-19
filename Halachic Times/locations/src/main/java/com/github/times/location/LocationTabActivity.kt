@@ -57,7 +57,6 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
     ThemeCallbacks<P>,
     LocationItemListener,
     SearchView.OnQueryTextListener,
-    ZmanimLocationListener,
     LocationAdapter.FilterListener {
 
     private val themeCallbacks: ThemeCallbacks<P> by lazy { createThemeCallbacks(this) }
@@ -129,13 +128,13 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
 
     override fun onStart() {
         super.onStart()
-        locations.start(this)
+//        locations.start(this)
         onNewIntent(intent)
     }
 
     override fun onStop() {
         super.onStop()
-        locations.stop(this)
+//        locations.stop(this)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -280,18 +279,13 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
         setAddress(null)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeMessages(WHAT_ADDED)
-        handler.removeMessages(WHAT_FAVORITE)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_ADD && resultCode == RESULT_OK) {
             val location = LocationData.from(data, AddLocationActivity.EXTRA_LOCATION)
+            val address = data?.getAddress(AddLocationActivity.EXTRA_ADDRESS)
             if (location != null) {
-                addLocation(location)
+                onLocationAdded(location, address)
             } else {
                 Timber.w("add empty location")
             }
@@ -317,32 +311,25 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
         get() = AddLocationActivity::class.java
 
     /**
-     * Add a custom location.
+     * A custom location was added.
      *
      * @param location the new location.
+     * @param address the new address.
      */
-    private fun addLocation(location: Location) {
-        fetchAddress(location)
-        val formatter: LocationFormatter = locations
-        val query: CharSequence = formatter.formatLongitude(abs(location.longitude))
-        search(query)
+    private fun onLocationAdded(location: Location, address: ZmanimAddress?) {
+        // Refresh the lists with the new location's address.
+        populateLists(binding)
+        tabHost?.currentTab = TAB_HISTORY
+
+        if (address != null) {
+            val formatter: LocationFormatter = locations
+            val query = formatter.formatLongitude(abs(address.longitude))
+            search(query)
+        } else {
+            search(null)
+        }
     }
 
-    private fun fetchAddress(location: Location) {
-        locations.findAddress(location, true)
-    }
-
-    override fun onAddressChanged(location: Location, address: ZmanimAddress) {
-        handler.obtainMessage(WHAT_ADDED, address).sendToTarget()
-    }
-
-    override fun onElevationChanged(location: Location) = Unit
-    override fun onLocationChanged(location: Location) = Unit
-
-    @Deprecated("Deprecated in Java")
-    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) = Unit
-    override fun onProviderEnabled(provider: String) = Unit
-    override fun onProviderDisabled(provider: String) = Unit
     override fun onFilterComplete(adapter: LocationAdapter?, count: Int) {
         // Switch to the first non-empty tab.
         val tabHost = tabHost ?: return
@@ -362,12 +349,7 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
             when (msg.what) {
                 WHAT_FAVORITE -> {
                     address = msg.obj as? ZmanimAddress ?: return
-                    activity.markFavorite(address)
-                }
-
-                WHAT_ADDED -> {
-                    address = msg.obj as? ZmanimAddress ?: return
-                    activity.addAddress(address)
+                    activity.saveAddress(address)
                 }
 
                 WHAT_DELETE -> {
@@ -378,31 +360,14 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
         }
     }
 
-    private fun markFavorite(address: ZmanimAddress) {
-        saveAddress(address)
+    private fun saveAddress(address: ZmanimAddress) {
+        addressProvider.insertOrUpdateAddress(null, address)
         adapterAll?.notifyItemChanged(address)
         adapterFavorites?.notifyItemChanged(address)
         adapterHistory?.notifyItemChanged(address)
     }
 
-    private fun addAddress(address: ZmanimAddress) {
-        saveAddress(address)
-
-        // Refresh the lists with the new location's address.
-        populateLists(binding)
-        tabHost?.currentTab = TAB_HISTORY
-        val formatter: LocationFormatter = locations
-        val query: CharSequence = formatter.formatLongitude(abs(address.longitude))
-        search(query)
-    }
-
-    private fun saveAddress(address: ZmanimAddress) {
-        val addressProvider = addressProvider
-        addressProvider.insertOrUpdateAddress(null, address)
-    }
-
     private fun deleteAddress(address: ZmanimAddress) {
-        val addressProvider = addressProvider
         if (addressProvider.deleteAddress(address)) {
             adapterAll?.delete(address)
             adapterFavorites?.delete(address)
@@ -416,7 +381,6 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
         private const val TAG_HISTORY = "history"
 
         private const val WHAT_FAVORITE = 1
-        private const val WHAT_ADDED = 2
         private const val WHAT_DELETE = 3
 
         private const val TAB_FAVORITES = 0

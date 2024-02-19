@@ -316,8 +316,12 @@ abstract class GeocoderBase(protected val locale: Locale) {
         const val USER_PROVIDER = "user"
 
         /**
+         * Maximum radius to consider a location near the same neighbourhood.
+         */
+        internal const val SAME_HOOD = 2000f // 2 kilometres.
+
+        /**
          * Maximum radius to consider a location near the same city.
-         *
          *
          * New York city, USA, is <tt>8,683 km<sup>2</sup></tt>, thus radius is
          * about <tt>37.175 km</tt>.<br></br>
