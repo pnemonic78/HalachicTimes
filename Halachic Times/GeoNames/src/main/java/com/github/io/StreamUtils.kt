@@ -13,111 +13,118 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.io;
+package com.github.io
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.io.BufferedInputStream
+import java.io.ByteArrayInputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.Reader
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
+import kotlin.math.max
 
 /**
  * Stream utilities.
  *
  * @author Moshe Waisberg
  */
-public class StreamUtils {
+object StreamUtils {
 
-    private static final int BUFFER_SIZE = 1024;
-
-    private StreamUtils() {
-    }
+    private const val BUFFER_SIZE = 1024
 
     /**
      * Read all the bytes from the input stream.
      *
-     * @param in the input.
+     * @param input the input.
      * @return the array of bytes.
      * @throws IOException if an I/O error occurs.
      */
-    public static InputStream readFully(InputStream in) throws IOException {
-        in = new BufferedInputStream(in);
-        return readFully(in, in.available());
+    @JvmStatic
+    @Throws(IOException::class)
+    fun readFully(input: InputStream): InputStream {
+        val stream = BufferedInputStream(input)
+        return readFully(stream, stream.available())
     }
 
     /**
      * Read all the bytes from the input stream.
      *
-     * @param in   the input.
+     * @param input   the input.
      * @param size the initial buffer size.
      * @return the array of bytes.
      * @throws IOException if an I/O error occurs.
      */
-    public static InputStream readFully(InputStream in, int size) throws IOException {
-        size = Math.max(size, 32);
-        RawByteArrayOutputStream out = new RawByteArrayOutputStream(size);
-        final byte[] buf = new byte[BUFFER_SIZE];
-        int count;
-        while ((count = in.read(buf)) >= 0) {
-            out.write(buf, 0, count);
+    @JvmStatic
+    @Throws(IOException::class)
+    fun readFully(input: InputStream, size: Int): InputStream {
+        val stream = input
+        val bufSize = max(size, BUFFER_SIZE)
+        val out = RawByteArrayOutputStream(bufSize)
+        val buf = ByteArray(BUFFER_SIZE)
+        var count: Int
+        while (stream.read(buf).also { count = it } >= 0) {
+            out.write(buf, 0, count)
         }
-        out.close();
-        return new ByteArrayInputStream(out.getByteArray(), 0, out.size());
+        out.close()
+        return ByteArrayInputStream(out.byteArray, 0, out.size())
     }
 
     /**
      * Convert the stream bytes to a sequence of characters.
      *
-     * @param in the input.
+     * @param input the input.
      * @return the characters.
      * @throws IOException if an I/O error occurs.
      */
-    public static CharSequence toCharSequence(InputStream in) throws IOException {
-        return toCharSequence(in, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Convert the stream bytes to a sequence of characters.
-     *
-     * @param in      the input.
-     * @param charset the character encoding.
-     * @return the characters.
-     * @throws IOException if an I/O error occurs.
-     */
-    public static CharSequence toCharSequence(InputStream in, Charset charset) throws IOException {
-        Reader reader = new InputStreamReader(in, charset);
-        StringBuilder out = new StringBuilder(in.available());
-        final char[] buf = new char[BUFFER_SIZE];
-        int count;
-        while ((count = reader.read(buf)) >= 0) {
-            out.append(buf, 0, count);
+    @JvmStatic
+    @Throws(IOException::class)
+    fun toCharSequence(
+        input: InputStream,
+        charset: Charset = StandardCharsets.UTF_8
+    ): CharSequence {
+        val reader: Reader = InputStreamReader(input, charset)
+        val out = StringBuilder(input.available())
+        val buf = CharArray(BUFFER_SIZE)
+        var count: Int
+        while (reader.read(buf).also { count = it } >= 0) {
+            out.append(buf, 0, count)
         }
-        return out;
+        return out
     }
 
     /**
      * Convert the stream bytes to a string.
      *
-     * @param in the input.
+     * @param input the input.
      * @return the string.
      * @throws IOException if an I/O error occurs.
      */
-    public static String toString(InputStream in) throws IOException {
-        return toCharSequence(in).toString();
+    @JvmStatic
+    @Throws(IOException::class)
+    fun toString(input: InputStream): String {
+        return toCharSequence(input).toString()
     }
 
     /**
      * Convert the stream bytes to a string.
      *
-     * @param in      the input.
+     * @param input      the input.
      * @param charset the character encoding.
      * @return the string.
      * @throws IOException if an I/O error occurs.
      */
-    public static String toString(InputStream in, Charset charset) throws IOException {
-        return toCharSequence(in, charset).toString();
+    @JvmStatic
+    @Throws(IOException::class)
+    fun toString(input: InputStream, charset: Charset = StandardCharsets.UTF_8): String {
+        return toCharSequence(input, charset).toString()
     }
 }
+
+@Throws(IOException::class)
+fun InputStream.readFully(): InputStream = StreamUtils.readFully(this)
+
+@Throws(IOException::class)
+fun InputStream.toString(charset: Charset = StandardCharsets.UTF_8): String =
+    StreamUtils.toString(this, charset)

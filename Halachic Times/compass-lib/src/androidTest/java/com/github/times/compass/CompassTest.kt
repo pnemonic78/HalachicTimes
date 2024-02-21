@@ -16,6 +16,7 @@
 package com.github.times.compass
 
 import android.hardware.SensorManager
+import kotlin.math.PI
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -57,7 +58,7 @@ class CompassTest {
         val orientation = FloatArray(3)
         SensorManager.getOrientation(matrixR, orientation)
         assertEquals(-0.0f, orientation[0])
-        assertEquals((Math.PI / -2).toFloat(), orientation[1])
+        assertEquals((PI * -0.5).toFloat(), orientation[1])
         assertEquals(-0.0f, orientation[2])
     }
 
@@ -93,7 +94,7 @@ class CompassTest {
         SensorManager.getOrientation(matrixR, orientation)
         assertEquals(-2.0427618f, orientation[0])
         assertEquals(-0.0f, orientation[1])
-        assertEquals((Math.PI / -2).toFloat(), orientation[2])
+        assertEquals((PI * -0.5).toFloat(), orientation[2])
     }
 
     @Test

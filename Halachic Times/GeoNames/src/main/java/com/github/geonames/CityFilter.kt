@@ -13,23 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.geonames;
+package com.github.geonames
 
-import static com.github.geonames.Features.FEATURE_P;
+import org.geonames.FeatureClass
 
 /**
  * Name filter for capital cities.
  *
  * @author Moshe Waisberg
  */
-public class CityFilter implements NameFilter {
-
-    @Override
-    public boolean accept(GeoNamesToponym name) {
-        return FEATURE_P.equals(name.getFeatureClass());
+class CityFilter : NameFilter {
+    override fun accept(name: GeoNamesToponym): Boolean {
+        return FeatureClass.P == name.featureClass
     }
 
-    @Override
-    public void replaceLocation(GeoNamesToponym name) {
-    }
+    override fun replaceLocation(name: GeoNamesToponym) = Unit
 }

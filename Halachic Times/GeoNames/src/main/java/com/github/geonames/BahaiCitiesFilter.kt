@@ -13,213 +13,130 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.geonames;
-
-import java.util.Arrays;
+package com.github.geonames
 
 /**
  * Name filter for Bahai cities.
  *
  * @author Moshe Waisberg
  */
-public class BahaiCitiesFilter implements NameFilter {
+class BahaiCitiesFilter : NameFilter {
 
-    /**
-     * List of Bahai cities' GeoName IDs.
-     */
-    private static final long[] CITIES = {
-            // Acre, Israel
-            295721,
-            // Amsterdam, Netherlands
-            2759794,
-            // Anchorage, United States
-            5879400,
-            // Andorra la Vella, Andorra
-            3041563,
-            // Antananarivo, Madagascar
-            1070940,
-            // Apia, Samoa
-            4035413,
-            // Asunción, Paraguay
-            3439389,
-            // Auckland, New Zealand
-            2193733,
-            // Baghdad, Iraq
-            98182,
-            // Baku, Azerbaijan
-            587084,
-            // Battambang, Cambodia
-            1831797,
-            // Belfast, Ireland
-            2655984,
-            // Benghazi, Libya
-            88319,
-            // Berlin, Germany
-            2950159,
-            // Bern, Switzerland
-            2661552,
-            // Bogota, Colombia
-            3688689,
-            // Bratislava, Slovakia
-            3060972,
-            // Brazzaville, Congo
-            2260535,
-            // Brussels, Belgium
-            2800866,
-            // Budapest, Hungary
-            3054643,
-            // Buenos Aires, Argentina
-            3435910,
-            // Cairo, Egypt
-            360630,
-            // Caracas, Venezuela
-            3646738,
-            // Casablanca, Morocco
-            2553604,
-            // Copenhagen, Denmark
-            2618425,
-            // Dakar, Senegal
-            2253354,
-            // Dodoma, Tanzania
-            160196,
-            // Eliot (Maine), United States
-            4963642,
-            // Gaborone, Botswana
-            933773,
-            // Glasgow, Scotland
-            2648579,
-            // Guatemala City, Guatemala
-            3598132,
-            // Haifa, Israel
-            294801,
-            // Helsinki, Finland
-            658225,
-            // Hong Kong, China
-            1819729,
-            // Istanbul, Turkey
-            745044,
-            // Jakarta, Indonesia
-            1642911,
-            // Johannesburg, South Africa
-            993800,
-            // Kabul, Afghanistan
-            1138958,
-            // Kampala, Uganda
-            232422,
-            // Karachi, Pakistan
-            1174872,
-            // Kiev, Ukraine
-            703448,
-            // Kigali, Rwanda
-            202061,
-            // Kingston, Jamaica
-            3489854,
-            // La Paz, Bolivia
-            3911925,
-            // Lilongwe, Malawi
-            927967,
-            // Lima, Peru
-            3936456,
-            // Limbe, Cameroon
-            2229411,
-            // Lisbon, Portugal
-            2267057,
-            // London, United Kingdom
-            2643743,
-            // Macau, China
-            1821274,
-            // Madrid, Spain
-            3117735,
-            // Managua, Nicaragua
-            3617763,
-            // Manila, Philippines
-            1701668,
-            // Mexico City, Mexico
-            3530597,
-            // Montevideo, Uruguay
-            3441575,
-            // Moscow, Russia
-            524901,
-            // Mumbai, India
-            1275339,
-            // Nairobi, Kenya
-            184745,
-            // N'Djamena, Chad
-            2427123,
-            // New Delhi, India
-            1273294,
-            // Oslo, Norway
-            3143244,
-            // Panama City, Panama
-            3703443,
-            // Paris, France
-            2988507,
-            // Port-au-Prince, Haiti
-            3718426,
-            // Quito, Ecuador
-            3652462,
-            // Reykjavík, Iceland
-            3413829,
-            // Rio de Janeiro, Brazil
-            3451190,
-            // Rome, Italy
-            3169070,
-            // San José, Costa Rica
-            3621841,
-            // San Salvador, El Salvador
-            3583361,
-            // Santiago, Chile
-            3871336,
-            // Santo Domingo, Dominican Republic
-            3492908,
-            // Sarajevo, Bosnia and Herzegovina
-            3191281,
-            // Shanghai, China
-            1796236,
-            // Stockholm, Sweden
-            2673730,
-            // Suva, Fiji
-            2198148,
-            // Sydney, Australia
-            2147714,
-            // Taipei, Taiwan, China
-            1668341,
-            // Tegucigalpa, Honduras
-            3600949,
-            // Tehran, Iran
-            112931,
-            // Tokyo, Japan
-            1850147,
-            // Toronto, Canada
-            6167865,
-            // Tunis, Tunisia
-            2464470,
-            // Vancouver, Canada
-            6173331,
-            // Vienna, Austria
-            2761369,
-            // Warsaw, Poland
-            756135,
-            // Wilmette (Illinois), United States
-            4916732,
-            // Yangon, Myanmar
-            1298824,
-            // Yaoundé, Cameroon
-            2220957,
-            // Yerevan, Armenia
-            616052,
-    };
-
-    public BahaiCitiesFilter() {
-        Arrays.sort(CITIES);
+    override fun accept(name: GeoNamesToponym): Boolean {
+        return CITIES.binarySearch(name.geoNameId) >= 0
     }
 
-    @Override
-    public boolean accept(GeoNamesToponym name) {
-        return Arrays.binarySearch(CITIES, name.getGeoNameId()) >= 0;
-    }
+    override fun replaceLocation(name: GeoNamesToponym) = Unit
 
-    @Override
-    public void replaceLocation(GeoNamesToponym name) {
+    companion object {
+        private const val ADDIS_ABABA = 344979
+        private const val ISTANBUL = 745044
+        private const val KIEV = 703448
+        private const val OSLO = 3143244
+        private const val PARIS = 2988507
+        private const val RIO_DE_JANEIRO = 3451190
+        private const val VIENNA = 2761369
+
+        /**
+         * List of Bahai cities' GeoName IDs.
+         */
+        private val CITIES = intArrayOf(
+            295721,  // Acre, Israel
+            ADDIS_ABABA,  // Addis Ababa, Ethiopia
+            2759794,  // Amsterdam, Netherlands
+            5879400,  // Anchorage, United States
+            3041563,  // Andorra la Vella, Andorra
+            1070940,  // Antananarivo, Madagascar
+            4035413,  // Apia, Samoa
+            3439389,  // Asunción, Paraguay
+            2193733,  // Auckland, New Zealand
+            98182,  // Baghdad, Iraq
+            587084,  // Baku, Azerbaijan
+            1831797,  // Battambang, Cambodia
+            2655984,  // Belfast, Ireland
+            88319,  // Benghazi, Libya
+            2950159,  // Berlin, Germany
+            2661552,  // Bern, Switzerland
+            3688689,  // Bogota, Colombia
+            3060972,  // Bratislava, Slovakia
+            2260535,  // Brazzaville, Congo
+            2800866,  // Brussels, Belgium
+            3054643,  // Budapest, Hungary
+            3435910,  // Buenos Aires, Argentina
+            360630,  // Cairo, Egypt
+            3369157,  // Cape Town, South Africa
+            3646738,  // Caracas, Venezuela
+            2553604,  // Casablanca, Morocco
+            2618425,  // Copenhagen, Denmark
+            2253354,  // Dakar, Senegal
+            160196,  // Dodoma, Tanzania
+            4963642,  // Eliot (Maine), United States
+            933773,  // Gaborone, Botswana
+            2648579,  // Glasgow, Scotland
+            3598132,  // Guatemala City, Guatemala
+            294801,  // Haifa, Israel
+            658225,  // Helsinki, Finland
+            1819729,  // Hong Kong, China
+            ISTANBUL,  // Istanbul, Turkey
+            1642911,  // Jakarta, Indonesia
+            281184,  // Jerusalem, Israel
+            993800,  // Johannesburg, South Africa
+            1138958,  // Kabul, Afghanistan
+            232422,  // Kampala, Uganda
+            1174872,  // Karachi, Pakistan
+            KIEV,  // Kiev, Ukraine
+            202061,  // Kigali, Rwanda
+            3489854,  // Kingston, Jamaica
+            3911925,  // La Paz, Bolivia
+            927967,  // Lilongwe, Malawi
+            3936456,  // Lima, Peru
+            2229411,  // Limbe, Cameroon
+            2267057,  // Lisbon, Portugal
+            2643743,  // London, United Kingdom
+            5368361,  // Los Angeles, United States
+            1821274,  // Macau, China
+            3117735,  // Madrid, Spain
+            3617763,  // Managua, Nicaragua
+            1701668,  // Manila, Philippines
+            3530597,  // Mexico City, Mexico
+            3441575,  // Montevideo, Uruguay
+            524901,  // Moscow, Russia
+            1275339,  // Mumbai, India
+            184745,  // Nairobi, Kenya
+            2427123,  // N'Djamena, Chad
+            1273294,  // New Delhi, India
+            5128581,  // New York, United States
+            OSLO,  // Oslo, Norway
+            3703443,  // Panama City, Panama
+            PARIS,  // Paris, France
+            3718426,  // Port-au-Prince, Haiti
+            3652462,  // Quito, Ecuador
+            3413829,  // Reykjavík, Iceland
+            RIO_DE_JANEIRO,  // Rio de Janeiro, Brazil
+            3169070,  // Rome, Italy
+            3621841,  // San José, Costa Rica
+            3583361,  // San Salvador, El Salvador
+            3871336,  // Santiago, Chile
+            3492908,  // Santo Domingo, Dominican Republic
+            3191281,  // Sarajevo, Bosnia and Herzegovina
+            1796236,  // Shanghai, China
+            2673730,  // Stockholm, Sweden
+            2198148,  // Suva, Fiji
+            2147714,  // Sydney, Australia
+            1668341,  // Taipei, Taiwan, China
+            3600949,  // Tegucigalpa, Honduras
+            293397,  // Tel Aviv, Israel
+            112931,  // Tehran, Iran
+            1850147,  // Tokyo, Japan
+            6167865,  // Toronto, Canada
+            2464470,  // Tunis, Tunisia
+            6173331,  // Vancouver, Canada
+            VIENNA,  // Vienna, Austria
+            756135,  // Warsaw, Poland
+            4916732,  // Wilmette (Illinois), United States
+            1298824,  // Yangon, Myanmar
+            2220957,  // Yaoundé, Cameroon
+            616052
+        ).sorted()
     }
 }

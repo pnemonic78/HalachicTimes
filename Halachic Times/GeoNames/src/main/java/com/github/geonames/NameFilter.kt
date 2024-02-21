@@ -13,18 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.geonames;
+package com.github.geonames
 
 /**
  * GeoName filter.
  *
  * @author Moshe Waisberg
  */
-public interface NameFilter {
+interface NameFilter {
+    /** Accept the GeoName record?  */
+    fun accept(name: GeoNamesToponym): Boolean
 
-    /** Accept the GeoName record? */
-    boolean accept(GeoNamesToponym name);
-
-    /** Replace the default location. */
-    void replaceLocation(GeoNamesToponym name);
+    /** Replace the default location.  */
+    fun replaceLocation(name: GeoNamesToponym)
 }

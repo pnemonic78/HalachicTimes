@@ -13,57 +13,59 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.net;
+package com.github.net
 
-import com.github.io.StreamUtils;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import com.github.io.StreamUtils.readFully
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlin.math.max
 
 /**
  * HTTP reader.
  *
  * @author Moshe Waisberg
  */
-public class HTTPReader {
+object HTTPReader {
+    /**
+     * Content type that is XML text.
+     */
+    const val CONTENT_APP_XML = "application/xml"
 
     /**
      * Content type that is XML text.
      */
-    public static final String CONTENT_APP_XML = "application/xml";
+    const val CONTENT_TEXT_XML = "text/xml"
+
     /**
-     * Content type that is XML text.
+     * Content types that are XML text.
      */
-    public static final String CONTENT_TEXT_XML = "text/xml";
-    /**
-     * Content type that is XML text.
-     */
-    public static final String[] CONTENT_XML = {CONTENT_APP_XML, CONTENT_TEXT_XML};
+    @JvmField
+    val CONTENT_XML = arrayOf(CONTENT_APP_XML, CONTENT_TEXT_XML)
+
     /**
      * Content type that is JSON text.
      */
-    public static final String CONTENT_JSON = "application/json";
+    const val CONTENT_APP_JSON = "application/json"
 
     /**
-     * Creates a new reader.
+     * Content types that are JSON text.
      */
-    private HTTPReader() {
-    }
+    @JvmField
+    val CONTENT_JSON = arrayOf(CONTENT_APP_JSON)
 
     /**
      * Read bytes from the network.
      *
      * @param url the URL.
-     * @return the data - {@code null} otherwise.
+     * @return the data - `null` otherwise.
      * @throws IOException if an I/O error occurs.
      */
-    public static InputStream read(URL url) throws IOException {
-        return read(url, (String[]) null);
+    @JvmStatic
+    @Throws(IOException::class)
+    fun read(url: URL): InputStream? {
+        return read(url, null as Array<String>?)
     }
 
     /**
@@ -71,11 +73,13 @@ public class HTTPReader {
      *
      * @param url                 the URL.
      * @param contentTypeExpected the expected content type.
-     * @return the data - {@code null} otherwise.
+     * @return the data - `null` otherwise.
      * @throws IOException if an I/O error occurs.
      */
-    public static InputStream read(URL url, String contentTypeExpected) throws IOException {
-        return read(url, new String[]{contentTypeExpected});
+    @JvmStatic
+    @Throws(IOException::class)
+    fun read(url: URL, contentTypeExpected: String): InputStream? {
+        return read(url, arrayOf(contentTypeExpected))
     }
 
     /**
@@ -83,62 +87,55 @@ public class HTTPReader {
      *
      * @param url                  the URL.
      * @param contentTypesExpected the expected content types.
-     * @return the data - {@code null} otherwise.
+     * @return the data - `null` otherwise.
      * @throws IOException if an I/O error occurs.
      */
-    public static InputStream read(URL url, String[] contentTypesExpected) throws IOException {
-        URLConnection conn = url.openConnection();
-        if (conn == null) {
-            throw new IOException(url.toString());
-        }
-        HttpURLConnection http = null;
-        if (conn instanceof HttpURLConnection) {
-            http = (HttpURLConnection) conn;
-            int code = http.getResponseCode();
+    @JvmStatic
+    @Throws(IOException::class)
+    fun read(url: URL, contentTypesExpected: Array<String>?): InputStream? {
+        val conn = url.openConnection() ?: throw IOException(url.toString())
+        var http: HttpURLConnection? = null
+        if (conn is HttpURLConnection) {
+            http = conn
+            val code = conn.responseCode
             if (code != HttpURLConnection.HTTP_OK) {
-                http.disconnect();
-                return null;
+                conn.disconnect()
+                return null
             }
         }
-        String contentType = conn.getContentType();
-        if (isEmpty(contentType)) {
-            if (http != null) {
-                http.disconnect();
-            }
-            return null;
+        var contentType = conn.contentType
+        if (contentType.isNullOrEmpty()) {
+            http?.disconnect()
+            return null
         }
         if (contentTypesExpected != null) {
-            int indexSemi = contentType.indexOf(';');
+            val indexSemi = contentType.indexOf(';')
             if (indexSemi >= 0) {
-                contentType = contentType.substring(0, indexSemi);
+                contentType = contentType.substring(0, indexSemi)
             }
-            boolean hasType = false;
-            for (String contentTypeExpected : contentTypesExpected) {
-                if (contentType.equals(contentTypeExpected)) {
-                    hasType = true;
-                    break;
+            var hasType = false
+            for (contentTypeExpected in contentTypesExpected) {
+                if (contentType == contentTypeExpected) {
+                    hasType = true
+                    break
                 }
             }
             if (!hasType) {
-                if (http != null) {
-                    http.disconnect();
-                }
-                return null;
+                http?.disconnect()
+                return null
             }
         }
-
-        InputStream data;
-        try (InputStream in = conn.getInputStream()) {
-            // Do NOT use Content-Length header for an exact buffer size!
-            // It is not always reliable / accurate.
-            final int dataSize = Math.max(in.available(), conn.getContentLength());
-            data = StreamUtils.readFully(in, dataSize);
+        var data: InputStream
+        try {
+            conn.getInputStream().use { input ->
+                // Do NOT use Content-Length header for an exact buffer size!
+                // It is not always reliable / accurate.
+                val dataSize = max(input.available(), conn.contentLength)
+                data = readFully(input, dataSize)
+            }
         } finally {
-            if (http != null) {
-                http.disconnect();
-            }
+            http?.disconnect()
         }
-        return data;
+        return data
     }
-
 }

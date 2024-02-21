@@ -13,94 +13,80 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.geonames;
+package com.github.geonames
 
-import com.github.geonames.util.LocaleUtils;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import com.github.geonames.util.LocaleUtils.getISOLanguage
+import com.github.geonames.util.LocaleUtils.toLanguageCode
 
 /**
  * GeoNames toponym POJO.
  *
  * @author Moshe Waisberg
  */
-public class GeoNamesToponym extends GeoNamesRecord {
+class GeoNamesToponym : GeoNamesRecord() {
+    var wikipediaURL: String? = null
 
-    private String wikipediaURL;
-    private final Map<String, AlternateName> alternateNamesMap = new HashMap<>();
+    val alternateNamesMap = mutableMapOf<String, AlternateName>()
 
-    public Map<String, AlternateName> getAlternateNamesMap() {
-        return alternateNamesMap;
-    }
-
-    public void setAlternateNames(Map<String, AlternateName> alternateNames) {
-        this.alternateNamesMap.clear();
+    fun setAlternateNames(alternateNames: Map<String, AlternateName>?) {
+        alternateNamesMap.clear()
         if (alternateNames != null) {
-            this.alternateNamesMap.putAll(alternateNames);
+            alternateNamesMap.putAll(alternateNames)
         }
     }
 
-    public void setAlternateNames(Collection<AlternateName> alternateNames) {
-        this.alternateNamesMap.clear();
+    fun setAlternateNames(alternateNames: Collection<AlternateName>?) {
+        alternateNamesMap.clear()
         if (alternateNames != null) {
-            for (AlternateName name : alternateNames) {
-                this.alternateNamesMap.put(name.getName(), name);
+            for (name in alternateNames) {
+                alternateNamesMap[name.name] = name
             }
         }
     }
 
-    public String getWikipediaURL() {
-        return wikipediaURL;
-    }
-
-    public void setWikipediaURL(String wikipediaURL) {
-        this.wikipediaURL = wikipediaURL;
-    }
-
-    public void putAlternateName(long geonameId, String language, String name) {
-        putAlternateName(geonameId, language, name, false, false, false, false);
-    }
-
-    public void putAlternateName(long geonameId, String language, String name, boolean preferred, boolean shortName, boolean colloquial, boolean historic) {
-        String languageCode = LocaleUtils.toLanguageCode(language);
-        String languageCodeISO = LocaleUtils.getISOLanguage(languageCode);
-        AlternateName alternateName = alternateNamesMap.get(languageCodeISO);
-        if ((alternateName == null) || preferred) {
-            alternateName = new AlternateName(language, name, preferred, shortName, colloquial, historic);
-            alternateNamesMap.put(languageCodeISO, alternateName);
-        } else if (!alternateName.isPreferred()) {
-            if ((alternateName.isShortName() && !shortName)
-                    || (alternateName.isColloquial() && !colloquial)
-                    || (alternateName.isHistoric() && !historic)) {
-                alternateName = new AlternateName(language, name, preferred, shortName, colloquial, historic);
-                alternateNamesMap.put(languageCodeISO, alternateName);
-            } else if (!historic && !colloquial && (languageCode.length() <= alternateName.getLanguage().length())) {
-                alternateName = new AlternateName(language, name, preferred, shortName, colloquial, historic);
-                alternateNamesMap.put(languageCodeISO, alternateName);
+    fun putAlternateName(
+        geonameId: GeoNameId,
+        language: String,
+        name: String,
+        preferred: Boolean = false,
+        shortName: Boolean = false,
+        colloquial: Boolean = false,
+        historic: Boolean = false
+    ) {
+        val languageCode = toLanguageCode(language)
+        val languageCodeISO = getISOLanguage(languageCode)
+        var alternateName = alternateNamesMap[languageCodeISO]
+        if (alternateName == null || preferred) {
+            alternateName =
+                AlternateName(language, name, preferred, shortName, colloquial, historic)
+            alternateNamesMap[languageCodeISO] = alternateName
+        } else if (!alternateName.isPreferred) {
+            if (alternateName.isShortName && !shortName || alternateName.isColloquial && !colloquial || alternateName.isHistoric && !historic) {
+                alternateName =
+                    AlternateName(language, name, preferred, shortName, colloquial, historic)
+                alternateNamesMap[languageCodeISO] = alternateName
+            } else if (!historic && !colloquial && languageCode.length <= alternateName.language.length) {
+                alternateName =
+                    AlternateName(language, name, preferred, shortName, colloquial, historic)
+                alternateNamesMap[languageCodeISO] = alternateName
             } else {
-                System.err.println("Duplicate name! id: " + geonameId + " language: " + language + " name: [" + name + "]");
+                System.err.println("Duplicate name! id: $geonameId language: $language name: [$name]")
             }
         } else {
-            System.err.println("Duplicate name! id: " + geonameId + " language: " + language + " name: [" + name + "]");
+            System.err.println("Duplicate name! id: $geonameId language: $language name: [$name]")
         }
     }
 
-    public String getBestName(String language) {
-        String name = getName(language);
-        return name != null ? name : getName();
+    fun getBestName(language: String?): String {
+        return getName(language) ?: name
     }
 
-    public String getName(String language) {
-        String languageCode = LocaleUtils.toLanguageCode(language);
-        AlternateName alternateName = getAlternateNamesMap().get(languageCode);
+    fun getName(language: String?): String? {
+        val languageCode = toLanguageCode(language)
+        val alternateName = alternateNamesMap[languageCode]
         if (alternateName != null) {
-            return alternateName.getName();
+            return alternateName.name
         }
-        if (language == null) {
-            return getName();
-        }
-        return null;
+        return if (language.isNullOrEmpty()) name else null
     }
 }

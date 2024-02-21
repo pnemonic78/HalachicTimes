@@ -21,6 +21,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.github.math.toDegrees
 import com.github.math.toRadians
+import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.ln
@@ -115,7 +116,7 @@ class ZmanimLocation : Location {
          * Double subtraction error.
          */
         private const val EPSILON = 1e-6
-        private const val RADIANS_180 = Math.PI
+        private const val RADIANS_180 = PI
         private const val RADIANS_360 = RADIANS_180 * 2
         private const val RADIANS_45 = RADIANS_180 / 4
 

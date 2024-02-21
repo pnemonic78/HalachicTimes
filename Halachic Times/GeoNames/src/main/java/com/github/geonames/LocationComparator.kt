@@ -13,63 +13,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.geonames;
-
-import java.util.Comparator;
+package com.github.geonames
 
 /**
  * Location comparator.
  *
  * @author Moshe Waisberg
  */
-public class LocationComparator implements Comparator<GeoNamesToponym> {
-
-    /** ISO 639 code for Norwegian Bokmål. */
-    public static final String ISO_639_NB = "nb";
-    /** ISO 639 code for Norwegian. */
-    public static final String ISO_639_NO = "no";
-
-    public LocationComparator() {
-        super();
-    }
-
-    @Override
-    public int compare(GeoNamesToponym geo0, GeoNamesToponym geo1) {
+class LocationComparator : Comparator<GeoNamesToponym> {
+    override fun compare(geo1: GeoNamesToponym, geo2: GeoNamesToponym): Int {
         // West < East
-        double lng0 = geo0.getLongitude();
-        double lng1 = geo1.getLongitude();
-        if (lng0 > lng1)
-            return +1;
-        if (lng0 < lng1)
-            return -1;
+        val lng1 = geo1.longitude
+        val lng2 = geo2.longitude
+        val lngCompare = lng1.compareTo(lng2)
+        if (lngCompare != 0) return lngCompare
 
         // North < South
-        double lat0 = geo0.getLatitude();
-        double lat1 = geo1.getLatitude();
-        if (lat0 > lat1)
-            return +1;
-        if (lat0 < lat1)
-            return -1;
+        val lat1 = geo1.latitude
+        val lat2 = geo2.latitude
+        val latCompare = lat1.compareTo(lat2)
+        if (latCompare != 0) return latCompare
 
-        int ele0 = geo0.getGrossElevation();
-        int ele1 = geo1.getGrossElevation();
-        int c = ele0 - ele1;
-        if (c != 0)
-            return c;
+        val ele1 = geo1.grossElevation ?: 0
+        val ele2 = geo2.grossElevation ?: 0
+        val eleCompare = ele1.compareTo(ele2)
+        if (eleCompare != 0) return eleCompare
 
-        String name0 = geo0.getName();
-        String name1 = geo1.getName();
-        c = name0.compareTo(name1);
-        if (c != 0)
-            return c;
+        val name1 = geo1.name
+        val name2 = geo2.name
+        val nameCompare = name1.compareTo(name2)
+        if (nameCompare != 0) return nameCompare
 
-        long id0 = geo0.getGeoNameId();
-        long id1 = geo1.getGeoNameId();
-        if (id0 > id1)
-            return +1;
-        if (id0 < id1)
-            return -1;
-        return 0;
+        val id1 = geo1.geoNameId
+        val id2 = geo2.geoNameId
+        return id1.compareTo(id2)
     }
 
+    companion object {
+        /**
+         * ISO 639 code for Norwegian Bokmål.
+         */
+        const val ISO_639_NB = "nb"
+
+        /**
+         * ISO 639 code for Norwegian.
+         */
+        const val ISO_639_NO = "no"
+    }
 }

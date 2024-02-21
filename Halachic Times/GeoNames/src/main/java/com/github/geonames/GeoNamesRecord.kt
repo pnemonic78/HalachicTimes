@@ -13,82 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.geonames;
+package com.github.geonames
 
-import org.geonames.InsufficientStyleException;
-import org.geonames.Toponym;
-
-import static com.github.geonames.CountryInfo.ISO639_ISRAEL;
-import static com.github.geonames.CountryInfo.ISO639_PALESTINE;
+import org.geonames.InsufficientStyleException
+import org.geonames.Toponym
 
 /**
  * GeoNames data record.
  *
  * @author Moshe Waisberg
  */
-public class GeoNamesRecord extends Toponym {
-
-    private String asciiName;
-    private String cc2;
-    private Integer dem = null;
-    private String modification;
+open class GeoNamesRecord : Toponym() {
+    /**
+     * The ASCII name.
+     */
+    var asciiName: String? = null
 
     /**
-     * Get the ASCII name.
-     *
-     * @return the name.
+     * The alternate country codes. A comma-separated list of codes.
      */
-    public String getAsciiName() {
-        return asciiName;
-    }
+    var alternateCountryCodes: String? = null
 
     /**
-     * Set the ASCII name.
-     *
-     * @param asciiName the name.
+     * The SRTM3 elevation.
      */
-    public void setAsciiName(String asciiName) {
-        this.asciiName = asciiName;
-    }
+    var digitalElevation: Int? = null
+        private set
 
     /**
-     * Set the countryCode.
-     *
-     * @param countryCode the countryCode.
+     * The modification.
      */
-    @Override
-    public void setCountryCode(String countryCode) {
-        if (ISO639_PALESTINE.equals(countryCode)) {
-            countryCode = ISO639_ISRAEL;
+    var modification: String? = null
+
+    /**
+     * Set the country code.
+     *
+     * @param countryCode the country code.
+     */
+    override fun setCountryCode(countryCode: String) {
+        var code = countryCode
+        if (CountryInfo.ISO639_PALESTINE == code) {
+            code = CountryInfo.ISO639_ISRAEL
         }
-        super.setCountryCode(countryCode);
-    }
-
-    /**
-     * Get the alternate country codes.
-     *
-     * @return the comma-separated list of codes.
-     */
-    public String getAlternateCountryCodes() {
-        return cc2;
-    }
-
-    /**
-     * Set the alternate country codes.
-     *
-     * @param cc2 the the comma-separated list of codes.
-     */
-    public void setAlternateCountryCodes(String cc2) {
-        this.cc2 = cc2;
-    }
-
-    /**
-     * Get the SRTM3 elevation.
-     *
-     * @return the elevation.
-     */
-    public Integer getDigitalElevation() {
-        return dem;
+        super.setCountryCode(code)
     }
 
     /**
@@ -96,42 +63,24 @@ public class GeoNamesRecord extends Toponym {
      *
      * @param dem the elevation.
      */
-    public void setDigitalElevation(int dem) {
-        this.dem = dem;
+    fun setDigitalElevation(dem: Int) {
+        digitalElevation = dem
     }
 
-    /**
-     * Get the modification.
-     *
-     * @return the modification
-     */
-    public String getModification() {
-        return modification;
+    override fun hashCode(): Int {
+        return geoNameId
     }
 
-    /**
-     * Set the modification.
-     *
-     * @param modification the modification.
-     */
-    public void setModification(String modification) {
-        this.modification = modification;
-    }
-
-    @Override
-    public int hashCode() {
-        return getGeoNameId();
-    }
-
-    public Integer getGrossElevation() {
-        Integer elevation = null;
-        try {
-            elevation = getElevation();
-        } catch (InsufficientStyleException ignore) {
+    val grossElevation: Int?
+        get() {
+            var elevation: Int? = null
+            try {
+                elevation = getElevation()
+            } catch (ignore: InsufficientStyleException) {
+            }
+            if (elevation == null) {
+                elevation = digitalElevation
+            }
+            return elevation
         }
-        if (elevation == null) {
-            elevation = getDigitalElevation();
-        }
-        return elevation;
-    }
 }

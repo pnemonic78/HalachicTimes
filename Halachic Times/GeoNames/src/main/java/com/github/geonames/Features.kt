@@ -1,75 +1,89 @@
-package com.github.geonames;
+package com.github.geonames
 
-import org.geonames.FeatureClass;
+import org.geonames.FeatureClass
 
 /**
  * Features.
  */
-public class Features {
-
+object Features {
     /**
      * Feature class for a populated city.
      */
-    public static final String FEATURE_P = FeatureClass.P.name();
+    @JvmField
+    val FEATURE_P = FeatureClass.P.name
+
     /**
      * Feature code for a populated place.
      */
-    public static final String FEATURE_PPL = "PPL";
+    const val FEATURE_PPL = "PPL"
+
     /**
      * Feature code for a seat of a first-order administrative division.
      */
-    public static final String FEATURE_PPLA = "PPLA";
+    const val FEATURE_PPLA = "PPLA"
+
     /**
      * Feature code for a seat of a second-order administrative division.
      */
-    public static final String FEATURE_PPLA2 = "PPLA2";
+    const val FEATURE_PPLA2 = "PPLA2"
+
     /**
      * Feature code for a seat of a third-order administrative division.
      */
-    public static final String FEATURE_PPLA3 = "PPLA3";
+    const val FEATURE_PPLA3 = "PPLA3"
+
     /**
      * Feature code for a seat of a fourth-order administrative division.
      */
-    public static final String FEATURE_PPLA4 = "PPLA4";
+    const val FEATURE_PPLA4 = "PPLA4"
+
     /**
      * Feature code for a capital of a political entity.
      */
-    public static final String FEATURE_PPLC = "PPLC";
+    const val FEATURE_PPLC = "PPLC"
+
     /**
      * Feature code for a farm village.
      */
-    public static final String FEATURE_PPLF = "PPLF";
+    const val FEATURE_PPLF = "PPLF"
+
     /**
      * Feature code for a seat of government of a political entity.
      */
-    public static final String FEATURE_PPLG = "PPLG";
+    const val FEATURE_PPLG = "PPLG"
+
     /**
      * Feature code for a populated locality.
      */
-    public static final String FEATURE_PPLL = "PPLL";
+    const val FEATURE_PPLL = "PPLL"
+
     /**
      * Feature code for an abandoned populated place.
      */
-    public static final String FEATURE_PPLQ = "PPLQ";
+    const val FEATURE_PPLQ = "PPLQ"
+
     /**
      * Feature code for a religious populated place.
      */
-    public static final String FEATURE_PPLR = "PPLR";
+    const val FEATURE_PPLR = "PPLR"
+
     /**
      * Feature code for populated places.
      */
-    public static final String FEATURE_PPLS = "PPLS";
+    const val FEATURE_PPLS = "PPLS"
+
     /**
      * Feature code for a destroyed populated place.
      */
-    public static final String FEATURE_PPLW = "PPLW";
+    const val FEATURE_PPLW = "PPLW"
+
     /**
      * Feature code for a section of populated place.
      */
-    public static final String FEATURE_PPLX = "PPLX";
+    const val FEATURE_PPLX = "PPLX"
+
     /**
      * Feature code for an Israeli settlement.
      */
-    public static final String FEATURE_STLMT = "STLMT";
-
+    const val FEATURE_STLMT = "STLMT"
 }

@@ -13,236 +13,208 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.geonames;
+package com.github.geonames
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+import com.github.geonames.CountryRegion.Companion.toRegion
+import java.io.File
+import java.io.IOException
+import java.util.TreeMap
+import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.parsers.ParserConfigurationException
+import javax.xml.transform.OutputKeys
+import javax.xml.transform.Result
+import javax.xml.transform.Source
+import javax.xml.transform.TransformerException
+import javax.xml.transform.TransformerFactory
+import javax.xml.transform.dom.DOMSource
+import javax.xml.transform.stream.StreamResult
+import org.w3c.dom.Element
 
 /**
  * Countries.
  *
  * @author Moshe Waisberg
  */
-public class Countries extends Cities {
-
-    /** The number of main vertices per region border. */
-    private static final int VERTICES_COUNT = 16;
-
-    /**
-     * Constructs a new countries.
-     */
-    public Countries() {
-        super();
-    }
-
-    public static void main(String[] args) throws Exception {
-        File countryInfoFile = new File("GeoNames/dump/countryInfo.txt");
-        if (args.length > 0) {
-            countryInfoFile = new File(args[0]);
-        }
-        File shapesFile = new File("GeoNames/dump/shapes_simplified_low.txt");
-        if (args.length > 1) {
-            shapesFile = new File(args[1]);
-        }
-
-        Countries countries = new Countries();
-        Collection<CountryInfo> names = countries.loadInfo(countryInfoFile);
-        Collection<GeoShape> shapes = countries.loadShapes(shapesFile);
-        Collection<CountryRegion> regions = countries.toRegions(names, shapes);
-
-        countries.writeAndroidXML(regions);
-    }
-
+class Countries : Cities() {
     /**
      * Transform the list of names to a list of country regions.
      *
-     * @param names
-     *         the list of places.
+     * @param names the list of places.
      * @return the list of regions.
      */
-    public Collection<CountryRegion> toRegions(Collection<GeoNamesToponym> names) {
-        Map<String, CountryRegion> regions = new TreeMap<String, CountryRegion>();
-        String countryCode;
-        CountryRegion region;
-
-        for (GeoNamesToponym name : names) {
-            countryCode = name.getCountryCode();
-
-            if (!regions.containsKey(countryCode)) {
-                region = new CountryRegion(countryCode);
-                regions.put(countryCode, region);
-            } else
-                region = regions.get(countryCode);
-            region.addLocation(name.getLatitude(), name.getLongitude());
+    fun toRegions(names: Collection<GeoNamesToponym>): Collection<CountryRegion> {
+        val regions: MutableMap<String, CountryRegion> = TreeMap()
+        var countryCode: String
+        var region: CountryRegion
+        for (name in names) {
+            countryCode = name.countryCode
+            if (regions.containsKey(countryCode)) {
+                region = regions[countryCode]!!
+            } else {
+                region = CountryRegion(countryCode)
+                regions[countryCode] = region
+            }
+            region.addLocation(name.latitude, name.longitude)
         }
-
-        return regions.values();
+        return regions.values
     }
 
     /**
      * Write the list of names as arrays in Android resource file format.
      *
-     * @param countries
-     *         the list of countries.
-     * @throws ParserConfigurationException
-     *         if a DOM error occurs.
-     * @throws TransformerException
-     *         if a DOM error occurs.
+     * @param countries the list of countries.
+     * @throws ParserConfigurationException if a DOM error occurs.
+     * @throws TransformerException if a DOM error occurs.
      */
-    public void writeAndroidXML(Collection<CountryRegion> countries) throws ParserConfigurationException, TransformerException {
-        List<CountryRegion> sorted = null;
-        if (countries instanceof List)
-            sorted = (List<CountryRegion>) countries;
-        else
-            sorted = new ArrayList<CountryRegion>(countries);
-        Collections.sort(sorted, new RegionComparator());
+    @Throws(ParserConfigurationException::class, TransformerException::class)
+    fun writeAndroidXML(countries: Collection<CountryRegion>) {
+        val sorted: List<CountryRegion> = countries.toList().sortedWith(RegionComparator())
 
-        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = builderFactory.newDocumentBuilder();
-        Document doc = builder.newDocument();
+        val builderFactory = DocumentBuilderFactory.newInstance()
+        val builder = builderFactory.newDocumentBuilder()
+        val doc = builder.newDocument()
 
-        Element resources = doc.createElement(ANDROID_ELEMENT_RESOURCES);
-        resources.appendChild(doc.createComment(HEADER));
-        doc.appendChild(resources);
+        val resources = doc.createElement(ANDROID_ELEMENT_RESOURCES)
+        resources.appendChild(doc.createComment(HEADER))
+        doc.appendChild(resources)
 
-        Element countriesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
-        countriesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "countries");
-        countriesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
-        resources.appendChild(countriesElement);
-        Element verticesCountElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY);
-        verticesCountElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "vertices_count");
-        verticesCountElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
-        resources.appendChild(verticesCountElement);
-        Element latitudesElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY);
-        latitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "latitudes");
-        latitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
-        resources.appendChild(latitudesElement);
-        Element longitudesElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY);
-        longitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "longitudes");
-        longitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
-        resources.appendChild(longitudesElement);
+        val countriesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY)
+        countriesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "countries")
+        countriesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false")
+        resources.appendChild(countriesElement)
 
-        Element country, latitude, longitude, verticesCount;
-        int[] pointIndexes;
-        int pointIndex;
-        int pointCount = 0;
+        val verticesCountElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY)
+        verticesCountElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "vertices_count")
+        verticesCountElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false")
+        resources.appendChild(verticesCountElement)
 
-        for (CountryRegion region : sorted) {
-            pointIndexes = region.findMainVertices(VERTICES_COUNT);
+        val latitudesElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY)
+        latitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "latitudes")
+        latitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false")
+        resources.appendChild(latitudesElement)
 
-            country = doc.createElement(ANDROID_ELEMENT_ITEM);
-            country.setTextContent(region.getCountryCode());
-            countriesElement.appendChild(country);
+        val longitudesElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY)
+        longitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "longitudes")
+        longitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false")
+        resources.appendChild(longitudesElement)
 
-            pointCount = 0;
-            for (int i = 0; i < VERTICES_COUNT; i++) {
-                pointIndex = pointIndexes[i];
+        var country: Element
+        var latitude: Element
+        var longitude: Element
+        var verticesCount: Element
+        var pointIndexes: IntArray
+        var pointIndex: Int
+        var pointCount: Int
 
-                if (pointIndex < 0)
-                    break;
+        for (region in sorted) {
+            pointIndexes = region.findMainVertices(VERTICES_COUNT)
 
-                latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-                latitude.setTextContent(Integer.toString(region.ypoints[pointIndex]));
-                latitudesElement.appendChild(latitude);
-                longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-                longitude.setTextContent(Integer.toString(region.xpoints[pointIndex]));
-                longitudesElement.appendChild(longitude);
-                pointCount++;
+            country = doc.createElement(ANDROID_ELEMENT_ITEM)
+            country.textContent = region.countryCode
+            countriesElement.appendChild(country)
+
+            pointCount = 0
+            for (i in 0 until VERTICES_COUNT) {
+                pointIndex = pointIndexes[i]
+                if (pointIndex < 0) break
+                latitude = doc.createElement(ANDROID_ELEMENT_ITEM)
+                latitude.textContent = region.ypoints[pointIndex].toString()
+                latitudesElement.appendChild(latitude)
+                longitude = doc.createElement(ANDROID_ELEMENT_ITEM)
+                longitude.textContent = region.xpoints[pointIndex].toString()
+                longitudesElement.appendChild(longitude)
+                pointCount++
             }
-
-            verticesCount = doc.createElement(ANDROID_ELEMENT_ITEM);
-            verticesCount.setTextContent(Integer.toString(pointCount));
-            verticesCountElement.appendChild(verticesCount);
-
+            verticesCount = doc.createElement(ANDROID_ELEMENT_ITEM)
+            verticesCount.textContent = pointCount.toString()
+            verticesCountElement.appendChild(verticesCount)
         }
 
-        File file = new File(getModulePath(), "values/countries.xml");
-        file.getParentFile().mkdirs();
+        val file = File(modulePath, "values/countries.xml")
+        file.parentFile.mkdirs()
 
-        Source src = new DOMSource(doc);
-        Result result = new StreamResult(file);
-        TransformerFactory xformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = xformerFactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty(S_KEY_INDENT_AMOUNT, "4");
-        transformer.transform(src, result);
+        val src: Source = DOMSource(doc)
+        val result: Result = StreamResult(file)
+        val transformerFactory = TransformerFactory.newInstance()
+        val transformer = transformerFactory.newTransformer()
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes")
+        transformer.setOutputProperty(S_KEY_INDENT_AMOUNT, "4")
+        transformer.transform(src, result)
     }
 
     /**
      * Load the list of countries.
      *
-     * @param file
-     *         the country info file.
+     * @param file the country info file.
      * @return the list of records.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
-    public Collection<CountryInfo> loadInfo(File file) throws IOException {
-        return geoNames.parseCountries(file);
+    @Throws(IOException::class)
+    fun loadInfo(file: File): Collection<CountryInfo> {
+        return geoNames.parseCountries(file)
     }
 
     /**
      * Load the list of shapes.
      *
-     * @param file
-     *         the shapes file.
+     * @param file the shapes file.
      * @return the list of records.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
-    public Collection<GeoShape> loadShapes(File file) throws IOException {
-        return geoNames.parseShapes(file);
+    @Throws(IOException::class)
+    fun loadShapes(file: File): Collection<GeoShape> {
+        return geoNames.parseShapes(file)
     }
 
     /**
      * Transform the list of countries to a list of country regions.
      *
-     * @param names
-     *         the list of countries.
-     * @param shapes
-     *         the list of country shapes.
+     * @param names the list of countries.
+     * @param shapes the list of country shapes.
      * @return the list of regions.
      */
-    public Collection<CountryRegion> toRegions(Collection<CountryInfo> names, Collection<GeoShape> shapes) throws IOException {
-        List<CountryRegion> regions = new ArrayList<>(names.size());
-        Long geoNameId;
-        Map<Long, GeoShape> shapesById = new HashMap<>();
-        GeoShape shape;
-
-        for (GeoShape s : shapes) {
-            shapesById.put(s.getGeoNameId(), s);
+    @Throws(IOException::class)
+    fun toRegions(
+        names: Collection<CountryInfo>,
+        shapes: Collection<GeoShape>
+    ): Collection<CountryRegion> {
+        val regions = mutableListOf<CountryRegion>()
+        var geoNameId: GeoNameId
+        val shapesById = mutableMapOf<GeoNameId, GeoShape>()
+        for (s in shapes) {
+            shapesById[s.geoNameId] = s
         }
+        var countryCode: String
+        var shape: GeoShape
+        for (name in names) {
+            geoNameId = name.geoNameId
+            countryCode = name.iso!!
+            shape = shapesById[geoNameId] ?: continue
+            regions.add(toRegion(countryCode, shape))
+        }
+        return regions
+    }
 
-        for (CountryInfo name : names) {
-            geoNameId = name.getGeoNameId();
-            shape = shapesById.get(geoNameId);
-            if (shape != null) {
-                regions.add(CountryRegion.toRegion(name.getIso(), shape));
+    companion object {
+        /** The number of main vertices per region border.  */
+        private const val VERTICES_COUNT = 16
+
+        @Throws(Exception::class)
+        @JvmStatic
+        fun main(args: Array<String>) {
+            var countryInfoFile = File("GeoNames/dump/countryInfo.txt")
+            var shapesFile = File("GeoNames/dump/shapes_simplified_low.txt")
+            if (args.isNotEmpty()) {
+                countryInfoFile = File(args[0])
+                if (args.size > 1) {
+                    shapesFile = File(args[1])
+                }
             }
+            val countries = Countries()
+            val names = countries.loadInfo(countryInfoFile)
+            val shapes = countries.loadShapes(shapesFile)
+            val regions = countries.toRegions(names, shapes)
+            countries.writeAndroidXML(regions)
         }
-
-        return regions;
     }
 }

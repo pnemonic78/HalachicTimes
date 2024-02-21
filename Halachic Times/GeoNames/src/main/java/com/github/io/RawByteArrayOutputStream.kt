@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.io;
+package com.github.io
 
-import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayOutputStream
 
 /**
  * Byte array output stream with raw access to the byte buffer.
  *
  * @author moshe on 2018/04/24.
  */
-public class RawByteArrayOutputStream extends ByteArrayOutputStream {
+class RawByteArrayOutputStream : ByteArrayOutputStream {
 
-    public RawByteArrayOutputStream() {
-    }
+    constructor() : super()
 
-    public RawByteArrayOutputStream(int size) {
-        super(size);
-    }
+    constructor(size: Int) : super(size)
 
-    public byte[] getByteArray() {
-        return buf;
-    }
+    val byteArray: ByteArray
+        get() = buf
 }

@@ -191,7 +191,7 @@ public class CountryCanvas extends JComponent {
     public static void main(String[] args) throws Exception {
         if (args.length < 1) {
             System.out.println("Country code required");
-            System.exit(0);
+            System.exit(1);
             return;
         }
         String code = args[0];

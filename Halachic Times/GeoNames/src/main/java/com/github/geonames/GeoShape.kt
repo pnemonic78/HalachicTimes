@@ -13,55 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.geonames;
+package com.github.geonames
 
-import com.vividsolutions.jts.geom.Geometry;
-
-import java.awt.Shape;
+import com.vividsolutions.jts.geom.Geometry
+import java.awt.Shape
 
 /**
  * Geonames shape.
  *
  * @author Moshe Waisberg
  */
-public class GeoShape {
-
-    private long geoNameId;
-    private String geoJSON;
-    private Geometry geometry;
-    private Shape shape;
-
-    public String getGeoJSON() {
-        return geoJSON;
-    }
-
-    public void setGeoJSON(String geoJSON) {
-        this.geoJSON = geoJSON;
-        setGeometry(null);
-    }
-
-    public long getGeoNameId() {
-        return geoNameId;
-    }
-
-    public void setGeoNameId(long geoNameId) {
-        this.geoNameId = geoNameId;
-    }
-
-    public Geometry getGeometry() {
-        return geometry;
-    }
-
-    public void setGeometry(Geometry geometry) {
-        this.geometry = geometry;
-        setShape(null);
-    }
-
-    public Shape getShape() {
-        return shape;
-    }
-
-    public void setShape(Shape shape) {
-        this.shape = shape;
-    }
+class GeoShape {
+    var geoNameId: GeoNameId = 0
+    var geoJSON: String? = null
+        set(value) {
+            field = value
+            geometry = null
+        }
+    var geometry: Geometry? = null
+        set(value) {
+            field = value
+            shape = null
+        }
+    var shape: Shape? = null
 }

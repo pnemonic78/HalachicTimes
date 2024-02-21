@@ -13,100 +13,56 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.geonames.util;
+package com.github.geonames.util
 
-import java.util.Locale;
+import java.util.Locale
 
 /**
  * Locale utilities.
  *
  * @author Moshe Waisberg
  */
-public class LocaleUtils {
-
-    private LocaleUtils() {
+object LocaleUtils {
+    @JvmStatic
+    fun toLanguageCode(language: String?): String {
+        if (language.isNullOrEmpty()) return Locale.ENGLISH.language
+        val tokens = language.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val s1 = tokens[0]
+        val s2 = if (tokens.size > 1) tokens[1] else ""
+        val locale = Locale(s1, s2)
+        return locale.language
     }
 
-    public static String toLanguageCode(String language) {
-        String languageCode = language;
-        if (languageCode == null) {
-            languageCode = Locale.ENGLISH.getLanguage();
-        } else {
-            String[] tokens = language.split("-");
-            String s1 = tokens[0];
-            String s2 = tokens.length > 1 ? tokens[1] : "";
-            Locale locale = new Locale(s1, s2);
-            languageCode = locale.getLanguage();
-        }
-        return languageCode;
-    }
-
-    public static String getISOLanguage(String languageCode) {
-        if (languageCode.length() >= 3) {
-            switch (languageCode) {
-                case "arz":
-                case "yhd":
-                    return "ar";
-                case "ces":
-                case "cze":
-                    return "cs";
-                case "frr":
-                case "ger":
-                    return "de";
-                case "ell":
-                case "grc":
-                case "gre":
-                    return "el";
-                case "fas":
-                case "per":
-                    return "fa";
-                case "olo":
-                    return "fi";
-                case "fra":
-                case "fre":
-                case "frp":
-                    return "fr";
-                case "arm":
-                case "hye":
-                    return "hy";
-                case "ice":
-                case "isl":
-                    return "is";
-                case "fur":
-                    return "it";
-                case "geo":
-                case "kat":
-                    return "ka";
-                case "mac":
-                case "mkd":
-                    return "mk";
-                case "may":
-                case "msa":
-                    return "ms";
-                case "dut":
-                case "nld":
-                case "zea":
-                    return "nl";
-                case "ron":
-                case "rum":
-                    return "ro";
-                case "slk":
-                case "slo":
-                    return "sk";
-                case "fil":
-                case "ilo":
-                case "phi":
-                    return "tl";
-                case "ota":
-                    return "tr";
-                case "chi":
-                case "czh":
-                case "czo":
-                case "yue":
-                case "zho":
-                    return "zh";
+    @JvmStatic
+    fun getISOLanguage(languageCode: String): String {
+        if (languageCode.length >= 3) {
+            return when (languageCode) {
+                "arz", "yhd" -> "ar"
+                "ces", "cze" -> "cs"
+                "frr", "ger" -> "de"
+                "ell", "grc", "gre" -> "el"
+                "fas", "per" -> "fa"
+                "olo" -> "fi"
+                "fra", "fre", "frp" -> "fr"
+                "arm", "hye" -> "hy"
+                "ice", "isl" -> "is"
+                "fur" -> "it"
+                "geo", "kat" -> "ka"
+                "mac", "mkd" -> "mk"
+                "may", "msa" -> "ms"
+                "dut", "nld", "zea" -> "nl"
+                "ron", "rum" -> "ro"
+                "slk", "slo" -> "sk"
+                "fil", "ilo", "phi" -> "tl"
+                "ota" -> "tr"
+                "chi", "czh", "czo", "yue", "zho" -> "zh"
+                else -> languageCode
             }
         }
-        return languageCode;
+        return languageCode
     }
+}
+
+fun String.toLanguageCode(): String {
+    return LocaleUtils.toLanguageCode(this)
 }

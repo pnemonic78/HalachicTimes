@@ -13,58 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.geonames;
-
-import java.util.Comparator;
+package com.github.geonames
 
 /**
  * Region comparator.
  *
  * @author Moshe Waisberg
  */
-public class RegionComparator implements Comparator<CountryRegion> {
+class RegionComparator : Comparator<CountryRegion> {
+    override fun compare(region1: CountryRegion, region2: CountryRegion): Int {
+        val name1 = region1.countryCode
+        val name2 = region2.countryCode
+        val name = name1.compareTo(name2)
+        if (name != 0) return name
 
-    public RegionComparator() {
-        super();
-    }
+        val npoints1 = region1.npoints
+        val npoints2 = region2.npoints
+        val npoints = npoints1.compareTo(npoints2)
+        if (npoints != 0) return npoints
 
-    @Override
-    public int compare(CountryRegion region0, CountryRegion region1) {
-        String name0 = region0.getCountryCode();
-        String name1 = region1.getCountryCode();
-        int name = name0.compareTo(name1);
-        if (name != 0)
-            return name;
-
-        int npoints0 = region0.npoints;
-        int npoints1 = region1.npoints;
-        int npoints = npoints0 - npoints1;
-        if (npoints != 0)
-            return npoints;
-
-        int x0;
-        int x1;
-        int x;
-        for (int i = 0; i < npoints0; i++) {
-            x0 = region0.xpoints[i];
-            x1 = region1.xpoints[i];
-            x = x0 - x1;
-            if (x != 0)
-                return npoints;
+        var x1: Int
+        var x2: Int
+        var x: Int
+        for (i in 0 until npoints1) {
+            x1 = region1.xpoints[i]
+            x2 = region2.xpoints[i]
+            x = x1.compareTo(x2)
+            if (x != 0) return x
         }
 
-        int y0;
-        int y1;
-        int y;
-        for (int i = 0; i < npoints0; i++) {
-            y0 = region0.ypoints[i];
-            y1 = region1.ypoints[i];
-            y = y0 - y1;
-            if (y != 0)
-                return npoints;
+        var y1: Int
+        var y2: Int
+        var y: Int
+        for (i in 0 until npoints1) {
+            y1 = region1.ypoints[i]
+            y2 = region2.ypoints[i]
+            y = y1.compareTo(y2)
+            if (y != 0) return y
         }
-
-        return 0;
+        return 0
     }
-
 }

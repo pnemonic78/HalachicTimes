@@ -1,5 +1,5 @@
 TODO
 -----
 
-* migrate to Kotlin
-  * GeoNames module
+* GeoNames module
+  * split countries into multiple polygons when wrap around globe

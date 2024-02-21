@@ -13,46 +13,72 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.geonames;
+package com.github.geonames
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.Collection;
+import java.io.File
 
 /**
  * Bahai cities for Android application resources.
  *
  * @author Moshe Waisberg
  */
-public class BahaiCities extends JewishCities {
-
-    protected static final String[] LANGUAGES = {null, "ar", "bg", "cs", "da", "de", "el", "es", "et", "fa", "fi", "fr", "he", "hi", "hu", "it", "iw", "lt", "nb", "no", "nl", "pl", "pt", "ro", "ru", "sv", "tr", "uk"};
-
-    public BahaiCities() {
-        super();
-        setModuleName("compass-bahai");
+class BahaiCities : CompassCities() {
+    init {
+        moduleName = "compass-bahai"
     }
 
-    public static void main(String[] args) throws Exception {
-        String pathCities = "GeoNames/dump/cities1000.zip";
-        if (args.length > 0) {
-            pathCities = args[0];
-        }
-        String pathNames = "GeoNames/dump/alternateNamesV2.zip";
-        if (args.length > 1) {
-            pathNames = args[1];
-        }
-        BahaiCities cities = new BahaiCities();
-        Collection<GeoNamesToponym> names = cities.loadNames(new File(pathCities), new BahaiCitiesFilter(), "cities1000.txt");
+    companion object {
+        private val LANGUAGES = arrayOf(
+            null,
+            "ar",
+            "bg",
+            "cs",
+            "da",
+            "de",
+            "el",
+            "es",
+            "et",
+            "fa",
+            "fi",
+            "fr",
+            "he",
+            "hi",
+            "hu",
+            "it",
+            "iw",
+            "lt",
+            "nb",
+            "no",
+            "nl",
+            "pl",
+            "pt",
+            "ro",
+            "ru",
+            "sv",
+            "tr",
+            "uk"
+        )
 
-        cities.populateElevations(names);
-        cities.populateAlternateNames(new File(pathNames), names, "alternateNamesV2.txt");
-
-        InputStream googleNames = cities.getClass().getResourceAsStream("/googleNames.txt");
-        cities.populateAlternateNames(googleNames, names);
-
-        for (String lang : LANGUAGES) {
-            cities.writeAndroidXML(names, lang);
+        @JvmStatic
+        @Throws(Exception::class)
+        fun main(args: Array<String>) {
+            var pathCities = "GeoNames/dump/cities1000.zip"
+            var pathNames = "GeoNames/dump/alternateNamesV2.zip"
+            if (args.isNotEmpty()) {
+                pathCities = args[0]
+                if (args.size > 1) {
+                    pathNames = args[1]
+                }
+            }
+            val cities = BahaiCities()
+            val names = cities.loadNames(File(pathCities), BahaiCitiesFilter(), "cities1000.txt")
+            cities.populateElevations(names)
+            cities.populateAlternateNames(File(pathNames), names, "alternateNamesV2.txt")
+            val googleNames = cities.javaClass.getResourceAsStream("/googleNames.txt")
+            cities.populateAlternateNames(googleNames, names)
+            for (lang in LANGUAGES) {
+                cities.writeAndroidXML(names, lang)
+            }
         }
     }
 }

@@ -13,274 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.geonames;
+package com.github.geonames
 
-import com.github.net.HTTPReader;
-
-import org.geonames.FeatureClass;
-import org.geonames.Timezone;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import com.github.net.HTTPReader
+import com.github.net.HTTPReader.read
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.Reader
+import java.net.URL
+import java.nio.charset.StandardCharsets
+import java.util.Locale
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
+import javax.json.Json
+import javax.json.JsonObject
+import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.parsers.ParserConfigurationException
+import org.geonames.FeatureClass
+import org.geonames.Timezone
+import org.w3c.dom.Element
+import org.xml.sax.SAXException
 
 /**
  * Manage lists of GeoName records.
- * <p>
- * <a href="http://download.geonames.org/export/dump/">GeoNames export</a>
- * </p>
+ *
+ * [GeoNames export](https://download.geonames.org/export/dump/)
  *
  * @author Moshe Waisberg
  */
-public class GeoNames {
-
-    /**
-     * GeoNames user name.
-     */
-    private static final String USERNAME = "";
-
-    private static final String TAG_ELEVATION_STATUS = "status";
-    private static final String TAG_ELEVATION_RESULT = "result";
-    private static final String TAG_ELEVATION_ELEVATION = "elevation";
-
-    /**
-     * URL that returns the attribute of the geoNames feature with the given geonameId as JSON document.
-     */
-    private static final String URL_GEONAME_GET = "http://api.geonames.org/getJSON?geonameId=%d&username=%s";
-
-    /**
-     * URL that accepts latitude and longitude coordinates as parameters for an
-     * elevation.
-     */
-    private static final String URL_ELEVATION_GOOGLE = "http://maps.googleapis.com/maps/api/elevation/xml?locations=%f,%f";
-    /**
-     * URL that accepts latitude and longitude coordinates as parameters for an
-     * elevation.<br>
-     * Uses Aster Global Digital Elevation Model data.
-     */
-    private static final String URL_ELEVATION_AGDEM = "http://api.geonames.org/astergdem?lat=%f&lng=%f&username=%s";
-
-    /**
-     * integer id of record in geonames database
-     */
-    private static final int FIELD_GEONAME_ID = 0;
-    /**
-     * name of geographical point (utf8) varchar(200)
-     */
-    private static final int FIELD_GEONAME_NAME = 1;
-    /**
-     * name of geographical point in plain ascii characters, varchar(200)
-     */
-    private static final int FIELD_GEONAME_ASCIINAME = 2;
-    /**
-     * alternatenames, comma separated, ascii names automatically transliterated, convenience attribute from alternatename table, varchar(10000)
-     */
-    private static final int FIELD_GEONAME_ALTERNATENAMES = 3;
-    /**
-     * latitude in decimal degrees (wgs84)
-     */
-    private static final int FIELD_GEONAME_LATITUDE = 4;
-    /**
-     * longitude in decimal degrees (wgs84)
-     */
-    private static final int FIELD_GEONAME_LONGITUDE = 5;
-    /**
-     * see http://www.geonames.org/export/codes.html, char(1)
-     */
-    private static final int FIELD_GEONAME_FEATURE_CLASS = 6;
-    /**
-     * see http://www.geonames.org/export/codes.html, varchar(10)
-     */
-    private static final int FIELD_GEONAME_FC = 7;
-    /**
-     * ISO-3166 2-letter country code, 2 characters
-     */
-    private static final int FIELD_GEONAME_CC = 8;
-    /**
-     * alternate country codes, comma separated, ISO-3166 2-letter country code, 200 characters
-     */
-    private static final int FIELD_GEONAME_CC2 = 9;
-    /**
-     * fipscode (subject to change to iso code), see exceptions below, see file admin1Codes.txt for display names of this code; varchar(20)
-     */
-    private static final int FIELD_GEONAME_ADMIN1_CODE = 10;
-    /**
-     * code for the second administrative division, a county in the US, see file admin2Codes.txt; varchar(80)
-     */
-    private static final int FIELD_GEONAME_ADMIN2_CODE = 11;
-    /**
-     * code for third level administrative division, varchar(20)
-     */
-    private static final int FIELD_GEONAME_ADMIN3_CODE = 12;
-    /**
-     * code for fourth level administrative division, varchar(20)
-     */
-    private static final int FIELD_GEONAME_ADMIN4_CODE = 13;
-    /**
-     * bigint (8 byte int)
-     */
-    private static final int FIELD_GEONAME_POPULATION = 14;
-    /**
-     * in meters, integer
-     */
-    private static final int FIELD_GEONAME_ELEVATION = 15;
-    /**
-     * digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat.
-     */
-    private static final int FIELD_GEONAME_DEM = 16;
-    /**
-     * the iana timezone id (see file timeZone.txt) varchar(40)
-     */
-    private static final int FIELD_GEONAME_TIMEZONE = 17;
-    /**
-     * date of last modification in yyyy-MM-dd format
-     */
-    private static final int FIELD_GEONAME_MODIFICATION = 18;
-
-    /**
-     * the id of this alternate name, int
-     */
-    private static final int FIELD_ALTERNATE_NAMES_ID = 0;
-    /**
-     * geonameId referring to id in table 'geoname', int
-     */
-    private static final int FIELD_ALTERNATE_NAMES_GEONAME_ID = 1;
-    /**
-     * iso 639 language code 2- or 3-characters; 4-characters 'post' for postal codes and 'iata','icao' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link to a website (mostly to wikipedia), wkdt for the wikidataid, varchar(7)
-     */
-    private static final int FIELD_ALTERNATE_NAMES_LANGUAGE = 2;
-    /**
-     * alternate name or name variant, varchar(400)
-     */
-    private static final int FIELD_ALTERNATE_NAMES_NAME = 3;
-    /**
-     * '1', if this alternate name is an official/preferred name
-     */
-    private static final int FIELD_ALTERNATE_NAMES_PREFERRED = 4;
-    /**
-     * '1', if this is a short name like 'California' for 'State of California'
-     */
-    private static final int FIELD_ALTERNATE_NAMES_SHORT = 5;
-    /**
-     * '1', if this alternate name is a colloquial or slang term. Example: 'Big Apple' for 'New York'.
-     */
-    private static final int FIELD_ALTERNATE_NAMES_COLLOQUIAL = 6;
-    /**
-     * '1', if this alternate name is historic and was used in the past. Example 'Bombay' for 'Mumbai'.
-     */
-    private static final int FIELD_ALTERNATE_NAMES_HISTORIC = 7;
-    /**
-     * from period when the name was used
-     */
-    private static final int FIELD_ALTERNATE_NAMES_FROM = 8;
-    /**
-     * to period when the name was used
-     */
-    private static final int FIELD_ALTERNATE_NAMES_TO = 9;
-
-    /**
-     * abbreviation
-     */
-    private static final String ALTERNATE_NAMES_ABBR = "abbr";
-    /**
-     * airport codes
-     */
-    private static final String ALTERNATE_NAMES_FAAC = "faac";
-    /**
-     * French Revolution names
-     */
-    private static final String ALTERNATE_NAMES_FR_1793 = "fr_1793";
-    /**
-     * airport codes
-     */
-    private static final String ALTERNATE_NAMES_IATA = "iata";
-    /**
-     * airport codes
-     */
-    private static final String ALTERNATE_NAMES_ICAO = "icao";
-    /**
-     * a website
-     */
-    private static final String ALTERNATE_NAMES_LINK = "link";
-    /**
-     * phonetics
-     */
-    private static final String ALTERNATE_NAMES_PHON = "phon";
-    /**
-     * pinyin
-     */
-    private static final String ALTERNATE_NAMES_PINY = "piny";
-    /**
-     * postal codes
-     */
-    private static final String ALTERNATE_NAMES_POST = "post";
-    /**
-     * airport codes
-     */
-    private static final String ALTERNATE_NAMES_TCID = "tcid";
-    /**
-     * UNLOCODE
-     */
-    private static final String ALTERNATE_NAMES_UNLC = "unlc";
-    /**
-     * wikidataid
-     */
-    private static final String ALTERNATE_NAMES_WKDT = "wkdt";
-
-    public GeoNames() {
-        super();
-    }
-
-    /**
-     * Parse the tab-delimited file with GeoName records.
-     *
-     * @param file the file to parse.
-     * @return the list of names.
-     * @throws IOException if an I/O error occurs.
-     */
-    public Collection<GeoNamesToponym> parseTabbed(File file) throws IOException {
-        return parseTabbed(file, null);
-    }
-
-    /**
-     * Parse the tab-delimited file with GeoName records.
-     *
-     * @param file       the file to parse.
-     * @param zippedName the zipped name.
-     * @return the list of names.
-     * @throws IOException if an I/O error occurs.
-     */
-    public Collection<GeoNamesToponym> parseTabbed(File file, String zippedName) throws IOException {
-        return parseTabbed(file, null, zippedName);
-    }
-
+class GeoNames {
     /**
      * Parse the tab-delimited file with GeoName records.
      *
@@ -290,155 +55,119 @@ public class GeoNames {
      * @return the list of names.
      * @throws IOException if an I/O error occurs.
      */
-    public Collection<GeoNamesToponym> parseTabbed(File file, NameFilter filter, String zippedName) throws IOException {
-        Collection<GeoNamesToponym> records;
-        Reader reader = null;
-        InputStream in = null;
-        try {
-            in = new FileInputStream(file);
-            if (zippedName != null) {
-                ZipInputStream zin = new ZipInputStream(in);
-                if (!zippedName.isEmpty()) {
-                    ZipEntry entry;
-                    do {
-                        entry = zin.getNextEntry();
-                    } while (!zippedName.equals(entry.getName()));
+    @Throws(IOException::class)
+    fun parseTabbed(
+        file: File,
+        filter: NameFilter? = null,
+        zippedName: String? = null
+    ): Collection<GeoNamesToponym> {
+        FileInputStream(file).use { input ->
+            openZipStream(input, zippedName).use { inputStream ->
+                InputStreamReader(inputStream, StandardCharsets.UTF_8).use { reader ->
+                    return parseTabbed(reader, filter)
                 }
-                in = zin;
             }
-            reader = new InputStreamReader(in, StandardCharsets.UTF_8);
-            in = null;
-            records = parseTabbed(reader, filter);
-        } finally {
-            if (in != null)
-                in.close();
-            if (reader != null)
-                reader.close();
         }
-        return records;
     }
 
     /**
      * Parse the tab-delimited file with GeoName records.
-     *
-     * @param reader the reader.
-     * @return the list of names.
-     * @throws IOException if an I/O error occurs.
-     */
-    public Collection<GeoNamesToponym> parseTabbed(Reader reader) throws IOException {
-        return parseTabbed(reader, null);
-    }
-
-    /**
-     * Parse the tab-delimited file with GeoName records.
-     * <p>
-     * <code>
-     * The main 'geoname' table has the following fields :<br>
-     * ---------------------------------------------------<br>
-     * geonameid         : integer id of record in geonames database<br>
-     * name              : name of geographical point (utf8) varchar(200)<br>
-     * asciiname         : name of geographical point in plain ascii characters, varchar(200)<br>
-     * alternatenames    : alternatenames, comma separated varchar(5000)<br>
-     * latitude          : latitude in decimal degrees (wgs84)<br>
-     * longitude         : longitude in decimal degrees (wgs84)<br>
-     * feature class     : see http://www.geonames.org/export/codes.html, char(1)<br>
-     * feature code      : see http://www.geonames.org/export/codes.html, varchar(10)<br>
-     * country code      : ISO-3166 2-letter country code, 2 characters<br>
-     * cc2               : alternate country codes, comma separated, ISO-3166 2-letter country code, 60 characters<br>
-     * admin1 code       : fipscode (subject to change to iso code), see exceptions below, see file admin1Codes.txt for display names of this code; varchar(20)<br>
-     * admin2 code       : code for the second administrative division, a county in the US, see file admin2Codes.txt; varchar(80)<br>
-     * admin3 code       : code for third level administrative division, varchar(20)<br>
-     * admin4 code       : code for fourth level administrative division, varchar(20)<br>
-     * population        : bigint (8 byte int)<br>
-     * elevation         : in meters, integer<br>
-     * dem               : digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat.<br>
-     * timezone          : the timezone id (see file timeZone.txt) varchar(40)<br>
-     * modification date : date of last modification in yyyy-MM-dd format<br>
-     * </code>
-     * </p>
+     * `
+     * The main 'geoname' table has the following fields :<br></br>
+     * ---------------------------------------------------<br></br>
+     * geonameid         : integer id of record in geonames database<br></br>
+     * name              : name of geographical point (utf8) varchar(200)<br></br>
+     * asciiname         : name of geographical point in plain ascii characters, varchar(200)<br></br>
+     * alternatenames    : alternatenames, comma separated varchar(5000)<br></br>
+     * latitude          : latitude in decimal degrees (wgs84)<br></br>
+     * longitude         : longitude in decimal degrees (wgs84)<br></br>
+     * feature class     : see http://www.geonames.org/export/codes.html, char(1)<br></br>
+     * feature code      : see http://www.geonames.org/export/codes.html, varchar(10)<br></br>
+     * country code      : ISO-3166 2-letter country code, 2 characters<br></br>
+     * cc2               : alternate country codes, comma separated, ISO-3166 2-letter country code, 60 characters<br></br>
+     * admin1 code       : fipscode (subject to change to iso code), see exceptions below, see file admin1Codes.txt for display names of this code; varchar(20)<br></br>
+     * admin2 code       : code for the second administrative division, a county in the US, see file admin2Codes.txt; varchar(80)<br></br>
+     * admin3 code       : code for third level administrative division, varchar(20)<br></br>
+     * admin4 code       : code for fourth level administrative division, varchar(20)<br></br>
+     * population        : bigint (8 byte int)<br></br>
+     * elevation         : in meters, integer<br></br>
+     * dem               : digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat.<br></br>
+     * timezone          : the timezone id (see file timeZone.txt) varchar(40)<br></br>
+     * modification date : date of last modification in yyyy-MM-dd format<br></br>
      *
      * @param reader the reader.
      * @param filter the filter.
      * @return the list of names.
      * @throws IOException if an I/O error occurs.
      */
-    public Collection<GeoNamesToponym> parseTabbed(Reader reader, NameFilter filter) throws IOException {
-        Collection<GeoNamesToponym> records = new ArrayList<>();
-        GeoNamesToponym record;
-        String line;
-        BufferedReader buf = new BufferedReader(reader);
-        String[] fields;
-        String field;
-        Timezone timezone;
-
+    @Throws(IOException::class)
+    fun parseTabbed(reader: Reader, filter: NameFilter? = null): Collection<GeoNamesToponym> {
+        val records = mutableListOf<GeoNamesToponym>()
+        var record: GeoNamesToponym
+        var line: String?
+        val buf = BufferedReader(reader)
+        var fields: Array<String>
+        var field: String
+        var timezone: Timezone
         while (true) {
-            line = buf.readLine();
-            if (line == null)
-                break;
-            if (line.isEmpty() || line.startsWith("#"))
-                continue;
-            fields = line.split("\t");
-            record = new GeoNamesToponym();
-
-            field = fields[FIELD_GEONAME_ID];
-            record.setGeoNameId(Integer.parseInt(field));
-            field = fields[FIELD_GEONAME_NAME];
-            record.setName(field);
-            field = fields[FIELD_GEONAME_ASCIINAME];
-            record.setAsciiName(field);
-            field = fields[FIELD_GEONAME_ALTERNATENAMES];
-            record.setAlternateNames(field);
-            field = fields[FIELD_GEONAME_LATITUDE];
-            record.setLatitude(Double.parseDouble(field));
-            field = fields[FIELD_GEONAME_LONGITUDE];
-            record.setLongitude(Double.parseDouble(field));
-            field = fields[FIELD_GEONAME_FEATURE_CLASS];
-            record.setFeatureClass(FeatureClass.fromValue(field));
-            field = fields[FIELD_GEONAME_FC];
-            record.setFeatureCode(field);
-            field = fields[FIELD_GEONAME_CC];
-            record.setCountryCode(field);
-            field = fields[FIELD_GEONAME_CC2];
-            record.setAlternateCountryCodes(field);
-            field = fields[FIELD_GEONAME_ADMIN1_CODE];
-            record.setAdminCode1(field);
-            field = fields[FIELD_GEONAME_ADMIN2_CODE];
-            record.setAdminCode2(field);
-            field = fields[FIELD_GEONAME_ADMIN3_CODE];
-            record.setAdminCode3(field);
-            field = fields[FIELD_GEONAME_ADMIN4_CODE];
-            record.setAdminCode4(field);
-            field = fields[FIELD_GEONAME_POPULATION];
-            record.setPopulation(Long.parseLong(field));
-            field = fields[FIELD_GEONAME_ELEVATION];
-            if (field.length() > 0)
-                record.setElevation(Integer.parseInt(field));
-            field = fields[FIELD_GEONAME_DEM];
-            if (field.length() > 0)
-                record.setDigitalElevation(Integer.parseInt(field));
-            field = fields[FIELD_GEONAME_TIMEZONE];
-            if (field.length() == 0) {
+            line = buf.readLine()
+            if (line == null) break
+            if (line.isEmpty() || line.startsWith("#")) continue
+            fields = line.split("\t".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            record = GeoNamesToponym()
+            field = fields[FIELD_GEONAME_ID]
+            record.geoNameId = field.toInt()
+            field = fields[FIELD_GEONAME_NAME]
+            record.name = field
+            field = fields[FIELD_GEONAME_ASCIINAME]
+            record.asciiName = field
+            field = fields[FIELD_GEONAME_ALTERNATENAMES]
+            record.alternateNames = field
+            field = fields[FIELD_GEONAME_LATITUDE]
+            record.latitude = field.toDouble()
+            field = fields[FIELD_GEONAME_LONGITUDE]
+            record.longitude = field.toDouble()
+            field = fields[FIELD_GEONAME_FEATURE_CLASS]
+            record.featureClass = FeatureClass.fromValue(field)
+            field = fields[FIELD_GEONAME_FC]
+            record.featureCode = field
+            field = fields[FIELD_GEONAME_CC]
+            record.countryCode = field
+            field = fields[FIELD_GEONAME_CC2]
+            record.alternateCountryCodes = field
+            field = fields[FIELD_GEONAME_ADMIN1_CODE]
+            record.adminCode1 = field
+            field = fields[FIELD_GEONAME_ADMIN2_CODE]
+            record.adminCode2 = field
+            field = fields[FIELD_GEONAME_ADMIN3_CODE]
+            record.adminCode3 = field
+            field = fields[FIELD_GEONAME_ADMIN4_CODE]
+            record.adminCode4 = field
+            field = fields[FIELD_GEONAME_POPULATION]
+            record.population = field.toLong()
+            field = fields[FIELD_GEONAME_ELEVATION]
+            if (field.length > 0) record.elevation = field.toInt()
+            field = fields[FIELD_GEONAME_DEM]
+            if (field.length > 0) record.setDigitalElevation(field.toInt())
+            field = fields[FIELD_GEONAME_TIMEZONE]
+            if (field.length == 0) {
                 // throw new NullPointerException("time zone required for " +
                 // record.getGeoNameId());
-                System.err.println("time zone required for " + record.getGeoNameId());
-                System.err.println(line);
-                continue;
+                System.err.println("time zone required for " + record.geoNameId)
+                System.err.println(line)
+                continue
             }
-            timezone = new Timezone();
-            timezone.setTimezoneId(field);
-            record.setTimezone(timezone);
-            field = fields[FIELD_GEONAME_MODIFICATION];
-            record.setModification(field);
-
-            if ((filter == null) || filter.accept(record)) {
-                if (filter != null) {
-                    filter.replaceLocation(record);
-                }
-                records.add(record);
+            timezone = Timezone()
+            timezone.timezoneId = field
+            record.timezone = timezone
+            field = fields[FIELD_GEONAME_MODIFICATION]
+            record.modification = field
+            if (filter == null || filter.accept(record)) {
+                filter?.replaceLocation(record)
+                records.add(record)
             }
         }
-
-        return records;
+        return records
     }
 
     /**
@@ -446,78 +175,83 @@ public class GeoNames {
      *
      * @param geoNames the list of names to populate.
      */
-    public void populateElevations(Collection<GeoNamesToponym> geoNames) {
-        Integer elevation;
-        for (GeoNamesToponym name : geoNames) {
+    fun populateElevations(geoNames: Collection<GeoNamesToponym>) {
+        var elevation: Int?
+        for (name in geoNames) {
             try {
-                elevation = name.getGrossElevation();
+                elevation = name.grossElevation
                 if (elevation == null) {
-                    populateElevation(name);
+                    populateElevation(name)
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
 
-    public void populateElevation(GeoNamesToponym geoName) throws IOException, ParserConfigurationException, SAXException {
-        geoName.setElevation(0);
+    @Throws(IOException::class, ParserConfigurationException::class, SAXException::class)
+    fun populateElevation(geoName: GeoNamesToponym) {
+        geoName.elevation = 0
         try {
-            populateElevationGeoNames(geoName);
-        } catch (Exception e) {
-            populateElevationGoogle(geoName);
+            populateElevationGeoNames(geoName)
+        } catch (e: Exception) {
+            populateElevationGoogle(geoName)
         }
     }
 
-    public void populateElevationGeoNames(GeoNamesToponym geoName) throws IOException, ParserConfigurationException, SAXException {
-        double latitude = geoName.getLatitude();
-        double longitude = geoName.getLongitude();
-        String queryUrl = String.format(Locale.US, URL_ELEVATION_AGDEM, latitude, longitude, USERNAME);
-        URL url = new URL(queryUrl);
-        InputStream data = HTTPReader.read(url);
-        String elevationValue = new BufferedReader(new InputStreamReader(data, StandardCharsets.UTF_8)).readLine().trim();
-        double elevation = Double.parseDouble(elevationValue);
-        geoName.setElevation((int) elevation);
+    @Throws(IOException::class, ParserConfigurationException::class, SAXException::class)
+    fun populateElevationGeoNames(geoName: GeoNamesToponym) {
+        val latitude = geoName.latitude
+        val longitude = geoName.longitude
+        val queryUrl = String.format(Locale.US, URL_ELEVATION_AGDEM, latitude, longitude, USERNAME)
+        val url = URL(queryUrl)
+        val data = read(url) ?: return
+        val elevationValue =
+            BufferedReader(InputStreamReader(data, StandardCharsets.UTF_8)).readLine()
+                .trim { it <= ' ' }
+        geoName.elevation = elevationValue.toDouble().toInt()
     }
 
-    public void populateElevationGoogle(GeoNamesToponym geoName) throws IOException, ParserConfigurationException, SAXException {
-        double latitude = geoName.getLatitude();
-        double longitude = geoName.getLongitude();
-        String queryUrl = String.format(Locale.US, URL_ELEVATION_GOOGLE, latitude, longitude);
-        URL url = new URL(queryUrl);
-        InputStream data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(data);
-        Element root = doc.getDocumentElement();
-        Element statusNode = (Element) root.getElementsByTagName(TAG_ELEVATION_STATUS).item(0);
-        String status = statusNode.getTextContent();
-        if (!"OK".equals(status)) {
-            System.err.println("status: " + status);
-            return;
+    @Throws(IOException::class, ParserConfigurationException::class, SAXException::class)
+    fun populateElevationGoogle(geoName: GeoNamesToponym) {
+        val latitude = geoName.latitude
+        val longitude = geoName.longitude
+        val queryUrl = String.format(Locale.US, URL_ELEVATION_GOOGLE, latitude, longitude)
+        val url = URL(queryUrl)
+        val data = read(url, HTTPReader.CONTENT_XML)
+        val factory = DocumentBuilderFactory.newInstance()
+        val builder = factory.newDocumentBuilder()
+        val doc = builder.parse(data)
+        val root = doc.documentElement
+        val statusNode = root.getElementsByTagName(TAG_ELEVATION_STATUS).item(0) as Element
+        val status = statusNode.textContent
+        if ("OK" != status) {
+            System.err.println("status: $status")
+            return
         }
-        Element resultNode = (Element) root.getElementsByTagName(TAG_ELEVATION_RESULT).item(0);
-        Element elevationNode = (Element) resultNode.getElementsByTagName(TAG_ELEVATION_ELEVATION).item(0);
-        String elevationValue = elevationNode.getTextContent().trim();
-        double elevation = Double.parseDouble(elevationValue);
-        geoName.setElevation((int) elevation);
+        val resultNode = root.getElementsByTagName(TAG_ELEVATION_RESULT).item(0) as Element
+        val elevationNode =
+            resultNode.getElementsByTagName(TAG_ELEVATION_ELEVATION).item(0) as Element
+        val elevationValue = elevationNode.textContent.trim { it <= ' ' }
+        val elevation = elevationValue.toDouble()
+        geoName.elevation = elevation.toInt()
     }
 
     /**
      * Populate the list of names with alternate names.
      *
      * @param records the list of records to populate.
-     * @see #populateAlternateNamesInternet(GeoNamesToponym)
+     * @see .populateAlternateNamesInternet
      */
-    public void populateAlternateNames(Collection<GeoNamesToponym> records) {
-        Map<String, AlternateName> alternateNames;
-        for (GeoNamesToponym record : records) {
-            alternateNames = record.getAlternateNamesMap();
-            if (alternateNames.size() <= 1) {
+    fun populateAlternateNames(records: Collection<GeoNamesToponym>) {
+        var alternateNames: Map<String, AlternateName>
+        for (record in records) {
+            alternateNames = record.alternateNamesMap
+            if (alternateNames.size <= 1) {
                 try {
-                    populateAlternateNamesInternet(record);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    populateAlternateNamesInternet(record)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
         }
@@ -529,42 +263,30 @@ public class GeoNames {
      * @param record the name to populate.
      * @see {@linktourl http://download.geonames.org/export/dump/readme.txt}
      */
-    protected void populateAlternateNamesInternet(GeoNamesToponym record) throws IOException {
-        String queryUrl = String.format(Locale.US, URL_GEONAME_GET, record.getGeoNameId(), USERNAME);
-        //queryUrl = "GeoNames/res/524901.json";
-        URL url = new URL(queryUrl);
-        InputStream data = HTTPReader.read(url);
-        JsonReader reader = Json.createReader(data);
-        JsonObject json = reader.readObject();
-        JsonArray arr = json.getJsonArray("alternateNames");
-
-        Map<String, AlternateName> alternateNames = record.getAlternateNamesMap();
-        AlternateName alternateName;
-        JsonObject jsonAlternateName;
-        String lang;
-        String name;
-        int length = arr.size();
-        for (int i = 0; i < length; i++) {
-            jsonAlternateName = arr.getJsonObject(i);
+    @Throws(IOException::class)
+    protected fun populateAlternateNamesInternet(record: GeoNamesToponym) {
+        val queryUrl = String.format(Locale.US, URL_GEONAME_GET, record.geoNameId, USERNAME)
+        val url = URL(queryUrl)
+        val data = read(url)
+        val reader = Json.createReader(data)
+        val json = reader.readObject()
+        val arr = json.getJsonArray("alternateNames")
+        val alternateNames = record.alternateNamesMap
+        var alternateName: AlternateName
+        var jsonAlternateName: JsonObject
+        var lang: String
+        var name: String?
+        val length = arr.size
+        for (i in 0 until length) {
+            jsonAlternateName = arr.getJsonObject(i)
             if (!jsonAlternateName.containsKey("lang")) {
-                continue;
+                continue
             }
-            lang = jsonAlternateName.getString("lang");
-            name = jsonAlternateName.getString("name");
-            alternateName = new AlternateName(lang, name);
-            alternateNames.put(lang, alternateName);
+            lang = jsonAlternateName.getString("lang")
+            name = jsonAlternateName.getString("name")
+            alternateName = AlternateName(lang, name)
+            alternateNames.put(lang, alternateName)
         }
-    }
-
-    /**
-     * Parse the file with GeoName alternate names.
-     *
-     * @param file    the file to parse.
-     * @param records the list of names.
-     * @throws IOException if an I/O error occurs.
-     */
-    public void populateAlternateNames(File file, Collection<GeoNamesToponym> records) throws IOException {
-        populateAlternateNames(file, records, null);
     }
 
     /**
@@ -575,9 +297,14 @@ public class GeoNames {
      * @param zippedName the zipped file name.
      * @throws IOException if an I/O error occurs.
      */
-    public void populateAlternateNames(File file, Collection<GeoNamesToponym> records, String zippedName) throws IOException {
-        try (InputStream in = new FileInputStream(file)) {
-            populateAlternateNames(in, records, zippedName);
+    @Throws(IOException::class)
+    fun populateAlternateNames(
+        file: File,
+        records: Collection<GeoNamesToponym>,
+        zippedName: String? = null
+    ) {
+        FileInputStream(file).use { input ->
+            populateAlternateNames(input, records, zippedName)
         }
     }
 
@@ -589,115 +316,101 @@ public class GeoNames {
      * @param zippedName the zipped file name.
      * @throws IOException if an I/O error occurs.
      */
-    public void populateAlternateNames(InputStream input, Collection<GeoNamesToponym> records, String zippedName) throws IOException {
-        InputStream in = input;
-        if (zippedName != null) {
-            ZipInputStream zin = new ZipInputStream(in);
-            if (!zippedName.isEmpty()) {
-                ZipEntry entry;
-                do {
-                    entry = zin.getNextEntry();
-                } while (!zippedName.equals(entry.getName()));
+    @Throws(IOException::class)
+    fun populateAlternateNames(
+        input: InputStream,
+        records: Collection<GeoNamesToponym>,
+        zippedName: String? = null
+    ) {
+        openZipStream(input, zippedName).use { inputStream ->
+            InputStreamReader(inputStream, StandardCharsets.UTF_8).use { reader ->
+                populateAlternateNames(reader, records)
             }
-            in = zin;
         }
-        Reader reader = new InputStreamReader(in, StandardCharsets.UTF_8);
-        populateAlternateNames(reader, records);
     }
 
     /**
      * Parse the file with GeoName alternate names.
-     * <p>
-     * <code>
-     * The table 'alternate names' :<br>
+     * `
+     * The table 'alternate names' :<br></br>
      * -----------------------------
-     * alternateNameId   : the id of this alternate name, int<br>
-     * geonameid         : geonameId referring to id in table 'geoname', int<br>
-     * isolanguage       : iso 639 language code 2- or 3-characters; 4-characters 'post' for postal codes and 'iata','icao' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link for a website, varchar(7)<br>
-     * alternate name    : alternate name or name variant, varchar(200)<br>
-     * isPreferredName   : '1', if this alternate name is an official/preferred name<br>
-     * isShortName       : '1', if this is a short name like 'California' for 'State of California'<br>
-     * isColloquial      : '1', if this alternate name is a colloquial or slang term<br>
-     * isHistoric        : '1', if this alternate name is historic and was used in the past<br>
-     * </code>
-     * </p>
+     * alternateNameId   : the id of this alternate name, int<br></br>
+     * geonameid         : geonameId referring to id in table 'geoname', int<br></br>
+     * isolanguage       : iso 639 language code 2- or 3-characters; 4-characters 'post' for postal codes and 'iata','icao' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link for a website, varchar(7)<br></br>
+     * alternate name    : alternate name or name variant, varchar(200)<br></br>
+     * isPreferredName   : '1', if this alternate name is an official/preferred name<br></br>
+     * isShortName       : '1', if this is a short name like 'California' for 'State of California'<br></br>
+     * isColloquial      : '1', if this alternate name is a colloquial or slang term<br></br>
+     * isHistoric        : '1', if this alternate name is historic and was used in the past<br></br>
      *
      * @param reader  the reader.
      * @param records the list of names.
      * @throws IOException if an I/O error occurs.
      */
-    public void populateAlternateNames(Reader reader, Collection<GeoNamesToponym> records) throws IOException {
-        Map<Integer, GeoNamesToponym> recordsById = new HashMap<>();
-        for (GeoNamesToponym record : records) {
-            recordsById.put(record.getGeoNameId(), record);
+    @Throws(IOException::class)
+    fun populateAlternateNames(reader: Reader, records: Collection<GeoNamesToponym>) {
+        val recordsById: MutableMap<Int, GeoNamesToponym> = HashMap()
+        for (record in records) {
+            recordsById[record.geoNameId] = record
         }
-
-        GeoNamesToponym record;
-        String line;
-        BufferedReader buf = new BufferedReader(reader);
-        String[] fields;
-
-        int geonameId;
-        String language;
-        String name;
-        boolean preferredName;
-        boolean shortName;
-        boolean colloquial;
-        boolean historic;
-
-        Set<Integer> finished = new HashSet<>();
-
+        var record: GeoNamesToponym?
+        var line: String?
+        val buf = BufferedReader(reader)
+        var fields: Array<String>
+        var geonameId: GeoNameId
+        var language: String
+        var name: String
+        var preferredName: Boolean
+        var shortName: Boolean
+        var colloquial: Boolean
+        var historic: Boolean
+        val finished = mutableSetOf<GeoNameId>()
         while (true) {
-            line = buf.readLine();
-            if (line == null)
-                break;
-            if (line.isEmpty())
-                continue;
-            fields = line.split("\t");
-
-            geonameId = Integer.parseInt(fields[FIELD_ALTERNATE_NAMES_GEONAME_ID]);
+            line = buf.readLine()
+            if (line == null) break
+            if (line.isEmpty()) continue
+            fields = line.split("\t".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            geonameId = fields[FIELD_ALTERNATE_NAMES_GEONAME_ID].toInt()
             if (finished.contains(geonameId)) {
-                continue;
+                continue
             }
-            record = recordsById.get(geonameId);
+            record = recordsById[geonameId]
             if (record == null) {
-                continue;
+                continue
             }
-            language = fields[FIELD_ALTERNATE_NAMES_LANGUAGE];
-            if (language.isEmpty()
-                    || ALTERNATE_NAMES_ABBR.equals(language)
-                    || ALTERNATE_NAMES_FAAC.equals(language)
-                    || ALTERNATE_NAMES_FR_1793.equals(language)
-                    || ALTERNATE_NAMES_IATA.equals(language)
-                    || ALTERNATE_NAMES_ICAO.equals(language)
-                    || ALTERNATE_NAMES_PHON.equals(language)
-                    || ALTERNATE_NAMES_PINY.equals(language)
-                    || ALTERNATE_NAMES_POST.equals(language)
-                    || ALTERNATE_NAMES_TCID.equals(language)
-                    || ALTERNATE_NAMES_WKDT.equals(language)
-            ) {
-                continue;
+            language = fields[FIELD_ALTERNATE_NAMES_LANGUAGE]
+            if (language.isEmpty() || ALTERNATE_NAMES_ABBR == language || ALTERNATE_NAMES_FAAC == language || ALTERNATE_NAMES_FR_1793 == language || ALTERNATE_NAMES_IATA == language || ALTERNATE_NAMES_ICAO == language || ALTERNATE_NAMES_PHON == language || ALTERNATE_NAMES_PINY == language || ALTERNATE_NAMES_POST == language || ALTERNATE_NAMES_TCID == language || ALTERNATE_NAMES_WKDT == language) {
+                continue
             }
             // "unlc" is almost always the last record in the group, so anything following is probably a mistake.
-            if (ALTERNATE_NAMES_UNLC.equals(language)) {
-                finished.add(geonameId);
-                continue;
+            if (ALTERNATE_NAMES_UNLC == language) {
+                finished.add(geonameId)
+                continue
             }
-
-            name = fields[FIELD_ALTERNATE_NAMES_NAME];
-            if (ALTERNATE_NAMES_LINK.equals(language)) {
-                if (record.getWikipediaURL() == null) {
-                    record.setWikipediaURL(name);
+            name = fields[FIELD_ALTERNATE_NAMES_NAME]
+            if (ALTERNATE_NAMES_LINK == language) {
+                if (record.wikipediaURL == null) {
+                    record.wikipediaURL = name
                 }
-                continue;
+                continue
             }
-
-            preferredName = (fields.length > FIELD_ALTERNATE_NAMES_PREFERRED) && "1".equals(fields[FIELD_ALTERNATE_NAMES_PREFERRED]);
-            shortName = (fields.length > FIELD_ALTERNATE_NAMES_SHORT) && "1".equals(fields[FIELD_ALTERNATE_NAMES_SHORT]);
-            colloquial = (fields.length > FIELD_ALTERNATE_NAMES_COLLOQUIAL) && "1".equals(fields[FIELD_ALTERNATE_NAMES_COLLOQUIAL]);
-            historic = (fields.length > FIELD_ALTERNATE_NAMES_HISTORIC) && "1".equals(fields[FIELD_ALTERNATE_NAMES_HISTORIC]);
-
-            record.putAlternateName(geonameId, language, name, preferredName, shortName, colloquial, historic);
+            preferredName =
+                fields.size > FIELD_ALTERNATE_NAMES_PREFERRED && "1" == fields[FIELD_ALTERNATE_NAMES_PREFERRED]
+            shortName =
+                fields.size > FIELD_ALTERNATE_NAMES_SHORT && "1" == fields[FIELD_ALTERNATE_NAMES_SHORT]
+            colloquial =
+                fields.size > FIELD_ALTERNATE_NAMES_COLLOQUIAL && "1" == fields[FIELD_ALTERNATE_NAMES_COLLOQUIAL]
+            historic =
+                fields.size > FIELD_ALTERNATE_NAMES_HISTORIC && "1" == fields[FIELD_ALTERNATE_NAMES_HISTORIC]
+            record.putAlternateName(
+                geonameId,
+                language,
+                name,
+                preferredName,
+                shortName,
+                colloquial,
+                historic
+            )
         }
     }
 
@@ -708,22 +421,14 @@ public class GeoNames {
      * @return the list of names.
      * @throws IOException if an I/O error occurs.
      */
-    public Collection<CountryInfo> parseCountries(File file) throws IOException {
-        Reader reader = null;
-        InputStream in = null;
-        try {
-            in = new FileInputStream(file);
-            reader = new InputStreamReader(in, StandardCharsets.UTF_8);
-            in = null;
-            return parseCountries(reader);
-        } finally {
-            if (in != null)
-                in.close();
-            if (reader != null)
-                reader.close();
+    @Throws(IOException::class)
+    fun parseCountries(file: File): Collection<CountryInfo> {
+        FileInputStream(file).use { input ->
+            InputStreamReader(input, StandardCharsets.UTF_8).use { reader ->
+                return parseCountries(reader)
+            }
         }
     }
-
 
     /**
      * Parse the tab-delimited file with GeoName records.
@@ -732,120 +437,354 @@ public class GeoNames {
      * @return the list of names.
      * @throws IOException if an I/O error occurs.
      */
-    public Collection<CountryInfo> parseCountries(Reader reader) throws IOException {
-        Collection<CountryInfo> records = new ArrayList<CountryInfo>();
-        CountryInfo record;
-        String line;
-        BufferedReader buf = new BufferedReader(reader);
-        String[] fields;
-        int column;
-        String field;
-
+    @Throws(IOException::class)
+    fun parseCountries(reader: Reader): Collection<CountryInfo> {
+        val records = mutableListOf<CountryInfo>()
+        var record: CountryInfo
+        var line: String?
+        val buf = BufferedReader(reader)
+        var fields: Array<String>
+        var column: Int
+        var field: String
         while (true) {
-            line = buf.readLine();
-            if (line == null)
-                break;
-            if (line.isEmpty() || line.startsWith("#"))
-                continue;
-            fields = line.split("\t");
-            record = new CountryInfo();
-
-            column = 0;
-            field = fields[column++];
-            record.setIso(field);
-            field = fields[column++];
-            record.setIso3(field);
-            field = fields[column++];
-            record.setIsoNumeric(Integer.parseInt(field));
-            field = fields[column++];
-            record.setFips(field);
-            field = fields[column++];
-            record.setCountry(field);
-            field = fields[column++];
-            record.setCapital(field);
-            field = fields[column++];
-            record.setArea(Double.parseDouble(field));
-            field = fields[column++];
-            record.setPopulation(Long.parseLong(field));
-            field = fields[column++];
-            record.setContinent(field);
-            field = fields[column++];
-            record.setTld(field);
-            field = fields[column++];
-            record.setCurrencyCode(field);
-            field = fields[column++];
-            record.setCurrencyName(field);
-            field = fields[column++];
-            record.setPhone(field);
-            field = fields[column++];
-            record.setPostalCodeFormat(field);
-            field = fields[column++];
-            record.setPostalCodeRegex(field);
-            field = fields[column++];
-            record.setLanguages(Arrays.asList(field.split(",")));
-            field = fields[column++];
-            record.setGeoNameId(Long.parseLong(field));
-            if (column < fields.length) {
-                field = fields[column++];
-                record.setNeighbours(Arrays.asList(field.split(",")));
-                if (column < fields.length) {
-                    field = fields[column++];
-                    record.setEquivalentFipsCode(field);
+            line = buf.readLine()
+            if (line == null) break
+            if (line.isEmpty() || line.startsWith("#")) continue
+            fields = line.split("\t".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            record = CountryInfo()
+            column = 0
+            field = fields[column++]
+            record.iso = field
+            field = fields[column++]
+            record.iso3 = field
+            field = fields[column++]
+            record.isoNumeric = field.toInt()
+            field = fields[column++]
+            record.fips = field
+            field = fields[column++]
+            record.country = field
+            field = fields[column++]
+            record.capital = field
+            field = fields[column++]
+            record.area = field.toDouble()
+            field = fields[column++]
+            record.population = field.toLong()
+            field = fields[column++]
+            record.continent = field
+            field = fields[column++]
+            record.tld = field
+            field = fields[column++]
+            record.currencyCode = field
+            field = fields[column++]
+            record.currencyName = field
+            field = fields[column++]
+            record.phone = field
+            field = fields[column++]
+            record.postalCodeFormat = field
+            field = fields[column++]
+            record.postalCodeRegex = field
+            field = fields[column++]
+            record.languages =
+                listOf(*field.split(",".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray())
+            field = fields[column++]
+            record.geoNameId = field.toInt()
+            if (column < fields.size) {
+                field = fields[column++]
+                record.neighbours =
+                    listOf(*field.split(",".toRegex()).dropLastWhile { it.isEmpty() }
+                        .toTypedArray())
+                if (column < fields.size) {
+                    field = fields[column++]
+                    record.equivalentFipsCode = field
                 }
             }
-
-            records.add(record);
+            records.add(record)
         }
-
-        return records;
+        return records
     }
 
-    public Collection<GeoShape> parseShapes(File file) throws IOException {
-        Reader reader = null;
-        InputStream in = null;
-        try {
-            in = new FileInputStream(file);
-            reader = new InputStreamReader(in, StandardCharsets.UTF_8);
-            in = null;
-            return parseShapes(reader);
-        } finally {
-            if (in != null)
-                in.close();
-            if (reader != null)
-                reader.close();
+    @Throws(IOException::class)
+    fun parseShapes(file: File): Collection<GeoShape> {
+        FileInputStream(file).use { input ->
+            InputStreamReader(input, StandardCharsets.UTF_8).use { reader ->
+                return parseShapes(reader)
+            }
         }
     }
 
-    public Collection<GeoShape> parseShapes(Reader reader) throws IOException {
-        Collection<GeoShape> records = new ArrayList<GeoShape>();
-        GeoShape record;
-        String line;
-        BufferedReader buf = new BufferedReader(reader);
-        String[] fields;
-        int column;
-        String field;
+    @Throws(IOException::class)
+    fun parseShapes(reader: Reader): Collection<GeoShape> {
+        val records = mutableListOf<GeoShape>()
+        var record: GeoShape
+        var line: String?
+        val buf = BufferedReader(reader)
+        var fields: Array<String>
+        var column: Int
+        var field: String
 
         // Skip header row.
-        buf.readLine();
-
+        buf.readLine()
         while (true) {
-            line = buf.readLine();
-            if (line == null)
-                break;
-            if (line.isEmpty() || line.startsWith("#"))
-                continue;
-            fields = line.split("\t");
-            record = new GeoShape();
-
-            column = 0;
-            field = fields[column++];
-            record.setGeoNameId(Long.parseLong(field));
-            field = fields[column++];
-            record.setGeoJSON(field);
-
-            records.add(record);
+            line = buf.readLine()
+            if (line == null) break
+            if (line.isEmpty() || line.startsWith("#")) continue
+            fields = line.split("\t".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            record = GeoShape()
+            column = 0
+            field = fields[column++]
+            record.geoNameId = field.toInt()
+            field = fields[column++]
+            record.geoJSON = field
+            records.add(record)
         }
+        return records
+    }
 
-        return records;
+    @Throws(IOException::class)
+    private fun openZipStream(input: InputStream, zippedName: String?): InputStream {
+        if (zippedName.isNullOrEmpty()) return input
+        val zin = ZipInputStream(input)
+        var entry: ZipEntry?
+        do {
+            entry = zin.nextEntry
+        } while (entry != null && zippedName != entry.name)
+        return zin
+    }
+
+    companion object {
+        /**
+         * GeoNames user name.
+         */
+        private const val USERNAME = ""
+        private const val TAG_ELEVATION_STATUS = "status"
+        private const val TAG_ELEVATION_RESULT = "result"
+        private const val TAG_ELEVATION_ELEVATION = "elevation"
+
+        /**
+         * URL that returns the attribute of the geoNames feature with the given geonameId as JSON document.
+         */
+        private const val URL_GEONAME_GET =
+            "http://api.geonames.org/getJSON?geonameId=%d&username=%s"
+
+        /**
+         * URL that accepts latitude and longitude coordinates as parameters for an
+         * elevation.
+         */
+        private const val URL_ELEVATION_GOOGLE =
+            "http://maps.googleapis.com/maps/api/elevation/xml?locations=%f,%f"
+
+        /**
+         * URL that accepts latitude and longitude coordinates as parameters for an
+         * elevation.<br></br>
+         * Uses Aster Global Digital Elevation Model data.
+         */
+        private const val URL_ELEVATION_AGDEM =
+            "http://api.geonames.org/astergdem?lat=%f&lng=%f&username=%s"
+
+        /**
+         * integer id of record in geonames database
+         */
+        private const val FIELD_GEONAME_ID = 0
+
+        /**
+         * name of geographical point (utf8) varchar(200)
+         */
+        private const val FIELD_GEONAME_NAME = 1
+
+        /**
+         * name of geographical point in plain ascii characters, varchar(200)
+         */
+        private const val FIELD_GEONAME_ASCIINAME = 2
+
+        /**
+         * alternatenames, comma separated, ascii names automatically transliterated, convenience attribute from alternatename table, varchar(10000)
+         */
+        private const val FIELD_GEONAME_ALTERNATENAMES = 3
+
+        /**
+         * latitude in decimal degrees (wgs84)
+         */
+        private const val FIELD_GEONAME_LATITUDE = 4
+
+        /**
+         * longitude in decimal degrees (wgs84)
+         */
+        private const val FIELD_GEONAME_LONGITUDE = 5
+
+        /**
+         * see http://www.geonames.org/export/codes.html, char(1)
+         */
+        private const val FIELD_GEONAME_FEATURE_CLASS = 6
+
+        /**
+         * see http://www.geonames.org/export/codes.html, varchar(10)
+         */
+        private const val FIELD_GEONAME_FC = 7
+
+        /**
+         * ISO-3166 2-letter country code, 2 characters
+         */
+        private const val FIELD_GEONAME_CC = 8
+
+        /**
+         * alternate country codes, comma separated, ISO-3166 2-letter country code, 200 characters
+         */
+        private const val FIELD_GEONAME_CC2 = 9
+
+        /**
+         * fipscode (subject to change to iso code), see exceptions below, see file admin1Codes.txt for display names of this code; varchar(20)
+         */
+        private const val FIELD_GEONAME_ADMIN1_CODE = 10
+
+        /**
+         * code for the second administrative division, a county in the US, see file admin2Codes.txt; varchar(80)
+         */
+        private const val FIELD_GEONAME_ADMIN2_CODE = 11
+
+        /**
+         * code for third level administrative division, varchar(20)
+         */
+        private const val FIELD_GEONAME_ADMIN3_CODE = 12
+
+        /**
+         * code for fourth level administrative division, varchar(20)
+         */
+        private const val FIELD_GEONAME_ADMIN4_CODE = 13
+
+        /**
+         * bigint (8 byte int)
+         */
+        private const val FIELD_GEONAME_POPULATION = 14
+
+        /**
+         * in meters, integer
+         */
+        private const val FIELD_GEONAME_ELEVATION = 15
+
+        /**
+         * digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat.
+         */
+        private const val FIELD_GEONAME_DEM = 16
+
+        /**
+         * the iana timezone id (see file timeZone.txt) varchar(40)
+         */
+        private const val FIELD_GEONAME_TIMEZONE = 17
+
+        /**
+         * date of last modification in yyyy-MM-dd format
+         */
+        private const val FIELD_GEONAME_MODIFICATION = 18
+
+        /**
+         * the id of this alternate name, int
+         */
+        private const val FIELD_ALTERNATE_NAMES_ID = 0
+
+        /**
+         * geonameId referring to id in table 'geoname', int
+         */
+        private const val FIELD_ALTERNATE_NAMES_GEONAME_ID = 1
+
+        /**
+         * iso 639 language code 2- or 3-characters; 4-characters 'post' for postal codes and 'iata','icao' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link to a website (mostly to wikipedia), wkdt for the wikidataid, varchar(7)
+         */
+        private const val FIELD_ALTERNATE_NAMES_LANGUAGE = 2
+
+        /**
+         * alternate name or name variant, varchar(400)
+         */
+        private const val FIELD_ALTERNATE_NAMES_NAME = 3
+
+        /**
+         * '1', if this alternate name is an official/preferred name
+         */
+        private const val FIELD_ALTERNATE_NAMES_PREFERRED = 4
+
+        /**
+         * '1', if this is a short name like 'California' for 'State of California'
+         */
+        private const val FIELD_ALTERNATE_NAMES_SHORT = 5
+
+        /**
+         * '1', if this alternate name is a colloquial or slang term. Example: 'Big Apple' for 'New York'.
+         */
+        private const val FIELD_ALTERNATE_NAMES_COLLOQUIAL = 6
+
+        /**
+         * '1', if this alternate name is historic and was used in the past. Example 'Bombay' for 'Mumbai'.
+         */
+        private const val FIELD_ALTERNATE_NAMES_HISTORIC = 7
+
+        /**
+         * from period when the name was used
+         */
+        private const val FIELD_ALTERNATE_NAMES_FROM = 8
+
+        /**
+         * to period when the name was used
+         */
+        private const val FIELD_ALTERNATE_NAMES_TO = 9
+
+        /**
+         * abbreviation
+         */
+        private const val ALTERNATE_NAMES_ABBR = "abbr"
+
+        /**
+         * airport codes
+         */
+        private const val ALTERNATE_NAMES_FAAC = "faac"
+
+        /**
+         * French Revolution names
+         */
+        private const val ALTERNATE_NAMES_FR_1793 = "fr_1793"
+
+        /**
+         * airport codes
+         */
+        private const val ALTERNATE_NAMES_IATA = "iata"
+
+        /**
+         * airport codes
+         */
+        private const val ALTERNATE_NAMES_ICAO = "icao"
+
+        /**
+         * a website
+         */
+        private const val ALTERNATE_NAMES_LINK = "link"
+
+        /**
+         * phonetics
+         */
+        private const val ALTERNATE_NAMES_PHON = "phon"
+
+        /**
+         * pinyin
+         */
+        private const val ALTERNATE_NAMES_PINY = "piny"
+
+        /**
+         * postal codes
+         */
+        private const val ALTERNATE_NAMES_POST = "post"
+
+        /**
+         * airport codes
+         */
+        private const val ALTERNATE_NAMES_TCID = "tcid"
+
+        /**
+         * UNLOCODE
+         */
+        private const val ALTERNATE_NAMES_UNLC = "unlc"
+
+        /**
+         * wikidataid
+         */
+        private const val ALTERNATE_NAMES_WKDT = "wkdt"
     }
 }
