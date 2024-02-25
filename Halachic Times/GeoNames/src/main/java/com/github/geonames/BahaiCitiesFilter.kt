@@ -20,13 +20,13 @@ package com.github.geonames
  *
  * @author Moshe Waisberg
  */
-class BahaiCitiesFilter : NameFilter {
+class BahaiCitiesFilter : ToponymFilter {
 
-    override fun accept(name: GeoNamesToponym): Boolean {
-        return CITIES.binarySearch(name.geoNameId) >= 0
+    override fun accept(toponym: GeoNamesToponym): Boolean {
+        return CITIES.binarySearch(toponym.geoNameId) >= 0
     }
 
-    override fun replaceLocation(name: GeoNamesToponym) = Unit
+    override fun replaceLocation(toponym: GeoNamesToponym) = Unit
 
     companion object {
         private const val ADDIS_ABABA = 344979

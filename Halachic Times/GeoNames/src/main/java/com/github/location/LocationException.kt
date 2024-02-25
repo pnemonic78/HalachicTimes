@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.geonames
+package com.github.location
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import java.io.IOException
 
 /**
- * Root object for GeoNames address JSON status.
+ * Location exception.
  *
  * @author Moshe Waisberg
  */
-@Serializable
-class GeoNamesStatus {
-    @SerialName("message")
-    var message: String? = null
-
-    @SerialName("value")
-    var value = 0
+class LocationException : IOException {
+    constructor()
+    constructor(message: String?) : super(message)
+    constructor(message: String?, cause: Throwable?) : super(message, cause)
+    constructor(cause: Throwable?) : super(cause)
 }

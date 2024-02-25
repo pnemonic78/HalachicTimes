@@ -26,6 +26,9 @@ import java.util.Locale
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.decodeFromStream
+import org.geonames.GeoNamesResponse
+import org.geonames.Ocean
+import org.geonames.Toponym
 
 /**
  * Handler for parsing the GeoNames response for addresses.

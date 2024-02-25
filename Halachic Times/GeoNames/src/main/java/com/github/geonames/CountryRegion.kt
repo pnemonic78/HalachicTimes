@@ -15,6 +15,8 @@
  */
 package com.github.geonames
 
+import com.github.geonames.util.LocaleUtils.ISO639_ISRAEL
+import com.github.geonames.util.LocaleUtils.ISO639_PALESTINE
 import com.vividsolutions.jts.geom.Geometry
 import com.vividsolutions.jts.geom.GeometryCollection
 import java.awt.Polygon
@@ -22,6 +24,7 @@ import java.awt.geom.Point2D
 import java.io.IOException
 import kotlin.math.PI
 import kotlin.math.atan2
+import kotlin.math.round
 import org.geotools.geojson.geom.GeometryJSON
 
 /**
@@ -30,8 +33,8 @@ import org.geotools.geojson.geom.GeometryJSON
  * @author Moshe Waisberg
  */
 class CountryRegion(countryCode: String) : Polygon() {
-    val countryCode: String = if (CountryInfo.ISO639_PALESTINE == countryCode) {
-        CountryInfo.ISO639_ISRAEL
+    val countryCode: String = if (ISO639_PALESTINE == countryCode) {
+        ISO639_ISRAEL
     } else {
         countryCode
     }
@@ -43,7 +46,7 @@ class CountryRegion(countryCode: String) : Polygon() {
      * @param longitude the longitude.
      */
     fun addLocation(latitude: Double, longitude: Double) {
-        addPoint(longitude * FACTOR_TO_INT, latitude * FACTOR_TO_INT)
+        addPoint(toFixedPoint(longitude), toFixedPoint(latitude))
     }
 
     /**
@@ -135,7 +138,7 @@ class CountryRegion(countryCode: String) : Polygon() {
 
     companion object {
         /** Factor to convert coordinate value to a fixed-point integer.  */
-        const val FACTOR_TO_INT = 1e+5
+        private const val FACTOR_TO_INT = 1e+5
 
         /**
          * Factor to convert coordinate value to a fixed-point integer for city
@@ -183,6 +186,14 @@ class CountryRegion(countryCode: String) : Polygon() {
                 }
             }
             return regions
+        }
+
+        fun toFixedPoint(degrees: Double): Double {
+            return round(degrees * FACTOR_TO_INT)
+        }
+
+        fun toFixedPointInt(degrees: Double): Int {
+            return toFixedPoint(degrees).toInt()
         }
     }
 }

@@ -15,7 +15,6 @@
  */
 package com.github.geonames
 
-import org.geonames.InsufficientStyleException
 import org.geonames.Toponym
 
 /**
@@ -24,10 +23,6 @@ import org.geonames.Toponym
  * @author Moshe Waisberg
  */
 open class GeoNamesRecord : Toponym() {
-    /**
-     * The ASCII name.
-     */
-    var asciiName: String? = null
 
     /**
      * The alternate country codes. A comma-separated list of codes.
@@ -35,52 +30,11 @@ open class GeoNamesRecord : Toponym() {
     var alternateCountryCodes: String? = null
 
     /**
-     * The SRTM3 elevation.
-     */
-    var digitalElevation: Int? = null
-        private set
-
-    /**
      * The modification.
      */
     var modification: String? = null
 
-    /**
-     * Set the country code.
-     *
-     * @param countryCode the country code.
-     */
-    override fun setCountryCode(countryCode: String) {
-        var code = countryCode
-        if (CountryInfo.ISO639_PALESTINE == code) {
-            code = CountryInfo.ISO639_ISRAEL
-        }
-        super.setCountryCode(code)
-    }
-
-    /**
-     * Set the SRTM3 elevation.
-     *
-     * @param dem the elevation.
-     */
-    fun setDigitalElevation(dem: Int) {
-        digitalElevation = dem
-    }
-
     override fun hashCode(): Int {
         return geoNameId
     }
-
-    val grossElevation: Int?
-        get() {
-            var elevation: Int? = null
-            try {
-                elevation = getElevation()
-            } catch (ignore: InsufficientStyleException) {
-            }
-            if (elevation == null) {
-                elevation = digitalElevation
-            }
-            return elevation
-        }
 }

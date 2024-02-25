@@ -22,10 +22,10 @@ import org.geonames.FeatureClass
  *
  * @author Moshe Waisberg
  */
-class CityFilter : NameFilter {
-    override fun accept(name: GeoNamesToponym): Boolean {
-        return FeatureClass.P == name.featureClass
+class CityFilter : ToponymFilter {
+    override fun accept(toponym: GeoNamesToponym): Boolean {
+        return FeatureClass.P == toponym.featureClass
     }
 
-    override fun replaceLocation(name: GeoNamesToponym) = Unit
+    override fun replaceLocation(toponym: GeoNamesToponym) = Unit
 }

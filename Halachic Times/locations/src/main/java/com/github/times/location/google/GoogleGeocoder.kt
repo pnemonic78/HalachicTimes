@@ -32,9 +32,7 @@ import java.util.Locale
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
  * Google Geocoding API.
  *
- *
- * [http://
- * code.google.com/apis/maps/documentation/geocoding/](http://code.google.com/apis/maps/documentation/geocoding/)
+ * [geocoding](https://developers.google.com/maps/documentation/geocoding)
  *
  * @author Moshe Waisberg
  */

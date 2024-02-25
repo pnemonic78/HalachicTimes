@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.geonames
+package org.geonames
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -24,13 +24,13 @@ import kotlinx.serialization.Serializable
  * @author Moshe Waisberg
  */
 @Serializable
-class GeoNamesResponse {
+data class GeoNamesResponse(
     @SerialName("geonames")
-    var records: List<Toponym>? = null
+    var records: List<Toponym>? = null,
 
     @SerialName("status")
-    var status: GeoNamesStatus? = null
+    var status: GeoNamesStatus? = null,
 
     @SerialName("ocean")
     var ocean: Ocean? = null
-}
+)

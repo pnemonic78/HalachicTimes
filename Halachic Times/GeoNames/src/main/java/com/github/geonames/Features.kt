@@ -4,6 +4,7 @@ import org.geonames.FeatureClass
 
 /**
  * Features.
+ * TODO make enum from https://www.geonames.org/export/codes.html
  */
 object Features {
     /**

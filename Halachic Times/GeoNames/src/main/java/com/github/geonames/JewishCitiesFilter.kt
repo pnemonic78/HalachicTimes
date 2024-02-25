@@ -20,49 +20,49 @@ package com.github.geonames
  *
  * @author Moshe Waisberg
  */
-class JewishCitiesFilter : NameFilter {
+class JewishCitiesFilter : ToponymFilter {
 
-    override fun accept(name: GeoNamesToponym): Boolean {
-        return CITIES.binarySearch(name.geoNameId) >= 0
+    override fun accept(toponym: GeoNamesToponym): Boolean {
+        return CITIES.binarySearch(toponym.geoNameId) >= 0
     }
 
-    override fun replaceLocation(name: GeoNamesToponym) {
-        when (name.geoNameId) {
+    override fun replaceLocation(toponym: GeoNamesToponym) {
+        when (toponym.geoNameId) {
             ADDIS_ABABA -> {
-                name.latitude = 9.0350628
-                name.longitude = 38.7486724
+                toponym.latitude = 9.0350628
+                toponym.longitude = 38.7486724
             }
             ANTWERP -> {
-                name.latitude = 51.2199612
-                name.longitude = 4.3861885
+                toponym.latitude = 51.2199612
+                toponym.longitude = 4.3861885
             }
             ISTANBUL -> {
-                name.latitude = 41.0128072
-                name.longitude = 28.9550702
+                toponym.latitude = 41.0128072
+                toponym.longitude = 28.9550702
             }
             KIEV -> {
-                name.latitude = 50.446306
-                name.longitude = 30.5180833
+                toponym.latitude = 50.446306
+                toponym.longitude = 30.5180833
             }
             OSLO -> {
-                name.latitude = 59.9119497
-                name.longitude = 10.7313994
+                toponym.latitude = 59.9119497
+                toponym.longitude = 10.7313994
             }
             PARIS -> {
-                name.latitude = 48.8657367
-                name.longitude = 2.3382167
+                toponym.latitude = 48.8657367
+                toponym.longitude = 2.3382167
             }
             PORTLAND -> {
-                name.latitude = 45.4275604
-                name.longitude = -122.814655
+                toponym.latitude = 45.4275604
+                toponym.longitude = -122.814655
             }
             RIO_DE_JANEIRO -> {
-                name.latitude = -22.9041251
-                name.longitude = -43.5734578
+                toponym.latitude = -22.9041251
+                toponym.longitude = -43.5734578
             }
             VIENNA -> {
-                name.latitude = 48.2108685
-                name.longitude = 16.3550599
+                toponym.latitude = 48.2108685
+                toponym.longitude = 16.3550599
             }
         }
     }

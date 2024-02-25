@@ -34,8 +34,8 @@ class LocationComparator : Comparator<GeoNamesToponym> {
         val latCompare = lat1.compareTo(lat2)
         if (latCompare != 0) return latCompare
 
-        val ele1 = geo1.grossElevation ?: 0
-        val ele2 = geo2.grossElevation ?: 0
+        val ele1 = geo1.elevation ?: 0
+        val ele2 = geo2.elevation ?: 0
         val eleCompare = ele1.compareTo(ele2)
         if (eleCompare != 0) return eleCompare
 

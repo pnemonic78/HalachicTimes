@@ -15,6 +15,11 @@
  */
 package com.github.geonames
 
+import com.github.geonames.dump.NameAlternateNames
+import com.github.geonames.dump.NameCities1000
+import com.github.geonames.dump.PathAlternateNames
+import com.github.geonames.dump.PathCities1000
+import com.github.geonames.dump.PathGoogleNames
 import java.io.File
 
 /**
@@ -62,8 +67,8 @@ class BahaiCities : CompassCities() {
         @JvmStatic
         @Throws(Exception::class)
         fun main(args: Array<String>) {
-            var pathCities = "GeoNames/dump/cities1000.zip"
-            var pathNames = "GeoNames/dump/alternateNamesV2.zip"
+            var pathCities = PathCities1000
+            var pathNames = PathAlternateNames
             if (args.isNotEmpty()) {
                 pathCities = args[0]
                 if (args.size > 1) {
@@ -71,12 +76,12 @@ class BahaiCities : CompassCities() {
                 }
             }
             val cities = BahaiCities()
-            val names = cities.loadNames(File(pathCities), BahaiCitiesFilter(), "cities1000.txt")
+            val names = cities.loadNames(File(pathCities), BahaiCitiesFilter(), NameCities1000)
             cities.populateElevations(names)
-            cities.populateAlternateNames(File(pathNames), names, "alternateNamesV2.txt")
-            val googleNames = cities.javaClass.getResourceAsStream("/googleNames.txt")
+            cities.populateAlternateNames(File(pathNames), names, NameAlternateNames)
+            val googleNames = cities.javaClass.getResourceAsStream(PathGoogleNames)!!
             cities.populateAlternateNames(googleNames, names)
-            for (lang in LANGUAGES) {
+            LANGUAGES.forEach { lang ->
                 cities.writeAndroidXML(names, lang)
             }
         }

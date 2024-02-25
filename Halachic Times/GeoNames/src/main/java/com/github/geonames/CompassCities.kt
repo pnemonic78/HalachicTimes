@@ -1,5 +1,6 @@
 package com.github.geonames
 
+import com.github.geonames.CountryRegion.Companion.toFixedPointInt
 import java.io.File
 import java.util.Locale
 import javax.xml.parsers.DocumentBuilderFactory
@@ -11,7 +12,6 @@ import javax.xml.transform.TransformerException
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
-import org.geonames.InsufficientStyleException
 import org.w3c.dom.Element
 
 abstract class CompassCities : Cities() {
@@ -26,11 +26,9 @@ abstract class CompassCities : Cities() {
      */
     @Throws(
         ParserConfigurationException::class,
-        TransformerException::class,
-        InsufficientStyleException::class
+        TransformerException::class
     )
     override fun writeAndroidXML(names: Collection<GeoNamesToponym>, language: String?) {
-        val sorted: List<GeoNamesToponym> = names.toList().sortedWith(LocationComparator())
         val builderFactory = DocumentBuilderFactory.newInstance()
         val builder = builderFactory.newDocumentBuilder()
         val doc = builder.newDocument()
@@ -68,6 +66,7 @@ abstract class CompassCities : Cities() {
         zonesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false")
         if (language == null) resources.appendChild(zonesElement)
 
+        val places = names.sortedWith(LocationComparator())
         var city: Element
         var country: Element
         var latitude: Element
@@ -77,31 +76,33 @@ abstract class CompassCities : Cities() {
         var name: String?
         val language2 = getLanguageCode(language)
 
-        for (place in sorted) {
-            name = place.getName(language2)
-            if (name == null) {
-                name = place.name!!
-                System.err.println("Unknown translation! id: " + place.geoNameId + " language: " + language2 + " name: [" + place.name + "]")
+        for (place in places) {
+            name = place.getBestName(language2)
+            if (name.isEmpty()) {
+                System.err.println("Unknown translation! id: " + place.geoNameId + ", language: " + language2 + ", name: [" + place.name + "]")
             }
             city = doc.createElement(ANDROID_ELEMENT_ITEM)
             city.textContent = escape(name)
+            citiesElement.appendChild(city)
+
             country = doc.createElement(ANDROID_ELEMENT_ITEM)
             country.textContent = place.countryCode
-            latitude = doc.createElement(ANDROID_ELEMENT_ITEM)
-            latitude.textContent =
-                (place.latitude * CountryRegion.FACTOR_TO_INT).toInt().toString()
-            longitude = doc.createElement(ANDROID_ELEMENT_ITEM)
-            longitude.textContent =
-                (place.longitude * CountryRegion.FACTOR_TO_INT).toInt().toString()
-            elevation = doc.createElement(ANDROID_ELEMENT_ITEM)
-            elevation.textContent = (place.grossElevation ?: 0).toString()
-            zone = doc.createElement(ANDROID_ELEMENT_ITEM)
-            zone.textContent = place.timezone.timezoneId
-            citiesElement.appendChild(city)
             countriesElement.appendChild(country)
+
+            latitude = doc.createElement(ANDROID_ELEMENT_ITEM)
+            latitude.textContent = toFixedPointInt(place.latitude).toString()
             latitudesElement.appendChild(latitude)
+
+            longitude = doc.createElement(ANDROID_ELEMENT_ITEM)
+            longitude.textContent = toFixedPointInt(place.longitude).toString()
             longitudesElement.appendChild(longitude)
+
+            elevation = doc.createElement(ANDROID_ELEMENT_ITEM)
+            elevation.textContent = (place.elevation ?: 0).toString()
             elevationsElement.appendChild(elevation)
+
+            zone = doc.createElement(ANDROID_ELEMENT_ITEM)
+            zone.textContent = place.timeZone!!.id
             zonesElement.appendChild(zone)
         }
         val file: File = if (language == null)

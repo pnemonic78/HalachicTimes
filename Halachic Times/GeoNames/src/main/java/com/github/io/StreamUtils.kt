@@ -23,6 +23,8 @@ import java.io.InputStreamReader
 import java.io.Reader
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
 import kotlin.math.max
 
 /**
@@ -128,3 +130,14 @@ fun InputStream.readFully(): InputStream = StreamUtils.readFully(this)
 @Throws(IOException::class)
 fun InputStream.toString(charset: Charset = StandardCharsets.UTF_8): String =
     StreamUtils.toString(this, charset)
+
+@Throws(IOException::class)
+fun openZipStream(input: InputStream, zippedName: String?): InputStream {
+    if (zippedName.isNullOrEmpty()) return input
+    val zin = ZipInputStream(input)
+    var entry: ZipEntry?
+    do {
+        entry = zin.nextEntry
+    } while (entry != null && zippedName != entry.name)
+    return zin
+}

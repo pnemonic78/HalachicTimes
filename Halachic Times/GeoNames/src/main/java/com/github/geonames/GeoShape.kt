@@ -17,6 +17,7 @@ package com.github.geonames
 
 import com.vividsolutions.jts.geom.Geometry
 import java.awt.Shape
+import org.geonames.GeoNameId
 
 /**
  * Geonames shape.

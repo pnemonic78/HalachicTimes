@@ -16,6 +16,9 @@
 package com.github.geonames
 
 import com.github.geonames.CountryRegion.Companion.toRegion
+import com.github.geonames.dump.NameShapesLow
+import com.github.geonames.dump.PathCountryInfo
+import com.github.geonames.dump.PathShapesLow
 import java.io.File
 import java.io.IOException
 import java.util.TreeMap
@@ -28,6 +31,7 @@ import javax.xml.transform.TransformerException
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
+import org.geonames.GeoNameId
 import org.w3c.dom.Element
 
 /**
@@ -47,7 +51,7 @@ class Countries : Cities() {
         var countryCode: String
         var region: CountryRegion
         for (name in names) {
-            countryCode = name.countryCode
+            countryCode = name.countryCode ?: continue
             if (regions.containsKey(countryCode)) {
                 region = regions[countryCode]!!
             } else {
@@ -117,12 +121,15 @@ class Countries : Cities() {
             for (i in 0 until VERTICES_COUNT) {
                 pointIndex = pointIndexes[i]
                 if (pointIndex < 0) break
+
                 latitude = doc.createElement(ANDROID_ELEMENT_ITEM)
                 latitude.textContent = region.ypoints[pointIndex].toString()
                 latitudesElement.appendChild(latitude)
+
                 longitude = doc.createElement(ANDROID_ELEMENT_ITEM)
                 longitude.textContent = region.xpoints[pointIndex].toString()
                 longitudesElement.appendChild(longitude)
+
                 pointCount++
             }
             verticesCount = doc.createElement(ANDROID_ELEMENT_ITEM)
@@ -158,12 +165,13 @@ class Countries : Cities() {
      * Load the list of shapes.
      *
      * @param file the shapes file.
+     * @param zippedName the zipped file name.
      * @return the list of records.
      * @throws IOException if an I/O error occurs.
      */
     @Throws(IOException::class)
-    fun loadShapes(file: File): Collection<GeoShape> {
-        return geoNames.parseShapes(file)
+    fun loadShapes(file: File, zippedName: String? = null): Collection<GeoShape> {
+        return geoNames.parseShapes(file, zippedName)
     }
 
     /**
@@ -180,15 +188,12 @@ class Countries : Cities() {
     ): Collection<CountryRegion> {
         val regions = mutableListOf<CountryRegion>()
         var geoNameId: GeoNameId
-        val shapesById = mutableMapOf<GeoNameId, GeoShape>()
-        for (s in shapes) {
-            shapesById[s.geoNameId] = s
-        }
+        val shapesById = shapes.associateBy { it.geoNameId }
         var countryCode: String
         var shape: GeoShape
         for (name in names) {
             geoNameId = name.geoNameId
-            countryCode = name.iso!!
+            countryCode = name.iso ?: continue
             shape = shapesById[geoNameId] ?: continue
             regions.add(toRegion(countryCode, shape))
         }
@@ -202,17 +207,17 @@ class Countries : Cities() {
         @Throws(Exception::class)
         @JvmStatic
         fun main(args: Array<String>) {
-            var countryInfoFile = File("GeoNames/dump/countryInfo.txt")
-            var shapesFile = File("GeoNames/dump/shapes_simplified_low.txt")
+            var countryInfoPath = PathCountryInfo
+            var shapesPath = PathShapesLow
             if (args.isNotEmpty()) {
-                countryInfoFile = File(args[0])
+                countryInfoPath = args[0]
                 if (args.size > 1) {
-                    shapesFile = File(args[1])
+                    shapesPath = args[1]
                 }
             }
             val countries = Countries()
-            val names = countries.loadInfo(countryInfoFile)
-            val shapes = countries.loadShapes(shapesFile)
+            val names = countries.loadInfo(File(countryInfoPath))
+            val shapes = countries.loadShapes(File(shapesPath), NameShapesLow)
             val regions = countries.toRegions(names, shapes)
             countries.writeAndroidXML(regions)
         }

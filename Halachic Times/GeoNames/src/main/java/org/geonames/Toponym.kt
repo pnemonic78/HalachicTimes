@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.geonames
+package org.geonames
 
+import com.github.geonames.util.LocaleUtils.ISO639_ISRAEL
+import com.github.geonames.util.LocaleUtils.ISO639_PALESTINE
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import org.geonames.BoundingBox
-import org.geonames.FeatureClass
-import org.geonames.Timezone
 
 /**
  * GeoNames toponym.
@@ -27,27 +26,41 @@ import org.geonames.Timezone
  * @author Moshe Waisberg
  */
 @Serializable
-class Toponym {
+open class Toponym {
     @SerialName("geonameId")
-    var geoNameId: Long = 0
+    var geoNameId: GeoNameId = 0
 
     @SerialName("toponymName")
     var toponymName: String? = null
+        get() = field ?: name
 
     @SerialName("name")
-    var name: String? = null
+    var name: String = ""
+
+    /**
+     * The ASCII name.
+     */
+    @SerialName("asciiName")
+    var asciiName: String? = null
 
     @SerialName("alternateNames")
-    var alternateNames: String? = null
+    var alternateNames: List<AlternateName>? = null
 
     @SerialName("continentCode")
     var continentCode: String? = null
 
     @SerialName("countryCode")
     var countryCode: String? = null
+        set(value) {
+            field = if (ISO639_PALESTINE == value) {
+                ISO639_ISRAEL
+            } else {
+                value
+            }
+        }
 
     @SerialName("countryId")
-    var countryId: String? = null
+    var countryId: GeoNameId? = null
 
     @SerialName("countryName")
     var countryName: String? = null
@@ -57,6 +70,21 @@ class Toponym {
 
     @SerialName("elevation")
     var elevation: Int? = null
+        get() = field ?: elevationSRTM ?: elevationAsterGDEM
+
+    /**
+     * The GDEM elevation.
+     * ASTER Global Digital Elevation Model.
+     */
+    @SerialName("astergdem")
+    var elevationAsterGDEM: Int? = null
+
+    /**
+     * The SRTM3 elevation.
+     * Shuttle Radar Topography Mission.
+     */
+    @SerialName("srtm3")
+    var elevationSRTM: Int? = null
 
     @SerialName("fcl")
     var featureClass: FeatureClass? = null
@@ -79,11 +107,17 @@ class Toponym {
     @SerialName("adminCode1")
     var adminCode1: String? = null
 
+    @SerialName("adminId1")
+    var adminId1: GeoNameId? = null
+
     @SerialName("adminName1")
     var adminName1: String? = null
 
     @SerialName("adminCode2")
     var adminCode2: String? = null
+
+    @SerialName("adminId2")
+    var adminId2: GeoNameId? = null
 
     @SerialName("adminName2")
     var adminName2: String? = null
@@ -91,11 +125,17 @@ class Toponym {
     @SerialName("adminCode3")
     var adminCode3: String? = null
 
+    @SerialName("adminId3")
+    var adminId3: GeoNameId? = null
+
     @SerialName("adminName3")
     var adminName3: String? = null
 
     @SerialName("adminCode4")
     var adminCode4: String? = null
+
+    @SerialName("adminId4")
+    var adminId4: GeoNameId? = null
 
     @SerialName("adminName4")
     var adminName4: String? = null
@@ -103,12 +143,21 @@ class Toponym {
     @SerialName("adminCode5")
     var adminCode5: String? = null
 
+    @SerialName("adminId5")
+    var adminId5: GeoNameId? = null
+
     @SerialName("adminName5")
     var adminName5: String? = null
 
+    @SerialName("adminTypeName")
+    var adminTypeName: String? = null
+
     @SerialName("timezone")
-    var timezone: Timezone? = null
+    var timeZone: TimeZone? = null
 
     @SerialName("bbox")
     var boundingBox: BoundingBox? = null
+
+    @SerialName("wikipediaURL")
+    var wikipediaURL: String? = null
 }

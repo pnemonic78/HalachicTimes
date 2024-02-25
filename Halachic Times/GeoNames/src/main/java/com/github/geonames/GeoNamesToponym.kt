@@ -15,7 +15,6 @@
  */
 package com.github.geonames
 
-import com.github.geonames.util.LocaleUtils.getISOLanguage
 import com.github.geonames.util.LocaleUtils.toLanguageCode
 
 /**
@@ -24,69 +23,21 @@ import com.github.geonames.util.LocaleUtils.toLanguageCode
  * @author Moshe Waisberg
  */
 class GeoNamesToponym : GeoNamesRecord() {
-    var wikipediaURL: String? = null
-
-    val alternateNamesMap = mutableMapOf<String, AlternateName>()
-
-    fun setAlternateNames(alternateNames: Map<String, AlternateName>?) {
-        alternateNamesMap.clear()
-        if (alternateNames != null) {
-            alternateNamesMap.putAll(alternateNames)
-        }
-    }
-
-    fun setAlternateNames(alternateNames: Collection<AlternateName>?) {
-        alternateNamesMap.clear()
-        if (alternateNames != null) {
-            for (name in alternateNames) {
-                alternateNamesMap[name.name] = name
-            }
-        }
-    }
-
-    fun putAlternateName(
-        geonameId: GeoNameId,
-        language: String,
-        name: String,
-        preferred: Boolean = false,
-        shortName: Boolean = false,
-        colloquial: Boolean = false,
-        historic: Boolean = false
-    ) {
-        val languageCode = toLanguageCode(language)
-        val languageCodeISO = getISOLanguage(languageCode)
-        var alternateName = alternateNamesMap[languageCodeISO]
-        if (alternateName == null || preferred) {
-            alternateName =
-                AlternateName(language, name, preferred, shortName, colloquial, historic)
-            alternateNamesMap[languageCodeISO] = alternateName
-        } else if (!alternateName.isPreferred) {
-            if (alternateName.isShortName && !shortName || alternateName.isColloquial && !colloquial || alternateName.isHistoric && !historic) {
-                alternateName =
-                    AlternateName(language, name, preferred, shortName, colloquial, historic)
-                alternateNamesMap[languageCodeISO] = alternateName
-            } else if (!historic && !colloquial && languageCode.length <= alternateName.language.length) {
-                alternateName =
-                    AlternateName(language, name, preferred, shortName, colloquial, historic)
-                alternateNamesMap[languageCodeISO] = alternateName
-            } else {
-                System.err.println("Duplicate name! id: $geonameId language: $language name: [$name]")
-            }
-        } else {
-            System.err.println("Duplicate name! id: $geonameId language: $language name: [$name]")
-        }
-    }
 
     fun getBestName(language: String?): String {
-        return getName(language) ?: name
-    }
-
-    fun getName(language: String?): String? {
         val languageCode = toLanguageCode(language)
-        val alternateName = alternateNamesMap[languageCode]
-        if (alternateName != null) {
-            return alternateName.name
-        }
-        return if (language.isNullOrEmpty()) name else null
+        val names = alternateNames
+            ?.filter { it.language == languageCode }
+            ?.sortedBy { it.alternateNameId }
+            ?: return name
+        val prefer =
+            names.firstOrNull() { it.isPreferred && !it.isShort && !it.isColloquial && !it.isHistoric }
+                ?: names.firstOrNull { it.isPreferred && !it.isColloquial && !it.isHistoric }
+                ?: names.firstOrNull { it.isPreferred && !it.isShort && !it.isHistoric }
+                ?: names.firstOrNull { it.isPreferred && !it.isHistoric }
+                ?: names.firstOrNull { !it.isShort && !it.isColloquial && !it.isHistoric }
+                ?: names.firstOrNull { !it.isShort && !it.isHistoric }
+                ?: names.firstOrNull { !it.isHistoric }
+        return prefer?.name ?: names.firstOrNull()?.name ?: name
     }
 }

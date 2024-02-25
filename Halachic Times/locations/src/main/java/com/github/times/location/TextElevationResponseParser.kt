@@ -58,12 +58,12 @@ class TextElevationResponseParser : ElevationResponseParser() {
                 Timber.w("elevation too high: %s", response)
                 return null
             }
-            val result = Location(GeocoderBase.USER_PROVIDER)
-            result.time = System.currentTimeMillis()
-            result.latitude = latitude
-            result.longitude = longitude
-            result.altitude = elevation
-            result
+            Location(GeocoderBase.USER_PROVIDER).apply {
+                this.time = System.currentTimeMillis()
+                this.latitude = latitude
+                this.longitude = longitude
+                this.altitude = elevation
+            }
         } catch (e: NumberFormatException) {
             Timber.e(e, "Bad elevation: [$response] at $latitude,$longitude")
             throw LocationException(e)

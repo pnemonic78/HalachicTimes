@@ -15,37 +15,31 @@
  */
 package com.github.geonames
 
+import org.geonames.GeoNameId
+
 /**
  * Country information.
  *
  * @author Moshe Waisberg
  */
-class CountryInfo {
-    var iso: String? = null
-    var iso3: String? = null
-    var isoNumeric = 0
-    var fips: String? = null
-    var country: String? = null
-    var capital: String? = null
-    var area = 0.0
-    var population: Long = 0
-    var continent: String? = null
-    var tld: String? = null
-    var currencyCode: String? = null
-    var currencyName: String? = null
-    var phone: String? = null
-    var postalCodeFormat: String? = null
-    var postalCodeRegex: String? = null
-    var languages: List<String>? = null
-    var geoNameId: GeoNameId = 0
-    var neighbours: List<String>? = null
+data class CountryInfo(
+    var iso: String? = null,
+    var iso3: String? = null,
+    var isoNumeric: Int = 0,
+    var fips: String? = null,
+    var country: String? = null,
+    var capital: String? = null,
+    var area: Double = 0.0,
+    var population: Long = 0,
+    var continent: String? = null,
+    var tld: String? = null,
+    var currencyCode: String? = null,
+    var currencyName: String? = null,
+    var phone: String? = null,
+    var postalCodeFormat: String? = null,
+    var postalCodeRegex: String? = null,
+    var languages: List<String>? = null,
+    var geoNameId: GeoNameId = 0,
+    var neighbours: List<String>? = null,
     var equivalentFipsCode: String? = null
-
-    companion object {
-        /** ISO 639 country code for Israel.  */
-        const val ISO639_ISRAEL = "IL"
-
-        /** ISO 639 country code for Palestine.  */
-        const val ISO639_PALESTINE = "PS"
-    }
-}
+)

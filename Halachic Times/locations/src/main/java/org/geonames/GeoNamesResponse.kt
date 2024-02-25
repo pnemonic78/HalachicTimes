@@ -13,21 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.geonames
+package org.geonames
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * GeoNames ocean.
+ * Root object for GeoNames address JSON response.
  *
  * @author Moshe Waisberg
  */
 @Serializable
-class Ocean {
-    @SerialName("distance")
-    var distance: Double = 0.0
+data class GeoNamesResponse(
+    @SerialName("geonames")
+    var records: List<Toponym>? = null,
 
-    @SerialName("name")
-    var name: String? = null
-}
+    @SerialName("status")
+    var status: GeoNamesStatus? = null,
+
+    @SerialName("ocean")
+    var ocean: Ocean? = null
+)

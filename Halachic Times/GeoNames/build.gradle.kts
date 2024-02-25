@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     application
     kotlin("jvm")
+    kotlin("plugin.serialization") version BuildVersions.kotlinVersion
 }
 
 repositories {
@@ -38,7 +39,14 @@ tasks.jar {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation("javax.json:javax.json-api:1.0")
-    implementation("org.glassfish:javax.json:1.0.4")
     implementation(kotlin("stdlib"))
+
+    // JSON
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
+    // Maps
+    implementation("com.google.maps:google-maps-services:2.1.0")
+
+    // Testing
+    testImplementation("junit:junit:${BuildVersions.junitVersion}")
 }
