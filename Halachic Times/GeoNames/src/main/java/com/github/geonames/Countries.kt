@@ -41,29 +41,6 @@ import org.w3c.dom.Element
  */
 class Countries : Cities() {
     /**
-     * Transform the list of names to a list of country regions.
-     *
-     * @param names the list of places.
-     * @return the list of regions.
-     */
-    fun toRegions(names: Collection<GeoNamesToponym>): Collection<CountryRegion> {
-        val regions: MutableMap<String, CountryRegion> = TreeMap()
-        var countryCode: String
-        var region: CountryRegion
-        for (name in names) {
-            countryCode = name.countryCode ?: continue
-            if (regions.containsKey(countryCode)) {
-                region = regions[countryCode]!!
-            } else {
-                region = CountryRegion(countryCode)
-                regions[countryCode] = region
-            }
-            region.addLocation(name.latitude, name.longitude)
-        }
-        return regions.values
-    }
-
-    /**
      * Write the list of names as arrays in Android resource file format.
      *
      * @param countries the list of countries.
@@ -120,14 +97,14 @@ class Countries : Cities() {
             pointCount = 0
             for (i in 0 until VERTICES_COUNT) {
                 pointIndex = pointIndexes[i]
-                if (pointIndex < 0) break
+                if (pointIndex < 0) continue
 
                 latitude = doc.createElement(ANDROID_ELEMENT_ITEM)
-                latitude.textContent = region.ypoints[pointIndex].toString()
+                latitude.textContent = region.boundary.ypoints[pointIndex].toString()
                 latitudesElement.appendChild(latitude)
 
                 longitude = doc.createElement(ANDROID_ELEMENT_ITEM)
-                longitude.textContent = region.xpoints[pointIndex].toString()
+                longitude.textContent = region.boundary.xpoints[pointIndex].toString()
                 longitudesElement.appendChild(longitude)
 
                 pointCount++
@@ -202,7 +179,7 @@ class Countries : Cities() {
 
     companion object {
         /** The number of main vertices per region border.  */
-        private const val VERTICES_COUNT = 16
+        const val VERTICES_COUNT = 16
 
         @Throws(Exception::class)
         @JvmStatic

@@ -29,6 +29,7 @@ import com.github.times.location.LocationException
 import com.github.times.location.R
 import com.github.times.location.ZmanimLocation
 import com.github.times.location.country.Country.Companion.generateCountryId
+import com.github.times.location.country.CountryPolygon.Companion.fromFixedPoint
 import com.github.util.LocaleUtils.getDefaultLocale
 import java.io.IOException
 import java.util.Locale
@@ -98,7 +99,7 @@ class CountriesGeocoder @JvmOverloads constructor(
         var latitudes = immutableCitiesLatitudes
         if (latitudes == null) {
             val latitudesRes = res.getIntArray(R.array.cities_latitudes)
-            latitudes = DoubleArray(citiesCount) { CountryPolygon.toDouble(latitudesRes[it]) }
+            latitudes = DoubleArray(citiesCount) { fromFixedPoint(latitudesRes[it]) }
             immutableCitiesLatitudes = latitudes
         }
         citiesLatitudes = latitudes
@@ -106,7 +107,7 @@ class CountriesGeocoder @JvmOverloads constructor(
         var longitudes = immutableCitiesLongitudes
         if (longitudes == null) {
             val longitudesRes = res.getIntArray(R.array.cities_longitudes)
-            longitudes = DoubleArray(citiesCount) { CountryPolygon.toDouble(longitudesRes[it]) }
+            longitudes = DoubleArray(citiesCount) { fromFixedPoint(longitudesRes[it]) }
             immutableCitiesLongitudes = longitudes
         }
         citiesLongitudes = longitudes
@@ -157,8 +158,8 @@ class CountriesGeocoder @JvmOverloads constructor(
         val locale = Locale(language, borders.countryCode)
         val middle = borders.centre()
         return Country(locale).apply {
-            this.latitude = CountryPolygon.toDouble(middle.x)
-            this.longitude = CountryPolygon.toDouble(middle.y)
+            this.latitude = fromFixedPoint(middle.x)
+            this.longitude = fromFixedPoint(middle.y)
             this.countryCode = locale.country
             this.countryName = locale.getDisplayCountry(locale)
             this.id = generateCountryId(this)

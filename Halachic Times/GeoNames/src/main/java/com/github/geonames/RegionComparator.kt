@@ -27,8 +27,8 @@ class RegionComparator : Comparator<CountryRegion> {
         val name = name1.compareTo(name2)
         if (name != 0) return name
 
-        val npoints1 = region1.npoints
-        val npoints2 = region2.npoints
+        val npoints1 = region1.boundary.npoints
+        val npoints2 = region2.boundary.npoints
         val npoints = npoints1.compareTo(npoints2)
         if (npoints != 0) return npoints
 
@@ -36,8 +36,8 @@ class RegionComparator : Comparator<CountryRegion> {
         var x2: Int
         var x: Int
         for (i in 0 until npoints1) {
-            x1 = region1.xpoints[i]
-            x2 = region2.xpoints[i]
+            x1 = region1.boundary.xpoints[i]
+            x2 = region2.boundary.xpoints[i]
             x = x1.compareTo(x2)
             if (x != 0) return x
         }
@@ -46,8 +46,8 @@ class RegionComparator : Comparator<CountryRegion> {
         var y2: Int
         var y: Int
         for (i in 0 until npoints1) {
-            y1 = region1.ypoints[i]
-            y2 = region2.ypoints[i]
+            y1 = region1.boundary.ypoints[i]
+            y2 = region2.boundary.ypoints[i]
             y = y1.compareTo(y2)
             if (y != 0) return y
         }

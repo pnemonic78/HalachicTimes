@@ -218,7 +218,7 @@ class CountryPolygon @JvmOverloads constructor(
         /**
          * Factor to convert a fixed-point integer to double.
          */
-        private const val RATIO = 1e+5
+        private const val FACTOR_TO_INT = 1e+5
 
         /**
          * Default length for latitudes and longitudes.
@@ -294,20 +294,20 @@ class CountryPolygon @JvmOverloads constructor(
             return abs((px - ax) * dyAB - (py - ay) * dxAB) / normalLength
         }
 
-        fun toDouble(degrees: Int): Double {
-            return degrees / RATIO
-        }
-
-        fun toDouble(degrees: Double): Double {
-            return degrees / RATIO
-        }
-
         fun toFixedPoint(degrees: Double): Double {
-            return round(degrees * RATIO)
+            return round(degrees * FACTOR_TO_INT)
         }
 
         fun toFixedPointInt(degrees: Double): Int {
             return toFixedPoint(degrees).toInt()
+        }
+
+        fun fromFixedPoint(fixedPoint: Int): Double {
+            return fixedPoint / FACTOR_TO_INT
+        }
+
+        fun fromFixedPoint(fixedPoint: Double): Double {
+            return fixedPoint / FACTOR_TO_INT
         }
     }
 }
