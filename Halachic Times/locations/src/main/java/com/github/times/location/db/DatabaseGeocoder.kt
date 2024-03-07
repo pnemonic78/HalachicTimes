@@ -37,7 +37,7 @@ import com.github.times.location.provider.LocationContract.AddressColumns
 import com.github.times.location.provider.LocationContract.CityColumns
 import com.github.times.location.provider.LocationContract.ElevationColumns
 import com.github.times.location.provider.LocationContract.Elevations
-import com.github.util.LocaleUtils.getDefaultLocale
+import com.github.util.getDefaultLocale
 import java.io.Closeable
 import java.io.IOException
 import java.util.Collections
@@ -52,7 +52,7 @@ import timber.log.Timber
  */
 class DatabaseGeocoder(
     private val context: Context,
-    locale: Locale = getDefaultLocale(context)
+    locale: Locale = context.getDefaultLocale()
 ) : GeocoderBase(locale), Closeable {
 
     /**

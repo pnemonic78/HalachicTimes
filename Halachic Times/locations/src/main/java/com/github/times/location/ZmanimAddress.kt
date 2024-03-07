@@ -20,8 +20,8 @@ import android.location.Address
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import com.github.lang.StringUtils
 import com.github.os.getParcelableCompat
-import com.github.util.StringUtils
 import java.util.Locale
 
 /**

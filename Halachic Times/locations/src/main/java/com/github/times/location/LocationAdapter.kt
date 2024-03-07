@@ -21,7 +21,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.github.times.location.LocationAdapter.LocationItem
 import com.github.times.location.databinding.LocationBinding
-import com.github.util.LocaleUtils.getDefaultLocale
+import com.github.util.getDefaultLocale
 import com.github.widget.ArrayAdapter
 import java.text.Collator
 import java.util.Locale
@@ -75,7 +75,7 @@ open class LocationAdapter @JvmOverloads constructor(
 
     protected val comparator: LocationComparator by lazy { LocationComparator() }
     private val collator: Collator = Collator.getInstance()
-    private val locale: Locale = getDefaultLocale(context)
+    private val locale: Locale = context.getDefaultLocale()
     private var listener: LocationItemListener? = null
 
     init {

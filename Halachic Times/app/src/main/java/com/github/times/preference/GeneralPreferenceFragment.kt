@@ -28,10 +28,8 @@ import androidx.preference.Preference
 import androidx.preference.SwitchPreference
 import com.github.preference.NumberPickerPreference
 import com.github.times.R
-import com.github.times.compass.preference.CompassPreferences
-import com.github.times.location.LocationPreferences
 import com.github.times.remind.ZmanimReminder.Companion.checkPermissions
-import com.github.util.LocaleUtils.isLocaleRTL
+import com.github.util.isLocaleRTL
 
 /**
  * This fragment shows the preferences for the General header.
@@ -45,7 +43,7 @@ class GeneralPreferenceFragment : AbstractPreferenceFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
         findPreference<Preference>(ZmanimPreferences.KEY_YEAR_FINAL)?.apply {
-            isVisible = isLocaleRTL(context)
+            isVisible = context.isLocaleRTL()
         }
         if (Build.VERSION.SDK_INT >= VERSION_CODES.O) {
             findPreference<Preference>(ZmanimPreferences.KEY_REMINDER_SETTINGS)?.apply {

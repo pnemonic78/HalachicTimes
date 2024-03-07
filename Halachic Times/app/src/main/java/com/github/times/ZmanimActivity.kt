@@ -57,7 +57,7 @@ import com.github.times.preference.ZmanimPreferenceActivity
 import com.github.times.preference.ZmanimPreferences
 import com.github.times.remind.ZmanimReminder
 import com.github.times.remind.ZmanimReminderService.Companion.enqueueWork
-import com.github.util.LocaleUtils.isLocaleRTL
+import com.github.util.isLocaleRTL
 import com.github.view.animation.ConstraintLayoutWeightAnimation
 import java.lang.ref.WeakReference
 import java.util.Calendar
@@ -291,7 +291,7 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
         val context: Context = this
         val binding = TimesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        localeRTL = isLocaleRTL(context)
+        localeRTL = context.isLocaleRTL()
         gestureDetector = GestureDetector(context, this, handler).apply {
             setIsLongpressEnabled(false)
         }
@@ -653,7 +653,7 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        localeRTL = isLocaleRTL(newConfig)
+        localeRTL = newConfig.isLocaleRTL()
     }
 
     /**

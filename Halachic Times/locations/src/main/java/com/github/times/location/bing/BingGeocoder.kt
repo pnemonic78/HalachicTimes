@@ -15,7 +15,6 @@
  */
 package com.github.times.location.bing
 
-import android.content.Context
 import android.location.Address
 import android.location.Location
 import com.github.times.location.AddressResponseParser
@@ -23,7 +22,6 @@ import com.github.times.location.BuildConfig
 import com.github.times.location.ElevationResponseParser
 import com.github.times.location.GeocoderBase
 import com.github.times.location.LocationException
-import com.github.util.LocaleUtils.getDefaultLocale
 import java.io.IOException
 import java.util.Locale
 

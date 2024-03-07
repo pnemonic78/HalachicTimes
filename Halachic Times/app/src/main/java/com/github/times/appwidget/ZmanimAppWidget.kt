@@ -46,7 +46,7 @@ import com.github.times.location.ZmanimLocationListener
 import com.github.times.location.ZmanimLocations
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
-import com.github.util.LocaleUtils.isLocaleRTL
+import com.github.util.isLocaleRTL
 import java.util.Calendar
 import timber.log.Timber
 
@@ -75,7 +75,7 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
         val contextLocale = localeCallbacks.attachBaseContext(context)
         this.context = contextLocale
         super.onReceive(contextLocale, intent)
-        isDirectionRTL = isLocaleRTL(contextLocale)
+        isDirectionRTL = contextLocale.isLocaleRTL()
 
         val action = intent.action
         if (action.isNullOrEmpty()) return
@@ -103,7 +103,7 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
         val contextLocale = localeCallbacks.attachBaseContext(context)
         this.context = contextLocale
         super.onUpdate(contextLocale, appWidgetManager, appWidgetIds)
-        isDirectionRTL = isLocaleRTL(contextLocale)
+        isDirectionRTL = contextLocale.isLocaleRTL()
         populateTimes(contextLocale, appWidgetManager, appWidgetIds)
     }
 

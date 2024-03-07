@@ -19,7 +19,7 @@ import android.content.Context
 import android.location.Address
 import android.location.Location
 import com.github.times.location.LocationPreferences.Values.Companion.FORMAT_SEXAGESIMAL
-import com.github.util.LocaleUtils.getDefaultLocale
+import com.github.util.getDefaultLocale
 import java.text.DecimalFormat
 import java.util.Locale
 import kotlin.math.abs
@@ -188,7 +188,7 @@ open class DefaultLocationFormatter(
      *
      * @return the context's locale.
      */
-    protected val locale: Locale = getDefaultLocale(context)
+    protected val locale: Locale = context.getDefaultLocale()
 
     override fun formatBearing(azimuth: Double): String {
         return if (FORMAT_SEXAGESIMAL == notation) {

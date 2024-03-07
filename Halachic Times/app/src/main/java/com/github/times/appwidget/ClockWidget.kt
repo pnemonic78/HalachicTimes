@@ -31,8 +31,8 @@ import com.github.times.ZmanViewHolder
 import com.github.times.ZmanimAdapter
 import com.github.times.ZmanimItem
 import com.github.times.isNullOrEmptyOrElapsed
-import com.github.util.LocaleUtils.getDefaultLocale
 import com.github.util.TimeUtils.roundUp
+import com.github.util.getDefaultLocale
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -48,7 +48,7 @@ class ClockWidget : ZmanimAppWidget() {
         @StringRes val time24Id =
             if (time24) R.string.clock_24_hours_format else R.string.clock_12_hours_format
         val pattern = context.getString(time24Id)
-        SimpleDateFormat(pattern, getDefaultLocale(context))
+        SimpleDateFormat(pattern, context.getDefaultLocale())
     }
 
     override fun getLayoutId(): Int {

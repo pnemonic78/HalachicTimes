@@ -29,7 +29,7 @@ import com.github.times.location.country.CountriesGeocoder
 import com.github.times.location.db.DatabaseGeocoder
 import com.github.times.location.geonames.GeoNamesGeocoder
 import com.github.times.location.google.GoogleGeocoder
-import com.github.util.LocaleUtils.getDefaultLocale
+import com.github.util.getDefaultLocale
 import java.util.Locale
 import timber.log.Timber
 
@@ -41,7 +41,7 @@ import timber.log.Timber
  */
 class AddressProvider @JvmOverloads constructor(
     private val context: Context,
-    private val locale: Locale = getDefaultLocale(context)
+    private val locale: Locale = context.getDefaultLocale()
 ) {
     interface OnFindAddressListener {
         /**

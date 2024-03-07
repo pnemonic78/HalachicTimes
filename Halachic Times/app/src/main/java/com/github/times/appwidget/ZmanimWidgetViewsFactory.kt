@@ -39,7 +39,7 @@ import com.github.times.isNullOrEmpty
 import com.github.times.location.ZmanimLocations
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
-import com.github.util.LocaleUtils.isLocaleRTL
+import com.github.util.isLocaleRTL
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate
 import java.util.Calendar
@@ -57,7 +57,7 @@ class ZmanimWidgetViewsFactory(
     private val packageName = context.packageName
     private val preferences: ZmanimPreferences = SimpleZmanimPreferences(context)
     private val items: MutableList<ZmanimItem> = ArrayList()
-    private val isDirectionRTL: Boolean = isLocaleRTL(context)
+    private val isDirectionRTL: Boolean = context.isLocaleRTL()
 
     @ColorInt
     private var colorDisabled = Color.DKGRAY

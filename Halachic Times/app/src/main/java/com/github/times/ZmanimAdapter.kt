@@ -23,9 +23,9 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import com.github.times.databinding.TimesItemBinding
 import com.github.times.preference.ZmanimPreferences
-import com.github.util.LocaleUtils.getDefaultLocale
-import com.github.util.LocaleUtils.isLocaleRTL
 import com.github.util.TimeUtils.roundUp
+import com.github.util.getDefaultLocale
+import com.github.util.isLocaleRTL
 import com.github.widget.ArrayAdapter
 import com.kosherjava.zmanim.ComplexZmanimCalendar
 import com.kosherjava.zmanim.hebrewcalendar.HebrewDateFormatter
@@ -87,7 +87,7 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
 
     init {
         val time24 = DateFormat.is24HourFormat(context)
-        val locale = getDefaultLocale(context)
+        val locale = context.getDefaultLocale()
         if (settings.isSeconds) {
             val pattern = if (time24) {
                 context.getString(com.github.lib.R.string.twenty_four_hour_time_format)
@@ -235,7 +235,7 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
         val monthStr = monthNames[jewishMonth - 1]
         val dayStr: String
         val dayPadded: String
-        if (isLocaleRTL(context)) {
+        if (context.isLocaleRTL()) {
             val formatter = hebrewDateFormatter
             yearStr = formatter.formatHebrewNumber(jewishYear)
             dayStr = formatter.formatHebrewNumber(jewishDay)
@@ -294,7 +294,7 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
             return String.format(format, suffix)
         }
         format = omerFormat
-        val dayStr: String = if (isLocaleRTL(context)) {
+        val dayStr: String = if (context.isLocaleRTL()) {
             val formatter = hebrewDateFormatter
             formatter.formatHebrewNumber(days)
         } else {

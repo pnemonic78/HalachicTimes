@@ -46,7 +46,7 @@ import com.github.times.databinding.AlarmActivityBinding
 import com.github.times.preference.RingtonePreference
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
-import com.github.util.LocaleUtils.getDefaultLocale
+import com.github.util.getDefaultLocale
 import com.github.util.TimeUtils.roundUp
 import java.text.Format
 import java.text.SimpleDateFormat
@@ -96,7 +96,7 @@ class AlarmActivity<P : ZmanimPreferences> : AppCompatActivity(), ThemeCallbacks
 
         binding.reminderDismiss.setOnClickListener { dismiss(true) }
         val context: Context = this
-        val locale = getDefaultLocale(context)
+        val locale = context.getDefaultLocale()
         val prefs = preferences
         if (prefs.isSeconds) {
             val time24 = DateFormat.is24HourFormat(context)

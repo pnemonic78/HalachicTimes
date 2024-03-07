@@ -30,7 +30,7 @@ import com.github.times.location.R
 import com.github.times.location.ZmanimLocation
 import com.github.times.location.country.Country.Companion.generateCountryId
 import com.github.times.location.country.CountryPolygon.Companion.fromFixedPoint
-import com.github.util.LocaleUtils.getDefaultLocale
+import com.github.util.getDefaultLocale
 import java.io.IOException
 import java.util.Locale
 import java.util.TimeZone
@@ -42,7 +42,7 @@ import java.util.TimeZone
  */
 class CountriesGeocoder @JvmOverloads constructor(
     context: Context,
-    locale: Locale = getDefaultLocale(context)
+    locale: Locale = context.getDefaultLocale()
 ) : GeocoderBase(locale) {
 
     private lateinit var countryBorders: Array<CountryPolygon>
