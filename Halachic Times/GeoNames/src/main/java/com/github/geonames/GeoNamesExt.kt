@@ -32,3 +32,7 @@ operator fun Point2D.times(value: Double): Point2D {
 fun Point2D.toPoint(): Point {
     return Point(x.toInt(), y.toInt())
 }
+
+fun Polygon. addPoint(x: Double, y:Double) {
+    addPoint(x.toInt(), y.toInt())
+}

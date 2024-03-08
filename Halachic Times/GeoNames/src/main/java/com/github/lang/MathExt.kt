@@ -21,3 +21,7 @@ operator fun IntArray.timesAssign(value: Double) {
         this[i] = (this[i] * value).toInt()
     }
 }
+
+fun IntArray.toDoubleArray(): DoubleArray {
+    return DoubleArray(size) { i -> this[i].toDouble() }
+}

@@ -17,6 +17,7 @@ package com.github.geonames.ui
 
 import com.github.geonames.Countries
 import com.github.geonames.CountryRegion
+import com.github.geonames.CountryRegion.Companion.VERTICES_COUNT
 import com.github.geonames.CountryRegion.Companion.toFixedPoint
 import com.github.geonames.dump.NameShapesLow
 import com.github.geonames.dump.PathCountryInfo
@@ -61,12 +62,6 @@ class CountryCanvas() : JComponent() {
         var specific: Point? = null
 
         when (region.countryCode) {
-            "AE" -> {
-            }
-
-            "AF" -> {
-            }
-
             "BW" -> {
                 // Dikholola near Brits.
                 specific = Point(
@@ -81,6 +76,8 @@ class CountryCanvas() : JComponent() {
             }
 
             "US" -> {
+                ratioX *= 10
+                ratioY *= 10
             }
 
             "ZA" -> {
@@ -93,40 +90,38 @@ class CountryCanvas() : JComponent() {
                 )
             }
         }
-        val border = Polygon(
-            region.boundary.xpoints * ratioX,
-            region.boundary.ypoints * ratioY,
-            region.boundary.npoints
-        )
-        val envelope = border.bounds
+        val mainIndex = region.maxAreaIndex
+        val boundaryMain = region.boundaries[mainIndex]
         val boundary = Polygon(
-            region.boundary.xpoints * ratioX,
-            region.boundary.ypoints * ratioY,
-            region.boundary.npoints
+            boundaryMain.xpoints * ratioX,
+            boundaryMain.ypoints * ratioY,
+            boundaryMain.npoints
         )
-        val mainVertices = region.findMainVertices(BORDER_VERTICES)
+        val envelope = boundary.bounds
+        val centroid = region.centroids[mainIndex]
+        val mainVertices = region.findMainVertices(boundaryMain, VERTICES_COUNT)
         val borderMain = Polygon()
         for (i in mainVertices) {
             if (i < 0) continue
             borderMain.addPoint(
-                (region.boundary.xpoints[i] * ratioX).toInt(),
-                (region.boundary.ypoints[i] * ratioY).toInt()
+                (boundaryMain.xpoints[i] * ratioX).toInt(),
+                (boundaryMain.ypoints[i] * ratioY).toInt()
             )
         }
         boundaries.clear()
-        region.boundaries.forEach { boundary ->
+        region.boundaries.forEach { b ->
             boundaries.add(
                 Polygon(
-                    boundary.xpoints * ratioX,
-                    boundary.ypoints * ratioY,
-                    boundary.npoints
+                    b.xpoints * ratioX,
+                    b.ypoints * ratioY,
+                    b.npoints
                 )
             )
         }
 
         this.tX = 20 - envelope.x
         this.tY = 20 - envelope.y
-        this.centroid = region.centroid.let {
+        this.centroid = centroid.let {
             Point((it.x * ratioX).toInt(), (it.y * ratioY).toInt())
         }
         this.mainVertices = mainVertices
@@ -184,14 +179,14 @@ class CountryCanvas() : JComponent() {
     }
 
     private fun paintRays(g: Graphics, cx: Int, cy: Int) {
-        val sweepAngle = (2 * PI) / BORDER_VERTICES
+        val sweepAngle = (2 * PI) / VERTICES_COUNT
         var angleStart = 0.0
         var x2: Int
         var y2: Int
         val r = CANVAS_SIZE
 
         g.color = Color.cyan
-        for (v in 0 until BORDER_VERTICES) {
+        for (v in 0 until VERTICES_COUNT) {
             x2 = cx + (r * cos(angleStart)).toInt()
             y2 = cy + (r * sin(angleStart)).toInt()
             g.drawLine(cx, cy, x2, y2)
@@ -217,8 +212,7 @@ class CountryCanvas() : JComponent() {
     }
 
     companion object {
-        private val FIXEDINT_TO_DOUBLE = 1.0 / CountryRegion.FACTOR_TO_INT
-        private const val BORDER_VERTICES = Countries.VERTICES_COUNT
+        private const val FIXEDINT_TO_DOUBLE = 1.0 / CountryRegion.FACTOR_TO_INT
         private const val CANVAS_SIZE = 2500
 
         @Throws(Exception::class)

@@ -15,13 +15,13 @@
  */
 package com.github.geonames
 
+import com.github.geonames.CountryRegion.Companion.VERTICES_COUNT
 import com.github.geonames.CountryRegion.Companion.toRegion
 import com.github.geonames.dump.NameShapesLow
 import com.github.geonames.dump.PathCountryInfo
 import com.github.geonames.dump.PathShapesLow
 import java.io.File
 import java.io.IOException
-import java.util.TreeMap
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.parsers.ParserConfigurationException
 import javax.xml.transform.OutputKeys
@@ -88,7 +88,7 @@ class Countries : Cities() {
         var pointCount: Int
 
         for (region in sorted) {
-            pointIndexes = region.findMainVertices(VERTICES_COUNT)
+            pointIndexes = region.findMainVertices(region.boundary, VERTICES_COUNT)
 
             country = doc.createElement(ANDROID_ELEMENT_ITEM)
             country.textContent = region.countryCode
@@ -178,9 +178,6 @@ class Countries : Cities() {
     }
 
     companion object {
-        /** The number of main vertices per region border.  */
-        const val VERTICES_COUNT = 16
-
         @Throws(Exception::class)
         @JvmStatic
         fun main(args: Array<String>) {

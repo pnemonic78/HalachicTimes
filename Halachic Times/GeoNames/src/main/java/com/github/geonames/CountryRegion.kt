@@ -17,6 +17,7 @@ package com.github.geonames
 
 import com.github.geonames.util.LocaleUtils.ISO639_ISRAEL
 import com.github.geonames.util.LocaleUtils.ISO639_PALESTINE
+import com.github.lang.toDoubleArray
 import com.vividsolutions.jts.geom.Geometry
 import java.awt.Polygon
 import java.awt.geom.Point2D
@@ -41,56 +42,81 @@ class CountryRegion(countryCode: String, geometry: Geometry) {
     val boundary: Polygon = geometry.boundary.toPolygon(FACTOR_TO_INT)
     val centroid: Point2D = geometry.centroid.toPoint2D() * FACTOR_TO_INT
     val boundaries: List<Polygon>
+    val areas: List<Double>
+    val centroids: List<Point2D>
+    val maxAreaIndex: Int
 
     init {
+        val areas = mutableListOf<Double>()
+        val centroids = mutableListOf<Point2D>()
         val num = geometry.numGeometries
         val geometries = mutableListOf<Polygon>()
-        for (n in 0 until num) {
-            geometries.add(geometry.getGeometryN(n).toPolygon(FACTOR_TO_INT))
-        }
-        boundaries = geometries
-    }
+        var maxAreaIndex = -1
+        var maxArea = 0.0
 
-    private fun addPoint(x: Double, y: Double) {
-        boundary.addPoint(x.toInt(), y.toInt())
+        for (n in 0 until num) {
+            val geometryN = geometry.getGeometryN(n)
+            val areaN = geometryN.area
+            geometries.add(geometryN.toPolygon(FACTOR_TO_INT))
+            areas.add(areaN)
+            centroids.add(geometryN.centroid.toPoint2D() * FACTOR_TO_INT)
+
+            if (areaN > maxArea) {
+                maxArea = areaN
+                maxAreaIndex = n
+            }
+        }
+        this.boundaries = geometries
+        this.areas = areas
+        this.centroids = centroids
+        this.maxAreaIndex = maxAreaIndex
     }
 
     /**
      * Find the main vertices that represent the border.
      *
+     * @param boundary the boundary with vertices.
      * @param vertexCount the number of vertices.
      * @return an array of indexes.
      */
-    fun findMainVertices(vertexCount: Int): IntArray {
-        // TODO("find point closest to the 'ray'")
+    fun findMainVertices(boundary: Polygon, vertexCount: Int): IntArray {
         val indexes = IntArray(vertexCount) { -1 }
-        var r = 0
         val n = boundary.npoints
-        val xpoints = boundary.xpoints
-        val ypoints = boundary.ypoints
+        val xpoints = boundary.xpoints.toDoubleArray()
+        val ypoints = boundary.ypoints.toDoubleArray()
         val cx = centroid.x
         val cy = centroid.y
+        val angles = DoubleArray(n)
+        var x: Double
+        var y: Double
+
+        for (i in 0 until n) {
+            x = xpoints[i]
+            y = ypoints[i]
+            angles[i] = atan2(y - cy, x - cx) + PI
+        }
 
         val sweepAngle = (2 * PI) / vertexCount
         var angleStart = 0.0
         var angleEnd: Double
-        var x: Double
-        var y: Double
+        var angleRange: OpenEndRange<Double>
         var a: Double
         var d: Double
+        var i = 0
         var farIndex: Int
         var farDist: Double
 
         for (v in 0 until vertexCount) {
             angleEnd = angleStart + sweepAngle
-            farDist = Double.MIN_VALUE
+            angleRange = angleStart.rangeUntil(angleEnd)
+            farDist = 0.0
             farIndex = -1
 
             for (i in 0 until n) {
-                x = xpoints[i].toDouble()
-                y = ypoints[i].toDouble()
-                a = atan2(y - cy, x - cx) + PI
-                if (angleStart <= a && a < angleEnd) {
+                a = angles[i]
+                if (a in angleRange) {
+                    x = xpoints[i]
+                    y = ypoints[i]
                     d = Point2D.distanceSq(cx, cy, x, y)
                     if (farDist < d) {
                         farDist = d
@@ -99,23 +125,25 @@ class CountryRegion(countryCode: String, geometry: Geometry) {
                 }
             }
 
-            if (farIndex >= 0) indexes[r++] = farIndex
+            if (farIndex >= 0) indexes[i++] = farIndex
             angleStart += sweepAngle
         }
-        if (r < vertexCount) {
-            when (r) {
+        if (i < vertexCount) {
+            when (i) {
                 0 -> {
-                    addPoint(xpoints[0] - CITY_BOUNDARY, ypoints[0] - CITY_BOUNDARY)
-                    addPoint(xpoints[0] + CITY_BOUNDARY, ypoints[0] + CITY_BOUNDARY)
-                    addPoint(xpoints[1] - CITY_BOUNDARY, ypoints[1] - CITY_BOUNDARY)
-                    addPoint(xpoints[1] + CITY_BOUNDARY, ypoints[1] + CITY_BOUNDARY)
-                    return findMainVertices(vertexCount)
+                    val boundarySmall = Polygon()
+                    boundarySmall.addPoint(xpoints[0] - CITY_BOUNDARY, ypoints[0] - CITY_BOUNDARY)
+                    boundarySmall.addPoint(xpoints[0] + CITY_BOUNDARY, ypoints[0] + CITY_BOUNDARY)
+                    boundarySmall.addPoint(xpoints[1] - CITY_BOUNDARY, ypoints[1] - CITY_BOUNDARY)
+                    boundarySmall.addPoint(xpoints[1] + CITY_BOUNDARY, ypoints[1] + CITY_BOUNDARY)
+                    return findMainVertices(boundarySmall, vertexCount)
                 }
 
                 1 -> {
-                    addPoint(xpoints[1] - CITY_BOUNDARY, ypoints[1] - CITY_BOUNDARY)
-                    addPoint(xpoints[1] + CITY_BOUNDARY, ypoints[1] + CITY_BOUNDARY)
-                    return findMainVertices(vertexCount)
+                    val boundarySmall = Polygon()
+                    boundarySmall.addPoint(xpoints[1] - CITY_BOUNDARY, ypoints[1] - CITY_BOUNDARY)
+                    boundarySmall.addPoint(xpoints[1] + CITY_BOUNDARY, ypoints[1] + CITY_BOUNDARY)
+                    return findMainVertices(boundarySmall, vertexCount)
                 }
             }
         }
@@ -125,6 +153,9 @@ class CountryRegion(countryCode: String, geometry: Geometry) {
     companion object {
         /** Factor to convert coordinate value to a fixed-point integer.  */
         internal const val FACTOR_TO_INT = 1e+5
+
+        /** The number of main vertices per region border.  */
+        const val VERTICES_COUNT = 16
 
         /**
          * Factor to convert coordinate value to a fixed-point integer for city
