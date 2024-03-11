@@ -121,30 +121,6 @@ open class ZmanimWidget : ZmanimAppWidget() {
             }
             position++
         }
-        if (positionOvermorrow >= 0) {
-            bindViewsHeader(
-                context,
-                adapterTomorrow,
-                items,
-                positionOvermorrow,
-                jewishDateOvermorrow,
-                holidayOvermorrow,
-                candlesOvermorrow,
-                omerOvermorrow
-            )
-        }
-        if (positionToday < 0 || positionTomorrow >= 0) {
-            bindViewsHeader(
-                context,
-                adapterTomorrow,
-                items,
-                positionTomorrow,
-                jewishDateTomorrow,
-                holidayTomorrow,
-                candlesTomorrow,
-                omerTomorrow
-            )
-        }
         if (positionToday >= 0) {
             bindViewsHeader(
                 context,
@@ -156,7 +132,30 @@ open class ZmanimWidget : ZmanimAppWidget() {
                 candlesToday,
                 omerToday
             )
+        } else if (positionTomorrow >= 0) {
+            bindViewsHeader(
+                context,
+                adapterTomorrow,
+                items,
+                positionTomorrow,
+                jewishDateTomorrow,
+                holidayTomorrow,
+                candlesTomorrow,
+                omerTomorrow
+            )
+        } else if (positionOvermorrow >= 0) {
+            bindViewsHeader(
+                context,
+                adapterTomorrow,
+                items,
+                positionOvermorrow,
+                jewishDateOvermorrow,
+                holidayOvermorrow,
+                candlesOvermorrow,
+                omerOvermorrow
+            )
         }
+
         bindViews(context, list, items)
     }
 
