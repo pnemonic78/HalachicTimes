@@ -16,13 +16,13 @@
 package com.github.geonames.ui
 
 import com.github.geonames.Countries
+import com.github.geonames.CountryGeometry
+import com.github.geonames.CountryGeometry.Companion.VERTICES_COUNT
 import com.github.geonames.CountryRegion
-import com.github.geonames.CountryRegion.Companion.VERTICES_COUNT
 import com.github.geonames.CountryRegion.Companion.toFixedPoint
 import com.github.geonames.dump.NameShapesLow
 import com.github.geonames.dump.PathCountryInfo
 import com.github.geonames.dump.PathShapesLow
-import com.github.lang.times
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.Graphics
@@ -38,19 +38,17 @@ import javax.swing.JScrollPane
 import javax.swing.WindowConstants
 import kotlin.math.PI
 import kotlin.math.cos
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sin
 import kotlin.system.exitProcess
 
 class CountryCanvas() : JComponent() {
-    private var mainVertices: IntArray = intArrayOf()
-    private var centroid: Point = Point()
-    private var boundary: Polygon? = null
-    private var boundaryMain: Polygon? = null
-    private var envelope: Rectangle? = null
     private var tX = 0
     private var tY = 0
     private var specific: Point? = null
-    private val boundaries = mutableListOf<Polygon>()
+    private val geometries = mutableListOf<CountryGeometry>()
+    private var envelope: Rectangle? = null
 
     constructor(region: CountryRegion) : this() {
         setRegion(region)
@@ -71,18 +69,18 @@ class CountryCanvas() : JComponent() {
             }
 
             "IL" -> {
-                ratioX *= 150
-                ratioY *= 150
+                ratioX *= 15
+                ratioY *= 15
             }
 
             "US" -> {
-                ratioX *= 10
-                ratioY *= 10
+                ratioX *= 1
+                ratioY *= 1
             }
 
             "ZA" -> {
-                ratioX *= 50
-                ratioY *= 50
+                ratioX *= 5
+                ratioY *= 5
                 // Dikholola near Brits.
                 specific = Point(
                     (toFixedPoint(27.746222) * ratioX).toInt(),
@@ -90,62 +88,37 @@ class CountryCanvas() : JComponent() {
                 )
             }
         }
-        val mainIndex = region.maxAreaIndex
-        val boundaryMain = region.boundaries[mainIndex]
-        val boundary = Polygon(
-            boundaryMain.xpoints * ratioX,
-            boundaryMain.ypoints * ratioY,
-            boundaryMain.npoints
-        )
-        val envelope = boundary.bounds
-        val centroid = region.centroids[mainIndex]
-        val mainVertices = region.findMainVertices(boundaryMain, VERTICES_COUNT)
-        val borderMain = Polygon()
-        for (i in mainVertices) {
-            if (i < 0) continue
-            borderMain.addPoint(
-                (boundaryMain.xpoints[i] * ratioX).toInt(),
-                (boundaryMain.ypoints[i] * ratioY).toInt()
-            )
+
+        geometries.clear()
+        geometries += region.geometries.map {
+            it.scale(ratioX, ratioY)
         }
-        boundaries.clear()
-        region.boundaries.forEach { b ->
-            boundaries.add(
-                Polygon(
-                    b.xpoints * ratioX,
-                    b.ypoints * ratioY,
-                    b.npoints
-                )
+
+        val mainIndex = region.maxAreaIndex
+        val mainGeometry = geometries[mainIndex]
+        val envelope = mainGeometry.envelope
+        var envelopeAll = envelope
+        geometries.forEach { geo ->
+            envelopeAll = Rectangle(
+                min(envelopeAll.x, geo.envelope.x),
+                min(envelopeAll.y, geo.envelope.y),
+                max(envelopeAll.width, geo.envelope.width),
+                max(envelopeAll.height, geo.envelope.height)
             )
         }
 
-        this.tX = 20 - envelope.x
-        this.tY = 20 - envelope.y
-        this.centroid = centroid.let {
-            Point((it.x * ratioX).toInt(), (it.y * ratioY).toInt())
-        }
-        this.mainVertices = mainVertices
-        this.boundary = boundary
-        this.boundaryMain = borderMain
-        this.envelope = envelope
+        this.tX = 20 - envelopeAll.x
+        this.tY = 20 - envelopeAll.y
+        this.envelope = envelopeAll
         this.specific = specific
     }
 
     override fun paint(g: Graphics) {
-        val boundary = boundary ?: return
-        val boundaryMain = boundaryMain ?: return
-        val cx = centroid.x
-        val cy = centroid.y
-
         g.translate(tX, tY)
-        paintRays(g, cx, cy)
-        paintCentroid(g, cx, cy)
-        boundaries.forEachIndexed { index, polygon ->
-            paintBoundary(g, polygon, index)
-        }
         envelope?.let { paintEnvelope(g, it) }
-        paintMain(g, boundaryMain)
-        paintMainVertices(g, boundary)
+        geometries.forEachIndexed { index, geo ->
+            paintGeometry(g, geo, index)
+        }
         specific?.let { paintSpecific(g, it) }
         g.translate(-tX, -tY)
     }
@@ -160,10 +133,11 @@ class CountryCanvas() : JComponent() {
         g.drawPolygon(poly)
     }
 
-    private fun paintMainVertices(g: Graphics, poly: Polygon) {
+    private fun paintVertices(g: Graphics, poly: Polygon) {
         g.color = Color.blue
-        for (i in mainVertices) {
-            if (i < 0) continue
+        paintBoundary(g, poly, 0)
+        val npoints = poly.npoints
+        for (i in 0 until npoints) {
             g.drawOval(poly.xpoints[i] - 5, poly.ypoints[i] - 5, 10, 10)
         }
     }
@@ -199,6 +173,19 @@ class CountryCanvas() : JComponent() {
         g.drawOval(specific.x - 5, specific.y - 5, 10, 10)
     }
 
+    private fun paintGeometry(g: Graphics, countryGeometry: CountryGeometry, index: Int) {
+        val boundary = countryGeometry.boundary
+        val cx = countryGeometry.centroid.x
+        val cy = countryGeometry.centroid.y
+
+//        paintRays(g, cx, cy)
+        paintCentroid(g, cx, cy)
+        paintBoundary(g, boundary, index)
+        paintEnvelope(g, countryGeometry.envelope)
+        paintMain(g, boundary)
+        paintVertices(g, countryGeometry.pathVertices)
+    }
+
     fun showFrame() {
         val screenSize = Toolkit.getDefaultToolkit().screenSize
         val canvas = this
@@ -212,7 +199,7 @@ class CountryCanvas() : JComponent() {
     }
 
     companion object {
-        private const val FIXEDINT_TO_DOUBLE = 1.0 / CountryRegion.FACTOR_TO_INT
+        private const val FIXEDINT_TO_DOUBLE = 10 / CountryRegion.FACTOR_TO_INT
         private const val CANVAS_SIZE = 2500
 
         @Throws(Exception::class)

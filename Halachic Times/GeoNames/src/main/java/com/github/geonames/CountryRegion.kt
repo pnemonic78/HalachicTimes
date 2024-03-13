@@ -17,13 +17,8 @@ package com.github.geonames
 
 import com.github.geonames.util.LocaleUtils.ISO639_ISRAEL
 import com.github.geonames.util.LocaleUtils.ISO639_PALESTINE
-import com.github.lang.toDoubleArray
 import com.vividsolutions.jts.geom.Geometry
-import java.awt.Polygon
-import java.awt.geom.Point2D
 import java.io.IOException
-import kotlin.math.PI
-import kotlin.math.atan2
 import kotlin.math.round
 import org.geotools.geojson.geom.GeometryJSON
 
@@ -39,129 +34,69 @@ class CountryRegion(countryCode: String, geometry: Geometry) {
         countryCode
     }
 
-    val boundary: Polygon = geometry.boundary.toPolygon(FACTOR_TO_INT)
-    val centroid: Point2D = geometry.centroid.toPoint2D() * FACTOR_TO_INT
-    val boundaries: List<Polygon>
-    val areas: List<Double>
-    val centroids: List<Point2D>
+    val geometries: List<CountryGeometry>
     val maxAreaIndex: Int
 
     init {
-        val areas = mutableListOf<Double>()
-        val centroids = mutableListOf<Point2D>()
         val num = geometry.numGeometries
-        val geometries = mutableListOf<Polygon>()
-        var maxAreaIndex = -1
-        var maxArea = 0.0
-
+        val geometries = mutableListOf<CountryGeometry>()
         for (n in 0 until num) {
             val geometryN = geometry.getGeometryN(n)
-            val areaN = geometryN.area
-            geometries.add(geometryN.toPolygon(FACTOR_TO_INT))
-            areas.add(areaN)
-            centroids.add(geometryN.centroid.toPoint2D() * FACTOR_TO_INT)
+            val countryGeometry = CountryGeometry(geometryN.close())
+            geometries.add(countryGeometry)
+        }
+        this.geometries = merge(geometries)
+        this.maxAreaIndex = findMaxArea(this.geometries)
+    }
 
+    private fun findMaxArea(geometries: List<CountryGeometry>): Int {
+        val lastIndex = geometries.lastIndex
+        var maxAreaIndex = -1
+        var maxArea = 0.0
+        for (n in 0..lastIndex) {
+            val geometryN = geometries[n]
+            val areaN = geometryN.area
             if (areaN > maxArea) {
                 maxArea = areaN
                 maxAreaIndex = n
             }
         }
-        this.boundaries = geometries
-        this.areas = areas
-        this.centroids = centroids
-        this.maxAreaIndex = maxAreaIndex
+        return maxAreaIndex
     }
 
-    /**
-     * Find the main vertices that represent the border.
-     *
-     * @param boundary the boundary with vertices.
-     * @param vertexCount the number of vertices.
-     * @return an array of indexes.
-     */
-    fun findMainVertices(boundary: Polygon, vertexCount: Int): IntArray {
-        val indexes = IntArray(vertexCount) { -1 }
-        val n = boundary.npoints
-        val xpoints = boundary.xpoints.toDoubleArray()
-        val ypoints = boundary.ypoints.toDoubleArray()
-        val cx = centroid.x
-        val cy = centroid.y
-        val angles = DoubleArray(n)
-        var x: Double
-        var y: Double
+    /** Merge neighbouring geometries. */
+    private fun merge(geometries: List<CountryGeometry>): List<CountryGeometry> {
+        val merged = mutableListOf<Geometry?>()
+        merged.addAll(geometries.sortedByDescending { it.area }.map { it.geometry })
+        val lastIndex = merged.lastIndex
 
-        for (i in 0 until n) {
-            x = xpoints[i]
-            y = ypoints[i]
-            angles[i] = atan2(y - cy, x - cx) + PI
-        }
-
-        val sweepAngle = (2 * PI) / vertexCount
-        var angleStart = 0.0
-        var angleEnd: Double
-        var angleRange: OpenEndRange<Double>
-        var a: Double
-        var d: Double
-        var i = 0
-        var farIndex: Int
-        var farDist: Double
-
-        for (v in 0 until vertexCount) {
-            angleEnd = angleStart + sweepAngle
-            angleRange = angleStart.rangeUntil(angleEnd)
-            farDist = 0.0
-            farIndex = -1
-
-            for (i in 0 until n) {
-                a = angles[i]
-                if (a in angleRange) {
-                    x = xpoints[i]
-                    y = ypoints[i]
-                    d = Point2D.distanceSq(cx, cy, x, y)
-                    if (farDist < d) {
-                        farDist = d
-                        farIndex = i
+        for (i in 0..lastIndex) {
+            var geoI = merged[i] ?: continue
+            val envelopeI = geoI.envelope
+            for (j in (i + 1)..lastIndex) {
+                val geoJ = merged[j] ?: continue
+                val envelopeJ = geoJ.envelope
+                try {
+                    if (envelopeI.distance(envelopeJ) <= DISTANCE_NEIGHBOUR) {
+                        geoI = geoI.join(geoJ)
+                        merged[i] = geoI
+                        merged[j] = null
                     }
-                }
-            }
-
-            if (farIndex >= 0) indexes[i++] = farIndex
-            angleStart += sweepAngle
-        }
-        if (i < vertexCount) {
-            when (i) {
-                0 -> {
-                    val boundarySmall = Polygon()
-                    boundarySmall.addPoint(xpoints[0] - CITY_BOUNDARY, ypoints[0] - CITY_BOUNDARY)
-                    boundarySmall.addPoint(xpoints[0] + CITY_BOUNDARY, ypoints[0] + CITY_BOUNDARY)
-                    boundarySmall.addPoint(xpoints[1] - CITY_BOUNDARY, ypoints[1] - CITY_BOUNDARY)
-                    boundarySmall.addPoint(xpoints[1] + CITY_BOUNDARY, ypoints[1] + CITY_BOUNDARY)
-                    return findMainVertices(boundarySmall, vertexCount)
-                }
-
-                1 -> {
-                    val boundarySmall = Polygon()
-                    boundarySmall.addPoint(xpoints[1] - CITY_BOUNDARY, ypoints[1] - CITY_BOUNDARY)
-                    boundarySmall.addPoint(xpoints[1] + CITY_BOUNDARY, ypoints[1] + CITY_BOUNDARY)
-                    return findMainVertices(boundarySmall, vertexCount)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
         }
-        return indexes
+
+        return merged.filterNotNull()
+            .map { CountryGeometry(it.convexHull(), 1.0) }
     }
 
     companion object {
         /** Factor to convert coordinate value to a fixed-point integer.  */
-        internal const val FACTOR_TO_INT = 1e+5
+        internal const val FACTOR_TO_INT = CountryGeometry.FACTOR_TO_INT
 
-        /** The number of main vertices per region border.  */
-        const val VERTICES_COUNT = 16
-
-        /**
-         * Factor to convert coordinate value to a fixed-point integer for city
-         * limits.
-         */
-        private const val CITY_BOUNDARY = 1e+4
+        private const val DISTANCE_NEIGHBOUR = 5 * FACTOR_TO_INT
 
         @JvmStatic
         @Throws(IOException::class)

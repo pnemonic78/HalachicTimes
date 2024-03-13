@@ -15,7 +15,7 @@
  */
 package com.github.geonames
 
-import com.github.geonames.CountryRegion.Companion.VERTICES_COUNT
+import com.github.geonames.CountryGeometry.Companion.VERTICES_COUNT
 import com.github.geonames.CountryRegion.Companion.toRegion
 import com.github.geonames.dump.NameShapesLow
 import com.github.geonames.dump.PathCountryInfo
@@ -88,7 +88,9 @@ class Countries : Cities() {
         var pointCount: Int
 
         for (region in sorted) {
-            pointIndexes = region.findMainVertices(region.boundary, VERTICES_COUNT)
+            val mainIndex = region.maxAreaIndex
+            val mainGeometry = region.geometries[mainIndex]
+            pointIndexes = mainGeometry.vertices
 
             country = doc.createElement(ANDROID_ELEMENT_ITEM)
             country.textContent = region.countryCode
@@ -100,11 +102,11 @@ class Countries : Cities() {
                 if (pointIndex < 0) continue
 
                 latitude = doc.createElement(ANDROID_ELEMENT_ITEM)
-                latitude.textContent = region.boundary.ypoints[pointIndex].toString()
+                latitude.textContent = mainGeometry.boundary.ypoints[pointIndex].toString()
                 latitudesElement.appendChild(latitude)
 
                 longitude = doc.createElement(ANDROID_ELEMENT_ITEM)
-                longitude.textContent = region.boundary.xpoints[pointIndex].toString()
+                longitude.textContent = mainGeometry.boundary.xpoints[pointIndex].toString()
                 longitudesElement.appendChild(longitude)
 
                 pointCount++

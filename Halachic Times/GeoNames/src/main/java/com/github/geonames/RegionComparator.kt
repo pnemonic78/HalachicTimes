@@ -27,30 +27,47 @@ class RegionComparator : Comparator<CountryRegion> {
         val name = name1.compareTo(name2)
         if (name != 0) return name
 
-        val npoints1 = region1.boundary.npoints
-        val npoints2 = region2.boundary.npoints
-        val npoints = npoints1.compareTo(npoints2)
-        if (npoints != 0) return npoints
+        val geometries1 = region1.geometries
+        val geometries2 = region2.geometries
+        val size1 = geometries1.size
+        val size2 = geometries2.size
+        val sizeC = size1.compareTo(size2)
+        if (sizeC != 0) return sizeC
+
+        for (i in 0 until size1) {
+            val c = compareGeometry(geometries1[i], geometries2[i])
+            if (c != 0) return c
+        }
+
+        return 0
+    }
+
+    private fun compareGeometry(g1: CountryGeometry, g2: CountryGeometry): Int {
+        val npoints1 = g1.boundary.npoints
+        val npoints2 = g2.boundary.npoints
+        val npointsC = npoints1.compareTo(npoints2)
+        if (npointsC != 0) return npointsC
 
         var x1: Int
         var x2: Int
-        var x: Int
+        var xC: Int
         for (i in 0 until npoints1) {
-            x1 = region1.boundary.xpoints[i]
-            x2 = region2.boundary.xpoints[i]
-            x = x1.compareTo(x2)
-            if (x != 0) return x
+            x1 = g1.boundary.xpoints[i]
+            x2 = g2.boundary.xpoints[i]
+            xC = x1.compareTo(x2)
+            if (xC != 0) return xC
         }
 
         var y1: Int
         var y2: Int
-        var y: Int
+        var yC: Int
         for (i in 0 until npoints1) {
-            y1 = region1.boundary.ypoints[i]
-            y2 = region2.boundary.ypoints[i]
-            y = y1.compareTo(y2)
-            if (y != 0) return y
+            y1 = g1.boundary.ypoints[i]
+            y2 = g2.boundary.ypoints[i]
+            yC = y1.compareTo(y2)
+            if (yC != 0) return yC
         }
+
         return 0
     }
 }
