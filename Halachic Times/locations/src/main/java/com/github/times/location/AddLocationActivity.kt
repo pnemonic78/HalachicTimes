@@ -15,6 +15,7 @@
  */
 package com.github.times.location
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.location.Location
@@ -32,6 +33,7 @@ import android.widget.ViewSwitcher
 import androidx.appcompat.app.AppCompatActivity
 import com.github.app.SimpleThemeCallbacks
 import com.github.app.ThemeCallbacks
+import com.github.lang.isTrue
 import com.github.os.getParcelableCompat
 import com.github.preference.ThemePreferences
 import com.github.text.method.RangeInputFilter
@@ -41,6 +43,7 @@ import com.github.times.location.country.Country
 import com.github.times.location.databinding.LocationAddBinding
 import com.github.times.location.text.LatitudeInputFilter
 import com.github.times.location.text.LongitudeInputFilter
+import com.github.util.getDefaultLocale
 import java.text.NumberFormat
 import java.util.Locale
 import kotlin.math.abs
@@ -75,11 +78,23 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
     /**
      * Provider for locations.
      */
-    private lateinit var locations: LocationsProvider
+    private val locations: LocationsProvider by lazy {
+        val app = application as LocationApplication<*, *, *>
+        app.locations
+    }
+
+    /**
+     * Provider for addresses.
+     */
+    private val addresses: AddressProvider by lazy {
+        val app = application as LocationApplication<*, *, *>
+        app.addresses
+    }
     private var location: Location = Location(GeocoderBase.USER_PROVIDER)
     private var address: ZmanimAddress? = null
     private var locationForConvert: Location? = null
     private var shouldFinish = false
+    private var progressDialog: ProgressDialog? = null
 
     /**
      * Formatter for for displaying the current value.
@@ -99,8 +114,6 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
     public override fun onCreate(savedInstanceState: Bundle?) {
         onPreCreate()
         super.onCreate(savedInstanceState)
-        val app = application as LocationApplication<*, *, *>
-        locations = app.locations
 
         val actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
@@ -228,6 +241,7 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
     override fun onStop() {
         super.onStop()
         locations.stop(this)
+        hideProgress()
     }
 
     override fun onResume() {
@@ -253,21 +267,12 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
             }
             // Cannot use 'switch' here because library ids are not final.
             R.id.menu_location_cancel -> {
-                setResult(RESULT_CANCELED)
-                finish()
+                cancel()
                 true
             }
 
             R.id.menu_location_add -> {
-                if (saveLocation(location, coordsFormatSpinner.selectedItemPosition)) {
-                    Intent().apply {
-                        put(EXTRA_LOCATION, location)
-                        setResult(RESULT_OK, this)
-                    }
-                    shouldFinish = true
-                    // TODO force fetch from remote even if cached in db.
-                    fetchAddress(location, true)
-                }
+                addLocation()
                 true
             }
 
@@ -331,10 +336,9 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
         return true
     }
 
-    private fun fetchAddress(location: Location, persist: Boolean) {
+    private fun fetchAddress(location: Location, persist: Boolean, force: Boolean = false) {
         addressView.setText(R.string.location_unknown)
-        val locations = locations
-        locations.findAddress(location, persist)
+        locations.findAddress(location, persist, force)
     }
 
     override fun onAddressChanged(location: Location, address: ZmanimAddress) {
@@ -352,6 +356,7 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
                 put(EXTRA_ADDRESS, address)
                 setResult(RESULT_OK, this)
             }
+            hideProgress()
             finish()
         }
     }
@@ -493,6 +498,40 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
         if (address is City) return false
         val distance = distanceBetween(location, address)
         return distance <= GeocoderBase.SAME_HOOD
+    }
+
+    private fun cancel() {
+        setResult(RESULT_CANCELED)
+        finish()
+    }
+
+    private fun addLocation() {
+        if (saveLocation(location, coordsFormatSpinner.selectedItemPosition)) {
+            showProgress()
+            Intent().apply {
+                put(EXTRA_LOCATION, location)
+                setResult(RESULT_OK, this)
+            }
+            shouldFinish = true
+            // force fetch from remote even if cached in db.
+            fetchAddress(location, persist = true, force = true)
+        }
+    }
+
+    private fun showProgress() {
+        if (progressDialog?.isShowing.isTrue) return
+        ProgressDialog(this).apply {
+            progressDialog = this
+            setCancelable(true)
+            setMessage(getText(R.string.location_unknown))
+            show()
+        }
+    }
+
+    private fun hideProgress() {
+        if (progressDialog?.isShowing.isTrue) {
+            progressDialog?.dismiss()
+        }
     }
 
     companion object {

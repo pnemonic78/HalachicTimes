@@ -46,6 +46,14 @@ class AddressService : JobIntentService(), OnFindAddressListener {
         val provider = addressProvider ?: return
         when (intent.action) {
             ACTION_ADDRESS -> {
+                if (extras.containsKey(PARAMETER_FORCE)) {
+                    location.extras = (location.extras ?: Bundle()).apply {
+                        putBoolean(
+                            PARAMETER_FORCE,
+                            extras.getBoolean(PARAMETER_FORCE, FORCE_DEFAULT)
+                        )
+                    }
+                }
                 if (extras.containsKey(PARAMETER_PERSIST)) {
                     location.extras = (location.extras ?: Bundle()).apply {
                         putBoolean(
@@ -109,8 +117,10 @@ class AddressService : JobIntentService(), OnFindAddressListener {
 
         private const val PARAMETER_LOCATION = ZmanimLocationListener.EXTRA_LOCATION
         private const val PARAMETER_ADDRESS = ZmanimLocationListener.EXTRA_ADDRESS
+        private const val PARAMETER_FORCE = ZmanimLocationListener.EXTRA_FORCE
         private const val PARAMETER_PERSIST = ZmanimLocationListener.EXTRA_PERSIST
 
+        private const val FORCE_DEFAULT = false
         private const val PERSIST_DEFAULT = true
 
         fun enqueueWork(context: Context, intent: Intent) {

@@ -62,6 +62,11 @@ interface ZmanimLocationListener : LocationListener {
         const val EXTRA_ADDRESS = "address"
 
         /**
+         * Whether to force-fetch the address?
+         */
+        const val EXTRA_FORCE = "force_fetch_address"
+
+        /**
          * Whether to persist the address?
          */
         const val EXTRA_PERSIST = "persist_address"

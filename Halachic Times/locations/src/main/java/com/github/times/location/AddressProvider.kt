@@ -21,6 +21,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.Location.distanceBetween
 import com.github.database.CursorFilter
+import com.github.lang.isTrue
 import com.github.times.location.City.Companion.generateCityId
 import com.github.times.location.ZmanimAddress.Companion.compare
 import com.github.times.location.ZmanimLocation.Companion.compare
@@ -68,10 +69,10 @@ class AddressProvider @JvmOverloads constructor(
      */
     private val geocoderCountries: CountriesGeocoder = CountriesGeocoder(context, locale)
     private val geocoderDatabase: DatabaseGeocoder = DatabaseGeocoder(context, locale)
-    private var geocoder: Geocoder? = null
-    private var geocoderGoogle: GoogleGeocoder? = null
-    private var geocoderBing: BingGeocoder? = null
-    private var geocoderGeonames: GeoNamesGeocoder? = null
+    private val geocoder by lazy { Geocoder(context) }
+    private val geocoderGoogle by lazy { GoogleGeocoder(locale) }
+    private val geocoderBing by lazy { BingGeocoder(locale) }
+    private val geocoderGeonames by lazy { GeoNamesGeocoder(locale) }
     private val isOnline = BuildConfig.INTERNET
 
     /**
@@ -94,6 +95,8 @@ class AddressProvider @JvmOverloads constructor(
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX) {
             return null
         }
+        val forceFetch = location.extras?.getBoolean(PARAMETER_FORCE, FORCE_DEFAULT).isTrue
+
         var addresses: List<Address>?
         var best: Address?
         var bestPlateau: Address? = null
@@ -105,7 +108,7 @@ class AddressProvider @JvmOverloads constructor(
         if (best != null) {
             notifyAddressFound(listener, location, best)
         }
-        val bestCountry = best
+        var bestCountry = best
 
         // Find the best XML city.
         addresses = findNearestCity(location)
@@ -129,12 +132,19 @@ class AddressProvider @JvmOverloads constructor(
             bestCached = best
             notifyAddressFound(listener, location, best)
         }
+        if (forceFetch) {
+            best = null
+            bestCached = null
+        }
 
         // Find the best city from some Geocoder provider.
         if (best == null && isOnline) {
             addresses = findNearestAddressGeocoder(location)
+            if (bestCountry == null) {
+                bestCountry = findBestAddress(location, addresses, GeocoderBase.SAME_PLANET)
+            }
             best = findBestAddress(location, addresses, GeocoderBase.SAME_PLATEAU)
-            if (best != null && compare(best, bestCached) != 0) {
+            if (best != null && compare(best, bestPlateau) != 0) {
                 bestPlateau = best
                 notifyAddressFound(listener, location, best)
             }
@@ -144,8 +154,8 @@ class AddressProvider @JvmOverloads constructor(
             }
         }
 
-        // Find the best city remotely.
-        if (best == null && isOnline) {
+        // Find the best city from remote Geocoder providers.
+        if ((best == null || forceFetch) && isOnline) {
             for (geocoder in remoteAddressProviders) {
                 addresses = try {
                     geocoder.getFromLocation(latitude, longitude, 10)
@@ -155,9 +165,9 @@ class AddressProvider @JvmOverloads constructor(
                         "Address geocoder: $geocoder error: ${e.message} at $latitude,$longitude"
                     )
                     continue
-                }
+                } ?: continue
                 best = findBestAddress(location, addresses, GeocoderBase.SAME_PLATEAU)
-                if (best != null && compare(best, bestCached) != 0) {
+                if (best != null && compare(best, bestPlateau) != 0) {
                     bestPlateau = best
                     notifyAddressFound(listener, location, best)
                 }
@@ -170,16 +180,8 @@ class AddressProvider @JvmOverloads constructor(
                 }
             }
         }
-        if (best == null) {
-            best = bestCity
-            if (best == null) {
-                best = bestPlateau
-                if (best == null) {
-                    best = bestCountry
-                }
-            }
-        }
-        return best
+
+        return best ?: bestCity ?: bestPlateau ?: bestCountry
     }
 
     private fun notifyAddressFound(
@@ -202,11 +204,6 @@ class AddressProvider @JvmOverloads constructor(
     private fun findNearestAddressGeocoder(location: Location): List<Address>? {
         val latitude = location.latitude
         val longitude = location.longitude
-        var geocoder = geocoder
-        if (geocoder == null) {
-            geocoder = Geocoder(context)
-            this.geocoder = geocoder
-        }
         try {
             return geocoder.getFromLocation(latitude, longitude, 5)
         } catch (ignore: Exception) {
@@ -219,30 +216,11 @@ class AddressProvider @JvmOverloads constructor(
      *
      * @return the list of providers.
      */
-    private val remoteAddressProviders: List<GeocoderBase>
-        get() {
-            val locale = locale
-            val providers = mutableListOf<GeocoderBase>()
-            var bingGeocoder = geocoderBing
-            if (bingGeocoder == null) {
-                bingGeocoder = BingGeocoder(locale)
-                geocoderBing = bingGeocoder
-            }
-            providers.add(bingGeocoder)
-            var geonamesGeocoder = geocoderGeonames
-            if (geonamesGeocoder == null) {
-                geonamesGeocoder = GeoNamesGeocoder(locale)
-                geocoderGeonames = geonamesGeocoder
-            }
-            providers.add(geonamesGeocoder)
-            var googleGeocoder = geocoderGoogle
-            if (googleGeocoder == null) {
-                googleGeocoder = GoogleGeocoder(locale)
-                geocoderGoogle = googleGeocoder
-            }
-            providers.add(googleGeocoder)
-            return providers
-        }
+    private val remoteAddressProviders: List<GeocoderBase> = listOf(
+        geocoderGoogle,
+        geocoderBing,
+        geocoderGeonames
+    )
 
     /**
      * Find the best address by checking relevant fields.
@@ -491,29 +469,11 @@ class AddressProvider @JvmOverloads constructor(
      *
      * @return the list of providers.
      */
-    private val remoteElevationProviders: List<GeocoderBase>
-        get() {
-            val providers = mutableListOf<GeocoderBase>()
-            var bingGeocoder = geocoderBing
-            if (bingGeocoder == null) {
-                bingGeocoder = BingGeocoder(locale)
-                geocoderBing = bingGeocoder
-            }
-            providers.add(bingGeocoder)
-            var geonamesGeocoder = geocoderGeonames
-            if (geonamesGeocoder == null) {
-                geonamesGeocoder = GeoNamesGeocoder(locale)
-                geocoderGeonames = geonamesGeocoder
-            }
-            providers.add(geonamesGeocoder)
-            var googleGeocoder = geocoderGoogle
-            if (googleGeocoder == null) {
-                googleGeocoder = GoogleGeocoder(locale)
-                geocoderGoogle = googleGeocoder
-            }
-            providers.add(googleGeocoder)
-            return providers
-        }
+    private val remoteElevationProviders: List<GeocoderBase> = listOf(
+        geocoderBing,
+        geocoderGeonames,
+        geocoderGoogle
+    )
 
     /**
      * Find elevation of nearest locations cached in the database. Calculates
@@ -612,5 +572,9 @@ class AddressProvider @JvmOverloads constructor(
         private const val LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX
         private const val LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN
         private const val LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX
+
+        private const val FORCE_DEFAULT = false
+
+        private const val PARAMETER_FORCE = ZmanimLocationListener.EXTRA_FORCE
     }
 }

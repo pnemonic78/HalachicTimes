@@ -17,6 +17,7 @@ package com.github.times.location
 
 import android.content.Intent
 import android.location.Address
+import android.location.Location
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
@@ -282,6 +283,14 @@ open class ZmanimAddress : Address, Comparable<ZmanimAddress> {
 
     override fun hashCode(): Int {
         return super.hashCode()
+    }
+
+    fun setLocation(location: Location) {
+        this.latitude = location.latitude
+        this.longitude = location.longitude
+        if (location.hasAltitude()) {
+            this.elevation = location.altitude
+        }
     }
 
     companion object {

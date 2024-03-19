@@ -42,7 +42,9 @@ import com.github.times.location.ZmanimLocation.Companion.distanceBetween
 import com.github.times.location.ZmanimLocationListener.Companion.ACTION_ADDRESS
 import com.github.times.location.ZmanimLocationListener.Companion.ACTION_ELEVATION
 import com.github.times.location.ZmanimLocationListener.Companion.ACTION_LOCATION_CHANGED
+import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_FORCE
 import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_LOCATION
+import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_PERSIST
 import com.github.times.location.country.CountriesGeocoder
 import java.util.TimeZone
 import java.util.concurrent.CopyOnWriteArrayList
@@ -735,10 +737,11 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         }
     }
 
-    fun findAddress(location: Location, persist: Boolean = true) {
+    fun findAddress(location: Location, persist: Boolean = true, force: Boolean = false) {
         val findAddress = Intent(ACTION_ADDRESS)
+            .putExtra(EXTRA_FORCE, force)
             .putExtra(EXTRA_LOCATION, location)
-            .putExtra(ZmanimLocationListener.EXTRA_PERSIST, persist)
+            .putExtra(EXTRA_PERSIST, persist)
         enqueueWork(context, findAddress)
     }
 
