@@ -15,7 +15,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/reminder">
         <com.github.preference.TimePreference
-            android:defaultValue="@string/reminder_defaultValue"
+            android:defaultValue="@integer/reminder_defaultValue"
             android:dialogIcon="@drawable/ic_settings_alarm"
             android:icon="@drawable/ic_settings_alarm"
             android:key="levana_earliest.reminder"

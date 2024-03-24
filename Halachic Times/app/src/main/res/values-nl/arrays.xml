@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="reminder_entries">
-        <item>@string/reminder_off</item>
-        <item>@string/reminder_on_time</item>
-        <item>1 minuut voor</item>
-        <item>5 minuten voor</item>
-        <item>10 minuten voor</item>
-        <item>15 minuten voor</item>
-        <item>20 minuten voor</item>
-        <item>25 minuten voor</item>
-        <item>30 minuten voor</item>
-        <item>45 minuten voor</item>
-        <item>1 uur voor</item>
-    </string-array>
     <string-array name="hebrew_months">
         <item>Niesan</item>
         <item>Ijar</item>

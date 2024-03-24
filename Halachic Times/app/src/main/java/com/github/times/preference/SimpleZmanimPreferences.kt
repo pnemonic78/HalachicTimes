@@ -394,11 +394,12 @@ class SimpleZmanimPreferences(context: Context) : SimplePreferences(context), Zm
         if (time == ZmanimItem.NEVER) return ZmanimItem.NEVER
         val key = toKey(id) ?: return ZmanimItem.NEVER
         val keyReminder = key + ZmanimPreferences.REMINDER_SUFFIX
-        val value =
-            preferences.getString(keyReminder, context.getString(R.string.reminder_defaultValue))
-        if (value.isNullOrEmpty()) {
-            return ZmanimItem.NEVER
-        }
+        val value = preferences.getString(
+            keyReminder,
+            context.resources.getString(R.string.reminder_defaultValue)
+        )
+
+        if (value.isNullOrEmpty()) return ZmanimItem.NEVER
         if (value.indexOf(':') >= 0) {
             val parsed = parseTime(value)
             if (parsed != null) {
@@ -419,12 +420,15 @@ class SimpleZmanimPreferences(context: Context) : SimplePreferences(context), Zm
                 return yesterday
             }
         } else {
-            val before = value.toLong() * DateUtils.MINUTE_IN_MILLIS
-            if (before >= 0L) {
-                return time - before
-            }
+            return getReminder(time, value.toInt())
         }
         return ZmanimItem.NEVER
+    }
+
+    private fun getReminder(time: Long, value: Int): Long {
+        if (value < 0) return ZmanimItem.NEVER
+        val before = value * DateUtils.MINUTE_IN_MILLIS
+        return time - before
     }
 
     override var latestReminder: Long

@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="reminder_entries">
-        <item>@string/reminder_off</item>
-        <item>@string/reminder_on_time</item>
-        <item>За 1 минуту</item>
-        <item>За 5 минут</item>
-        <item>За 10 минут</item>
-        <item>За 15 минут</item>
-        <item>За 20 минут</item>
-        <item>За 25 минут</item>
-        <item>За 30 минут</item>
-        <item>За 45 минут</item>
-        <item>За 1 час</item>
-    </string-array>
     <string-array name="hebrew_months">
         <item>Нисан</item>
         <item>Ияр</item>

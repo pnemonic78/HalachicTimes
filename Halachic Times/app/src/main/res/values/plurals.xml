@@ -37,6 +37,14 @@
     </plurals>
 
     <!-- Reminder -->
+    <plurals name="reminder_minutes" translatable="false">
+        <item quantity="zero">@string/reminder_minutes_zero</item>
+        <item quantity="one">@string/reminder_minutes_one</item>
+        <item quantity="two">@string/reminder_minutes_two</item>
+        <item quantity="few">@string/reminder_minutes_few</item>
+        <item quantity="many">@string/reminder_minutes_many</item>
+        <item quantity="other">@string/reminder_minutes_other</item>
+    </plurals>
     <plurals name="reminder_silence_minutes" translatable="false">
         <item quantity="zero">@string/minutes_after_zero</item>
         <item quantity="one">@string/minutes_after_one</item>

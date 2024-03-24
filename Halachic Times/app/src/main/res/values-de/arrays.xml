@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="reminder_entries">
-        <item>@string/reminder_off</item>
-        <item>@string/reminder_on_time</item>
-        <item>1 minute vor</item>
-        <item>5 minuten vor</item>
-        <item>10 minuten vor</item>
-        <item>15 minuten vor</item>
-        <item>20 minuten vor</item>
-        <item>25 minuten vor</item>
-        <item>30 minuten vor</item>
-        <item>45 minuten vor</item>
-        <item>1 stunde vor</item>
-    </string-array>
     <string-array name="hebrew_months">
         <item>Nissan</item>
         <item>Ijjar</item>

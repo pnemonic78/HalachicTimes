@@ -126,6 +126,7 @@
     <string name="reminder_stream_defaultValue" translatable="false">@string/reminder_stream_value_alarm</string>
     <string name="reminder_ringtone_defaultValue" translatable="false">content://settings/system/alarm_alert</string>
     <string name="reminder_defaultValue" translatable="false" />
+    <integer name="reminder_defaultValue" translatable="false">-1</integer>
     <bool name="reminder_day_1_defaultValue" translatable="false">true</bool>
     <bool name="reminder_day_2_defaultValue" translatable="false">true</bool>
     <bool name="reminder_day_3_defaultValue" translatable="false">true</bool>

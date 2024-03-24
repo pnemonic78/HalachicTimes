@@ -15,10 +15,8 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/reminder">
         <com.github.times.preference.ZmanReminderPreference
-            android:defaultValue="@string/reminder_defaultValue"
+            android:defaultValue="@integer/reminder_defaultValue"
             android:dialogIcon="@drawable/ic_settings_alarm"
-            android:entries="@array/reminder_entries"
-            android:entryValues="@array/reminder_values"
             android:icon="@drawable/ic_settings_alarm"
             android:key="prayers.reminder"
             android:title="@string/reminder"

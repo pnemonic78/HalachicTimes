@@ -31,7 +31,9 @@ import androidx.preference.PreferenceManager
 import androidx.preference.TwoStatePreference
 import com.github.lang.isTrue
 import com.github.preference.AbstractPreferenceFragment
+import com.github.preference.NumberPickerPreference
 import com.github.preference.SimplePreferences
+import com.github.preference.TimePreference
 import com.github.times.R
 import com.github.times.remind.ZmanimReminder
 import com.github.times.remind.ZmanimReminderService.Companion.enqueueWork
@@ -95,26 +97,24 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
 
     private fun initReminder(key: String?) {
         if (key.isNullOrEmpty()) return
-        var preference: Preference? = findPreference<ListPreference>(key)
-        if (preference == null) {
-            preference = initTime(key)
+        var preference = findPreference<Preference>(key) ?: return
+        if (preference is NumberPickerPreference) {
+            preference = initNumber(preference)
+        } else if (preference is TimePreference) {
+            preference = initTime(preference)
         }
-        if (preference != null) {
-            val context = preference.context
-            val listener = preference.onPreferenceChangeListener
-            preference.setOnPreferenceChangeListener { _: Preference, newValue: Any? ->
-                requestReminderPermissions(context)
-                remind(context)
-                listener?.onPreferenceChange(preference, newValue).isTrue
-            }
-            initReminderDays(preference)
+        val context = preference.context
+        val listener = preference.onPreferenceChangeListener
+        preference.setOnPreferenceChangeListener { _: Preference, newValue: Any? ->
+            requestReminderPermissions(context)
+            remind(context)
+            listener?.onPreferenceChange(preference, newValue).isTrue
         }
+        initReminderDays(preference)
     }
 
     private fun initOpinionPreference(key: String): Preference? {
-        var preference: Preference?
-
-        preference = findPreference(key)
+        var preference: Preference? = findPreference(key)
         if (preference is ListPreference) {
             val context = preference.context
             preference.setOnPreferenceChangeListener { _: Preference, newValue: Any? ->

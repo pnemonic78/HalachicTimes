@@ -361,6 +361,12 @@
     <string name="reminder_stream_notification" translatable="false">@string/notification_volume_title</string>
     <string name="reminder_off" translatable="false">@string/off</string>
     <string name="reminder_on_time">On time</string>
+    <string name="reminder_minutes_zero" translatable="false">@string/reminder_minutes_other</string>
+    <string name="reminder_minutes_one">%d minute</string>
+    <string name="reminder_minutes_two" translatable="false">@string/reminder_minutes_other</string>
+    <string name="reminder_minutes_few" translatable="false">@string/reminder_minutes_other</string>
+    <string name="reminder_minutes_many" translatable="false">@string/reminder_minutes_other</string>
+    <string name="reminder_minutes_other">%d minutes</string>
     <string name="reminder_friday">Remind on Friday</string>
     <string name="reminder_monday">Remind on Monday</string>
     <string name="reminder_saturday">Remind on Saturday and Yom Tov</string>
