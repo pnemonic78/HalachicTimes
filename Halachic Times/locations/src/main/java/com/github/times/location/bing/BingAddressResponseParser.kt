@@ -23,6 +23,7 @@ import com.github.times.location.ZmanimAddress
 import java.io.IOException
 import java.io.InputStream
 import java.util.Locale
+import kotlin.math.min
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.decodeFromStream
@@ -77,7 +78,7 @@ class BingAddressResponseParser : AddressResponseParser() {
         }
         var resource: BingResource
         var address: Address?
-        val size = resources.size.coerceAtMost(maxResults)
+        val size = min(resources.size, maxResults)
         for (i in 0 until size) {
             resource = resources[i]
             address = toAddress(resource, locale)

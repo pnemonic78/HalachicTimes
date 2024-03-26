@@ -23,6 +23,7 @@ import com.github.times.location.LocationException
 import com.github.times.location.ZmanimLocation
 import java.io.IOException
 import java.io.InputStream
+import kotlin.math.min
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.decodeFromStream
@@ -74,7 +75,7 @@ class BingElevationResponseParser : ElevationResponseParser() {
             return
         }
         var location: Location?
-        val size = maxResults.coerceAtMost(resources.size)
+        val size = min(maxResults, resources.size)
         for (resource in resources) {
             location = toLocation(resource, latitude, longitude)
             if (location != null) {

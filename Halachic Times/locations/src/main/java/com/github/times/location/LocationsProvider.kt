@@ -25,6 +25,7 @@ import android.content.IntentFilter
 import android.location.Address
 import android.location.Criteria
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -35,6 +36,7 @@ import android.os.Message
 import android.text.format.DateUtils
 import androidx.annotation.RequiresApi
 import androidx.core.content.PermissionChecker
+import com.github.lang.isTrue
 import com.github.times.location.AddressService.Companion.enqueueWork
 import com.github.times.location.ZmanimLocation.Companion.compare
 import com.github.times.location.ZmanimLocation.Companion.compareAll
@@ -48,6 +50,7 @@ import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_PERSIST
 import com.github.times.location.country.CountriesGeocoder
 import java.util.TimeZone
 import java.util.concurrent.CopyOnWriteArrayList
+import kotlin.math.min
 import timber.log.Timber
 
 /**
@@ -63,6 +66,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
      * The owner location listeners.
      */
     private val listeners: MutableCollection<ZmanimLocationListener> = CopyOnWriteArrayList()
+    private val listener: LocationListener = this
 
     /**
      * Service provider for locations.
@@ -108,14 +112,14 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     private var startTaskDelay = UPDATE_INTERVAL_START
 
     /**
-     * The location is externally set?
+     * The location that was externally set.
      */
-    private var isManualLocation = false
+    private var locationManual: Location? = null
 
     /**
      * The location formatter.
      */
-    private val formatterHelper: LocationFormatter = createLocationFormatter(context)
+    private val formatterHelper: LocationFormatter by lazy { createLocationFormatter(context) }
 
     /**
      * Register a location listener to receive location notifications.
@@ -139,7 +143,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
 
     override fun onLocationChanged(location: Location) {
         Timber.v("onLocationChanged %s", location)
-        onLocationChanged(location, true, true)
+        onLocationChanged(location, findAddress = true, findElevation = true)
     }
 
     private fun onLocationChanged(
@@ -168,27 +172,26 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
             if (locationOld.time + LOCATION_EXPIRATION > locationNew.time) {
                 keepLocation = false
             }
-            // Ignore manual locations.
-            if (isManualLocation) {
-                // But does the new location have an elevation?
-                if (locationNew.hasAltitude() && !locationOld.hasAltitude()) {
-                    val distance = distanceBetween(locationOld, location)
-                    if (distance <= GeocoderBase.SAME_CITY) {
-                        locationOld.altitude = locationNew.altitude
-                    }
+            // Does the new location have an elevation?
+            if (locationNew.hasAltitude() && !locationOld.hasAltitude()) {
+                val distance = distanceBetween(locationOld, location)
+                if (distance <= GeocoderBase.SAME_CITY) {
+                    locationOld.altitude = locationNew.altitude
                 }
-                locationNew = locationOld
             }
+            // Ignore manual locations.
+            locationNew = locationManual ?: locationNew
         }
         if (keepLocation) {
             this.locationLocal = locationNew
-            preferences.location = locationNew
+            this.locationSaved = locationNew
         }
         notifyLocationChanged(locationNew)
-        if (findElevation && !locationNew.hasAltitude()) {
-            findElevation(locationNew)
-        } else if (findAddress) {
+        if (findAddress) {
             findAddress(locationNew)
+        }
+        if (findElevation) {
+            findElevation(locationNew)
         }
     }
 
@@ -241,7 +244,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     }
 
     override fun onElevationChanged(location: Location) {
-        onLocationChanged(location, true, false)
+        onLocationChanged(location, findAddress = true, findElevation = false)
     }
 
     /**
@@ -273,7 +276,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
      *
      * @return the location - `null` otherwise.
      */
-    val locationGPS: Location?
+    private val locationGPS: Location?
         get() {
             val locationManager = locationManager
             if (locationManager == null || hasNoLocationPermission(context)) {
@@ -296,7 +299,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
      *
      * @return the location - `null` otherwise.
      */
-    val locationNetwork: Location?
+    private val locationNetwork: Location?
         get() {
             val locationManager = locationManager
             if (locationManager == null || hasNoLocationPermission(context)) {
@@ -319,7 +322,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
      *
      * @return the location - `null` otherwise.
      */
-    val locationPassive: Location?
+    private val locationPassive: Location?
         get() {
             val locationManager = locationManager
             if (locationManager == null || hasNoLocationPermission(context)) {
@@ -342,15 +345,18 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
      *
      * @return the location - {@code null} otherwise.
      */
-    val locationSaved: Location?
+    private var locationSaved: Location?
         get() = preferences.location
+        set(value) {
+            preferences.location = value
+        }
 
     /**
      * Get a location from the time zone.
      *
      * @return the location - `null` otherwise.
      */
-    val locationTZ: Location
+    private val locationTZ: Location
         get() = getLocationTZ(timeZone)
 
     /**
@@ -479,13 +485,11 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         addLocationListener(listener)
 
         // Give the listener our latest known location and address.
-        if (locationLocal == null) {
-            loadLocation()
+        val location = getLocation()
+        if (location != null) {
+            listener.onLocationChanged(location)
         } else {
-            val location = getLocation()
-            if (location != null) {
-                listener.onLocationChanged(location)
-            }
+            loadLocation()
         }
         startTaskDelay = UPDATE_INTERVAL_START
         sendEmptyMessage(WHAT_START)
@@ -602,32 +606,44 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
      */
     fun setLocation(location: Location?) {
         this.locationLocal = null
-        isManualLocation = location != null
-        preferences.location = null
+        this.locationManual = location
+        this.locationSaved = null
         if (location == null) {
-            sendEmptyMessage(WHAT_START)
+            handler.removeMessages(WHAT_CHANGED)
+            handler.removeMessages(WHAT_START)
+            handler.obtainMessage(WHAT_START, true).sendToTarget()
         } else {
-            onLocationChanged(location)
+            handleLocationChanged(location)
         }
     }
 
-    private fun requestUpdates() {
-        val locationManager = locationManager
-        if (locationManager == null || hasNoLocationPermission(context)) {
+    private fun requestUpdates(reset: Boolean = false) {
+        if (hasNoLocationPermission(context)) {
+            Timber.w("No location permissions")
             return
         }
+        val locationManager = locationManager
+        if (locationManager == null) {
+            Timber.w("No location manager")
+            return
+        }
+        if (reset) {
+            this.locationLocal = null
+            this.locationSaved = null
+        }
+        loadLocation()
         val provider = getBestProvider(locationManager)
         if (provider == null) {
             Timber.w("No location provider")
             return
         }
         try {
-            locationManager.removeUpdates(this)
+            locationManager.removeUpdates(listener)
             locationManager.requestLocationUpdates(
                 provider,
                 UPDATE_TIME,
                 UPDATE_DISTANCE,
-                this,
+                listener,
                 handlerThread.looper
             )
         } catch (e: IllegalArgumentException) {
@@ -640,7 +656,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
 
         // Let the updates run for only a small while to save battery.
         sendEmptyMessageDelayed(WHAT_STOP, UPDATE_DURATION)
-        startTaskDelay = UPDATE_INTERVAL_MAX.coerceAtMost(startTaskDelay shl 1)
+        startTaskDelay = min(UPDATE_INTERVAL_MAX, startTaskDelay shl 1)
     }
 
     private fun getBestProvider(locationManager: LocationManager): String? {
@@ -676,7 +692,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
 
     private fun removeUpdates() {
         try {
-            locationManager?.removeUpdates(this)
+            locationManager?.removeUpdates(listener)
         } catch (e: Exception) {
             Timber.e(e, "remove updates: %s", e.message)
         }
@@ -691,7 +707,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
      * Quit updating locations.
      */
     fun quit() {
-        isManualLocation = false
+        locationManual = null
         listeners.clear()
         removeUpdates()
         context.unregisterReceiver(broadcastReceiver)
@@ -710,8 +726,16 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
             var address: ZmanimAddress? = null
 
             when (msg.what) {
-                WHAT_START -> requestUpdates()
+                WHAT_START -> {
+                    var reset = false
+                    if (msg.obj != null) {
+                        reset = (msg.obj as? Boolean).isTrue
+                    }
+                    requestUpdates(reset)
+                }
+
                 WHAT_STOP -> removeUpdates()
+
                 WHAT_CHANGED -> if (msg.obj != null) {
                     location = msg.obj as Location
                     onLocationChanged(location)
@@ -746,6 +770,9 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     }
 
     fun findElevation(location: Location) {
+        if (location.hasAltitude()) {
+            return
+        }
         val findElevation = Intent(ACTION_ELEVATION)
             .putExtra(EXTRA_LOCATION, location)
         enqueueWork(context, findElevation)
@@ -780,7 +807,6 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
                 return
             }
             val intentPackage = intent.getPackage()
-            var location: Location? = null
             var address: ZmanimAddress? = null
             val intentExtras = intent.extras
             val handler = this@LocationsProvider.handler
@@ -790,7 +816,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
                     if (intentPackage.isNullOrEmpty() || intentPackage != context.packageName) {
                         return
                     }
-                    location = LocationData.from(intentExtras, EXTRA_LOCATION)
+                    val location = LocationData.from(intentExtras, EXTRA_LOCATION)
                     if (intentExtras != null) {
                         address = intentExtras.getAddress(ZmanimLocationListener.EXTRA_ADDRESS)
                     }
@@ -808,7 +834,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
                     if (intentPackage.isNullOrEmpty() || intentPackage != context.packageName) {
                         return
                     }
-                    location = LocationData.from(intentExtras, EXTRA_LOCATION)
+                    val location = LocationData.from(intentExtras, EXTRA_LOCATION)
                     handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget()
                 }
 
@@ -864,7 +890,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         /**
          * The minimum time interval between location updates, in milliseconds.
          */
-        private const val UPDATE_TIME = 10 * DateUtils.SECOND_IN_MILLIS
+        private const val UPDATE_TIME = 2 * DateUtils.SECOND_IN_MILLIS
 
         /**
          * The minimum distance between location updates, in metres.

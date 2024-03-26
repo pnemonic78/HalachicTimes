@@ -42,6 +42,7 @@ import java.io.Closeable
 import java.io.IOException
 import java.util.Collections
 import java.util.Locale
+import kotlin.math.min
 import timber.log.Timber
 
 /**
@@ -98,7 +99,7 @@ class DatabaseGeocoder(
         }
         val q = queryAddresses(filter)
         Collections.sort(q, DistanceComparator(latitude, longitude))
-        val addresses = q.subList(0, maxResults.coerceAtMost(q.size))
+        val addresses = q.subList(0, min(maxResults, q.size))
         return ArrayList<Address>(addresses)
     }
 

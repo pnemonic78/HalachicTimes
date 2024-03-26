@@ -25,6 +25,7 @@ import com.google.maps.model.GeocodingResult
 import java.io.IOException
 import java.io.InputStream
 import java.util.Locale
+import kotlin.math.min
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.decodeFromStream
@@ -75,7 +76,7 @@ internal class GoogleAddressResponseParser : AddressResponseParser() {
         }
         var geocoderResult: GeocodingResult
         var address: Address?
-        val size = responseResults.size.coerceAtMost(maxResults)
+        val size = min(responseResults.size, maxResults)
         for (i in 0 until size) {
             geocoderResult = responseResults[i]
             address = toAddress(geocoderResult, locale)

@@ -35,6 +35,7 @@ import com.github.math.toDegrees
 import com.github.times.compass.lib.databinding.CompassFragmentBinding
 import com.github.times.compass.preference.CompassPreferences
 import com.github.times.compass.preference.SimpleCompassPreferences
+import kotlin.math.min
 
 /**
  * Show a compass.
@@ -261,7 +262,7 @@ open class CompassFragment : Fragment(), SensorEventListener {
         if (output == null) {
             return input
         }
-        val length = input.size.coerceAtMost(output.size)
+        val length = min(input.size, output.size)
         for (i in 0 until length) {
             output[i] += ALPHA * (input[i] - output[i])
         }

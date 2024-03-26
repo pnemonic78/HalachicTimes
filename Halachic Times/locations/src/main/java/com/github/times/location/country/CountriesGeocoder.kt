@@ -34,6 +34,7 @@ import com.github.util.getDefaultLocale
 import java.io.IOException
 import java.util.Locale
 import java.util.TimeZone
+import kotlin.math.min
 
 /**
  * Maintains the lists of countries.
@@ -153,7 +154,7 @@ class CountriesGeocoder @JvmOverloads constructor(
         if (countryIndex < 0) {
             return null
         }
-        countryIndex = countryIndex.coerceAtMost(countryBorders.size - 1)
+        countryIndex = min(countryIndex, countryBorders.lastIndex)
         val borders = countryBorders[countryIndex]
         val locale = Locale(language, borders.countryCode)
         val middle = borders.centre()

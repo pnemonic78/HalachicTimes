@@ -23,6 +23,7 @@ import com.github.times.location.ZmanimAddress
 import java.io.IOException
 import java.io.InputStream
 import java.util.Locale
+import kotlin.math.min
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.decodeFromStream
@@ -86,7 +87,7 @@ class GeoNamesAddressResponseParser : AddressResponseParser() {
             return
         }
         var toponym: Toponym?
-        val size = records.size.coerceAtMost(maxResults)
+        val size = min(records.size, maxResults)
         for (i in 0 until size) {
             toponym = records[i]
             address = toAddress(toponym, locale)
