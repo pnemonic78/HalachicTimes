@@ -128,18 +128,13 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
 
     override fun onStart() {
         super.onStart()
-//        locations.start(this)
         onNewIntent(intent)
-    }
-
-    override fun onStop() {
-        super.onStop()
-//        locations.stop(this)
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         val query = intent.getStringExtra(SearchManager.QUERY)
+        intent.removeExtra(SearchManager.QUERY)
         search(query)
     }
 

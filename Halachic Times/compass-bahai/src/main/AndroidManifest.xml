@@ -26,7 +26,7 @@
 
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.github.times.location.LocationActivity" />
+                android:value="com.github.compass.bahai.LocationActivity" />
         </activity>
         <activity
             android:name="com.github.times.compass.preference.CompassPreferenceActivity"
