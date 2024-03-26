@@ -28,6 +28,12 @@ import androidx.preference.Preference
 import androidx.preference.SwitchPreference
 import com.github.preference.NumberPickerPreference
 import com.github.times.R
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_NOTIFICATION_UPCOMING
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_RINGTONE
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_SETTINGS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_SILENCE
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_STREAM
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_YEAR_FINAL
 import com.github.times.remind.ZmanimReminder.Companion.checkPermissions
 import com.github.util.isLocaleRTL
 
@@ -42,11 +48,11 @@ class GeneralPreferenceFragment : AbstractPreferenceFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
-        findPreference<Preference>(ZmanimPreferences.KEY_YEAR_FINAL)?.apply {
+        findPreference<Preference>(KEY_YEAR_FINAL)?.apply {
             isVisible = context.isLocaleRTL()
         }
         if (Build.VERSION.SDK_INT >= VERSION_CODES.O) {
-            findPreference<Preference>(ZmanimPreferences.KEY_REMINDER_SETTINGS)?.apply {
+            findPreference<Preference>(KEY_REMINDER_SETTINGS)?.apply {
                 isEnabled = true
                 setOnPreferenceClickListener {
                     val context = it.context
@@ -58,7 +64,7 @@ class GeneralPreferenceFragment : AbstractPreferenceFragment() {
             }
         }
         if (Build.VERSION.SDK_INT >= VERSION_CODES.M) {
-            findPreference<SwitchPreference>(ZmanimPreferences.KEY_NOTIFICATION_UPCOMING)?.apply {
+            findPreference<SwitchPreference>(KEY_NOTIFICATION_UPCOMING)?.apply {
                 val preference: SwitchPreference = this
                 setOnPreferenceClickListener {
                     if (preference.isChecked) {
@@ -71,12 +77,12 @@ class GeneralPreferenceFragment : AbstractPreferenceFragment() {
             }
         }
         val ringtonePreference =
-            initRingtone<RingtonePreference>(ZmanimPreferences.KEY_REMINDER_RINGTONE)?.apply {
+            initRingtone<RingtonePreference>(KEY_REMINDER_RINGTONE)?.apply {
                 reminderRingtonePreference = this
                 setRequestPermissionsCode(this@GeneralPreferenceFragment, REQUEST_PERMISSIONS)
             }
 
-        findPreference<ListPreference>(ZmanimPreferences.KEY_REMINDER_STREAM)?.apply {
+        findPreference<ListPreference>(KEY_REMINDER_STREAM)?.apply {
             setOnPreferenceChangeListener { _, newValue: Any? ->
                 val value = newValue?.toString().orEmpty()
                 val audioStreamType =
@@ -90,7 +96,7 @@ class GeneralPreferenceFragment : AbstractPreferenceFragment() {
                 true
             }
         }
-        findPreference<NumberPickerPreference>(ZmanimPreferences.KEY_REMINDER_SILENCE)?.apply {
+        findPreference<NumberPickerPreference>(KEY_REMINDER_SILENCE)?.apply {
             summaryProvider = ReminderSilenceSummaryProvider.instance
         }
         validateIntent("date_time_settings")

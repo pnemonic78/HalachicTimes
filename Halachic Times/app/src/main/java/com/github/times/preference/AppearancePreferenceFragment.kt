@@ -33,6 +33,8 @@ import com.github.app.restart
 import com.github.preference.LocalePreferences
 import com.github.times.BuildConfig
 import com.github.times.R
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_THEME_WIDGET
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_THEME_WIDGET_RATIONALE
 import com.github.util.LocaleUtils.sortByDisplay
 import com.github.util.LocaleUtils.unique
 import java.util.Locale
@@ -53,14 +55,14 @@ class AppearancePreferenceFragment : AbstractPreferenceFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
-        findPreference<ListPreference>(ZmanimPreferences.KEY_THEME_WIDGET)?.apply {
+        findPreference<Preference>(KEY_THEME_WIDGET)?.apply {
             setOnPreferenceClickListener {
                 val context = it.context
                 checkWallpaperPermission(context)
             }
         }
         initLocaleList(LocalePreferences.KEY_LOCALE)
-        findPreference<Preference>(ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE)?.apply {
+        findPreference<Preference>(KEY_THEME_WIDGET_RATIONALE)?.apply {
             setOnPreferenceClickListener {
                 val context = it.context
                 checkWallpaperPermission(context)

@@ -15,7 +15,6 @@
  */
 package com.github.times.appwidget
 
-import android.Manifest
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
@@ -28,7 +27,8 @@ import androidx.preference.Preference
 import com.github.app.PERMISSION_WALLPAPER
 import com.github.times.R
 import com.github.times.preference.AbstractPreferenceFragment
-import com.github.times.preference.ZmanimPreferences
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_THEME_WIDGET
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_THEME_WIDGET_RATIONALE
 import timber.log.Timber
 
 /**
@@ -46,7 +46,7 @@ class ZmanimWidgetPreferenceFragment : AbstractPreferenceFragment() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
-        widgetPreference = findPreference<ListPreference>(ZmanimPreferences.KEY_THEME_WIDGET)?.apply {
+        widgetPreference = findPreference<ListPreference>(KEY_THEME_WIDGET)?.apply {
             onPreferenceClickListener = this@ZmanimWidgetPreferenceFragment
             onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { preference: Preference, _: Any? ->
@@ -54,8 +54,7 @@ class ZmanimWidgetPreferenceFragment : AbstractPreferenceFragment() {
                     true
                 }
         }
-        findPreference<Preference>(ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE)?.onPreferenceClickListener =
-            this
+        findPreference<Preference>(KEY_THEME_WIDGET_RATIONALE)?.onPreferenceClickListener = this
     }
 
     override fun onPreferenceClick(preference: Preference): Boolean {
@@ -65,7 +64,7 @@ class ZmanimWidgetPreferenceFragment : AbstractPreferenceFragment() {
             if (checkWallpaperPermission(context)) {
                 return true
             }
-        } else if (ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE == key) {
+        } else if (KEY_THEME_WIDGET_RATIONALE == key) {
             if (checkWallpaperPermission(context)) {
                 return true
             }

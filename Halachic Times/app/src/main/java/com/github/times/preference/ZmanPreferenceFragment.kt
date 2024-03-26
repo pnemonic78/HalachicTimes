@@ -114,7 +114,8 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
     }
 
     private fun initOpinionPreference(key: String): Preference? {
-        var preference: Preference? = findPreference(key)
+        val preference = findPreference<Preference>(key)
+
         if (preference is ListPreference) {
             val context = preference.context
             preference.setOnPreferenceChangeListener { _: Preference, newValue: Any? ->
@@ -124,12 +125,18 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
             return preference
         }
 
-        preference = initRingtone(key)
-        if (preference != null) {
-            return preference
+        if (preference is NumberPickerPreference) {
+            return initNumber(preference)
         }
 
-        preference = initTime(key)
+        if (preference is RingtonePreference) {
+            return initRingtone(preference)
+        }
+
+        if (preference is TimePreference) {
+            return initTime(preference)
+        }
+
         return preference
     }
 
