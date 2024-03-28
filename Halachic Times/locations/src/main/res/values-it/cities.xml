@@ -62,7 +62,7 @@
         <item>Johannesburg</item>
         <item>Istanbul</item>
         <item>San Pietroburgo</item>
-        <item>Kiev</item>
+        <item>Kyiv</item>
         <item>Durban</item>
         <item>Ashkelon</item>
         <item>Netivot</item>
@@ -72,7 +72,7 @@
         <item>Gan Yavne</item>
         <item>Yavne</item>
         <item>Bat Yam</item>
-        <item>Jaffa</item>
+        <item>Giaffa</item>
         <item>Kiryat Gat</item>
         <item>Holon</item>
         <item>Gedera</item>
@@ -88,16 +88,16 @@
         <item>Bnei Brak</item>
         <item>Ramat HaSharon</item>
         <item>Givat Shmuel</item>
-        <item>Or Giuda</item>
         <item>Kiryat Ono</item>
+        <item>Or Giuda</item>
         <item>Netanya</item>
         <item>Ganei Tikva</item>
         <item>Ra\'anana</item>
         <item>Giud Monosson</item>
-        <item>Petah Tikva</item>
+        <item>Petah Tiqwa</item>
         <item>Even Giuda</item>
         <item>Lod</item>
-        <item>Giud</item>
+        <item>Yehud</item>
         <item>Hod HaSharon</item>
         <item>Hadera</item>
         <item>Kfar Saba</item>
@@ -114,12 +114,12 @@
         <item>Modiin Ilit</item>
         <item>Nesher</item>
         <item>Kiryat Yam</item>
-        <item>San Giovanni d\'Acri</item>
+        <item>Acri</item>
         <item>Kiryat Motzkin</item>
         <item>Kiryat Bialik</item>
         <item>Nahariya</item>
         <item>Kiryat Ata</item>
-        <item>Mevasseret Zion</item>
+        <item>Mevaseret Zion</item>
         <item>Ariel</item>
         <item>Tamra</item>
         <item>Arad</item>
@@ -128,10 +128,11 @@
         <item>Afula</item>
         <item>Nazaret</item>
         <item>Karmiel</item>
-        <item>Safed</item>
-        <item>Beit Shean</item>
+        <item>Safad</item>
+        <item>Beit She\'an</item>
         <item>Tiberiade</item>
-        <item>Kiryat Shemona</item>
+        <item>Kiryat Shmona</item>
+        <item>Katzrin</item>
         <item>Mosca</item>
         <item>Addis Abeba</item>
         <item>Mumbai</item>

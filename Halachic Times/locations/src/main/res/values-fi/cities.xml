@@ -9,7 +9,7 @@
         <item>Seattle</item>
         <item>Los Angeles</item>
         <item>San Diego</item>
-        <item>Feeniks</item>
+        <item>Phoenix</item>
         <item>Las Vegas</item>
         <item>Denver</item>
         <item>México</item>
@@ -88,16 +88,16 @@
         <item>Bnei Brak</item>
         <item>Ramat HaSharon</item>
         <item>Givat Shmuel</item>
-        <item>Or Judah</item>
         <item>Kiryat Ono</item>
+        <item>Or Judah</item>
         <item>Netanya</item>
         <item>Ganei Tikva</item>
         <item>Ra\'anana</item>
         <item>Juud Monosson</item>
         <item>Petah Tikva</item>
-        <item>Even Judah</item>
+        <item>Even Yehuda</item>
         <item>Lod</item>
-        <item>Juud</item>
+        <item>Yehud</item>
         <item>Hod HaSharon</item>
         <item>Hadera</item>
         <item>Kfar Saba</item>
@@ -129,9 +129,10 @@
         <item>Nasaret</item>
         <item>Karmiel</item>
         <item>Safed</item>
-        <item>Beit Shean</item>
+        <item>Beit She\'an</item>
         <item>Tiberias</item>
-        <item>Kiryat Shemona</item>
+        <item>Kirjat Shmona</item>
+        <item>Katzrin</item>
         <item>Moskova</item>
         <item>Addis Abeba</item>
         <item>Mumbai</item>

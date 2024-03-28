@@ -39,7 +39,6 @@ class JewishCities : CompassCities() {
             "et",
             "fi",
             "fr",
-            "he",
             "hu",
             "it",
             "iw",
@@ -68,6 +67,7 @@ class JewishCities : CompassCities() {
             }
             val cities = JewishCities()
             val names = cities.loadNames(File(pathCities), JewishCitiesFilter(), NameCities1000)
+            if (names.isEmpty()) throw NoSuchElementException()
             cities.populateElevations(names)
             cities.populateAlternateNames(File(pathNames), names, NameAlternateNames)
             val googleNames = cities.javaClass.getResourceAsStream(PathGoogleNames)!!

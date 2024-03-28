@@ -25,9 +25,9 @@
         <item>Toronto</item>
         <item>Washington DC</item>
         <item>Baltimore</item>
-        <item>Filadelfia</item>
+        <item>Philadelphia</item>
         <item>Bogotá</item>
-        <item>New Yorgi</item>
+        <item>New York</item>
         <item>Montréal</item>
         <item>Boston</item>
         <item>Buenos Aires</item>
@@ -72,7 +72,7 @@
         <item>Gan Yavne</item>
         <item>Yavne</item>
         <item>Bat Yam</item>
-        <item>Jaffa</item>
+        <item>Yafo</item>
         <item>Kiryat Gat</item>
         <item>Holon</item>
         <item>Gedera</item>
@@ -88,13 +88,13 @@
         <item>Bnei Brak</item>
         <item>Ramat HaSharon</item>
         <item>Givat Shmuel</item>
-        <item>Or Juuda</item>
         <item>Kiryat Ono</item>
+        <item>Or Juuda</item>
         <item>Netanya</item>
         <item>Ganei Tikva</item>
         <item>Ra\'anaana</item>
         <item>Juud Monosson</item>
-        <item>Petah Tikva</item>
+        <item>Petaẖ-Tikva</item>
         <item>Even Juuda</item>
         <item>Lod</item>
         <item>Juud</item>
@@ -117,7 +117,7 @@
         <item>Akko</item>
         <item>Kiryat Motzkin</item>
         <item>Kiryat Bialik</item>
-        <item>Nahariya</item>
+        <item>Nahariyya</item>
         <item>Kiryat Ata</item>
         <item>Mevasseret Zion</item>
         <item>Ariel</item>
@@ -132,6 +132,7 @@
         <item>Bayt Sean</item>
         <item>Teverya</item>
         <item>Kiryat Shemona</item>
+        <item>Katzrin</item>
         <item>Moskva</item>
         <item>Addis Abeba</item>
         <item>Mumbai</item>

@@ -9,7 +9,7 @@
         <item>Seattle</item>
         <item>Los Ángeles</item>
         <item>San Diego</item>
-        <item>Fénix</item>
+        <item>Phoenix</item>
         <item>Las Vegas</item>
         <item>Denver</item>
         <item>Ciudad de México</item>
@@ -62,7 +62,7 @@
         <item>Johannesburgo</item>
         <item>Estambul</item>
         <item>San Petersburgo</item>
-        <item>Kiev</item>
+        <item>Kyiv</item>
         <item>Durban</item>
         <item>Askelon</item>
         <item>Netivot</item>
@@ -72,7 +72,7 @@
         <item>Gan Yavne</item>
         <item>Yavne</item>
         <item>Bat Yam</item>
-        <item>Jaffa</item>
+        <item>Jafa</item>
         <item>Kiryat Gat</item>
         <item>Jolón</item>
         <item>Gedera</item>
@@ -88,16 +88,16 @@
         <item>Bnei Brak</item>
         <item>Ramat Hasharon</item>
         <item>Givat Shmuel</item>
-        <item>Or Judá</item>
         <item>Kiryat Ono</item>
+        <item>Or Judá</item>
         <item>Netanya</item>
         <item>Ganei Tikva</item>
         <item>Ra\'anana</item>
         <item>Jud Monosson</item>
-        <item>Petah Tikva</item>
+        <item>Petaj Tikva</item>
         <item>Even Judá</item>
         <item>Lod</item>
-        <item>Jud</item>
+        <item>Yehud</item>
         <item>Hod HaSharon</item>
         <item>Hadera</item>
         <item>Kfar Saba</item>
@@ -119,7 +119,7 @@
         <item>Kiryat Bialik</item>
         <item>Nahariya</item>
         <item>Kiryat Ata</item>
-        <item>Mevasseret Zion</item>
+        <item>Mevaseret Sion</item>
         <item>Ariel</item>
         <item>Tamra</item>
         <item>Arad</item>
@@ -128,13 +128,14 @@
         <item>Afula</item>
         <item>Nazaret</item>
         <item>Karmiel</item>
-        <item>Sefat</item>
+        <item>Safed</item>
         <item>Beit She\'an</item>
         <item>Tiberíades</item>
         <item>Kiryat Shemona</item>
+        <item>Katzrin</item>
         <item>Moscú</item>
         <item>Adís Abeba</item>
-        <item>Bombay</item>
+        <item>Mumbai</item>
         <item>Delhi</item>
         <item>Perth</item>
         <item>Tokio</item>

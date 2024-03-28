@@ -62,7 +62,7 @@
         <item>Johannesburg</item>
         <item>Istanbul</item>
         <item>Sint-Petersburg</item>
-        <item>Kiev</item>
+        <item>Kyiv</item>
         <item>Durban</item>
         <item>Askelon</item>
         <item>Netivot</item>
@@ -88,16 +88,16 @@
         <item>Bnei Brak</item>
         <item>Ramat Hasjaron</item>
         <item>Givat Shmuel</item>
-        <item>Or Juda</item>
         <item>Kiryat Ono</item>
-        <item>Netanja</item>
+        <item>Or Juda</item>
+        <item>Netanya</item>
         <item>Ganei Tikva</item>
         <item>Ra\'anana</item>
         <item>Jud Monosson</item>
-        <item>Petah Tikva</item>
-        <item>Even Juda</item>
+        <item>Petach Tikwa</item>
+        <item>Even Yehuda</item>
         <item>Lod</item>
-        <item>Jud</item>
+        <item>Yehud</item>
         <item>Hod Hasjaron</item>
         <item>Hadera</item>
         <item>Kefar Sava</item>
@@ -117,9 +117,9 @@
         <item>Akko</item>
         <item>Kirjat Motzkin</item>
         <item>Kirjat Bialik</item>
-        <item>Naharia</item>
+        <item>Nahariya</item>
         <item>Kirjat Ata</item>
-        <item>Mevasseret Zion</item>
+        <item>Mevaseret Zion</item>
         <item>Ariel</item>
         <item>Tamra</item>
         <item>Arad</item>
@@ -129,9 +129,10 @@
         <item>Nazareth</item>
         <item>Karmiel</item>
         <item>Safed</item>
-        <item>Bejt Shean</item>
+        <item>Beet She\'an</item>
         <item>Tiberias</item>
-        <item>Kirjat Shemona</item>
+        <item>Kirjat Sjmona</item>
+        <item>Katzrin</item>
         <item>Moskou</item>
         <item>Addis Abeba</item>
         <item>Bombay</item>

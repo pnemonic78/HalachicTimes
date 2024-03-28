@@ -5,7 +5,7 @@
         <item>Anchorage</item>
         <item>Vancouver</item>
         <item>Portland</item>
-        <item>San Francisco</item>
+        <item>Сан Франциско</item>
         <item>Seattle</item>
         <item>Los Angeles</item>
         <item>San Diego</item>
@@ -27,7 +27,7 @@
         <item>Baltimore</item>
         <item>Filadelfia</item>
         <item>Bogotá</item>
-        <item>New York</item>
+        <item>Нью-Йорк</item>
         <item>Montreal</item>
         <item>Boston</item>
         <item>Buenos Aires</item>
@@ -62,7 +62,7 @@
         <item>Johannesburg</item>
         <item>Istambul</item>
         <item>Sankt Petersburg</item>
-        <item>Kiev</item>
+        <item>Kyiv</item>
         <item>Durban</item>
         <item>Așkelon</item>
         <item>Netivot</item>
@@ -88,8 +88,8 @@
         <item>Bnei Brak</item>
         <item>Ramat HaSharon</item>
         <item>Givat Shmuel</item>
-        <item>Or Iuda</item>
         <item>Kiryat Ono</item>
+        <item>Or Iuda</item>
         <item>Netania</item>
         <item>Ganei Tikva</item>
         <item>Raanana</item>
@@ -119,7 +119,7 @@
         <item>Kiryat Bialik</item>
         <item>Nahariia</item>
         <item>Kiryat Ata</item>
-        <item>Mevasseret Zion</item>
+        <item>Mevaseret Zion</item>
         <item>Ariel</item>
         <item>Tamra</item>
         <item>Arad</item>
@@ -129,9 +129,10 @@
         <item>Nazaret</item>
         <item>Karmiel</item>
         <item>Safed</item>
-        <item>Beit Shean</item>
+        <item>Beit Șe\'an</item>
         <item>Tiberius</item>
-        <item>Kiryat Shemona</item>
+        <item>Kiriat Șmona</item>
+        <item>Kațrin</item>
         <item>Moscova</item>
         <item>Addis Abeba</item>
         <item>Mumbay</item>

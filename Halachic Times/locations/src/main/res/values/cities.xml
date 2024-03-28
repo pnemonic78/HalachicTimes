@@ -61,7 +61,7 @@
         <item>Helsinki</item>
         <item>Johannesburg</item>
         <item>Istanbul</item>
-        <item>St Petersburg</item>
+        <item>St.-Petersburg</item>
         <item>Kyiv</item>
         <item>Durban</item>
         <item>Ashqelon</item>
@@ -88,8 +88,8 @@
         <item>Bnei Brak</item>
         <item>Ramat HaSharon</item>
         <item>Giv‘at Shmuel</item>
-        <item>Or Yehuda</item>
         <item>Kiryat Ono</item>
+        <item>Or Yehuda</item>
         <item>Netanya</item>
         <item>Ganei Tikva</item>
         <item>Raanana</item>
@@ -132,6 +132,7 @@
         <item>Bet Shean</item>
         <item>Tiberias</item>
         <item>Kiryat Shmona</item>
+        <item>Qatzrin</item>
         <item>Moscow</item>
         <item>Addis Ababa</item>
         <item>Mumbai</item>
@@ -273,6 +274,7 @@
         <item>IL</item>
         <item>IL</item>
         <item>IL</item>
+        <item>IL</item>
         <item>RU</item>
         <item>ET</item>
         <item>IN</item>
@@ -298,30 +300,30 @@
         <item>3278306</item>
         <item>2976328</item>
         <item>3862727</item>
-        <item>4185002</item>
+        <item>4185003</item>
         <item>3374900</item>
         <item>4233143</item>
-        <item>4149949</item>
+        <item>4149950</item>
         <item>2577427</item>
         <item>4044062</item>
-        <item>4370011</item>
+        <item>4370643</item>
         <item>3889511</item>
         <item>3929038</item>
-        <item>3995233</item>
+        <item>3995238</item>
         <item>460971</item>
         <item>4071427</item>
         <item>4550884</item>
         <item>4235843</item>
-        <item>-3461314</item>
+        <item>-3461315</item>
         <item>-2354750</item>
-        <item>-2290412</item>
+        <item>-2290413</item>
         <item>3871667</item>
         <item>3358831</item>
         <item>5459682</item>
         <item>4041650</item>
         <item>5348095</item>
         <item>5150853</item>
-        <item>4886573</item>
+        <item>4886574</item>
         <item>5121996</item>
         <item>4574846</item>
         <item>5237403</item>
@@ -329,22 +331,22 @@
         <item>4620222</item>
         <item>4694809</item>
         <item>4736667</item>
-        <item>5991194</item>
+        <item>5991195</item>
         <item>4813743</item>
         <item>4189193</item>
         <item>5567594</item>
         <item>5252437</item>
-        <item>4821086</item>
-        <item>5933258</item>
+        <item>4821087</item>
+        <item>5932938</item>
         <item>4384864</item>
         <item>-3392584</item>
         <item>4749835</item>
         <item>5222977</item>
         <item>6016952</item>
         <item>-2620227</item>
-        <item>4101280</item>
+        <item>4101281</item>
         <item>5993863</item>
-        <item>5044630</item>
+        <item>5044631</item>
         <item>-2985790</item>
         <item>3166926</item>
         <item>3142305</item>
@@ -362,27 +364,27 @@
         <item>3197102</item>
         <item>3125181</item>
         <item>3192933</item>
-        <item>3202429</item>
+        <item>3202430</item>
         <item>3208227</item>
         <item>3189421</item>
-        <item>3207224</item>
-        <item>3216626</item>
+        <item>3207225</item>
+        <item>3216627</item>
         <item>3208074</item>
         <item>3214613</item>
         <item>3207817</item>
+        <item>3206124</item>
         <item>3202923</item>
-        <item>3205503</item>
         <item>3233291</item>
         <item>3205971</item>
         <item>3218360</item>
         <item>3202840</item>
-        <item>3208706</item>
+        <item>3208707</item>
         <item>3226959</item>
         <item>3194670</item>
         <item>3203317</item>
         <item>3215934</item>
         <item>3244192</item>
-        <item>3217499</item>
+        <item>3217500</item>
         <item>3231669</item>
         <item>3199866</item>
         <item>2955805</item>
@@ -394,7 +396,7 @@
         <item>3189385</item>
         <item>3107079</item>
         <item>3193221</item>
-        <item>3276621</item>
+        <item>3276622</item>
         <item>3284966</item>
         <item>3292814</item>
         <item>3283706</item>
@@ -402,8 +404,8 @@
         <item>3300892</item>
         <item>3281149</item>
         <item>3180186</item>
-        <item>3210649</item>
-        <item>3285300</item>
+        <item>3210650</item>
+        <item>3285301</item>
         <item>3125882</item>
         <item>3176904</item>
         <item>3267597</item>
@@ -412,8 +414,9 @@
         <item>3291708</item>
         <item>3296465</item>
         <item>3249728</item>
-        <item>3279220</item>
+        <item>3279221</item>
         <item>3320733</item>
+        <item>3299194</item>
         <item>5575222</item>
         <item>903506</item>
         <item>1907283</item>
@@ -421,13 +424,13 @@
         <item>-3195224</item>
         <item>3568950</item>
         <item>-3781400</item>
-        <item>-3386784</item>
-        <item>-3684852</item>
+        <item>-3386785</item>
+        <item>-3684853</item>
     </integer-array>
     <integer-array name="cities_longitudes" translatable="false">
         <item>-14990028</item>
         <item>-12311934</item>
-        <item>-12281465</item>
+        <item>-12281466</item>
         <item>-12241942</item>
         <item>-12233207</item>
         <item>-11824368</item>
@@ -443,40 +446,40 @@
         <item>-8438798</item>
         <item>-8304575</item>
         <item>-8169541</item>
-        <item>-8019365</item>
+        <item>-8019366</item>
         <item>-7999589</item>
-        <item>-7941630</item>
+        <item>-7939864</item>
         <item>-7703637</item>
         <item>-7661219</item>
-        <item>-7516379</item>
+        <item>-7516362</item>
         <item>-7408175</item>
         <item>-7400597</item>
         <item>-7358781</item>
         <item>-7105977</item>
         <item>-5837723</item>
         <item>-4663611</item>
-        <item>-4357345</item>
+        <item>-4357346</item>
         <item>-913333</item>
         <item>-761138</item>
         <item>-592541</item>
         <item>-370256</item>
-        <item>-223742</item>
-        <item>-12573</item>
-        <item>233821</item>
-        <item>438618</item>
+        <item>-223743</item>
+        <item>-12574</item>
+        <item>233822</item>
+        <item>438619</item>
         <item>484671</item>
         <item>488969</item>
         <item>538107</item>
         <item>614569</item>
         <item>744744</item>
         <item>855000</item>
-        <item>1073139</item>
+        <item>1073140</item>
         <item>1157549</item>
         <item>1251133</item>
         <item>1256553</item>
         <item>1341053</item>
-        <item>1635505</item>
-        <item>1806490</item>
+        <item>1635506</item>
+        <item>1806871</item>
         <item>1835644</item>
         <item>1842322</item>
         <item>1904045</item>
@@ -487,34 +490,34 @@
         <item>3031413</item>
         <item>3051808</item>
         <item>3102920</item>
-        <item>3457148</item>
+        <item>3457149</item>
         <item>3458911</item>
         <item>3459693</item>
         <item>3462025</item>
-        <item>3464965</item>
+        <item>3464966</item>
         <item>3470659</item>
         <item>3473983</item>
-        <item>3475184</item>
+        <item>3475185</item>
         <item>3475224</item>
         <item>3476422</item>
-        <item>3477917</item>
+        <item>3477918</item>
         <item>3477998</item>
-        <item>3478056</item>
-        <item>3478938</item>
+        <item>3478057</item>
+        <item>3478939</item>
         <item>3479130</item>
-        <item>3479867</item>
+        <item>3479868</item>
         <item>3480632</item>
         <item>3481065</item>
         <item>3481199</item>
         <item>3481253</item>
         <item>3482536</item>
-        <item>3483379</item>
+        <item>3483380</item>
         <item>3483940</item>
         <item>3484858</item>
-        <item>3485788</item>
+        <item>3485618</item>
         <item>3485788</item>
         <item>3485992</item>
-        <item>3487319</item>
+        <item>3487320</item>
         <item>3487386</item>
         <item>3487960</item>
         <item>3488747</item>
@@ -529,7 +532,7 @@
         <item>3494821</item>
         <item>3495023</item>
         <item>3495664</item>
-        <item>3497182</item>
+        <item>3497183</item>
         <item>3498850</item>
         <item>3499293</item>
         <item>3501504</item>
@@ -538,12 +541,12 @@
         <item>3504425</item>
         <item>3506973</item>
         <item>3507647</item>
-        <item>3507759</item>
+        <item>3507760</item>
         <item>3508583</item>
         <item>3509814</item>
         <item>3511323</item>
         <item>3515072</item>
-        <item>3518448</item>
+        <item>3518449</item>
         <item>3519870</item>
         <item>3521282</item>
         <item>3521633</item>
@@ -552,13 +555,14 @@
         <item>3529722</item>
         <item>3530501</item>
         <item>3549600</item>
-        <item>3549631</item>
-        <item>3553123</item>
+        <item>3549632</item>
+        <item>3553124</item>
         <item>3557212</item>
+        <item>3569139</item>
         <item>3761556</item>
         <item>3874867</item>
         <item>7288261</item>
-        <item>7723148</item>
+        <item>7723149</item>
         <item>11586140</item>
         <item>13969171</item>
         <item>14496332</item>
@@ -586,7 +590,7 @@
         <item>199</item>
         <item>2</item>
         <item>233</item>
-        <item>175</item>
+        <item>161</item>
         <item>7</item>
         <item>10</item>
         <item>12</item>
@@ -596,7 +600,7 @@
         <item>14</item>
         <item>31</item>
         <item>769</item>
-        <item>6</item>
+        <item>12</item>
         <item>45</item>
         <item>27</item>
         <item>7</item>
@@ -604,7 +608,7 @@
         <item>51</item>
         <item>25</item>
         <item>42</item>
-        <item>10</item>
+        <item>13</item>
         <item>173</item>
         <item>13</item>
         <item>28</item>
@@ -617,10 +621,10 @@
         <item>14</item>
         <item>74</item>
         <item>171</item>
-        <item>28</item>
+        <item>17</item>
         <item>509</item>
         <item>25</item>
-        <item>75</item>
+        <item>104</item>
         <item>113</item>
         <item>26</item>
         <item>1767</item>
@@ -652,8 +656,8 @@
         <item>51</item>
         <item>68</item>
         <item>53</item>
+        <item>69</item>
         <item>33</item>
-        <item>0</item>
         <item>38</item>
         <item>79</item>
         <item>49</item>
@@ -690,12 +694,13 @@
         <item>786</item>
         <item>227</item>
         <item>62</item>
-        <item>358</item>
+        <item>333</item>
         <item>233</item>
         <item>779</item>
         <item>-121</item>
         <item>-140</item>
         <item>124</item>
+        <item>325</item>
         <item>144</item>
         <item>2405</item>
         <item>8</item>
@@ -767,8 +772,9 @@
         <item>Africa/Johannesburg</item>
         <item>Europe/Istanbul</item>
         <item>Europe/Moscow</item>
-        <item>Europe/Kiev</item>
+        <item>Europe/Kyiv</item>
         <item>Africa/Johannesburg</item>
+        <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>

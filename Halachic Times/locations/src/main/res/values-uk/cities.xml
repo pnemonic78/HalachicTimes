@@ -23,7 +23,7 @@
         <item>Маямі</item>
         <item>Піттсбург</item>
         <item>Торонто</item>
-        <item>Вашингтон, ДК</item>
+        <item>Вашингтон</item>
         <item>Балтимор</item>
         <item>Філадельфія</item>
         <item>Богота</item>
@@ -85,16 +85,16 @@
         <item>Реховот</item>
         <item>Гиватайім</item>
         <item>Герцлія</item>
-        <item>Бней Брак</item>
+        <item>Бней-Брак</item>
         <item>Рамат А\'Шарон</item>
         <item>Гіват Шмуель</item>
-        <item>Ор Єгуда</item>
         <item>Кірят Оно</item>
+        <item>Ор Єгуда</item>
         <item>Нетанья</item>
         <item>Ганей Тиква</item>
         <item>Раанана</item>
         <item>Єгуд Моносон</item>
-        <item>Петах Тиква</item>
+        <item>Петах-Тіква</item>
         <item>Еван Єгуда</item>
         <item>Лод</item>
         <item>Єгуд</item>
@@ -119,7 +119,7 @@
         <item>Кірят Бялик</item>
         <item>Нагарія</item>
         <item>Кірят Ата</item>
-        <item>Мевасерет Ціон</item>
+        <item>Мевасерет-Ціон</item>
         <item>Аріель</item>
         <item>Тамра</item>
         <item>Арад</item>
@@ -129,9 +129,10 @@
         <item>Назарет</item>
         <item>Кармієль</item>
         <item>Цфат</item>
-        <item>Бейт Шеан</item>
+        <item>Бейт-Шеан</item>
         <item>Тверія</item>
-        <item>Кірят Шемона</item>
+        <item>Кір\'ят-Шмона</item>
+        <item>Кацрін</item>
         <item>Москва</item>
         <item>Аддис-Абеба</item>
         <item>Мумбаї</item>

@@ -184,7 +184,7 @@ class JewishCitiesFilter : ToponymFilter {
             293844,  // Qiryat Bialik, Israel
             293842,  // Qiryat Gat, Israel
             293831,  // Qiryat Mozqin, Israel
-            11049562,  // Qiryat Ono, Israel
+            12031840,  // Qiryat Ono, Israel
             293825,  // Qiryat Shemona, Israel
             293822,  // Qiryat Yam, Israel
             293807,  // Raanana, Israel

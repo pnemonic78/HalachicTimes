@@ -28,7 +28,7 @@ class GeoNamesToponym : GeoNamesRecord() {
         val languageCode = toLanguageCode(language)
         val names = alternateNames
             ?.filter { it.language == languageCode }
-            ?.sortedBy { it.alternateNameId }
+            ?.sortedByDescending { it.alternateNameId }
             ?: return name
         val prefer =
             names.firstOrNull() { it.isPreferred && !it.isShort && !it.isColloquial && !it.isHistoric }

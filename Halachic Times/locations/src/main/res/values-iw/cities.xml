@@ -76,7 +76,7 @@
         <item>קריית גת</item>
         <item>חולון</item>
         <item>גדרה</item>
-        <item>תל אביב</item>
+        <item>תל אביב-יפו</item>
         <item>ראשון לציון</item>
         <item>באר שבע</item>
         <item>נס ציונה</item>
@@ -88,8 +88,8 @@
         <item>בני ברק</item>
         <item>רמת השרון</item>
         <item>גבעת שמואל</item>
+        <item>קרית אונו</item>
         <item>אור יהודה</item>
-        <item>קריית אונו</item>
         <item>נתניה</item>
         <item>גני תקווה</item>
         <item>רעננה</item>
@@ -102,7 +102,7 @@
         <item>חדרה</item>
         <item>כפר סבא</item>
         <item>כפר יונה</item>
-        <item>שהם</item>
+        <item>שוהם</item>
         <item>אילת</item>
         <item>א טירה</item>
         <item>ראש העין</item>
@@ -132,6 +132,7 @@
         <item>בית שאן</item>
         <item>טבריה</item>
         <item>קריית שמונה</item>
+        <item>קצרין</item>
         <item>מוסקבה</item>
         <item>אדיס אבבה</item>
         <item>מומבאי</item>

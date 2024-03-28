@@ -62,7 +62,7 @@
         <item>Johannesburg</item>
         <item>Istanbul</item>
         <item>St. Petersburg</item>
-        <item>Kiev</item>
+        <item>Kyiv</item>
         <item>Durban</item>
         <item>Askalon</item>
         <item>Netivot</item>
@@ -88,8 +88,8 @@
         <item>Bnei Brak</item>
         <item>Ramat HaSharon</item>
         <item>Givat Shmuel</item>
-        <item>Or Juda</item>
         <item>Kiryat Ono</item>
+        <item>Or Juda</item>
         <item>Netanya</item>
         <item>Ganei Tikva</item>
         <item>Ra\'anana</item>
@@ -132,6 +132,7 @@
         <item>Bet Sean</item>
         <item>Tiberias</item>
         <item>Kiryat Shemona</item>
+        <item>Katzrin</item>
         <item>Moskva</item>
         <item>Addis Abeba</item>
         <item>Mumbai</item>

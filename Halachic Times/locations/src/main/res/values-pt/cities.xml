@@ -42,7 +42,7 @@
         <item>Paris</item>
         <item>Antuérpia</item>
         <item>Lyon</item>
-        <item>Amesterdão</item>
+        <item>Amsterdã</item>
         <item>Marselha</item>
         <item>Genebra</item>
         <item>Berna</item>
@@ -62,7 +62,7 @@
         <item>Johannesburgo</item>
         <item>Istambul</item>
         <item>São Petersburgo</item>
-        <item>Kiev</item>
+        <item>Kyiv</item>
         <item>Durban</item>
         <item>Askelon</item>
         <item>Netivot</item>
@@ -85,11 +85,11 @@
         <item>Rehovot</item>
         <item>Givatayim</item>
         <item>Herzliya</item>
-        <item>Bnei Brak</item>
+        <item>Bene Beraq</item>
         <item>Ramat Hasharon</item>
         <item>Givat Shmuel</item>
-        <item>Or Judá</item>
         <item>Kiryat Ono</item>
+        <item>Or Judá</item>
         <item>Netanya</item>
         <item>Ganei Tikva</item>
         <item>Ra\'anana</item>
@@ -119,19 +119,20 @@
         <item>Kiryat Bialik</item>
         <item>Nahariya</item>
         <item>Kiryat Ata</item>
-        <item>Mevasseret Sião</item>
+        <item>Mevaseret Zion</item>
         <item>Ariel</item>
         <item>Tamra</item>
         <item>Arad</item>
         <item>Jerusalém</item>
-        <item>Migdal HaEmek</item>
+        <item>Migdal HaEmeq</item>
         <item>Afula</item>
         <item>Nazaré</item>
         <item>Karmiel</item>
         <item>Safed</item>
-        <item>Bete-Seã</item>
+        <item>Beit She\'an</item>
         <item>Tiberíades</item>
-        <item>Kiryat Shemona</item>
+        <item>Qiryat-Chemoná</item>
+        <item>Katzrin</item>
         <item>Moscovo</item>
         <item>Adis Abeba</item>
         <item>Mumbai</item>

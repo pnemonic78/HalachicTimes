@@ -13,7 +13,7 @@ const val NameCities1000 = "cities1000.txt"
 /** https://download.geonames.org/export/dump/countryInfo.txt */
 const val PathCountryInfo = "${PathFolder}/countryInfo.txt"
 
-const val PathGoogleNames = "/googleNames.txt"
+const val PathGoogleNames = "/googleNames.csv"
 
 /** https://download.geonames.org/export/dump/shapes_all_low.zip */
 const val PathShapesLow = "${PathFolder}/shapes_all_low.zip"

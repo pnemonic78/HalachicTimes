@@ -26,7 +26,7 @@
         <item>Washington</item>
         <item>Baltimore</item>
         <item>Philadelphia</item>
-        <item>Bogotá</item>
+        <item>Bogota</item>
         <item>New York City</item>
         <item>Montreal</item>
         <item>Boston</item>
@@ -78,26 +78,26 @@
         <item>Gedera</item>
         <item>Tel Aviv</item>
         <item>Rischon LeZion</item>
-        <item>Be’er Scheva</item>
+        <item>Biʾr as-Sabʿ</item>
         <item>Nes Ziona</item>
         <item>Azor</item>
         <item>Ramat Gan</item>
         <item>Rechovot</item>
         <item>Givatajim</item>
         <item>Herzlia</item>
-        <item>Bnei Brak</item>
+        <item>Bnei Berak</item>
         <item>Ramat haScharon</item>
         <item>Givat Schmuel</item>
-        <item>Or Jehuda</item>
         <item>Kirjat Ono</item>
+        <item>Or Jehuda</item>
         <item>Netanja</item>
         <item>Ganei Tikva</item>
         <item>Ra\'anana</item>
         <item>Jud Monosson</item>
-        <item>Petah Tikwa</item>
-        <item>Even Yehuda</item>
+        <item>Petach Tikwa</item>
+        <item>Ewen Jehuda</item>
         <item>Lod</item>
-        <item>Jud</item>
+        <item>Jehud</item>
         <item>Hod haScharon</item>
         <item>Chadera</item>
         <item>Kfar Saba</item>
@@ -119,12 +119,12 @@
         <item>Kirjat Bialik</item>
         <item>Naharija</item>
         <item>Kirjat Ata</item>
-        <item>Mevasseret Zion</item>
+        <item>Mewasseret Zion</item>
         <item>Ariel</item>
         <item>Tamra</item>
         <item>Arad</item>
         <item>Jerusalem</item>
-        <item>Migdal HaEmek</item>
+        <item>Migdal haEmek</item>
         <item>Afula</item>
         <item>Nazaret</item>
         <item>Karmiel</item>
@@ -132,6 +132,7 @@
         <item>Bet Sche’an</item>
         <item>Tiberias</item>
         <item>Kirjat Schmona</item>
+        <item>Katzrin</item>
         <item>Moskau</item>
         <item>Addis Abeba</item>
         <item>Mumbai</item>

@@ -62,7 +62,7 @@
         <item>Johannesburg</item>
         <item>Istanbul</item>
         <item>Sankt Petersburg</item>
-        <item>Kiev</item>
+        <item>Kyiv</item>
         <item>Durban</item>
         <item>Ashkelon</item>
         <item>Netivot</item>
@@ -71,7 +71,7 @@
         <item>Ashdod</item>
         <item>Gan Javne</item>
         <item>Javne</item>
-        <item>Bat Jam</item>
+        <item>Bat Yam</item>
         <item>Jaffa</item>
         <item>Kiryat Gat</item>
         <item>Holon</item>
@@ -88,16 +88,16 @@
         <item>Bnei Brak</item>
         <item>Ramat HaSharon</item>
         <item>Givat Shmuel</item>
-        <item>Or Judah</item>
         <item>Kiryat Ono</item>
+        <item>Or Judah</item>
         <item>Netanya</item>
         <item>Ganei Tikva</item>
         <item>Ra\'anana</item>
         <item>Jud Monosson</item>
-        <item>Petah Tikwa</item>
-        <item>Even Judah</item>
+        <item>Petaẖ Tiqwa</item>
+        <item>Even Yehuda</item>
         <item>Lod</item>
-        <item>Jud</item>
+        <item>Yehud</item>
         <item>Hod HaSharon</item>
         <item>Hadera</item>
         <item>Kfar Saba</item>
@@ -119,19 +119,20 @@
         <item>Kiryat Bialik</item>
         <item>Nahariya</item>
         <item>Kiryat Ata</item>
-        <item>Mevasseret Zion</item>
+        <item>Mevasseret Ẕiyyon</item>
         <item>Ariel</item>
         <item>Tamra</item>
         <item>Arad</item>
         <item>Jerusalem</item>
-        <item>Migdal HaEmek</item>
-        <item>Afula</item>
+        <item>Migdal Ha‘Emeq</item>
+        <item>‘Afula</item>
         <item>Nasaret</item>
         <item>Karmiel</item>
-        <item>Sefat</item>
-        <item>Beit Shean</item>
+        <item>Safed</item>
+        <item>Bet She\'an</item>
         <item>Tiberias</item>
-        <item>Kiryat Shemona</item>
+        <item>Qiryat Shemona</item>
+        <item>Katzrin</item>
         <item>Moskva</item>
         <item>Addis Abeba</item>
         <item>Mumbai</item>
