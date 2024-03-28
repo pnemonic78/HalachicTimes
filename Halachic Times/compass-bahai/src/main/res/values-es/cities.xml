@@ -5,19 +5,21 @@
         <item>Apia</item>
         <item>Anchorage</item>
         <item>Vancouver</item>
+        <item>Los Ángeles</item>
         <item>Ciudad de México</item>
         <item>Ciudad de Guatemala</item>
         <item>San Salvador</item>
         <item>Wilmette</item>
         <item>Tegucigalpa</item>
         <item>Managua</item>
-        <item>San José</item>
+        <item>Pizote</item>
         <item>Panamá</item>
         <item>Toronto</item>
         <item>Quito</item>
         <item>Lima</item>
         <item>Kingston</item>
         <item>Bogotá</item>
+        <item>Nueva York</item>
         <item>Puerto Príncipe</item>
         <item>Eliot</item>
         <item>Santiago de Chile</item>
@@ -54,6 +56,7 @@
         <item>Bratislava</item>
         <item>Estocolmo</item>
         <item>Sarajevo</item>
+        <item>El Cabo</item>
         <item>Budapest</item>
         <item>Bengasi</item>
         <item>Varsovia</item>
@@ -62,15 +65,18 @@
         <item>Johannesburgo</item>
         <item>Estambul</item>
         <item>Kigali</item>
-        <item>Kiev</item>
+        <item>Kyiv</item>
         <item>El Cairo</item>
         <item>Kampala</item>
         <item>Lilongüe</item>
+        <item>Tel Aviv</item>
         <item>Haifa</item>
         <item>Acre</item>
+        <item>Jerusalén</item>
         <item>Dodoma</item>
         <item>Nairobi</item>
         <item>Moscú</item>
+        <item>Adís Abeba</item>
         <item>Bagdad</item>
         <item>Ereván</item>
         <item>Antananarivo</item>
@@ -78,7 +84,7 @@
         <item>Teherán</item>
         <item>Karachi</item>
         <item>Kabul</item>
-        <item>Bombay</item>
+        <item>Mumbai</item>
         <item>Delhi</item>
         <item>Rangún</item>
         <item>Ciudad de Battambang</item>

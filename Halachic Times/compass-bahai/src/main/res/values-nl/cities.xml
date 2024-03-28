@@ -5,6 +5,7 @@
         <item>Apia</item>
         <item>Anchorage</item>
         <item>Vancouver</item>
+        <item>Los Angeles</item>
         <item>Mexico-stad</item>
         <item>Guatemala-stad</item>
         <item>San Salvador</item>
@@ -18,6 +19,7 @@
         <item>Lima</item>
         <item>Kingston</item>
         <item>Bogota</item>
+        <item>New York City</item>
         <item>Port-au-Prince</item>
         <item>Eliot</item>
         <item>Santiago</item>
@@ -54,6 +56,7 @@
         <item>Bratislava</item>
         <item>Stockholm</item>
         <item>Sarajevo</item>
+        <item>Kaapstad</item>
         <item>Boedapest</item>
         <item>Benghazi</item>
         <item>Warschau</item>
@@ -62,15 +65,18 @@
         <item>Johannesburg</item>
         <item>Istanbul</item>
         <item>Kigali</item>
-        <item>Kiev</item>
+        <item>Kyiv</item>
         <item>Caïro</item>
         <item>Kampala</item>
         <item>Lilongwe</item>
+        <item>Tel Aviv</item>
         <item>Haifa</item>
         <item>Akko</item>
+        <item>Jeruzalem</item>
         <item>Dodoma</item>
         <item>Nairobi</item>
         <item>Moskou</item>
+        <item>Addis Abeba</item>
         <item>Bagdad</item>
         <item>Jerevan</item>
         <item>Antananarivo</item>

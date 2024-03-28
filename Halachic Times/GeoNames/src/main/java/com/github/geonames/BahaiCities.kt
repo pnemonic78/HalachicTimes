@@ -77,6 +77,7 @@ class BahaiCities : CompassCities() {
             }
             val cities = BahaiCities()
             val names = cities.loadNames(File(pathCities), BahaiCitiesFilter(), NameCities1000)
+            if (names.isEmpty()) throw NoSuchElementException()
             cities.populateElevations(names)
             cities.populateAlternateNames(File(pathNames), names, NameAlternateNames)
             val googleNames = cities.javaClass.getResourceAsStream(PathGoogleNames)!!

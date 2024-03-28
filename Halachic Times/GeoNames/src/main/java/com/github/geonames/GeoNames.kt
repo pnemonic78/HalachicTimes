@@ -244,7 +244,7 @@ class GeoNames {
          * URL that returns the attribute of the geoNames feature with the given geoNameId as JSON document.
          */
         private const val URL_GEONAME_GET =
-            "http://api.geonames.org/getJSON?geoNameId=%d&username=%s"
+            "http://api.geonames.org/getJSON?geonameId=%d&username=%s"
 
         /**
          * abbreviation
