@@ -66,7 +66,8 @@ open class HolyCompassFragment : CompassFragment() {
     }
 
     override fun setAzimuth(azimuth: Float) {
-        _binding?.compass?.setAzimuth(azimuth)
+        val binding = _binding ?: return
+        binding.compass.setAzimuth(azimuth)
         maybeVibrate(azimuth)
     }
 

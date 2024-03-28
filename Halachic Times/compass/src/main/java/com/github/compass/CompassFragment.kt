@@ -19,7 +19,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.github.compass.databinding.CompassBearingFragmentBinding
+import com.github.compass.databinding.CompassBearingBinding
 import com.github.times.location.LocationApplication
 import com.github.times.location.LocationFormatter
 
@@ -30,7 +30,7 @@ import com.github.times.location.LocationFormatter
  */
 class CompassFragment : com.github.times.compass.CompassFragment() {
 
-    private var _binding: CompassBearingFragmentBinding? = null
+    private var _binding: CompassBearingBinding? = null
     private lateinit var formatter: LocationFormatter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +44,7 @@ class CompassFragment : com.github.times.compass.CompassFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = CompassBearingFragmentBinding.inflate(inflater, container, false)
+        val binding = CompassBearingBinding.inflate(inflater, container, false)
         _binding = binding
         return binding.root
     }
