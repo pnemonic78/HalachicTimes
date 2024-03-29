@@ -44,7 +44,7 @@ fun join(c0: Array<Coordinate>, c1: Array<Coordinate>): Array<Coordinate> {
 
     // 2. Delete their edge (line segment).
     // 3. Insert the points with their nearest neighbours.
-    val c = mutableListOf<Coordinate>()
+    val c = ArrayList<Coordinate>(l0 + l1)
     for (i in 0..minDistIndexC0) {
         c.add(c0[i])
     }

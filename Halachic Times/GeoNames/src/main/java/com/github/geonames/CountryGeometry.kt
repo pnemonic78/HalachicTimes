@@ -11,7 +11,6 @@ import kotlin.math.PI
 import kotlin.math.atan2
 
 class CountryGeometry(
-    val geometry: Geometry,
     val path: Polygon,
     val boundary: Polygon,
     val centroid: Point,
@@ -26,18 +25,15 @@ class CountryGeometry(
         pathVertices = setVertices(vertices)
     }
 
-    constructor(geometry: Geometry, factor: Double = FACTOR_TO_INT) : this(
-        geometry = geometry * factor,
-        path = geometry.toPolygon(factor),
-        boundary = geometry.boundary.toPolygon(factor),
-        centroid = (geometry.centroid.toPoint2D() * factor).toPoint(),
+    constructor(geometry: Geometry) : this(
+        path = geometry.toPolygon(),
+        boundary = geometry.boundary.toPolygon(),
+        centroid = (geometry.centroid.toPoint2D()).toPoint(),
         area = geometry.area
     )
 
     fun scale(scaleX: Double, scaleY: Double): CountryGeometry {
-        val v = pathVertices
         return CountryGeometry(
-            geometry = geometry * scaleX,
             path = Polygon(
                 path.xpoints * scaleX,
                 path.ypoints * scaleY,
@@ -132,7 +128,8 @@ class CountryGeometry(
                 }
             }
         }
-        return indexes
+
+        return indexes.filter { it >= 0 }.toIntArray()
     }
 
     private fun setVertices(vertices: IntArray): Polygon {
@@ -147,13 +144,6 @@ class CountryGeometry(
         return p
     }
 
-    fun add(other: CountryGeometry): CountryGeometry {
-        val geo0 = this.geometry
-        val geo1 = other.geometry
-        val both = geo0.union( geo1)
-        return CountryGeometry(both, 1.0)
-    }
-
     companion object {
         /** Factor to convert coordinate value to a fixed-point integer.  */
         internal const val FACTOR_TO_INT = 1e+5
@@ -166,5 +156,14 @@ class CountryGeometry(
          * limits.
          */
         private const val CITY_BOUNDARY = 1e+4
+
+        fun scale(geometry: Geometry, factor: Double) = CountryGeometry(
+            path = geometry.toPolygon(factor),
+            boundary = geometry.boundary.toPolygon(factor),
+            centroid = (geometry.centroid.toPoint2D() * factor).toPoint(),
+            area = geometry.area * factor
+        )
+
+        fun toFixedInt(geometry: Geometry) = scale(geometry, FACTOR_TO_INT)
     }
 }

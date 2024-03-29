@@ -39,14 +39,14 @@ class CountryRegion(countryCode: String, geometry: Geometry) {
 
     init {
         val num = geometry.numGeometries
-        val geometries = mutableListOf<CountryGeometry>()
+        val geometriesCloses = mutableListOf<Geometry>()
         for (n in 0 until num) {
-            val geometryN = geometry.getGeometryN(n)
-            val countryGeometry = CountryGeometry(geometryN.close())
-            geometries.add(countryGeometry)
+            val geometryN = geometry.getGeometryN(n).close()
+            geometriesCloses.add(geometryN)
         }
-        this.geometries = merge(geometries)
-        this.maxAreaIndex = findMaxArea(this.geometries)
+        val geometries = merge(geometriesCloses).map { CountryGeometry.toFixedInt(it) }
+        this.geometries = geometries
+        this.maxAreaIndex = findMaxArea(geometries)
     }
 
     private fun findMaxArea(geometries: List<CountryGeometry>): Int {
@@ -65,9 +65,14 @@ class CountryRegion(countryCode: String, geometry: Geometry) {
     }
 
     /** Merge neighbouring geometries. */
-    private fun merge(geometries: List<CountryGeometry>): List<CountryGeometry> {
+    private fun merge(
+        geometries: List<Geometry>,
+        distanceNeighbour: Double = DISTANCE_NEIGHBOUR
+    ): List<Geometry> {
+        if (geometries.size <= 1) return geometries
+
         val merged = mutableListOf<Geometry?>()
-        merged.addAll(geometries.sortedByDescending { it.area }.map { it.geometry })
+        merged.addAll(geometries.sortedByDescending { it.area })
         val lastIndex = merged.lastIndex
 
         for (i in 0..lastIndex) {
@@ -77,7 +82,7 @@ class CountryRegion(countryCode: String, geometry: Geometry) {
                 val geoJ = merged[j] ?: continue
                 val envelopeJ = geoJ.envelope
                 try {
-                    if (envelopeI.distance(envelopeJ) <= DISTANCE_NEIGHBOUR) {
+                    if (envelopeI.distance(envelopeJ) <= distanceNeighbour) {
                         geoI = geoI.join(geoJ)
                         merged[i] = geoI
                         merged[j] = null
@@ -89,14 +94,14 @@ class CountryRegion(countryCode: String, geometry: Geometry) {
         }
 
         return merged.filterNotNull()
-            .map { CountryGeometry(it.convexHull(), 1.0) }
+            .map { it.convexHull() }
     }
 
     companion object {
         /** Factor to convert coordinate value to a fixed-point integer.  */
         internal const val FACTOR_TO_INT = CountryGeometry.FACTOR_TO_INT
 
-        private const val DISTANCE_NEIGHBOUR = 5 * FACTOR_TO_INT
+        private const val DISTANCE_NEIGHBOUR = 5.0
 
         @JvmStatic
         @Throws(IOException::class)

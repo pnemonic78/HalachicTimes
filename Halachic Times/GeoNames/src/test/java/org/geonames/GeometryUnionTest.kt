@@ -83,13 +83,16 @@ class GeometryUnionTest {
         assertNotNull(u)
         val c = u.coordinates
         assertNotNull(c)
-        assertEquals(6, c.size)
+        assertEquals(9, c.size)
         assertEquals(c[0], r0_c0)
         assertEquals(c[1], r0_c1)
-        assertEquals(c[2], r1_c2)
-        assertEquals(c[3], r1_c3)
-        assertEquals(c[4], r0_c3)
-        assertEquals(c[5], r0_c0)
+        assertEquals(c[2], r0_c2)
+        assertEquals(c[3], r1_c1)
+        assertEquals(c[4], r1_c2)
+        assertEquals(c[5], r1_c3)
+        assertEquals(c[6], r1_c0)
+        assertEquals(c[7], r0_c3)
+        assertEquals(c[8], r0_c0)
     }
 
     @Test
@@ -114,13 +117,15 @@ class GeometryUnionTest {
         assertNotNull(u)
         val c = u.coordinates
         assertNotNull(c)
-        assertEquals(7, c.size)
+        assertEquals(9, c.size)
         assertEquals(c[0], r0_c0)
         assertEquals(c[1], r0_c1)
-        assertEquals(c[2], r0_c2)
+        assertEquals(c[2], r1_c1)
         assertEquals(c[3], r1_c2)
         assertEquals(c[4], r1_c3)
-        assertEquals(c[5], r0_c3)
-        assertEquals(c[6], r0_c0)
+        assertEquals(c[5], r1_c0)
+        assertEquals(c[6], r0_c2)
+        assertEquals(c[7], r0_c3)
+        assertEquals(c[8], r0_c0)
     }
 }

@@ -15,6 +15,7 @@
  */
 package com.github.geonames.ui
 
+import com.github.awt.applyAlpha
 import com.github.geonames.Countries
 import com.github.geonames.CountryGeometry
 import com.github.geonames.CountryGeometry.Companion.VERTICES_COUNT
@@ -159,7 +160,7 @@ class CountryCanvas() : JComponent() {
         var y2: Int
         val r = CANVAS_SIZE
 
-        g.color = Color.cyan
+        g.color = Color.cyan.applyAlpha(0.25f)
         for (v in 0 until VERTICES_COUNT) {
             x2 = cx + (r * cos(angleStart)).toInt()
             y2 = cy + (r * sin(angleStart)).toInt()
@@ -178,7 +179,7 @@ class CountryCanvas() : JComponent() {
         val cx = countryGeometry.centroid.x
         val cy = countryGeometry.centroid.y
 
-//        paintRays(g, cx, cy)
+        paintRays(g, cx, cy)
         paintCentroid(g, cx, cy)
         paintBoundary(g, boundary, index)
         paintEnvelope(g, countryGeometry.envelope)
