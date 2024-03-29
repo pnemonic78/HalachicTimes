@@ -15,10 +15,9 @@
  */
 package com.github.times.location
 
-import android.content.Context
 import android.location.Address
 import android.location.Location
-import androidx.test.core.app.ApplicationProvider
+import com.github.BaseTests
 import com.github.times.location.bing.BingGeocoder
 import com.github.times.location.bing.BingResponse
 import com.github.times.location.country.CountriesGeocoder
@@ -33,16 +32,12 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class GeocoderTestCase {
+class GeocoderTestCase : BaseTests() {
     /**
      * Test Google address geocoder.
-     *
-     * @throws Exception if an error occurs.
      */
     @Test
-    @Throws(Exception::class)
     fun testGoogleAddress() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = GoogleGeocoder(locale)
@@ -125,13 +120,9 @@ class GeocoderTestCase {
 
     /**
      * Test Google elevation geocoder.
-     *
-     * @throws Exception if an error occurs.
      */
     @Test
-    @Throws(Exception::class)
     fun testGoogleElevation() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = GoogleGeocoder(locale)
@@ -157,13 +148,9 @@ class GeocoderTestCase {
 
     /**
      * Test GeoNames address geocoder.
-     *
-     * @throws Exception if an error occurs.
      */
     @Test
-    @Throws(Exception::class)
     fun testGeoNamesAddress() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = GeoNamesGeocoder(locale)
@@ -224,13 +211,9 @@ class GeocoderTestCase {
 
     /**
      * Test GeoNames elevation geocoder.
-     *
-     * @throws Exception if an error occurs.
      */
     @Test
-    @Throws(Exception::class)
     fun testGeoNamesElevation() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = GeoNamesGeocoder(locale)
@@ -253,11 +236,8 @@ class GeocoderTestCase {
 
     /**
      * Test Bing POJO response class.
-     *
-     * @throws Exception if an error occurs.
      */
     @Test
-    @Throws(Exception::class)
     fun testBingResponseClass() {
         val classResponse = BingResponse::class
         assertFalse(classResponse.isAbstract)
@@ -267,13 +247,9 @@ class GeocoderTestCase {
 
     /**
      * Test Bing address geocoder.
-     *
-     * @throws Exception if an error occurs.
      */
     @Test
-    @Throws(Exception::class)
     fun testBingAddress() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = BingGeocoder(locale)
@@ -319,13 +295,9 @@ class GeocoderTestCase {
 
     /**
      * Test Bing elevation geocoder.
-     *
-     * @throws Exception if an error occurs.
      */
     @Test
-    @Throws(Exception::class)
     fun testBingElevation() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = BingGeocoder(locale)
@@ -351,7 +323,6 @@ class GeocoderTestCase {
      */
     @Test
     fun testInternalGeocoderAddress() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val maxResults = 5
 
@@ -437,14 +408,10 @@ class GeocoderTestCase {
     }
 
     /**
-     * Test countries geocoder.
-     *
-     * @throws Exception if an error occurs.
+     * Test countries geocoder - Jerusalem, Israel.
      */
     @Test
-    @Throws(Exception::class)
-    fun testCountries() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
+    fun testCountries_Holiest() {
         assertNotNull(context)
         val geocoder = CountriesGeocoder(context)
 
@@ -454,14 +421,36 @@ class GeocoderTestCase {
     }
 
     /**
-     * Test cities geocoder.
-     *
-     * @throws Exception if an error occurs.
+     * Test countries geocoder - Delhi, India.
      */
     @Test
-    @Throws(Exception::class)
+    fun testCountries_Delhi() {
+        assertNotNull(context)
+        val geocoder = CountriesGeocoder(context)
+
+        val country = geocoder.findCountry(28.65195, 77.23149)
+        assertNotNull(country)
+        assertEquals("IN", country!!.countryCode)
+    }
+
+    /**
+     * Test countries geocoder - SanJose, USA.
+     */
+    @Test
+    fun testCountries_SanJose() {
+        assertNotNull(context)
+        val geocoder = CountriesGeocoder(context)
+
+        val country = geocoder.findCountry(37.38754, -122.06)
+        assertNotNull(country)
+        assertEquals("US", country!!.countryCode)
+    }
+
+    /**
+     * Test cities geocoder.
+     */
+    @Test
     fun testCities() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val geocoder = CountriesGeocoder(context)
 

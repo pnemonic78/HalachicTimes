@@ -69,7 +69,32 @@ class CountryCanvas() : JComponent() {
                 )
             }
 
+            "CN" -> {
+                ratioX *= 1.5
+                ratioY *= 1.5
+                // Delhi.
+                specific = Point(
+                    (toFixedPoint(77.23149) * ratioX).toInt(),
+                    (toFixedPoint(28.65195) * ratioY).toInt()
+                )
+            }
+
             "IL" -> {
+                ratioX *= 15
+                ratioY *= 15
+            }
+
+            "IN" -> {
+                ratioX *= 2
+                ratioY *= 2
+                // Delhi.
+                specific = Point(
+                    (toFixedPoint(77.23149) * ratioX).toInt(),
+                    (toFixedPoint(28.65195) * ratioY).toInt()
+                )
+            }
+
+            "JO" -> {
                 ratioX *= 15
                 ratioY *= 15
             }

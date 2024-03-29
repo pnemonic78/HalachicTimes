@@ -17,6 +17,7 @@ package com.github.times.location.country
 
 import android.graphics.Point
 import android.graphics.PointF
+import com.github.geom.Line2D
 import kotlin.math.abs
 import kotlin.math.hypot
 import kotlin.math.max
@@ -96,7 +97,10 @@ class CountryPolygon @JvmOverloads constructor(
 
     /**
      * Tests if the specified coordinates are inside the borders of the country.
-     * Uses the ray casting algorithm.
+     * 1. Given the point `p`.
+     * 2. Find the closest point `q` to `p`.
+     * 3. Measure distances to centroid.
+     * 4. If `p` closer, then contains is true.
      *
      * @param latitude  the latitude to be tested.
      * @param longitude the longitude to be tested.
@@ -104,25 +108,38 @@ class CountryPolygon @JvmOverloads constructor(
      * boundary; `false` otherwise.
      */
     fun contains(latitude: Int, longitude: Int): Boolean {
-        var oddNodes = false
-        var latI: Int
-        var lngI: Int
-        var latJ: Int
-        var lngJ: Int
+        if (latitude < latitudeMin) return false
+        if (latitude > latitudeMax) return false
+        if (longitude < longitudeMin) return false
+        if (longitude > longitudeMax) return false
+        return inside(longitude, latitude)
+    }
+
+    /**
+     * Is the point inside a convex hull?
+     * Does the lines segment p-centroid intersect any path line segments?
+     */
+    private fun inside(px: Int, py: Int): Boolean {
+        val npoints = this.npoints
+        val xpoints = this.longitudes
+        val ypoints = this.latitudes
+        val centre = centre()
+
         var j = npoints - 1
         for (i in 0 until npoints) {
-            latI = latitudes[i]
-            lngI = longitudes[i]
-            latJ = latitudes[j]
-            lngJ = longitudes[j]
-            if ((latitude in (latI + 1)..latJ || latitude in (latJ + 1)..latI) && (lngI <= longitude || lngJ <= longitude)) {
-                if (lngI + (((latitude - latI) * (lngJ - lngI)) / (latJ - latI)) < longitude) {
-                    oddNodes = !oddNodes
-                }
+            if (Line2D.linesIntersect(
+                    px, py,
+                    centre.x, centre.y,
+                    xpoints[j], ypoints[j],
+                    xpoints[i], ypoints[i]
+                )
+            ) {
+                return false
             }
             j = i
         }
-        return oddNodes
+
+        return true
     }
 
     /**
@@ -180,12 +197,12 @@ class CountryPolygon @JvmOverloads constructor(
         var d: Double
         for (i in 0 until npoints) {
             d = pointToLineDistance(
-                latitudes[i].toDouble(),
-                longitudes[i].toDouble(),
-                latitudes[j].toDouble(),
                 longitudes[j].toDouble(),
-                latitude.toDouble(),
-                longitude.toDouble()
+                latitudes[j].toDouble(),
+                longitudes[i].toDouble(),
+                latitudes[i].toDouble(),
+                longitude.toDouble(),
+                latitude.toDouble()
             )
             if (d < minimum) minimum = d
             j = i
@@ -211,7 +228,7 @@ class CountryPolygon @JvmOverloads constructor(
     fun centre(): Point {
         val latitude = (latitudeMin + latitudeMax) / 2
         val longitude = (longitudeMin + longitudeMax) / 2
-        return Point(latitude, longitude)
+        return Point(longitude, latitude)
     }
 
     companion object {
@@ -291,7 +308,7 @@ class CountryPolygon @JvmOverloads constructor(
             val dxAB = bx - ax
             val dyAB = by - ay
             val normalLength = hypot(dxAB, dyAB)
-            return abs((px - ax) * dyAB - (py - ay) * dxAB) / normalLength
+            return abs(((px - ax) * dyAB) - ((py - ay) * dxAB)) / normalLength
         }
 
         fun toFixedPoint(degrees: Double): Double {

@@ -43,6 +43,11 @@ class RegionComparator : Comparator<CountryRegion> {
     }
 
     private fun compareGeometry(g1: CountryGeometry, g2: CountryGeometry): Int {
+        val area1 = g1.area
+        val area2 = g2.area
+        val areaC = area1.compareTo(area2)
+        if (areaC != 0) return areaC
+
         val npoints1 = g1.boundary.npoints
         val npoints2 = g2.boundary.npoints
         val npointsC = npoints1.compareTo(npoints2)

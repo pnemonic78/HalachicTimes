@@ -159,8 +159,8 @@ class CountriesGeocoder @JvmOverloads constructor(
         val locale = Locale(language, borders.countryCode)
         val middle = borders.centre()
         return Country(locale).apply {
-            this.latitude = fromFixedPoint(middle.x)
-            this.longitude = fromFixedPoint(middle.y)
+            this.latitude = fromFixedPoint(middle.y)
+            this.longitude = fromFixedPoint(middle.x)
             this.countryCode = locale.country
             this.countryName = locale.getDisplayCountry(locale)
             this.id = generateCountryId(this)
@@ -229,7 +229,7 @@ class CountriesGeocoder @JvmOverloads constructor(
 
             // Case 2: Country rectangle intersects another country's rectangle.
             if (found < 0) {
-                // Only include countries foe which the location is actually
+                // Only include countries for which the location is actually
                 // inside the defined borders.
                 for (m in 0 until matchesCount) {
                     matchCountryIndex = matches[m]

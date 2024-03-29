@@ -15,9 +15,8 @@
  */
 package com.github.times.location
 
-import android.content.Context
 import android.location.Location
-import androidx.test.core.app.ApplicationProvider
+import com.github.BaseTests
 import java.util.TimeZone
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -26,10 +25,10 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class LocationsTestCase {
+class LocationsTestCase : BaseTests() {
     private val application: LocationApplication<*, *, *>
         get() {
-            val applicationContext = ApplicationProvider.getApplicationContext<Context>()
+            val applicationContext = context
             assertNotNull(applicationContext)
             assertTrue(applicationContext is LocationApplication<*, *, *>)
             return applicationContext as LocationApplication<*, *, *>
@@ -40,7 +39,6 @@ class LocationsTestCase {
      */
     @Test
     fun testApp() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         assertEquals("com.github.times.location.test", context.packageName)
         val app = application
@@ -260,7 +258,6 @@ class LocationsTestCase {
 
     @Test
     fun testParseLatitudeDecimal() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         SimpleLocationPreferences.init(context)
         val formatter: LocationFormatter =
             SimpleLocationFormatter(context, LocationPreferences.Values.FORMAT_DECIMAL!!, true)
@@ -283,7 +280,6 @@ class LocationsTestCase {
 
     @Test
     fun testParseLongitudeDecimal() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         SimpleLocationPreferences.init(context)
         val formatter: LocationFormatter =
             SimpleLocationFormatter(context, LocationPreferences.Values.FORMAT_DECIMAL!!, true)
@@ -306,7 +302,6 @@ class LocationsTestCase {
 
     @Test
     fun testParseLatitudeSexagecimal() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         SimpleLocationPreferences.init(context)
         val formatter: LocationFormatter =
             SimpleLocationFormatter(context, LocationPreferences.Values.FORMAT_SEXAGESIMAL!!, true)
@@ -344,7 +339,6 @@ class LocationsTestCase {
 
     @Test
     fun testParseLongitudeSexagecimal() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         SimpleLocationPreferences.init(context)
         val formatter: LocationFormatter =
             SimpleLocationFormatter(context, LocationPreferences.Values.FORMAT_SEXAGESIMAL!!, true)

@@ -60,9 +60,13 @@ class CountryGeometry(
      * @param vertexCount the number of vertices.
      * @return an array of indexes.
      */
-    fun findMainVertices(boundary: Polygon, centroid: Point2D, vertexCount: Int): IntArray {
-        val indexes = IntArray(vertexCount) { -1 }
+    private fun findMainVertices(boundary: Polygon, centroid: Point2D, vertexCount: Int): IntArray {
         val n = boundary.npoints
+        if (n <= vertexCount) {
+            return IntArray(n) { it }
+        }
+
+        val indexes = IntArray(vertexCount) { -1 }
         val xpoints = boundary.xpoints.toDoubleArray()
         val ypoints = boundary.ypoints.toDoubleArray()
         val cx = centroid.x
@@ -149,7 +153,7 @@ class CountryGeometry(
         internal const val FACTOR_TO_INT = 1e+5
 
         /** The number of main vertices per region border.  */
-        const val VERTICES_COUNT = 16
+        internal const val VERTICES_COUNT = 16
 
         /**
          * Factor to convert coordinate value to a fixed-point integer for city

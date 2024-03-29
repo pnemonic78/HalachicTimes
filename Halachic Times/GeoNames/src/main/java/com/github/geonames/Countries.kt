@@ -15,7 +15,6 @@
  */
 package com.github.geonames
 
-import com.github.geonames.CountryGeometry.Companion.VERTICES_COUNT
 import com.github.geonames.CountryRegion.Companion.toRegion
 import com.github.geonames.dump.NameShapesLow
 import com.github.geonames.dump.PathCountryInfo
@@ -88,32 +87,30 @@ class Countries : Cities() {
         var pointCount: Int
 
         for (region in sorted) {
-            val mainIndex = region.maxAreaIndex
-            val mainGeometry = region.geometries[mainIndex]
-            pointIndexes = mainGeometry.vertices
+            for (geo in region.geometries) {
+                pointIndexes = geo.vertices
 
-            country = doc.createElement(ANDROID_ELEMENT_ITEM)
-            country.textContent = region.countryCode
-            countriesElement.appendChild(country)
+                country = doc.createElement(ANDROID_ELEMENT_ITEM)
+                country.textContent = region.countryCode
+                countriesElement.appendChild(country)
 
-            pointCount = 0
-            for (i in 0 until VERTICES_COUNT) {
-                pointIndex = pointIndexes[i]
-                if (pointIndex < 0) continue
+                pointCount = pointIndexes.size
+                verticesCount = doc.createElement(ANDROID_ELEMENT_ITEM)
+                verticesCount.textContent = pointCount.toString()
+                verticesCountElement.appendChild(verticesCount)
 
-                latitude = doc.createElement(ANDROID_ELEMENT_ITEM)
-                latitude.textContent = mainGeometry.boundary.ypoints[pointIndex].toString()
-                latitudesElement.appendChild(latitude)
+                for (i in 0 until pointCount) {
+                    pointIndex = pointIndexes[i]
 
-                longitude = doc.createElement(ANDROID_ELEMENT_ITEM)
-                longitude.textContent = mainGeometry.boundary.xpoints[pointIndex].toString()
-                longitudesElement.appendChild(longitude)
+                    latitude = doc.createElement(ANDROID_ELEMENT_ITEM)
+                    latitude.textContent = geo.boundary.ypoints[pointIndex].toString()
+                    latitudesElement.appendChild(latitude)
 
-                pointCount++
+                    longitude = doc.createElement(ANDROID_ELEMENT_ITEM)
+                    longitude.textContent = geo.boundary.xpoints[pointIndex].toString()
+                    longitudesElement.appendChild(longitude)
+                }
             }
-            verticesCount = doc.createElement(ANDROID_ELEMENT_ITEM)
-            verticesCount.textContent = pointCount.toString()
-            verticesCountElement.appendChild(verticesCount)
         }
 
         val file = File(modulePath, "values/countries.xml")

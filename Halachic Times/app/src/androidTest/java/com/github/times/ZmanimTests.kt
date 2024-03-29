@@ -1,7 +1,6 @@
 package com.github.times
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
+import com.github.BaseTests
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
 import java.util.Calendar
@@ -11,10 +10,9 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 
-class ZmanimTests {
+class ZmanimTests : BaseTests() {
     @Test
     fun molad2019() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val preferences: ZmanimPreferences = SimpleZmanimPreferences(context)
         assertNotNull(preferences)
@@ -45,7 +43,6 @@ class ZmanimTests {
         hour: Int,
         minute: Int
     ) {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val settings: ZmanimPreferences = SimpleZmanimPreferences(context)
         assertNotNull(settings)
@@ -72,11 +69,11 @@ class ZmanimTests {
 
     @Test
     fun kosherCalendar() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val preferences: ZmanimPreferences = SimpleZmanimPreferences(context)
         assertNotNull(preferences)
-        val populater: ZmanimPopulater<*> = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences)
+        val populater: ZmanimPopulater<*> =
+            ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences)
         assertNotNull(populater)
         val complexZmanimCalendar = populater.calendar
         assertNotNull(complexZmanimCalendar)

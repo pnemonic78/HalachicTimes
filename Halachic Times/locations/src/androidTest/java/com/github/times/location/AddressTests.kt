@@ -17,26 +17,24 @@ package com.github.times.location
 
 import android.app.job.JobService
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.text.format.DateUtils
-import androidx.test.core.app.ApplicationProvider
+import com.github.BaseTests
 import java.util.concurrent.TimeUnit
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 
-class AddressTests {
+class AddressTests : BaseTests() {
     /**
      * Test job service.
      * [com.android.server.job.JobSchedulerService.JobSchedulerStub.enforceValidJobRequest]
      */
     @Test
     fun testEnforceValidJobRequest() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val clazz: Class<*> = AddressService::class.java
         val service = ComponentName(context, clazz)
@@ -55,7 +53,6 @@ class AddressTests {
      */
     @Test
     fun testLocationChanged() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         assertNotNull(context)
         val ms =
             4 * DateUtils.DAY_IN_MILLIS + 11 * DateUtils.MINUTE_IN_MILLIS + 57 * DateUtils.SECOND_IN_MILLIS + 6 //+4d0h11m57s6ms
