@@ -15,8 +15,8 @@
  */
 package org.geonames
 
-import com.github.geonames.util.LocaleUtils.ISO639_ISRAEL
-import com.github.geonames.util.LocaleUtils.ISO639_PALESTINE
+import com.github.util.LocaleUtils.ISO3166_ISRAEL
+import com.github.util.LocaleUtils.ISO3166_PALESTINE
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -52,8 +52,8 @@ open class Toponym {
     @SerialName("countryCode")
     var countryCode: String? = null
         set(value) {
-            field = if (ISO639_PALESTINE == value) {
-                ISO639_ISRAEL
+            field = if (ISO3166_PALESTINE == value) {
+                ISO3166_ISRAEL
             } else {
                 value
             }

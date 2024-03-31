@@ -48,16 +48,4 @@ class LocationComparator : Comparator<GeoNamesToponym> {
         val id2 = geo2.geoNameId
         return id1.compareTo(id2)
     }
-
-    companion object {
-        /**
-         * ISO 639 code for Norwegian Bokmål.
-         */
-        const val ISO_639_NB = "nb"
-
-        /**
-         * ISO 639 code for Norwegian.
-         */
-        const val ISO_639_NO = "no"
-    }
 }

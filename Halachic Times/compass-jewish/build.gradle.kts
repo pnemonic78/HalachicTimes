@@ -28,7 +28,6 @@ android {
             "et",
             "fi",
             "fr",
-            "he",
             "hu",
             "it",
             "iw",

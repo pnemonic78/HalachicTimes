@@ -50,7 +50,6 @@ class BahaiCities : CompassCities() {
             "hi",
             "hu",
             "it",
-            "iw",
             "lt",
             "nb",
             "no",

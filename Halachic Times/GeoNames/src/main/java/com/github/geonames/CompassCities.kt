@@ -1,6 +1,12 @@
 package com.github.geonames
 
 import com.github.geonames.CountryRegion.Companion.toFixedPointInt
+import com.github.util.LocaleUtils.ISO639_HEBREW
+import com.github.util.LocaleUtils.ISO639_HEBREW_JAVA
+import com.github.util.LocaleUtils.ISO639_NB
+import com.github.util.LocaleUtils.ISO639_NO
+import com.github.util.LocaleUtils.ISO639_YIDDISH
+import com.github.util.LocaleUtils.ISO639_YIDDISH_JAVA
 import java.io.File
 import java.util.Locale
 import javax.xml.parsers.DocumentBuilderFactory
@@ -29,6 +35,7 @@ abstract class CompassCities : Cities() {
         TransformerException::class
     )
     override fun writeAndroidXML(names: Collection<GeoNamesToponym>, language: String?) {
+        val languageCode = getLanguageCode(language)
         val builderFactory = DocumentBuilderFactory.newInstance()
         val builder = builderFactory.newDocumentBuilder()
         val doc = builder.newDocument()
@@ -44,27 +51,27 @@ abstract class CompassCities : Cities() {
         val countriesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY)
         countriesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_countries")
         countriesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false")
-        if (language == null) resources.appendChild(countriesElement)
+        if (languageCode == null) resources.appendChild(countriesElement)
 
         val latitudesElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY)
         latitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_latitudes")
         latitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false")
-        if (language == null) resources.appendChild(latitudesElement)
+        if (languageCode == null) resources.appendChild(latitudesElement)
 
         val longitudesElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY)
         longitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_longitudes")
         longitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false")
-        if (language == null) resources.appendChild(longitudesElement)
+        if (languageCode == null) resources.appendChild(longitudesElement)
 
         val elevationsElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY)
         elevationsElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_elevations")
         elevationsElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false")
-        if (language == null) resources.appendChild(elevationsElement)
+        if (languageCode == null) resources.appendChild(elevationsElement)
 
         val zonesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY)
         zonesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_time_zones")
         zonesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false")
-        if (language == null) resources.appendChild(zonesElement)
+        if (languageCode == null) resources.appendChild(zonesElement)
 
         val places = names.sortedWith(LocationComparator())
         var city: Element
@@ -105,10 +112,11 @@ abstract class CompassCities : Cities() {
             zone.textContent = place.timeZone!!.id
             zonesElement.appendChild(zone)
         }
-        val file: File = if (language == null)
+        val file: File = if (languageCode == null)
             File(modulePath, "values/cities.xml")
-        else
-            File(modulePath, "values-$language/cities.xml")
+        else {
+            File(modulePath, "values-${languageCode}/cities.xml")
+        }
         file.parentFile.mkdirs()
         val src: Source = DOMSource(doc)
         val result: Result = StreamResult(file)
@@ -124,13 +132,15 @@ abstract class CompassCities : Cities() {
     }
 
     protected open fun getLanguageCode(language: String?): String? {
-        if (language == null) {
+        if (language.isNullOrEmpty()) {
             return null
         }
-        var language2 = Locale(language).language
-        if (LocationComparator.ISO_639_NB == language2) {
-            language2 = LocationComparator.ISO_639_NO
+        val language2 = Locale(language).language
+        return when (language2) {
+            ISO639_HEBREW -> ISO639_HEBREW_JAVA
+            ISO639_YIDDISH -> ISO639_YIDDISH_JAVA
+            ISO639_NB -> ISO639_NO
+            else -> language2
         }
-        return language2
     }
 }

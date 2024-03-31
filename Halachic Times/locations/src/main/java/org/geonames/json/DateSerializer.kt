@@ -12,6 +12,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+@OptIn(ExperimentalSerializationApi::class)
 open class DateSerializer(private val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)) : KSerializer<Date?> {
     init {
         formatter.timeZone = TimeZone.getTimeZone("UTC")
@@ -19,7 +20,6 @@ open class DateSerializer(private val formatter: DateFormat = SimpleDateFormat("
 
     override val descriptor = PrimitiveSerialDescriptor("Date", PrimitiveKind.STRING)
 
-    @OptIn(ExperimentalSerializationApi::class)
     override fun deserialize(decoder: Decoder): Date? {
         if (decoder.decodeNotNullMark()) {
             val value = decoder.decodeString()
@@ -28,7 +28,6 @@ open class DateSerializer(private val formatter: DateFormat = SimpleDateFormat("
         return decoder.decodeNull()
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     override fun serialize(encoder: Encoder, value: Date?) {
         if (value == null) {
             encoder.encodeNull()

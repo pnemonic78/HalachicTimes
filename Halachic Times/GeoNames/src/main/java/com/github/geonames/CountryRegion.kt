@@ -15,8 +15,8 @@
  */
 package com.github.geonames
 
-import com.github.geonames.util.LocaleUtils.ISO639_ISRAEL
-import com.github.geonames.util.LocaleUtils.ISO639_PALESTINE
+import com.github.util.LocaleUtils.ISO3166_ISRAEL
+import com.github.util.LocaleUtils.ISO3166_PALESTINE
 import com.vividsolutions.jts.geom.Geometry
 import java.io.IOException
 import kotlin.math.round
@@ -28,8 +28,8 @@ import org.geotools.geojson.geom.GeometryJSON
  * @author Moshe Waisberg
  */
 class CountryRegion(countryCode: String, geometry: Geometry) {
-    val countryCode: String = if (ISO639_PALESTINE == countryCode) {
-        ISO639_ISRAEL
+    val countryCode: String = if (ISO3166_PALESTINE == countryCode) {
+        ISO3166_ISRAEL
     } else {
         countryCode
     }

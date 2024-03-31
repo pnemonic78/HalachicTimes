@@ -15,7 +15,7 @@
  */
 package com.github.geonames
 
-import com.github.geonames.util.LocaleUtils.toLanguageCode
+import com.github.util.LocaleUtils.toLanguageCode
 
 /**
  * GeoNames toponym POJO.

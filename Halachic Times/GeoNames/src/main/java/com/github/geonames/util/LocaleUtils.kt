@@ -15,31 +15,12 @@
  */
 package com.github.geonames.util
 
-import com.github.lang.RegexMinus
-import java.util.Locale
-
 /**
  * Locale utilities.
  *
  * @author Moshe Waisberg
  */
 object LocaleUtils {
-    /** ISO 639 country code for Israel.  */
-    const val ISO639_ISRAEL = "IL"
-
-    /** ISO 639 country code for Palestine.  */
-    const val ISO639_PALESTINE = "PS"
-
-    @JvmStatic
-    fun toLanguageCode(language: String?): String {
-        if (language.isNullOrEmpty()) return Locale.ENGLISH.language
-        val tokens = language.split(RegexMinus).dropLastWhile { it.isEmpty() }
-        val s1 = tokens[0]
-        val s2 = if (tokens.size > 1) tokens[1] else ""
-        val locale = Locale(s1, s2)
-        return locale.language
-    }
-
     @JvmStatic
     fun getISOLanguage(languageCode: String): String {
         if (languageCode.length >= 3) {
@@ -68,8 +49,8 @@ object LocaleUtils {
         }
         return languageCode
     }
-}
 
-fun String.toLanguageCode(): String {
-    return LocaleUtils.toLanguageCode(this)
+    fun applyAndroid() {
+        System.setProperty("java.locale.useOldISOCodes", "true")
+    }
 }

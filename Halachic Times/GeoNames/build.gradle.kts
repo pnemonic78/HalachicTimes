@@ -25,6 +25,9 @@ application {
     sourceSets {
         main {
             resources.srcDir("res")
+            kotlin {
+                srcDir("../android-lib/kotlin/src/main/kotlin")
+            }
         }
     }
 
@@ -39,9 +42,6 @@ tasks.jar {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
-    // Kotlin
-//FIXME    implementation(project(":android-lib:kotlin"))
 
     // JSON
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
