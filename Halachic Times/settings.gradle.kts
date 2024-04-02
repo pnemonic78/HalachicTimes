@@ -1,5 +1,6 @@
 rootProject.name = "Halachic Times"
 include(":android-lib:kotlin")
+include(":android-lib:kvm")
 include(":android-lib:lib")
 include(":app")
 include(":common")
