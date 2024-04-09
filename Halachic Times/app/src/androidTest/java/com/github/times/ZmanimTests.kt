@@ -3,6 +3,11 @@ package com.github.times
 import com.github.BaseTests
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
+import com.github.util.dayOfMonth
+import com.github.util.hour
+import com.github.util.minute
+import com.github.util.month
+import com.github.util.year
 import java.util.Calendar
 import java.util.TimeZone
 import org.junit.Assert.assertEquals
@@ -60,11 +65,11 @@ class ZmanimTests : BaseTests() {
         val molad = Calendar.getInstance(cal.timeZone)
         assertNotNull(molad)
         molad.timeInMillis = item!!.time
-        assertEquals(year, molad[Calendar.YEAR])
-        assertEquals(month, molad[Calendar.MONTH])
-        assertEquals(day, molad[Calendar.DAY_OF_MONTH])
-        assertEquals(hour, molad[Calendar.HOUR_OF_DAY])
-        assertEquals(minute, molad[Calendar.MINUTE])
+        assertEquals(year, molad.year)
+        assertEquals(month, molad.month)
+        assertEquals(day, molad.dayOfMonth)
+        assertEquals(hour, molad.hour)
+        assertEquals(minute, molad.minute)
     }
 
     @Test

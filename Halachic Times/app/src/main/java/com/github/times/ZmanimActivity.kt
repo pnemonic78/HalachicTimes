@@ -57,7 +57,14 @@ import com.github.times.preference.ZmanimPreferenceActivity
 import com.github.times.preference.ZmanimPreferences
 import com.github.times.remind.ZmanimReminder
 import com.github.times.remind.ZmanimReminderService.Companion.enqueueWork
+import com.github.util.dayOfMonth
+import com.github.util.hour
 import com.github.util.isLocaleRTL
+import com.github.util.millisecond
+import com.github.util.minute
+import com.github.util.month
+import com.github.util.second
+import com.github.util.year
 import com.github.view.animation.ConstraintLayoutWeightAnimation
 import java.lang.ref.WeakReference
 import java.util.Calendar
@@ -383,9 +390,9 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
         calendar.apply {
             this.timeZone = timeZone
             this.timeInMillis = System.currentTimeMillis()
-            this[Calendar.YEAR] = year
-            this[Calendar.MONTH] = monthOfYear
-            this[Calendar.DAY_OF_MONTH] = dayOfMonth
+            this.year = year
+            this.month = monthOfYear
+            this.dayOfMonth = dayOfMonth
         }
         showDate()
         scheduleNextDay()
@@ -451,9 +458,9 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
     private fun chooseDate() {
         val context: Context = this
         val calendar = calendar
-        val year = calendar[Calendar.YEAR]
-        val month = calendar[Calendar.MONTH]
-        val day = calendar[Calendar.DAY_OF_MONTH]
+        val year = calendar.year
+        val month = calendar.month
+        val day = calendar.dayOfMonth
         var datePicker = datePicker
         if (datePicker == null) {
             datePicker = TodayDatePickerDialog(context, this, year, month, day)
@@ -808,20 +815,20 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
         }
         val now = tomorrow.timeInMillis
         tomorrow.add(Calendar.DAY_OF_MONTH, 1)
-        tomorrow[Calendar.HOUR_OF_DAY] = 0
-        tomorrow[Calendar.MINUTE] = 0
-        tomorrow[Calendar.SECOND] = 0
-        tomorrow[Calendar.MILLISECOND] = 0
+        tomorrow.hour = 0
+        tomorrow.minute = 0
+        tomorrow.second = 0
+        tomorrow.millisecond = 0
         handler.sendEmptyMessageDelayed(WHAT_TODAY, tomorrow.timeInMillis - now)
     }
 
     private fun isToday(time: Calendar, today: Calendar): Boolean {
-        val whenYear = time[Calendar.YEAR]
-        val whenMonth = time[Calendar.MONTH]
-        val whenDay = time[Calendar.DAY_OF_MONTH]
-        val todayYear = today[Calendar.YEAR]
-        val todayMonth = today[Calendar.MONTH]
-        val todayDay = today[Calendar.DAY_OF_MONTH]
+        val whenYear = time.year
+        val whenMonth = time.month
+        val whenDay = time.dayOfMonth
+        val todayYear = today.year
+        val todayMonth = today.month
+        val todayDay = today.dayOfMonth
         return whenYear == todayYear && whenMonth == todayMonth && whenDay == todayDay
     }
 

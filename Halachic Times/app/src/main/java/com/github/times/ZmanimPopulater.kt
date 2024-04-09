@@ -22,6 +22,11 @@ import com.github.times.ZmanimDays.NO_HOLIDAY
 import com.github.times.ZmanimDays.SHABBATH
 import com.github.times.preference.ZmanimPreferences
 import com.github.util.TimeUtils.isSameDay
+import com.github.util.dayOfMonth
+import com.github.util.era
+import com.github.util.millisecond
+import com.github.util.month
+import com.github.util.year
 import com.kosherjava.zmanim.AstronomicalCalendar
 import com.kosherjava.zmanim.ComplexZmanimCalendar
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
@@ -98,7 +103,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
     ) {
         val cal = calendar
         val gcal = cal.calendar
-        if (gcal[Calendar.ERA] < GregorianCalendar.AD) {
+        if (gcal.era < GregorianCalendar.AD) {
             // Ignore potential "IllegalArgumentException".
             return
         }
@@ -1064,9 +1069,9 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
 
         // Molad.
         if (jewishDayOfMonth <= 1 || jewishDayOfMonth >= 25) {
-            val y = gcal[Calendar.YEAR]
-            val m = gcal[Calendar.MONTH]
-            val d = gcal[Calendar.DAY_OF_MONTH]
+            val y = gcal.year
+            val m = gcal.month
+            val d = gcal.dayOfMonth
 
             // Molad is always of the previous month.
             val jLastDayOfMonth = jcal.daysInJewishMonth
@@ -1090,7 +1095,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 val calMolad = gcal.clone() as Calendar
                 calMolad[moladYear, moladMonth, moladDay, molad.moladHours, molad.moladMinutes] =
                     moladSecondsFloor.toInt()
-                calMolad[Calendar.MILLISECOND] =
+                calMolad.millisecond =
                     (DateUtils.SECOND_IN_MILLIS * (moladSeconds - moladSecondsFloor)).toInt()
                 summary = R.string.molad_average
                 val moladTime = calMolad.timeInMillis
@@ -1179,7 +1184,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
     val jewishCalendar: JewishCalendar?
         get() {
             val gcal = calendar.calendar
-            if (gcal[Calendar.ERA] < GregorianCalendar.AD) {
+            if (gcal.era < GregorianCalendar.AD) {
                 // Avoid future "IllegalArgumentException".
                 return null
             }

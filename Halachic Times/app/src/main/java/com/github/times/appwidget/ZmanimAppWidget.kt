@@ -46,7 +46,12 @@ import com.github.times.location.ZmanimLocationListener
 import com.github.times.location.ZmanimLocations
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
+import com.github.util.dayOfMonth
+import com.github.util.hour
 import com.github.util.isLocaleRTL
+import com.github.util.millisecond
+import com.github.util.minute
+import com.github.util.second
 import java.util.Calendar
 import timber.log.Timber
 
@@ -365,11 +370,11 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
      */
     private fun scheduleNextDay(context: Context, appWidgetIds: IntArray) {
         val time = Calendar.getInstance().apply {
-            add(Calendar.DAY_OF_MONTH, 1)
-            this[Calendar.HOUR_OF_DAY] = 0
-            this[Calendar.MINUTE] = 0
-            this[Calendar.SECOND] = 0
-            this[Calendar.MILLISECOND] = 1
+            dayOfMonth++
+            hour = 0
+            minute = 0
+            second = 0
+            millisecond = 1
         }.timeInMillis
         schedulePending(context, appWidgetIds, time, ID_WIDGET_MIDNIGHT)
     }

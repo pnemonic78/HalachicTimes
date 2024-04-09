@@ -24,6 +24,7 @@ import androidx.annotation.StringRes
 import com.github.times.databinding.TimesItemBinding
 import com.github.times.preference.ZmanimPreferences
 import com.github.util.TimeUtils.roundUp
+import com.github.util.era
 import com.github.util.getDefaultLocale
 import com.github.util.isLocaleRTL
 import com.github.widget.ArrayAdapter
@@ -259,7 +260,7 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     val jewishCalendar: JewishCalendar?
         get() {
             val gcal = calendar.calendar
-            if (gcal[Calendar.ERA] < GregorianCalendar.AD) {
+            if (gcal.era < GregorianCalendar.AD) {
                 // Avoid future "IllegalArgumentException".
                 return null
             }

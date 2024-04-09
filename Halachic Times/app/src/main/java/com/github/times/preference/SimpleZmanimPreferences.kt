@@ -98,6 +98,10 @@ import com.github.times.preference.ZmanimPreferences.Values.OPINION_SEA
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_TWILIGHT
 import com.github.times.preference.ZmanimPreferences.Values.THEME_NONE
 import com.github.times.preference.ZmanimPreferences.Values.THEME_WHITE
+import com.github.util.hour
+import com.github.util.millisecond
+import com.github.util.minute
+import com.github.util.second
 import com.kosherjava.zmanim.ShaahZmanis
 import java.io.File
 import java.util.Calendar
@@ -404,11 +408,11 @@ class SimpleZmanimPreferences(context: Context) : SimplePreferences(context), Zm
             val parsed = parseTime(value)
             if (parsed != null) {
                 val cal = Calendar.getInstance().apply {
-                    this.timeInMillis = time
-                    this[Calendar.HOUR_OF_DAY] = parsed[Calendar.HOUR_OF_DAY]
-                    this[Calendar.MINUTE] = parsed[Calendar.MINUTE]
-                    this[Calendar.SECOND] = parsed[Calendar.SECOND]
-                    this[Calendar.MILLISECOND] = 0
+                    timeInMillis = time
+                    hour = parsed.hour
+                    minute = parsed.minute
+                    second = parsed.second
+                    millisecond = 0
                 }
 
                 var yesterday = cal.timeInMillis
