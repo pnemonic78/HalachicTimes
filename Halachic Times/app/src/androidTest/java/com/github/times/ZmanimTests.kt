@@ -7,9 +7,14 @@ import com.github.util.dayOfMonth
 import com.github.util.hour
 import com.github.util.minute
 import com.github.util.month
+import com.github.util.second
 import com.github.util.year
+import com.kosherjava.zmanim.ShaahZmanis
+import com.kosherjava.zmanim.ZmanimCalendar
+import com.kosherjava.zmanim.util.GeoLocation
 import java.util.Calendar
 import java.util.TimeZone
+import kotlin.math.absoluteValue
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
@@ -86,5 +91,66 @@ class ZmanimTests : BaseTests() {
         assertNotNull(complexZmanimCalendar.calendar)
         assertNotNull(complexZmanimCalendar.seaLevelSunrise)
         assertNotNull(complexZmanimCalendar.seaLevelSunset)
+    }
+
+    @Test
+    fun discrepancies_Brooklyn() {
+        val tz = TimeZone.getTimeZone("America/New_York")
+        val date = Calendar.getInstance(tz).apply {
+            year = 2024
+            month = Calendar.APRIL
+            dayOfMonth = 7
+            hour = 10
+            minute = 9
+            second = 40
+        }
+
+        val lat1 = 40.63411
+        val lng1 = -73.97551
+        val ele1 = 0.0//-17.0
+        val loc1 = GeoLocation("Brooklyn", lat1, lng1, ele1, tz)
+        val cal1 = ZmanimCalendar(loc1).apply {
+            calendar = date
+            isUseElevation = true
+        }
+        val dawn1 = cal1.alosHashachar
+        val mid1 = cal1.chatzos
+
+        val lat2 = 40.63413
+        val lng2 = -73.97571
+        val ele2 = 2.0
+        val loc2 = GeoLocation("Brooklyn", lat2, lng2, ele2, tz)
+        val cal2 = ZmanimCalendar(loc2).apply {
+            calendar = date
+            isUseElevation = true
+        }
+        val dawn2 = cal2.alosHashachar
+        val mid2 = cal2.chatzos
+
+        val diffDawnMillis = dawn1 - dawn2
+        assertEquals(45, diffDawnMillis.absoluteValue)
+        val diffMiddayMillis = mid1 - mid2
+        assertEquals(47, diffMiddayMillis.absoluteValue)
+
+        assertNotNull(context)
+        val preferences: ZmanimPreferences = object : SimpleZmanimPreferences(context) {
+            override val dawn: String? = null
+            override val midday: String? = null
+            override val isUseElevation: Boolean = true
+            override val hourType: ShaahZmanis = ShaahZmanis.GRA
+        }
+        assertNotNull(preferences)
+        val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences)
+        populater.isInIsrael = false
+        populater.setCalendar(date)
+
+        val adapter1 = ZmanimAdapter<ZmanViewHolder>(context, preferences)
+        assertEquals(0, adapter1.itemCount)
+        populater.setGeoLocation(loc1)
+        populater.populate(adapter1, false)
+        assertEquals(15, adapter1.itemCount)
+        val item1 = adapter1.getItemById(R.string.midday)
+        assertNotNull(item1)
+        assertEquals(mid1, item1!!.time)
     }
 }

@@ -112,7 +112,7 @@ import java.util.Locale
  *
  * @author Moshe Waisberg
  */
-class SimpleZmanimPreferences(context: Context) : SimplePreferences(context), ZmanimPreferences {
+open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context), ZmanimPreferences {
 
     private val themePreferences: ThemePreferences = SimpleThemePreferences(context)
     private val localePreferences: LocalePreferences = SimpleLocalePreferences(context)
