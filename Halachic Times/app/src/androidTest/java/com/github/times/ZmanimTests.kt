@@ -1,5 +1,6 @@
 package com.github.times
 
+import android.text.format.DateUtils
 import com.github.BaseTests
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
@@ -96,41 +97,53 @@ class ZmanimTests : BaseTests() {
     @Test
     fun discrepancies_Brooklyn() {
         val tz = TimeZone.getTimeZone("America/New_York")
-        val date = Calendar.getInstance(tz).apply {
+
+        val date1 = Calendar.getInstance(tz).apply {
             year = 2024
             month = Calendar.APRIL
             dayOfMonth = 7
             hour = 10
             minute = 9
-            second = 40
+            second = 54
         }
-
         val lat1 = 40.63411
         val lng1 = -73.97551
         val ele1 = 0.0//-17.0
         val loc1 = GeoLocation("Brooklyn", lat1, lng1, ele1, tz)
         val cal1 = ZmanimCalendar(loc1).apply {
-            calendar = date
+            calendar = date1
             isUseElevation = true
         }
         val dawn1 = cal1.alosHashachar
         val mid1 = cal1.chatzos
 
+        val date2 = Calendar.getInstance(tz).apply {
+            year = 2024
+            month = Calendar.APRIL
+            dayOfMonth = 8
+            hour = 10
+            minute = 6
+            second = 37
+        }
         val lat2 = 40.63413
         val lng2 = -73.97571
         val ele2 = 2.0
         val loc2 = GeoLocation("Brooklyn", lat2, lng2, ele2, tz)
         val cal2 = ZmanimCalendar(loc2).apply {
-            calendar = date
+            calendar = date2
             isUseElevation = true
         }
         val dawn2 = cal2.alosHashachar
         val mid2 = cal2.chatzos
 
-        val diffDawnMillis = dawn1 - dawn2
-        assertEquals(45, diffDawnMillis.absoluteValue)
-        val diffMiddayMillis = mid1 - mid2
-        assertEquals(47, diffMiddayMillis.absoluteValue)
+        val diffDawnMillis = (dawn1 - dawn2).absoluteValue
+        assertEquals(86_289_833L, diffDawnMillis)
+        val diffDawn = (diffDawnMillis - DateUtils.DAY_IN_MILLIS).absoluteValue
+        assertEquals(110_167L, diffDawn)   // ~2min
+        val diffMiddayMillis = (mid1 - mid2).absoluteValue
+        assertEquals(86_383_624L, diffMiddayMillis)
+        val diffMidday = (diffMiddayMillis - DateUtils.DAY_IN_MILLIS).absoluteValue
+        assertEquals(16_376L, diffMidday)   // ~16sec
 
         assertNotNull(context)
         val preferences: ZmanimPreferences = object : SimpleZmanimPreferences(context) {
@@ -142,10 +155,10 @@ class ZmanimTests : BaseTests() {
         assertNotNull(preferences)
         val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences)
         populater.isInIsrael = false
-        populater.setCalendar(date)
 
         val adapter1 = ZmanimAdapter<ZmanViewHolder>(context, preferences)
         assertEquals(0, adapter1.itemCount)
+        populater.setCalendar(date1)
         populater.setGeoLocation(loc1)
         populater.populate(adapter1, false)
         assertEquals(15, adapter1.itemCount)
