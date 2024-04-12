@@ -1,5 +1,7 @@
 package com.github.times
 
+import android.provider.Settings
+import android.text.format.DateFormat
 import android.text.format.DateUtils
 import com.github.BaseTests
 import com.github.times.preference.SimpleZmanimPreferences
@@ -13,12 +15,16 @@ import com.github.util.year
 import com.kosherjava.zmanim.ShaahZmanis
 import com.kosherjava.zmanim.ZmanimCalendar
 import com.kosherjava.zmanim.util.GeoLocation
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.TimeZone
 import kotlin.math.absoluteValue
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Before
 import org.junit.Test
 
 class ZmanimTests : BaseTests() {
@@ -97,6 +103,10 @@ class ZmanimTests : BaseTests() {
     @Test
     fun discrepancies_Brooklyn() {
         val tz = TimeZone.getTimeZone("America/New_York")
+        val is24 = DateFormat.is24HourFormat(context)
+        val df = SimpleDateFormat("HH:mm:ss").apply {
+            timeZone = TimeZone.getTimeZone("UTC")
+        }
 
         val date1 = Calendar.getInstance(tz).apply {
             year = 2024
@@ -116,6 +126,7 @@ class ZmanimTests : BaseTests() {
         }
         val dawn1 = cal1.alosHashachar
         val mid1 = cal1.chatzos
+        assertEquals(1712509090428L, mid1)
 
         val date2 = Calendar.getInstance(tz).apply {
             year = 2024
@@ -151,6 +162,7 @@ class ZmanimTests : BaseTests() {
             override val midday: String? = null
             override val isUseElevation: Boolean = true
             override val hourType: ShaahZmanis = ShaahZmanis.GRA
+            override val isSeconds: Boolean = true
         }
         assertNotNull(preferences)
         val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences)
@@ -165,5 +177,7 @@ class ZmanimTests : BaseTests() {
         val item1 = adapter1.getItemById(R.string.midday)
         assertNotNull(item1)
         assertEquals(mid1, item1!!.time)
+        assertEquals(if (is24) "12:58:10" else "12:58:10 PM", item1.timeLabel)
+        assertEquals("16:58:10", df.format(Date(item1.time)))
     }
 }

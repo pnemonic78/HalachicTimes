@@ -84,7 +84,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateHour(adapter: A, cal: ComplexZmanimCalendar) {
-        var time: Long
+        var time: TimeMillis
         var title: Int
         // Offset is added back when formatted.
         val offset = cal.calendar.timeZone.rawOffset.toLong()

@@ -135,7 +135,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         val shabbathAfterName = res.getString(shabbathAfter)
         val calDate = Calendar.getInstance(gcal.timeZone)
         if (!remote && settings.isHour) {
-            val time: Long
+            val time: TimeMillis
 
             when (settings.hour) {
                 OPINION_19_8 -> {

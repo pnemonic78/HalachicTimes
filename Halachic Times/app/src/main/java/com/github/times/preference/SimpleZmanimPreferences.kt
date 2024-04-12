@@ -32,6 +32,7 @@ import com.github.preference.ThemePreferences.Values.THEME_DEFAULT
 import com.github.preference.ThemePreferences.Values.THEME_LIGHT
 import com.github.preference.TimePreference.Companion.parseTime
 import com.github.times.R
+import com.github.times.TimeMillis
 import com.github.times.ZmanimItem
 import com.github.times.preference.ZmanimPreferences.Values.OMER_B
 import com.github.times.preference.ZmanimPreferences.Values.OMER_L
@@ -394,7 +395,7 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
             context.getString(R.string.guards_defaultValue)
         )
 
-    override fun getReminder(id: Int, time: Long): Long {
+    override fun getReminder(id: Int, time: TimeMillis): Long {
         if (time == ZmanimItem.NEVER) return ZmanimItem.NEVER
         val key = toKey(id) ?: return ZmanimItem.NEVER
         val keyReminder = key + ZmanimPreferences.REMINDER_SUFFIX
@@ -429,7 +430,7 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
         return ZmanimItem.NEVER
     }
 
-    private fun getReminder(time: Long, value: Int): Long {
+    private fun getReminder(time: TimeMillis, value: Int): Long {
         if (value < 0) return ZmanimItem.NEVER
         val before = value * DateUtils.MINUTE_IN_MILLIS
         return time - before

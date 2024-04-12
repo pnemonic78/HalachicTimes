@@ -16,7 +16,6 @@
 package com.github.times
 
 import android.content.Context
-import android.text.format.DateFormat
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -32,9 +31,8 @@ import com.kosherjava.zmanim.ComplexZmanimCalendar
 import com.kosherjava.zmanim.hebrewcalendar.HebrewDateFormatter
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate
-import java.text.Format
+import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.GregorianCalendar
 
 /**
@@ -58,14 +56,20 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
         setShaahZmanisType(settings.hourType)
         isUseElevation = settings.isUseElevation
     }
+        set(value) {
+            field = value
+            timeFormat.timeZone = value.calendar.timeZone
+            timeFormatSeasonalHour.timeZone = value.calendar.timeZone
+        }
 
     private val now = System.currentTimeMillis()
+
     /** Whether to use Israel holiday scheme or not. */
     var inIsrael = false
     private val summaries: Boolean = settings.isSummaries
     private val showElapsed: Boolean = settings.isPast
-    private val timeFormat: Format
-    private val timeFormatSeasonalHour: Format
+    private val timeFormat: DateFormat
+    private val timeFormatSeasonalHour: DateFormat
     private val timeFormatGranularity: Long
     private val comparator: Comparator<ZmanimItem?> by lazy { ZmanimComparator() }
 
@@ -87,7 +91,7 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     var candles = CandleData()
 
     init {
-        val time24 = DateFormat.is24HourFormat(context)
+        val time24 = android.text.format.DateFormat.is24HourFormat(context)
         val locale = context.getDefaultLocale()
         if (settings.isSeconds) {
             val pattern = if (time24) {
@@ -97,11 +101,13 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
             }
             timeFormat = SimpleDateFormat(pattern, locale)
             timeFormatGranularity = DateUtils.SECOND_IN_MILLIS
-            timeFormatSeasonalHour = SimpleDateFormat(context.getString(R.string.hour_format_seconds), locale)
+            timeFormatSeasonalHour =
+                SimpleDateFormat(context.getString(R.string.hour_format_seconds), locale)
         } else {
-            timeFormat = DateFormat.getTimeFormat(context)
+            timeFormat = android.text.format.DateFormat.getTimeFormat(context)
             timeFormatGranularity = DateUtils.MINUTE_IN_MILLIS
-            timeFormatSeasonalHour = SimpleDateFormat(context.getString(R.string.hour_format), locale)
+            timeFormatSeasonalHour =
+                SimpleDateFormat(context.getString(R.string.hour_format), locale)
         }
     }
 
@@ -140,13 +146,13 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     fun add(
         @StringRes titleId: Int,
         @StringRes summaryId: Int,
-        time: Long?,
+        time: TimeMillis?,
         jewishDate: JewishDate?,
         remote: Boolean = false
     ) = add(
         titleId,
         if (summaryId == 0) null else context.getText(summaryId),
-        time ?: ZmanimItem.NEVER,
+        time,
         jewishDate,
         remote
     )
@@ -164,7 +170,7 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     fun add(
         @StringRes titleId: Int,
         summary: CharSequence?,
-        time: Long?,
+        time: TimeMillis?,
         jewishDate: JewishDate?,
         remote: Boolean,
         hour: Boolean = (titleId == R.string.hour)
@@ -199,7 +205,7 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     fun addHour(
         @StringRes titleId: Int,
         @StringRes summaryId: Int,
-        time: Long,
+        time: TimeMillis,
         remote: Boolean = false
     ) = add(
         titleId,

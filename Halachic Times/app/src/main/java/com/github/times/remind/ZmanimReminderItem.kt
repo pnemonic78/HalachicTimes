@@ -16,6 +16,7 @@
 package com.github.times.remind
 
 import com.github.times.BuildConfig
+import com.github.times.TimeMillis
 import com.github.times.ZmanimItem
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
@@ -29,7 +30,7 @@ class ZmanimReminderItem(
     val id: Int,
     val title: CharSequence?,
     val text: CharSequence?,
-    val time: Long
+    val time: TimeMillis
 ) {
 
     val isEmpty: Boolean

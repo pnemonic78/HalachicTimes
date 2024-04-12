@@ -33,6 +33,7 @@ import com.github.appwidget.AppWidgetUtils.notifyAppWidgetViewDataChanged
 import com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate
 import com.github.preference.LocalePreferences
 import com.github.times.R
+import com.github.times.TimeMillis
 import com.github.times.ZmanViewHolder
 import com.github.times.ZmanimActivity
 import com.github.times.ZmanimAdapter
@@ -195,7 +196,7 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
         val now = System.currentTimeMillis()
         var whenUpdate = Long.MAX_VALUE
         var item: ZmanimItem?
-        var time: Long
+        var time: TimeMillis
         for (i in 0 until count) {
             item = adapter.getItem(i)
             if (item.isNullOrEmptyOrElapsed()) {
@@ -221,7 +222,7 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
      * @param time         the time to update.
      * @param id           the pending intent's id.
      */
-    private fun schedulePending(context: Context, appWidgetIds: IntArray, time: Long, id: Int) {
+    private fun schedulePending(context: Context, appWidgetIds: IntArray, time: TimeMillis, id: Int) {
         Timber.i("schedulePending [%s]", formatDateTime(time))
         val alarmIntent = Intent(context, javaClass)
             .setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
@@ -243,7 +244,7 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
      * @param appWidgetIds the widget ids for which an update is needed.
      * @param time         the time to update.
      */
-    private fun scheduleUpdate(context: Context, appWidgetIds: IntArray, time: Long) {
+    private fun scheduleUpdate(context: Context, appWidgetIds: IntArray, time: TimeMillis) {
         schedulePending(context, appWidgetIds, time, ID_WIDGET_UPDATE)
     }
 

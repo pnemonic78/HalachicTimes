@@ -19,6 +19,7 @@ import android.net.Uri
 import androidx.annotation.StyleRes
 import com.github.preference.LocalePreferences
 import com.github.preference.ThemePreferences
+import com.github.times.TimeMillis
 import com.github.times.location.LocationPreferences
 import com.kosherjava.zmanim.ShaahZmanis
 import java.util.Calendar
@@ -463,7 +464,7 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
      * @param time the zman time.
      * @return the reminder in milliseconds - `NEVER` when no reminder.
      */
-    fun getReminder(id: Int, time: Long): Long
+    fun getReminder(id: Int, time: TimeMillis): Long
 
     /**
      * The time that was used for the latest reminder.

@@ -28,7 +28,7 @@ object ZmanimHelper {
      * @param time the time to format.
      * @return the formatted time.
      */
-    fun formatDateTime(time: Long): String {
+    fun formatDateTime(time: TimeMillis): String {
         if (time == NEVER) return "never"
         return formatDateTime(Date(time))
     }
