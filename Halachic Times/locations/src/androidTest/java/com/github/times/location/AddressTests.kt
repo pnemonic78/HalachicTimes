@@ -21,6 +21,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.os.Build
 import android.text.format.DateUtils
 import com.github.BaseTests
 import java.util.concurrent.TimeUnit
@@ -54,8 +55,10 @@ class AddressTests : BaseTests() {
     @Test
     fun testLocationChanged() {
         assertNotNull(context)
-        val ms =
-            4 * DateUtils.DAY_IN_MILLIS + 11 * DateUtils.MINUTE_IN_MILLIS + 57 * DateUtils.SECOND_IN_MILLIS + 6 //+4d0h11m57s6ms
+        val ms = 4 * DateUtils.DAY_IN_MILLIS +
+            11 * DateUtils.MINUTE_IN_MILLIS +
+            57 * DateUtils.SECOND_IN_MILLIS +
+            6 //+4d0h11m57s6ms
         val location: Location = ZmanimLocation(LocationManager.GPS_PROVIDER).apply {
             latitude = 36.9
             longitude = 120.7
@@ -63,8 +66,10 @@ class AddressTests : BaseTests() {
             altitude = 24.9
             speed = 0.87f
             bearing = 296.7f
-            speedAccuracyMetersPerSecond = 1f
-            bearingAccuracyDegrees = 61f
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                speedAccuracyMetersPerSecond = 1f
+                bearingAccuracyDegrees = 61f
+            }
             elapsedRealtimeNanos = TimeUnit.MILLISECONDS.toNanos(ms)
         }
         val findAddress = Intent(ZmanimLocationListener.ACTION_ADDRESS)

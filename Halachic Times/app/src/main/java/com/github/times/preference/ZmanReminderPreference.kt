@@ -23,7 +23,7 @@ import com.github.preference.NumberPickerPreference
 import com.github.util.TypedValueUtils
 
 /**
- * Zman reminder preference.
+ * KosherDate reminder preference.
  */
 class ZmanReminderPreference @JvmOverloads constructor(
     context: Context,

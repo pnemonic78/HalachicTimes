@@ -73,10 +73,10 @@ class ZmanimTests : BaseTests() {
         populater.populate(adapter, false)
         assertNotEquals(0, adapter.itemCount)
         val item = adapter.getItemById(R.string.molad)
-        assertNotNull(item)
+        assertNotNull(item!!)
         val molad = Calendar.getInstance(cal.timeZone)
         assertNotNull(molad)
-        molad.timeInMillis = item!!.time
+        molad.timeInMillis = item.time
         assertEquals(year, molad.year)
         assertEquals(month, molad.month)
         assertEquals(day, molad.dayOfMonth)
@@ -126,7 +126,8 @@ class ZmanimTests : BaseTests() {
         }
         val dawn1 = cal1.alosHashachar
         val mid1 = cal1.chatzos
-        assertEquals(1712509090428L, mid1)
+        assertNotNull(mid1!!)
+        assertEquals(1712509077326L, mid1.time)
 
         val date2 = Calendar.getInstance(tz).apply {
             year = 2024
@@ -152,9 +153,9 @@ class ZmanimTests : BaseTests() {
         val diffDawn = (diffDawnMillis - DateUtils.DAY_IN_MILLIS).absoluteValue
         assertEquals(110_167L, diffDawn)   // ~2min
         val diffMiddayMillis = (mid1 - mid2).absoluteValue
-        assertEquals(86_383_624L, diffMiddayMillis)
+        assertEquals(86_383_498L, diffMiddayMillis)
         val diffMidday = (diffMiddayMillis - DateUtils.DAY_IN_MILLIS).absoluteValue
-        assertEquals(16_376L, diffMidday)   // ~16sec
+        assertEquals(16_502L, diffMidday)   // ~16sec
 
         assertNotNull(context)
         val preferences: ZmanimPreferences = object : SimpleZmanimPreferences(context) {
@@ -175,9 +176,9 @@ class ZmanimTests : BaseTests() {
         populater.populate(adapter1, false)
         assertEquals(15, adapter1.itemCount)
         val item1 = adapter1.getItemById(R.string.midday)
-        assertNotNull(item1)
-        assertEquals(mid1, item1!!.time)
-        assertEquals(if (is24) "12:58:10" else "12:58:10 PM", item1.timeLabel)
-        assertEquals("16:58:10", df.format(Date(item1.time)))
+        assertNotNull(item1!!)
+        assertEquals(mid1.time, item1.time)
+        assertEquals(if (is24) "12:57:57" else "12:57:57 PM", item1.timeLabel)
+        assertEquals("16:57:57", df.format(Date(item1.time)))
     }
 }

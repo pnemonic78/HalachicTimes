@@ -159,7 +159,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateDawn(adapter: A, cal: ComplexZmanimCalendar) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
@@ -225,7 +225,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateTallis(adapter: A, cal: ComplexZmanimCalendar) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
@@ -255,7 +255,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateSunrise(adapter: A, cal: ComplexZmanimCalendar) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
@@ -269,7 +269,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateShema(adapter: A, cal: ComplexZmanimCalendar) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
@@ -347,7 +347,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populatePrayers(adapter: A, cal: ComplexZmanimCalendar) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
@@ -417,7 +417,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateMidday(adapter: A, cal: ComplexZmanimCalendar) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
@@ -435,7 +435,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateEarliestMincha(adapter: A, cal: ComplexZmanimCalendar) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
@@ -465,7 +465,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateMincha(adapter: A, cal: ComplexZmanimCalendar) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
@@ -491,7 +491,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populatePlugHamincha(adapter: A, cal: ComplexZmanimCalendar) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
@@ -569,7 +569,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateSunset(adapter: A, cal: ComplexZmanimCalendar, offset: Long = 0) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
@@ -587,7 +587,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateTwilight(adapter: A, cal: ComplexZmanimCalendar, offset: Long = 0) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate = jewishCalendar!!
         jewishDate.forward(Calendar.DATE, 1)
@@ -618,7 +618,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateNightfall(adapter: A, cal: ComplexZmanimCalendar, offset: Long = 0) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate = jewishCalendar!!
         jewishDate.forward(Calendar.DATE, 1)
@@ -812,43 +812,43 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     ) {
         val gcal = cal.calendar
         val gcal2 = Calendar.getInstance(gcal.timeZone)
-        var date: Long
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
         date = getMidday(cal, settings)
-        if (isDate(date)) {
-            gcal2.timeInMillis = date + TWELVE_HOURS
+        if (date.isDate()) {
+            gcal2.time = date + TWELVE_HOURS
             title = R.string.midnight_12
             if (isSameDay(gcal, gcal2)) {
-                date = gcal2.timeInMillis
+                date = gcal2.time
                 adapter.add(title, SUMMARY_NONE, date, jewishDate)
             } else {
                 date = getMidday(calYesterday, settings)
-                if (isDate(date)) {
+                if (date.isDate()) {
                     adapter.add(title, SUMMARY_NONE, date + TWELVE_HOURS, jewishDate)
                 }
             }
         }
 
         date = getNightfall(cal, settings)
-        if (isDate(date)) {
-            gcal2.timeInMillis = date + SIX_HOURS
+        if (date.isDate()) {
+            gcal2.time = date + SIX_HOURS
             title = R.string.midnight_6
             if (isSameDay(gcal, gcal2)) {
-                date = gcal2.timeInMillis
+                date = gcal2.time
                 adapter.add(title, SUMMARY_NONE, date, jewishDate)
             } else {
                 date = getNightfall(calYesterday, settings)
-                if (isDate(date)) {
+                if (date.isDate()) {
                     adapter.add(title, SUMMARY_NONE, date + SIX_HOURS, jewishDate)
                 }
             }
         }
 
         date = cal.solarMidnight
-        if (isDate(date)) {
-            gcal2.timeInMillis = date
+        if (date.isDate()) {
+            gcal2.time = date
             title = R.string.midnight_solar
             if (!isSameDay(gcal, gcal2)) {
                 date = calYesterday.solarMidnight
@@ -862,7 +862,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         cal: ComplexZmanimCalendar,
         settings: ZmanimPreferences
     ) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate = jewishCalendar!!
         jewishDate.forward(Calendar.DATE, 1)
@@ -899,7 +899,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateEatChametz(adapter: A, cal: ComplexZmanimCalendar) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
@@ -921,7 +921,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     }
 
     private fun populateBurnChametz(adapter: A, cal: ComplexZmanimCalendar) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
@@ -947,20 +947,20 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         cal: ComplexZmanimCalendar,
         settings: ZmanimPreferences
     ) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
         val jcal = jewishCalendar
 
         date = cal.tchilasZmanKidushLevana3Days
         if (date == null && jcal != null) {
             date = jcal.tchilasZmanKidushLevana3Days
-            if (isDate(date)) {
+            if (date.isDate()) {
                 val cal2 = cal.clone() as ComplexZmanimCalendar
-                cal2.calendar.timeInMillis = date
+                cal2.calendar.time = date
                 date = cal2.tchilasZmanKidushLevana3Days
             }
         }
-        if (isDate(date)) {
+        if (date.isDate()) {
             title = R.string.levana_3
             adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings))
         }
@@ -968,13 +968,13 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         date = cal.tchilasZmanKidushLevana7Days
         if (date == null && jcal != null) {
             date = jcal.tchilasZmanKidushLevana7Days
-            if (isDate(date)) {
+            if (date.isDate()) {
                 val cal2 = cal.clone() as ComplexZmanimCalendar
-                cal2.calendar.timeInMillis = date
+                cal2.calendar.time = date
                 date = cal2.tchilasZmanKidushLevana7Days
             }
         }
-        if (isDate(date)) {
+        if (date.isDate()) {
             title = R.string.levana_7
             adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings))
         }
@@ -985,17 +985,17 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         cal: ComplexZmanimCalendar,
         settings: ZmanimPreferences
     ) {
-        var date: Long?
+        var date: KosherDate
         var title: Int
 
         date = cal.sofZmanKidushLevanaBetweenMoldos
-        if (isDate(date)) {
+        if (date.isDate()) {
             title = R.string.levana_halfway
             adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings))
         }
 
         date = cal.sofZmanKidushLevana15Days
-        if (isDate(date)) {
+        if (date.isDate()) {
             title = R.string.levana_15
             adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings))
         }

@@ -20,9 +20,6 @@ import com.kosherjava.zmanim.hebrewcalendar.JewishDate
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
-typealias TimeMillis = Long
-typealias Zman = TimeMillis?
-
 /**
  * Time row item.
  */
@@ -88,7 +85,7 @@ class ZmanimItem @JvmOverloads constructor(
     /**
      * Creates a new category item.
      */
-    constructor(label: CharSequence?) : this(0, NEVER) {
+    constructor(label: CharSequence?) : this(titleId = 0, time = NEVER) {
         timeLabel = label
         isCategory = true
     }

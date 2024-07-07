@@ -127,9 +127,9 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         val candlesOffset = candles.candlesOffset
         val candlesWhen = candles.whenCandles
         adapter.candles = candles
-        var date: Long?
+        var date: KosherDate
         var summary: Int
-        var dateAndSummary: Pair<Long, Int>
+        var dateAndSummary: Pair<KosherDate, Int>
         var summaryText: CharSequence?
         val res = context.resources
         val shabbathAfterName = res.getString(shabbathAfter)
@@ -313,7 +313,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             summary = R.string.dawn_120_zmanis
         }
         adapter.add(R.string.dawn, summary, date, jewishDate, remote)
-        val dawn = toDate(date)
+        val dawn = toTime(date)
 
         when (settings.tallis) {
             OPINION_10_2 -> {
@@ -550,7 +550,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         date = dateAndSummary.first
         summary = dateAndSummary.second
         adapter.add(R.string.midday, summary, date, jewishDate, remote)
-        val midday = date
+        val midday: KosherDate = date
         val middayYesterday = getMidday(calYesterday, settings.midday).first
 
         when (settings.earliestMincha) {
@@ -719,7 +719,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         date = dateAndSummary.first
         summary = dateAndSummary.second
         adapter.add(R.string.twilight, summary, date, jewishDateTomorrow, remote)
-        val twilight = date
+        val twilight: KosherDate = date
         val summaryTwilight = summary
 
         var opinionNightfall = settings.nightfall
@@ -727,7 +727,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         date = dateAndSummary.first
         summary = dateAndSummary.second
         adapter.add(R.string.nightfall, summary, date, jewishDateTomorrow, remote)
-        val nightfall = date
+        val nightfall: KosherDate = date
         val summaryNightfall = summary
         val nightfallYesterday = getNightfall(calYesterday, opinionNightfall).first
         if (shabbathAfter == R.string.sunset) {
@@ -752,9 +752,9 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 getNightfall(cal, opinionNightfall).first
             }
         }
-        var shabbatEnds = ZmanimItem.NEVER
+        var shabbatEnds: KosherDate = NEVER
         var summaryShabbatEnds: CharSequence? = null
-        if (date != ZmanimItem.NEVER) {
+        if (date.isDate()) {
             if (dayOfWeek == Calendar.SATURDAY) {
                 shabbatEnds = AstronomicalCalendar.getTimeOffset(
                     date,
@@ -801,7 +801,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
         if (candlesTomorrow > 0) {
             when (candlesWhen) {
-                CandleData.BEFORE_SUNSET -> if (sunset != ZmanimItem.NEVER) {
+                CandleData.BEFORE_SUNSET -> if (sunset.isDate()) {
                     date = sunset - candlesOffset * DateUtils.MINUTE_IN_MILLIS
                     summaryText = if (holidayTomorrow == JewishCalendar.CHANUKAH) {
                         res.getQuantityString(
@@ -819,7 +819,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                     adapter.add(R.string.candles, summaryText, date, jewishDate, remote)
                 }
 
-                CandleData.AT_SUNSET -> if (sunset != ZmanimItem.NEVER) {
+                CandleData.AT_SUNSET -> if (sunset.isDate()) {
                     if (holidayTomorrow == JewishCalendar.CHANUKAH) {
                         summaryText = res.getQuantityString(
                             R.plurals.candles_chanukka,
@@ -832,7 +832,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                     }
                 }
 
-                CandleData.AT_TWILIGHT -> if (twilight != ZmanimItem.NEVER) {
+                CandleData.AT_TWILIGHT -> if (twilight.isDate()) {
                     if (holidayTomorrow == JewishCalendar.CHANUKAH) {
                         summaryText = res.getQuantityString(
                             R.plurals.candles_chanukka,
@@ -857,7 +857,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                     }
                 }
 
-                CandleData.AT_NIGHT -> if (nightfall != ZmanimItem.NEVER) {
+                CandleData.AT_NIGHT -> if (nightfall.isDate()) {
                     if (holidayTomorrow == JewishCalendar.CHANUKAH) {
                         summaryText = res.getQuantityString(
                             R.plurals.candles_chanukka,
@@ -882,7 +882,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                     }
                 }
 
-                CandleData.MOTZE_SHABBATH -> if (shabbatEnds != ZmanimItem.NEVER) {
+                CandleData.MOTZE_SHABBATH -> if (shabbatEnds.isDate()) {
                     if (holidayTomorrow == JewishCalendar.CHANUKAH) {
                         summaryText = res.getQuantityString(
                             R.plurals.candles_chanukka,
@@ -918,8 +918,8 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             getMidnight(calYesterday, opinionMidnight, middayYesterday, nightfallYesterday)
         date = dateAndSummary.first
         val midnight = date
-        if (date < sunset) {
-            calDate.timeInMillis = date
+        if (date != null && date < sunset) {
+            calDate.time = date
             if (isSameDay(gcal, calDate)) {
                 adapter.add(R.string.midnight, summary, date, jewishDate, remote)
             } else {
@@ -947,7 +947,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         when (settings.guardsCount) {
             OPINION_4 -> {
                 summary = R.string.guard_fourth
-                if (midnight < sunrise) {
+                if (midnight != null && midnight < sunrise) {
                     date = getMorningGuard4(midnight, sunrise)
                     adapter.add(R.string.morning_guard, summary, date, jewishDate, remote)
                 } else {
@@ -959,7 +959,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             else -> {
                 summary = R.string.guard_third
                 date = getMorningGuard3(sunset, sunriseTomorrow)
-                calDate.timeInMillis = date
+                calDate.time = date
                 if (isSameDay(gcal, calDate)) {
                     adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote)
                 } else {
@@ -1100,7 +1100,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.molad_average
                 val moladTime = calMolad.timeInMillis
                 var moonDate: JewishDate = jewishDate
-                if (sunset != ZmanimItem.NEVER && sunset < moladTime) {
+                if (sunset.isDate() && sunset < moladTime) {
                     moonDate = jewishDateTomorrow
                 }
                 adapter.add(R.string.molad, summary, moladTime, moonDate, remote)
@@ -1120,12 +1120,12 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             }
             if (date != null && isSameDay(gcal, date)) {
                 var moonDate: JewishDate = jewishDate
-                if (sunset != ZmanimItem.NEVER && sunset < date) {
+                if (sunset.isDate() && sunset < date) {
                     moonDate = jewishDateTomorrow
                 }
                 adapter.add(R.string.levana_earliest, summary, date, moonDate, remote)
             }
-        } else if (jewishDayOfMonth > 10 && jewishDayOfMonth < 20) {
+        } else if (jewishDayOfMonth in 11..19) {
             when (settings.latestKiddushLevana) {
                 OPINION_15,
                 OPINION_15_ALOS -> {
@@ -1140,7 +1140,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             }
             if (date != null && isSameDay(gcal, date)) {
                 var moonDate: JewishDate = jewishDate
-                if (sunset != ZmanimItem.NEVER && sunset < date) {
+                if (sunset.isDate() && sunset < date) {
                     moonDate = jewishDateTomorrow
                 }
                 adapter.add(R.string.levana_latest, summary, date, moonDate, remote)
@@ -1199,9 +1199,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
      * @param date the civil date and time.
      * @return the date - `null` if time is invalid.
      */
-    protected fun getJewishDate(date: Long): JewishDate {
-        return getJewishDate(date, calendar, settings)
-    }
+    protected fun getJewishDate(date: KosherDate) = getJewishDate(date, calendar, settings)
 
     /**
      * Get the Jewish date.
@@ -1210,12 +1208,10 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
      * @return the date - `null` if time is invalid.
      */
     protected fun getJewishDate(
-        date: Long,
+        date: KosherDate,
         calendar: ComplexZmanimCalendar,
         settings: ZmanimPreferences
-    ): JewishDate {
-        return getJewishDate(date, getSunset(calendar, settings))
-    }
+    ) = getJewishDate(date, getSunset(calendar, settings))
 
     /**
      * Get the Jewish date.
@@ -1224,9 +1220,10 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
      * @param sunset the sunset time.
      * @return the date - `null` if time is invalid.
      */
-    private fun getJewishDate(date: Long, sunset: Long): JewishDate {
+    private fun getJewishDate(date: KosherDate, sunset: KosherDate): JewishDate? {
+        if (date == null) return null
         val cal = Calendar.getInstance().apply {
-            timeInMillis = date
+            time = date
         }
         val jewishDate = JewishDate(cal)
         if (date > sunset) {
@@ -1235,8 +1232,8 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         return jewishDate
     }
 
-    private fun getSunrise(cal: ComplexZmanimCalendar, opinion: String?): Pair<Long, Int> {
-        val date: Long
+    private fun getSunrise(cal: ComplexZmanimCalendar, opinion: String?): Pair<KosherDate, Int> {
+        val date: KosherDate
         val summary: Int
         when (opinion) {
             OPINION_SEA -> {
@@ -1254,10 +1251,10 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.sunrise_elevated
             }
         }
-        return Pair.create(toDate(date), summary)
+        return Pair.create(toTime(date), summary)
     }
 
-    private fun getSunrise(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): Long {
+    private fun getSunrise(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): KosherDate {
         val opinion = settings.sunrise
         return getSunrise(cal, opinion).first
     }
@@ -1265,14 +1262,14 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
     protected fun getSunriseTomorrow(
         cal: ComplexZmanimCalendar,
         settings: ZmanimPreferences
-    ): Long {
+    ): KosherDate {
         val calTomorrow = cal.clone() as ComplexZmanimCalendar
         calTomorrow.calendar.add(Calendar.DATE, 1)
         return getSunrise(calTomorrow, settings)
     }
 
-    protected fun getMidday(cal: ComplexZmanimCalendar, opinion: String?): Pair<Long, Int> {
-        val date: Long
+    protected fun getMidday(cal: ComplexZmanimCalendar, opinion: String?): Pair<KosherDate, Int> {
+        val date: KosherDate
         val summary: Int
         when (opinion) {
             OPINION_FIXED -> {
@@ -1290,16 +1287,16 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.midday_solar
             }
         }
-        return Pair.create(toDate(date), summary)
+        return Pair.create(toTime(date), summary)
     }
 
-    protected fun getMidday(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): Long {
+    protected fun getMidday(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): KosherDate {
         val opinion = settings.midday
         return getMidday(cal, opinion).first
     }
 
-    private fun getSunset(cal: ComplexZmanimCalendar, opinion: String?): Pair<Long, Int> {
-        val date: Long
+    private fun getSunset(cal: ComplexZmanimCalendar, opinion: String?): Pair<KosherDate, Int> {
+        val date: KosherDate
         val summary: Int
         when (opinion) {
             OPINION_SEA -> {
@@ -1317,16 +1314,16 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.sunset_elevated
             }
         }
-        return Pair.create(toDate(date), summary)
+        return Pair.create(toTime(date), summary)
     }
 
-    protected fun getSunset(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): Long {
+    protected fun getSunset(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): KosherDate {
         val opinion = settings.sunset
         return getSunset(cal, opinion).first
     }
 
-    private fun getTwilight(cal: ComplexZmanimCalendar, opinion: String?): Pair<Long, Int> {
-        val date: Long
+    private fun getTwilight(cal: ComplexZmanimCalendar, opinion: String?): Pair<KosherDate, Int> {
+        val date: KosherDate
         val summary: Int
         when (opinion) {
             OPINION_7_083 -> {
@@ -1349,11 +1346,11 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.twilight_2stars
             }
         }
-        return Pair.create(toDate(date), summary)
+        return Pair.create(toTime(date), summary)
     }
 
-    private fun getNightfall(cal: ComplexZmanimCalendar, opinion: String?): Pair<Long, Int> {
-        val date: Long
+    private fun getNightfall(cal: ComplexZmanimCalendar, opinion: String?): Pair<KosherDate, Int> {
+        val date: KosherDate
         val summary: Int
         when (opinion) {
             OPINION_120 -> {
@@ -1511,10 +1508,13 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.nightfall_8
             }
         }
-        return Pair.create(toDate(date), summary)
+        return Pair.create(toTime(date), summary)
     }
 
-    protected fun getNightfall(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): Long {
+    protected fun getNightfall(
+        cal: ComplexZmanimCalendar,
+        settings: ZmanimPreferences
+    ): KosherDate {
         val opinion = settings.nightfall
         return getNightfall(cal, opinion).first
     }
@@ -1522,15 +1522,15 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
     private fun getMidnight(
         cal: ComplexZmanimCalendar,
         opinion: String?,
-        midday: Long,
-        nightfall: Long
-    ): Pair<Long, Int> {
-        var date: Long?
+        midday: KosherDate,
+        nightfall: KosherDate
+    ): Pair<KosherDate, Int> {
+        var date: KosherDate
         val summary: Int
         when (opinion) {
             OPINION_12 -> {
                 date = midday
-                if (midday != ZmanimItem.NEVER) {
+                if (midday.isDate()) {
                     date += TWELVE_HOURS
                 }
                 summary = R.string.midnight_12
@@ -1538,7 +1538,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
 
             OPINION_6 -> {
                 date = nightfall
-                if (nightfall != ZmanimItem.NEVER) {
+                if (nightfall.isDate()) {
                     date += SIX_HOURS
                 }
                 summary = R.string.midnight_6
@@ -1549,10 +1549,10 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.midnight_solar
             }
         }
-        return Pair.create(toDate(date), summary)
+        return Pair.create(toTime(date), summary)
     }
 
-    protected fun getMidnight(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): Long {
+    protected fun getMidnight(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): KosherDate {
         val opinion = settings.midnight
         val midday = getMidday(cal, settings)
         val nightfall = getNightfall(cal, settings)
@@ -1568,7 +1568,10 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
      *
      * @return the Second Guard.
      */
-    protected fun getMidnightGuard(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): Long {
+    protected fun getMidnightGuard(
+        cal: ComplexZmanimCalendar,
+        settings: ZmanimPreferences
+    ): KosherDate {
         val sunset = getSunset(cal, settings)
         val opinion = settings.guardsCount
         return if (OPINION_4 == opinion) {
@@ -1578,19 +1581,19 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
     }
 
-    protected fun getMidnightGuard3(sunset: Long, sunrise: Long): Long {
-        if (sunset == ZmanimItem.NEVER || sunrise == ZmanimItem.NEVER) {
-            return ZmanimItem.NEVER
+    protected fun getMidnightGuard3(sunset: KosherDate, sunrise: KosherDate): KosherDate {
+        if (sunset.isNever() || sunrise.isNever()) {
+            return NEVER
         }
         val night = sunrise - sunset
         return sunset + night / 3L
     }
 
-    protected fun getMidnightGuard4(sunset: Long, midnight: Long): Long {
-        if (sunset == ZmanimItem.NEVER || midnight == ZmanimItem.NEVER) {
-            return ZmanimItem.NEVER
+    protected fun getMidnightGuard4(sunset: KosherDate, midnight: KosherDate): KosherDate {
+        if (sunset.isNever() || midnight.isNever()) {
+            return NEVER
         }
-        return sunset + (midnight - sunset shr 1)
+        return sunset + (midnight - sunset / 2L)
     }
 
     /**
@@ -1602,7 +1605,10 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
      *
      * @return the Third Guard.
      */
-    protected fun getMorningGuard(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): Long {
+    protected fun getMorningGuard(
+        cal: ComplexZmanimCalendar,
+        settings: ZmanimPreferences
+    ): KosherDate {
         val sunrise = getSunriseTomorrow(cal, settings)
         val opinion = settings.guardsCount
         return if (OPINION_4 == opinion) {
@@ -1612,31 +1618,27 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
     }
 
-    protected fun getMorningGuard3(sunset: Long, sunrise: Long): Long {
-        if (sunset == ZmanimItem.NEVER || sunrise == ZmanimItem.NEVER) {
-            return ZmanimItem.NEVER
+    protected fun getMorningGuard3(sunset: KosherDate, sunrise: KosherDate): KosherDate {
+        if (sunset.isNever() || sunrise.isNever()) {
+            return NEVER
         }
         val night = sunrise - sunset
-        return sunset + (night shl 1) / 3L //sunset + (night * 2 / 3)
+        return sunset + (night * 2) / 3L //sunset + (night * 2 / 3)
     }
 
-    protected fun getMorningGuard4(midnight: Long, sunrise: Long): Long {
-        if (midnight == ZmanimItem.NEVER || sunrise == ZmanimItem.NEVER) {
-            return ZmanimItem.NEVER
+    protected fun getMorningGuard4(midnight: KosherDate, sunrise: KosherDate): KosherDate {
+        if (midnight.isNever() || sunrise.isNever()) {
+            return NEVER
         }
-        return midnight + (sunrise - midnight shr 1)
+        return midnight + (sunrise - midnight / 2)
     }
 
-    protected fun getSofZmanBiurChametz(startOfDay: Long, shaahZmanis: Long): Long {
+    protected fun getSofZmanBiurChametz(startOfDay: KosherDate, shaahZmanis: Long): KosherDate {
         return AstronomicalCalendar.getTimeOffset(startOfDay, shaahZmanis * 5)
     }
 
-    private fun toDate(date: Long?): Long {
-        return date ?: ZmanimItem.NEVER
-    }
-
-    protected fun isDate(date: Long?): Boolean {
-        return date != null && date != ZmanimItem.NEVER
+    private fun toTime(date: KosherDate): KosherDate {
+        return date ?: NEVER
     }
 
     private fun cloneZmanimTomorrow(cal: ComplexZmanimCalendar): ComplexZmanimCalendar {

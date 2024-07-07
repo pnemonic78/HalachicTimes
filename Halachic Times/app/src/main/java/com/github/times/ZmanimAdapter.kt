@@ -158,6 +158,23 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     )
 
     /**
+     * Adds the item to the array for a valid time.
+     *
+     * @param titleId    the title label id.
+     * @param summaryId  the summary label id.
+     * @param date       the date with milliseconds.
+     * @param jewishDate the Jewish date.
+     * @param remote     hide elapsed times for remote view?
+     */
+    fun add(
+        @StringRes titleId: Int,
+        @StringRes summaryId: Int,
+        date: KosherDate,
+        jewishDate: JewishDate?,
+        remote: Boolean = false
+    ) = add(titleId, summaryId, date?.time, jewishDate, remote)
+
+    /**
      * Adds the item to the array for a valid date.
      *
      * @param titleId    the row layout id.
@@ -175,13 +192,13 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
         remote: Boolean,
         hour: Boolean = (titleId == R.string.hour)
     ) {
-        if ((time == null) || (time == ZmanimItem.NEVER)) {
+        if (!time.isTime) {
             return
         }
         val now = now
         val title: CharSequence = context.getString(titleId)
 
-        ZmanimItem(titleId, title, time).apply {
+        ZmanimItem(titleId, title, time!!).apply {
             this.summary = summary
             this.jewishDate = jewishDate
             this.isEmphasis = settings.isEmphasis(titleId)
@@ -194,6 +211,25 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
             add(this)
         }
     }
+
+    /**
+     * Adds the item to the array for a valid date.
+     *
+     * @param titleId    the row layout id.
+     * @param summary    the summary label.
+     * @param date       the date with milliseconds.
+     * @param jewishDate the Jewish date.
+     * @param remote     hide elapsed times for remote view?
+     * @param hour       format as hour?
+     */
+    fun add(
+        @StringRes titleId: Int,
+        summary: CharSequence?,
+        date: KosherDate,
+        jewishDate: JewishDate?,
+        remote: Boolean,
+        hour: Boolean = (titleId == R.string.hour)
+    ) = add(titleId, summary, date?.time, jewishDate, remote, hour)
 
     /**
      * Adds the item to the array for a valid time.
