@@ -41,16 +41,7 @@ class GeocodingResultSerializer : KSerializer<GeocodingResult> {
     override fun deserialize(decoder: Decoder): GeocodingResult {
         val result = GeocodingResult()
         decoder.decodeStructure(descriptor) {
-            if (decodeSequentially()) {
-                result.addressComponents = decodeSerializableElement(descriptor, 0, addressComponentsSerializer)
-                result.formattedAddress = decodeStringElement(descriptor, 1)
-                result.geometry = decodeSerializableElement(descriptor, 2, geometrySerializer)
-                result.partialMatch = decodeBooleanElement(descriptor, 3)
-                result.placeId = decodeStringElement(descriptor, 4)
-                result.plusCode = decodeSerializableElement(descriptor, 5, plusCodeSerializer)
-                result.postcodeLocalities = decodeSerializableElement(descriptor, 6, formattedAddressesSerializer)
-                result.types = decodeSerializableElement(descriptor, 7, typesSerializer)
-            } else while (true) {
+            while (true) {
                 when (val index = decodeElementIndex(descriptor)) {
                     0 -> result.addressComponents = decodeSerializableElement(descriptor, 0, addressComponentsSerializer)
                     1 -> result.formattedAddress = decodeStringElement(descriptor, 1)

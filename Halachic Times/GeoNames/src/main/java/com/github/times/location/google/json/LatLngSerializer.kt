@@ -22,10 +22,7 @@ class LatLngSerializer : KSerializer<LatLng> {
     override fun deserialize(decoder: Decoder): LatLng {
         val result = LatLng()
         decoder.decodeStructure(descriptor) {
-            if (decodeSequentially()) {
-                result.lat = decodeDoubleElement(descriptor, 0)
-                result.lng = decodeDoubleElement(descriptor, 1)
-            } else while (true) {
+            while (true) {
                 when (val index = decodeElementIndex(descriptor)) {
                     0 -> result.lat = decodeDoubleElement(descriptor, 0)
                     1 -> result.lng = decodeDoubleElement(descriptor, 1)

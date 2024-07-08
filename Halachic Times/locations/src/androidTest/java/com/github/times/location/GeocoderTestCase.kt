@@ -24,7 +24,6 @@ import com.github.times.location.country.CountriesGeocoder
 import com.github.times.location.geonames.GeoNamesGeocoder
 import com.github.times.location.google.GoogleGeocoder
 import com.github.times.location.test.R
-import java.io.InputStream
 import java.util.Locale
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -99,7 +98,7 @@ class GeocoderTestCase : BaseTests() {
         assertNotNull(parser)
         val maxResults = 10
 
-        val input = context.resources.openRawResource(R.raw.google_bar_yohai)
+        val input = context.resources.openRawResource(R.raw.google_bar_yohai).buffered()
         assertNotNull(input)
         val results = parser.parse(input, maxResults, locale)
         input.close()

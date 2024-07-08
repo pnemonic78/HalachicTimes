@@ -29,11 +29,7 @@ class AddressComponentSerializer : KSerializer<AddressComponent?> {
         if (decoder.decodeNotNullMark()) {
             val result = AddressComponent()
             decoder.decodeStructure(descriptor) {
-                if (decodeSequentially()) {
-                    result.longName = decodeStringElement(descriptor, 0)
-                    result.shortName = decodeStringElement(descriptor, 1)
-                    result.types = decodeSerializableElement(descriptor, 2, typesSerializer)
-                } else while (true) {
+                while (true) {
                     when (val index = decodeElementIndex(descriptor)) {
                         0 -> result.longName = decodeStringElement(descriptor, 0)
                         1 -> result.shortName = decodeStringElement(descriptor, 1)

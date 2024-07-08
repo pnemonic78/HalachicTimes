@@ -1,16 +1,13 @@
 package com.github.times.location.google.json
 
 import com.google.maps.model.Geometry
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.encoding.decodeStructure
 
-@OptIn(ExperimentalSerializationApi::class)
 class GeometrySerializer : KSerializer<Geometry> {
 
     private val boundsSerializer = BoundsSerializer()
@@ -27,12 +24,7 @@ class GeometrySerializer : KSerializer<Geometry> {
     override fun deserialize(decoder: Decoder): Geometry {
         val result = Geometry()
         decoder.decodeStructure(descriptor) {
-            if (decodeSequentially()) {
-                result.bounds = decodeSerializableElement(descriptor, 0, boundsSerializer)
-                result.location = decodeSerializableElement(descriptor, 1, latLngSerializer)
-                result.locationType = decodeSerializableElement(descriptor, 2, locationTypeSerializer)
-                result.viewport = decodeSerializableElement(descriptor, 3, boundsSerializer)
-            } else while (true) {
+            while (true) {
                 when (val index = decodeElementIndex(descriptor)) {
                     0 -> result.bounds = decodeSerializableElement(descriptor, 0, boundsSerializer)
                     1 -> result.location = decodeSerializableElement(descriptor, 1, latLngSerializer)
