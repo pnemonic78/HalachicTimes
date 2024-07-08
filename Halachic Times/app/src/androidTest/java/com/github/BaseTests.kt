@@ -6,7 +6,7 @@ import com.github.util.applyLocale
 import java.util.Locale
 
 open class BaseTests {
-    protected val context= ApplicationProvider.getApplicationContext<Context>().apply {
+    protected val context: Context = ApplicationProvider.getApplicationContext<Context>().apply {
         applyLocale(Locale.US)
     }
 }

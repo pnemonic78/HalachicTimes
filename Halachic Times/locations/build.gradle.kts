@@ -22,7 +22,6 @@ android {
         minSdk = BuildVersions.minSdkVersion
         targetSdk = BuildVersions.targetSdkVersion
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testApplicationId = "$namespace.test"
 
         encodeApiKey("BING_API_KEY")
         encodeApiKey("GEONAMES_USERNAME")
@@ -47,21 +46,13 @@ android {
     productFlavors {
         create(Flavors.Internet.online) {
             dimension = Flavors.Internet.dimension
-            buildConfigField(
-                "Boolean",
-                "INTERNET",
-                "true"
-            )
+            buildConfigField("Boolean", "INTERNET", "true")
             isDefault = true
         }
 
         create(Flavors.Internet.offline) {
             dimension = Flavors.Internet.dimension
-            buildConfigField(
-                "Boolean",
-                "INTERNET",
-                "false"
-            )
+            buildConfigField("Boolean", "INTERNET", "false")
         }
     }
 

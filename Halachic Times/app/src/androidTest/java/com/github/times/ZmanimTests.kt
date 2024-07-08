@@ -1,6 +1,5 @@
 package com.github.times
 
-import android.provider.Settings
 import android.text.format.DateFormat
 import android.text.format.DateUtils
 import com.github.BaseTests
@@ -20,11 +19,9 @@ import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
 import kotlin.math.absoluteValue
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
-import org.junit.Before
 import org.junit.Test
 
 class ZmanimTests : BaseTests() {
