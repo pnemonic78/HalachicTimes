@@ -42,10 +42,10 @@ class BingGeocoder(locale: Locale) : GeocoderBase(locale) {
         latitude: Double,
         longitude: Double,
         maxResults: Int
-    ): List<Address>? {
+    ): List<Address> {
         require(latitude in LATITUDE_MIN..LATITUDE_MAX) { "latitude == $latitude" }
         require(longitude in LONGITUDE_MIN..LONGITUDE_MAX) { "longitude == $longitude" }
-        if (API_KEY.isNullOrEmpty()) return null
+        if (API_KEY.isEmpty()) return emptyList()
         val queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, language, API_KEY)
         return getJsonAddressesFromURL(latitude, longitude, queryUrl, maxResults)
     }
@@ -58,7 +58,7 @@ class BingGeocoder(locale: Locale) : GeocoderBase(locale) {
     override fun getElevation(latitude: Double, longitude: Double): Location? {
         require(latitude in LATITUDE_MIN..LATITUDE_MAX) { "latitude == $latitude" }
         require(longitude in LONGITUDE_MIN..LONGITUDE_MAX) { "longitude == $longitude" }
-        if (API_KEY.isNullOrEmpty()) return null
+        if (API_KEY.isEmpty()) return null
         val queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude, API_KEY)
         return getJsonElevationFromURL(latitude, longitude, queryUrl)
     }

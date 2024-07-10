@@ -42,17 +42,17 @@ class GoogleGeocoder(locale: Locale) : GeocoderBase(locale) {
         latitude: Double,
         longitude: Double,
         maxResults: Int
-    ): List<Address>? {
+    ): List<Address> {
         require(latitude in LATITUDE_MIN..LATITUDE_MAX) { "latitude == $latitude" }
         require(longitude in LONGITUDE_MIN..LONGITUDE_MAX) { "longitude == $longitude" }
-        if (API_KEY.isNullOrEmpty()) return null
+        if (API_KEY.isEmpty()) return emptyList()
         val queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, language, API_KEY)
         return getJsonAddressesFromURL(latitude, longitude, queryUrl, maxResults)
     }
 
     @Throws(IOException::class)
-    override fun getFromLocationName(locationName: String, maxResults: Int): List<Address>? {
-        if (API_KEY.isNullOrEmpty()) return null
+    override fun getFromLocationName(locationName: String, maxResults: Int): List<Address> {
+        if (API_KEY.isEmpty()) return emptyList()
         val queryUrl = String.format(
             Locale.US,
             URL_ADDRESS,
@@ -68,12 +68,12 @@ class GoogleGeocoder(locale: Locale) : GeocoderBase(locale) {
         locationName: String, maxResults: Int,
         lowerLeftLatitude: Double, lowerLeftLongitude: Double,
         upperRightLatitude: Double, upperRightLongitude: Double
-    ): List<Address>? {
+    ): List<Address> {
         require(lowerLeftLatitude in LATITUDE_MIN..LATITUDE_MAX) { "lowerLeftLatitude == $lowerLeftLatitude" }
         require(lowerLeftLongitude in LONGITUDE_MIN..LONGITUDE_MAX) { "lowerLeftLongitude == $lowerLeftLongitude" }
         require(upperRightLatitude in LATITUDE_MIN..LATITUDE_MAX) { "upperRightLatitude == $upperRightLatitude" }
         require(upperRightLongitude in LONGITUDE_MIN..LONGITUDE_MAX) { "upperRightLongitude == $upperRightLongitude" }
-        if (API_KEY.isNullOrEmpty()) return null
+        if (API_KEY.isEmpty()) return emptyList()
         val queryUrl = String.format(
             Locale.US,
             URL_ADDRESS_BOUNDED,
@@ -99,7 +99,7 @@ class GoogleGeocoder(locale: Locale) : GeocoderBase(locale) {
     override fun getElevation(latitude: Double, longitude: Double): Location? {
         require(latitude in LATITUDE_MIN..LATITUDE_MAX) { "latitude == $latitude" }
         require(longitude in LONGITUDE_MIN..LONGITUDE_MAX) { "longitude == $longitude" }
-        if (API_KEY.isNullOrEmpty()) return null
+        if (API_KEY.isEmpty()) return null
         val queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude, API_KEY)
         return getJsonElevationFromURL(latitude, longitude, queryUrl)
     }

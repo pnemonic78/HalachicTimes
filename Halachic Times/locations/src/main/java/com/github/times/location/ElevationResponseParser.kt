@@ -16,6 +16,7 @@
 package com.github.times.location
 
 import android.location.Location
+import androidx.annotation.FloatRange
 import java.io.IOException
 import java.io.InputStream
 
@@ -39,8 +40,8 @@ abstract class ElevationResponseParser {
     @Throws(LocationException::class, IOException::class)
     abstract fun parse(
         data: InputStream,
-        latitude: Double,
-        longitude: Double,
+        @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) longitude: Double,
         maxResults: Int
     ): List<Location>
 }

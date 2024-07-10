@@ -41,10 +41,10 @@ class GeoNamesGeocoder(locale: Locale) : GeocoderBase(locale) {
         latitude: Double,
         longitude: Double,
         maxResults: Int
-    ): List<Address>? {
+    ): List<Address> {
         require(latitude in LATITUDE_MIN..LATITUDE_MAX) { "latitude == $latitude" }
         require(longitude in LONGITUDE_MIN..LONGITUDE_MAX) { "longitude == $longitude" }
-        if (USERNAME.isNullOrEmpty()) return null
+        if (USERNAME.isEmpty()) return emptyList()
         val queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, language, USERNAME)
         return getJsonAddressesFromURL(latitude, longitude, queryUrl, maxResults)
     }

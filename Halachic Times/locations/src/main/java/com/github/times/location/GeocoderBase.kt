@@ -18,6 +18,7 @@ package com.github.times.location
 import android.location.Address
 import android.location.Location
 import android.util.Base64
+import androidx.annotation.FloatRange
 import com.github.net.HTTPReader
 import com.github.net.HTTPReader.read
 import com.github.util.LocaleUtils
@@ -60,16 +61,16 @@ abstract class GeocoderBase(protected val locale: Locale) {
      * @param longitude  the longitude a point for the search.
      * @param maxResults maximum number of addresses to return. Smaller numbers (1 to
      * 5) are recommended.
-     * @return a list of addresses. Returns `null` or empty list if no
+     * @return a list of addresses. Returns empty list if no
      * matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
     @Throws(IOException::class)
     abstract fun getFromLocation(
-        latitude: Double,
-        longitude: Double,
+        @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) longitude: Double,
         maxResults: Int
-    ): List<Address>?
+    ): List<Address>
 
     /**
      * Returns an array of Addresses that are known to describe the named
@@ -87,13 +88,13 @@ abstract class GeocoderBase(protected val locale: Locale) {
      * @param locationName a user-supplied description of a location.
      * @param maxResults   max number of addresses to return. Smaller numbers (1 to 5)
      * are recommended.
-     * @return a list of addresses. Returns `null` or empty list if no
+     * @return a list of addresses. Returns empty list if no
      * matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
     @Throws(IOException::class)
-    open fun getFromLocationName(locationName: String, maxResults: Int): List<Address>? {
-        return null
+    open fun getFromLocationName(locationName: String, maxResults: Int): List<Address> {
+        return emptyList()
     }
 
     /**
@@ -121,7 +122,7 @@ abstract class GeocoderBase(protected val locale: Locale) {
      * @param lowerLeftLongitude  the longitude of the lower left corner of the bounding box.
      * @param upperRightLatitude  the latitude of the upper right corner of the bounding box.
      * @param upperRightLongitude the longitude of the upper right corner of the bounding box.
-     * @return a list of addresses. Returns `null` or empty list if no
+     * @return a list of addresses. Returns empty list if no
      * matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
@@ -129,16 +130,16 @@ abstract class GeocoderBase(protected val locale: Locale) {
     open fun getFromLocationName(
         locationName: String,
         maxResults: Int,
-        lowerLeftLatitude: Double,
-        lowerLeftLongitude: Double,
-        upperRightLatitude: Double,
-        upperRightLongitude: Double
-    ): List<Address?>? {
+        @FloatRange(from = -90.0, to = 90.0) lowerLeftLatitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) lowerLeftLongitude: Double,
+        @FloatRange(from = -90.0, to = 90.0) upperRightLatitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) upperRightLongitude: Double
+    ): List<Address?> {
         require(lowerLeftLatitude in LATITUDE_MIN..LATITUDE_MAX) { "lowerLeftLatitude == $lowerLeftLatitude" }
         require(lowerLeftLongitude in LONGITUDE_MIN..LONGITUDE_MAX) { "lowerLeftLongitude == $lowerLeftLongitude" }
         require(upperRightLatitude in LATITUDE_MIN..LATITUDE_MAX) { "upperRightLatitude == $upperRightLatitude" }
         require(upperRightLongitude in LONGITUDE_MIN..LONGITUDE_MAX) { "upperRightLongitude == $upperRightLongitude" }
-        return null
+        return emptyList()
     }
 
     /**
@@ -148,17 +149,17 @@ abstract class GeocoderBase(protected val locale: Locale) {
      * @param longitude  the requested longitude.
      * @param queryUrl   the URL.
      * @param maxResults the maximum number of results.
-     * @return a list of addresses. Returns `null` or empty list if no
+     * @return a list of addresses. Returns empty list if no
      * matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
     @Throws(IOException::class)
     protected fun getJsonAddressesFromURL(
-        latitude: Double,
-        longitude: Double,
+        @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) longitude: Double,
         queryUrl: String,
         maxResults: Int
-    ): List<Address>? {
+    ): List<Address> {
         val url = URL(queryUrl)
         read(url, HTTPReader.CONTENT_JSON).use { data ->
             return parseAddresses(
@@ -179,21 +180,21 @@ abstract class GeocoderBase(protected val locale: Locale) {
      * @param longitude  the requested longitude.
      * @param locale     the locale.
      * @param maxResults the maximum number of results.
-     * @return a list of addresses. Returns `null` or empty list if no
+     * @return a list of addresses. Returns empty list if no
      * matches were found or there is no backend service available.
      * @throws IOException if an I/O error occurs.
      */
     @Throws(IOException::class)
     protected fun parseAddresses(
         data: InputStream?,
-        latitude: Double,
-        longitude: Double,
+        @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) longitude: Double,
         locale: Locale,
         maxResults: Int
-    ): List<Address>? {
+    ): List<Address> {
         // Minimum length for either "<>" or "{}"
         if (data == null || data.available() <= 2) {
-            return null
+            return emptyList()
         }
         val parser = addressResponseParser
         return parser.parse(data, latitude, longitude, maxResults, locale)
@@ -233,7 +234,10 @@ abstract class GeocoderBase(protected val locale: Locale) {
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
     @Throws(IOException::class)
-    abstract fun getElevation(latitude: Double, longitude: Double): Location?
+    abstract fun getElevation(
+        @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) longitude: Double
+    ): Location?
 
     /**
      * Parse the XML response for an elevation.
@@ -247,8 +251,8 @@ abstract class GeocoderBase(protected val locale: Locale) {
      */
     @Throws(LocationException::class, IOException::class)
     protected fun parseElevation(
-        latitude: Double,
-        longitude: Double,
+        @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) longitude: Double,
         data: InputStream?
     ): Location? {
         // Minimum length for either "<>" or "{}"
@@ -271,8 +275,8 @@ abstract class GeocoderBase(protected val locale: Locale) {
      */
     @Throws(IOException::class)
     protected fun getTextElevationFromURL(
-        latitude: Double,
-        longitude: Double,
+        @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) longitude: Double,
         queryUrl: String
     ): Location? {
         val url = URL(queryUrl)
@@ -290,8 +294,8 @@ abstract class GeocoderBase(protected val locale: Locale) {
      */
     @Throws(IOException::class)
     protected fun getJsonElevationFromURL(
-        latitude: Double,
-        longitude: Double,
+        @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) longitude: Double,
         queryUrl: String
     ): Location? {
         val url = URL(queryUrl)

@@ -97,7 +97,7 @@ class AddressProvider @JvmOverloads constructor(
         }
         val forceFetch = location.extras?.getBoolean(PARAMETER_FORCE, FORCE_DEFAULT).isTrue
 
-        var addresses: List<Address>?
+        var addresses: List<Address>
         var best: Address?
         var bestPlateau: Address? = null
         var bestCached: Address? = null
@@ -165,7 +165,7 @@ class AddressProvider @JvmOverloads constructor(
                         "Address geocoder: $geocoder error: ${e.message} at $latitude,$longitude"
                     )
                     continue
-                } ?: continue
+                }
                 best = findBestAddress(location, addresses, GeocoderBase.SAME_PLATEAU)
                 if (best != null && compare(best, bestPlateau) != 0) {
                     bestPlateau = best
@@ -201,14 +201,14 @@ class AddressProvider @JvmOverloads constructor(
      * @param location the location.
      * @return the list of addresses.
      */
-    private fun findNearestAddressGeocoder(location: Location): List<Address>? {
+    private fun findNearestAddressGeocoder(location: Location): List<Address> {
         val latitude = location.latitude
         val longitude = location.longitude
         try {
-            return geocoder.getFromLocation(latitude, longitude, 5)
+            return geocoder.getFromLocation(latitude, longitude, 5) ?: emptyList()
         } catch (ignore: Exception) {
         }
-        return null
+        return emptyList()
     }
 
     /**
@@ -227,26 +227,15 @@ class AddressProvider @JvmOverloads constructor(
      *
      * @param location  the location.
      * @param addresses the list of addresses.
-     * @return the best address - `null` otherwise.
-     */
-    internal fun findBestAddress(location: Location, addresses: List<Address>?): Address? {
-        return findBestAddress(location, addresses, GeocoderBase.SAME_CITY)
-    }
-
-    /**
-     * Find the best address by checking relevant fields.
-     *
-     * @param location  the location.
-     * @param addresses the list of addresses.
      * @param radius    the maximum radius.
      * @return the best address - `null` otherwise.
      */
     internal fun findBestAddress(
         location: Location,
-        addresses: List<Address>?,
+        addresses: List<Address>,
         radius: Float
     ): Address? {
-        if (addresses.isNullOrEmpty()) {
+        if (addresses.isEmpty()) {
             return null
         }
 
@@ -303,7 +292,7 @@ class AddressProvider @JvmOverloads constructor(
      * @param location the location.
      * @return the list of addresses.
      */
-    private fun findNearestAddressDatabase(location: Location): List<Address>? {
+    private fun findNearestAddressDatabase(location: Location): List<Address> {
         val latitude = location.latitude
         val longitude = location.longitude
         val geocoder: GeocoderBase = geocoderDatabase
@@ -312,7 +301,7 @@ class AddressProvider @JvmOverloads constructor(
         } catch (e: Exception) {
             Timber.e(e, "Database geocoder: ${e.message} at $latitude,$longitude")
         }
-        return null
+        return emptyList()
     }
 
     /**
@@ -341,12 +330,12 @@ class AddressProvider @JvmOverloads constructor(
      * @param location the location.
      * @return the list of addresses with at most 1 entry.
      */
-    private fun findNearestCountries(location: Location): List<Address>? {
+    private fun findNearestCountries(location: Location): List<Address> {
         val country: Address? = geocoderCountries.findCountry(location)
         if (country != null) {
             return listOf(country)
         }
-        return null
+        return emptyList()
     }
 
     /**
@@ -358,17 +347,16 @@ class AddressProvider @JvmOverloads constructor(
      * @param location the location.
      * @return the list of addresses with at most 1 entry.
      */
-    private fun findNearestCity(location: Location): List<Address>? {
+    private fun findNearestCity(location: Location): List<Address> {
         val latitude = location.latitude
         val longitude = location.longitude
-        var addresses: List<Address>? = null
         val geocoder: GeocoderBase = geocoderCountries
         try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 10)
+            return geocoder.getFromLocation(latitude, longitude, 10)
         } catch (e: Exception) {
             Timber.e(e, "City: ${e.message} at $latitude,$longitude")
         }
-        return addresses
+        return emptyList()
     }
 
     /**

@@ -17,6 +17,7 @@ package com.github.times.location
 
 import android.location.Address
 import android.location.Location
+import androidx.annotation.FloatRange
 
 /**
  * Location formatter.
@@ -53,7 +54,11 @@ interface LocationFormatter {
      * the elevation or altitude.
      * @return the coordinates text.
      */
-    fun formatCoordinates(latitude: Double, longitude: Double, elevation: Double): String
+    fun formatCoordinates(
+        @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) longitude: Double,
+        elevation: Double
+    ): String
 
     /**
      * Format a latitude coordinate.
@@ -62,7 +67,7 @@ interface LocationFormatter {
      * the coordinate.
      * @return the coordinate text.
      */
-    fun formatLatitude(latitude: Double): String
+    fun formatLatitude(@FloatRange(from = -90.0, to = 90.0) latitude: Double): String
 
     /**
      * Format a latitude coordinate using the decimal notation.
@@ -71,7 +76,7 @@ interface LocationFormatter {
      * the coordinate.
      * @return the coordinate text.
      */
-    fun formatLatitudeDecimal(latitude: Double): String
+    fun formatLatitudeDecimal(@FloatRange(from = -90.0, to = 90.0) latitude: Double): String
 
     /**
      * Format a latitude coordinate using the sexagesimal notation.
@@ -80,7 +85,7 @@ interface LocationFormatter {
      * the coordinate.
      * @return the coordinate text.
      */
-    fun formatLatitudeSexagesimal(latitude: Double): String
+    fun formatLatitudeSexagesimal(@FloatRange(from = -90.0, to = 90.0) latitude: Double): String
 
     /**
      * Format a longitude coordinate.
@@ -89,7 +94,7 @@ interface LocationFormatter {
      * the coordinate.
      * @return the coordinate text.
      */
-    fun formatLongitude(longitude: Double): String
+    fun formatLongitude(@FloatRange(from = -180.0, to = 180.0) longitude: Double): String
 
     /**
      * Format a longitude coordinate using the decimal notation.
@@ -98,7 +103,7 @@ interface LocationFormatter {
      * the coordinate.
      * @return the coordinate text.
      */
-    fun formatLongitudeDecimal(longitude: Double): String
+    fun formatLongitudeDecimal(@FloatRange(from = -180.0, to = 180.0) longitude: Double): String
 
     /**
      * Format a longitude coordinate using the sexagesimal notation.
@@ -107,7 +112,7 @@ interface LocationFormatter {
      * the coordinate.
      * @return the coordinate text.
      */
-    fun formatLongitudeSexagesimal(longitude: Double): String
+    fun formatLongitudeSexagesimal(@FloatRange(from = -180.0, to = 180.0) longitude: Double): String
 
     /**
      * Format an elevation.

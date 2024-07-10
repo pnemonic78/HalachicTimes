@@ -22,6 +22,7 @@ import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.FloatRange
 import com.github.os.VibratorCompat
 import com.github.times.compass.lib.databinding.HolyCompassFragmentBinding
 import com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE
@@ -87,7 +88,11 @@ open class HolyCompassFragment : CompassFragment() {
         _binding?.compass?.setHoliest(bearing)
     }
 
-    fun setHoliest(latitude: Double, longitude: Double, elevation: Double) {
+    fun setHoliest(
+        @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) longitude: Double,
+        elevation: Double
+    ) {
         holiest.latitude = latitude
         holiest.longitude = longitude
         holiest.altitude = elevation

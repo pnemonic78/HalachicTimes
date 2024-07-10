@@ -16,6 +16,7 @@
 package com.github.times.location
 
 import android.location.Address
+import androidx.annotation.FloatRange
 import java.io.IOException
 import java.io.InputStream
 import java.util.Locale
@@ -56,8 +57,8 @@ abstract class AddressResponseParser {
     @Throws(LocationException::class, IOException::class)
     abstract fun parse(
         data: InputStream,
-        latitude: Double,
-        longitude: Double,
+        @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+        @FloatRange(from = -180.0, to = 180.0) longitude: Double,
         maxResults: Int,
         locale: Locale
     ): List<Address>

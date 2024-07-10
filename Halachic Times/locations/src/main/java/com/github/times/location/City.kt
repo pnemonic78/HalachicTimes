@@ -18,10 +18,10 @@ package com.github.times.location
 import android.location.Address
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.FloatRange
 import com.github.times.location.country.CountryPolygon
 import java.util.Locale
 import java.util.TimeZone
-import kotlin.math.round
 
 /**
  * City that is stored in the application binary.
@@ -53,7 +53,7 @@ class City : ZmanimAddress {
             return generateCityId(city.latitude, city.longitude)
         }
 
-        fun generateCityId(latitude: Double, longitude: Double): Long {
+        fun generateCityId(@FloatRange(from = -90.0, to = 90.0) latitude: Double, @FloatRange(from = -180.0, to = 180.0) longitude: Double): Long {
             val fixedPointLatitude = CountryPolygon.toFixedPoint(latitude).toLong() and 0x7FFFFFFFL
             val fixedPointLongitude = CountryPolygon.toFixedPoint(longitude).toLong() and 0xFFFFFFFFL
             return (fixedPointLatitude shl 31) or fixedPointLongitude
