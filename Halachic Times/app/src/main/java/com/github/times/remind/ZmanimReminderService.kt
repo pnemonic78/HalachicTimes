@@ -133,7 +133,7 @@ class ZmanimReminderService : Service() {
 
             // Handler high priority actions immediately.
             if (ACTION_CANCEL == action) {
-                WorkManager.getInstance(context).cancelAllWork()
+//  FIXME              WorkManager.getInstance(context).cancelAllWork()
                 processReminder(context, intent)
                 return
             }

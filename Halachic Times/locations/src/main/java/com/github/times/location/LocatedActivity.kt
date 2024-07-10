@@ -138,7 +138,7 @@ abstract class LocatedActivity<P : ThemePreferences> : AppCompatActivity(),
     }
 
     override fun onAddressChanged(location: Location, address: ZmanimAddress) {
-        Timber.v("onAddressChanged %s %s", location, address)
+        Timber.v("onAddressChanged %s", address)
         addressLocation = location
         this.address = address
         runOnUiThread(bindHeader)

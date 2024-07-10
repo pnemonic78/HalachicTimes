@@ -68,7 +68,7 @@ class ZmanimReminderWorker(context: Context, params: WorkerParameters) : Worker(
 
         private fun putExtrasLocation(extras: Bundle, data: Data.Builder) {
             LocationData.from(extras, ZmanimLocationListener.EXTRA_LOCATION)?.also {
-                LocationData.writeToData(data, ZmanimLocationListener.EXTRA_LOCATION, it)
+                LocationData.put(data, ZmanimLocationListener.EXTRA_LOCATION, it)
             }
         }
 

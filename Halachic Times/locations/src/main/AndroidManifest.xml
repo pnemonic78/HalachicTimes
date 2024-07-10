@@ -24,11 +24,6 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name="com.github.times.location.AddressService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
         <provider
             android:name="com.github.times.location.provider.LocationContentProvider"
             android:authorities="${applicationId}.locations"

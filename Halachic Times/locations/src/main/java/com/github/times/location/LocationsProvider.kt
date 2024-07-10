@@ -37,16 +37,16 @@ import android.text.format.DateUtils
 import androidx.annotation.RequiresApi
 import androidx.core.content.PermissionChecker
 import com.github.lang.isTrue
-import com.github.times.location.AddressService.Companion.enqueueWork
+import com.github.times.location.AddressWorker.Companion.enqueueAddress
+import com.github.times.location.AddressWorker.Companion.enqueueElevation
 import com.github.times.location.ZmanimLocation.Companion.compare
 import com.github.times.location.ZmanimLocation.Companion.compareAll
 import com.github.times.location.ZmanimLocation.Companion.distanceBetween
 import com.github.times.location.ZmanimLocationListener.Companion.ACTION_ADDRESS
 import com.github.times.location.ZmanimLocationListener.Companion.ACTION_ELEVATION
 import com.github.times.location.ZmanimLocationListener.Companion.ACTION_LOCATION_CHANGED
-import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_FORCE
+import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_ADDRESS
 import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_LOCATION
-import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_PERSIST
 import com.github.times.location.country.CountriesGeocoder
 import java.util.TimeZone
 import java.util.concurrent.CopyOnWriteArrayList
@@ -762,20 +762,14 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     }
 
     fun findAddress(location: Location, persist: Boolean = true, force: Boolean = false) {
-        val findAddress = Intent(ACTION_ADDRESS)
-            .putExtra(EXTRA_FORCE, force)
-            .putExtra(EXTRA_LOCATION, location)
-            .putExtra(EXTRA_PERSIST, persist)
-        enqueueWork(context, findAddress)
+        enqueueAddress(context, location, persist, force)
     }
 
     fun findElevation(location: Location) {
         if (location.hasAltitude()) {
             return
         }
-        val findElevation = Intent(ACTION_ELEVATION)
-            .putExtra(EXTRA_LOCATION, location)
-        enqueueWork(context, findElevation)
+        enqueueElevation(context, location)
     }
 
     /**
@@ -818,7 +812,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
                     }
                     val location = LocationData.from(intentExtras, EXTRA_LOCATION)
                     if (intentExtras != null) {
-                        address = intentExtras.getAddress(ZmanimLocationListener.EXTRA_ADDRESS)
+                        address = intentExtras.getAddress(EXTRA_ADDRESS)
                     }
                     if (address != null) {
                         address.extras = (address.extras ?: Bundle()).apply {

@@ -17,7 +17,6 @@ package com.github.times.location
 
 import android.app.job.JobService
 import android.content.ComponentName
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -30,25 +29,6 @@ import org.junit.Assert.assertNotNull
 import org.junit.Test
 
 class AddressTests : BaseTests() {
-    /**
-     * Test job service.
-     * [com.android.server.job.JobSchedulerService.JobSchedulerStub.enforceValidJobRequest]
-     */
-    @Test
-    fun testEnforceValidJobRequest() {
-        assertNotNull(context)
-        val clazz: Class<*> = AddressService::class.java
-        val service = ComponentName(context, clazz)
-        val pm = context.packageManager
-        assertNotNull(pm)
-        val si = pm.getServiceInfo(
-            service, PackageManager.MATCH_DIRECT_BOOT_AWARE
-                or PackageManager.MATCH_DIRECT_BOOT_UNAWARE
-        )
-        assertNotNull(si)
-        assertEquals(JobService.PERMISSION_BIND, si.permission)
-    }
-
     /**
      * Test address service.
      */
@@ -72,9 +52,6 @@ class AddressTests : BaseTests() {
             }
             elapsedRealtimeNanos = TimeUnit.MILLISECONDS.toNanos(ms)
         }
-        val findAddress = Intent(ZmanimLocationListener.ACTION_ADDRESS)
-            .putExtra(ZmanimLocationListener.EXTRA_LOCATION, location)
-            .putExtra(ZmanimLocationListener.EXTRA_PERSIST, false)
-        AddressService.enqueueWork(context, findAddress)
+        AddressWorker.enqueueAddress(context, location, persist = false)
     }
 }

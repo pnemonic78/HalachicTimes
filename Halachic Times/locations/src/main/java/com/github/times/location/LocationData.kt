@@ -9,7 +9,7 @@ import com.github.os.getParcelableCompat
 
 object LocationData {
     private const val DATA_LOCATION = "android.location.Location"
-    private const val DATA_KEY_SUFFIX = "/${DATA_LOCATION}"
+    const val DATA_KEY_SUFFIX = "/${DATA_LOCATION}"
     private const val DATA_PREFIX = "${DATA_KEY_SUFFIX}."
     private const val DATA_LATITUDE = DATA_PREFIX + "Latitude"
     private const val DATA_LONGITUDE = DATA_PREFIX + "Longitude"
@@ -27,7 +27,7 @@ object LocationData {
         DATA_PREFIX + "SpeedAccuracyMetersPerSecond"
     private const val DATA_BEARING_ACCURACY_DEGREES = DATA_PREFIX + "BearingAccuracyDegrees"
 
-    fun writeToData(data: Data.Builder, key: String, location: Location) {
+    fun put(data: Data.Builder, key: String, location: Location) {
         data.putString(key + DATA_KEY_SUFFIX, key)
         data.putString(key + DATA_PROVIDER, location.provider)
         data.putLong(key + DATA_TIME, location.time)
@@ -173,4 +173,13 @@ fun Bundle.put(key: String, location: Location) {
 fun Intent.put(key: String, location: Location): Intent {
     LocationData.put(this, key, location)
     return this
+}
+
+fun Data.Builder.putLocation(key: String, location: Location): Data.Builder {
+    LocationData.put(this, key, location)
+    return this
+}
+
+fun Data.getLocation(key: String): Location? {
+    return LocationData.readFromData(this, key + LocationData.DATA_KEY_SUFFIX, mutableListOf())
 }
