@@ -21,8 +21,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.github.times.BuildConfig
 import com.github.times.location.LocationData
 import com.github.times.location.ZmanimLocationListener
 import com.github.times.location.ZmanimLocationListener.Companion.ACTION_LOCATION_CHANGED
@@ -49,6 +52,8 @@ class ZmanimReminderWorker(context: Context, params: WorkerParameters) : Worker(
     companion object {
         private const val DATA_ACTION = "android.intent.action"
         private const val DATA_DATA = "android.intent.data"
+
+        private const val WORK_REMINDER_TAG = BuildConfig.APPLICATION_ID + ":reminder"
 
         fun toWorkData(intent: Intent): Data {
             val data = Data.Builder()
@@ -174,6 +179,20 @@ class ZmanimReminderWorker(context: Context, params: WorkerParameters) : Worker(
                 intent.data = Uri.parse(dataString)
             }
             return intent
+        }
+
+        fun enqueue(context: Context, intent: Intent) {
+            val requestData = toWorkData(intent)
+            val workRequest = OneTimeWorkRequest.Builder(ZmanimReminderWorker::class.java)
+                .setInputData(requestData)
+                .addTag(WORK_REMINDER_TAG)
+                .build()
+
+            WorkManager.getInstance(context).enqueue(workRequest)
+        }
+
+        fun cancel(context: Context) {
+            WorkManager.getInstance(context).cancelAllWorkByTag(WORK_REMINDER_TAG)
         }
     }
 }

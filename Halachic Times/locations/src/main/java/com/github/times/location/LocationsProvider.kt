@@ -232,10 +232,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     }
 
     override fun onAddressChanged(location: Location, address: ZmanimAddress) {
-        if (!isValid(location)) {
-            return
-        }
-        if (!isValid(address)) {
+        if (!isValid(location) || !isValid(address)) {
             return
         }
         for (listener in listeners) {

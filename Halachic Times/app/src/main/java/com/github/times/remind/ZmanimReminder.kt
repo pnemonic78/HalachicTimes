@@ -211,6 +211,7 @@ class ZmanimReminder(private val context: Context) {
         cancelAlarm()
         cancelNotification()
         cancelUpcoming()
+        ZmanimReminderWorker.cancel(context)
     }
 
     private fun cancelAlarm() {

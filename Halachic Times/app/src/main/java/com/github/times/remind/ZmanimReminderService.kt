@@ -25,9 +25,6 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.SystemClock
 import android.text.format.DateUtils
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
-import androidx.work.WorkRequest
 import com.github.times.TimeMillis
 import com.github.times.ZmanimHelper.formatDateTime
 import com.github.times.preference.SimpleZmanimPreferences
@@ -133,7 +130,6 @@ class ZmanimReminderService : Service() {
 
             // Handler high priority actions immediately.
             if (ACTION_CANCEL == action) {
-//  FIXME              WorkManager.getInstance(context).cancelAllWork()
                 processReminder(context, intent)
                 return
             }
@@ -142,13 +138,7 @@ class ZmanimReminderService : Service() {
                 return
             }
 
-            val requestData = ZmanimReminderWorker.toWorkData(intent)
-            val workRequest: WorkRequest =
-                OneTimeWorkRequest.Builder(ZmanimReminderWorker::class.java)
-                    .setInputData(requestData)
-                    .build()
-
-            WorkManager.getInstance(context).enqueue(workRequest)
+            ZmanimReminderWorker.enqueue(context, intent)
         }
 
         private fun processReminder(context: Context, intent: Intent) {
