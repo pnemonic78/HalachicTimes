@@ -69,7 +69,19 @@ class DatabaseGeocoder(
     ): List<Address> {
         require(latitude in LATITUDE_MIN..LATITUDE_MAX) { "latitude == $latitude" }
         require(longitude in LONGITUDE_MIN..LONGITUDE_MAX) { "longitude == $longitude" }
-        val filter: CursorFilter = object : CursorFilter {
+        val filter: CursorFilter = createDistanceFilter(latitude, longitude, SAME_PLATEAU)
+        val q = queryAddresses(filter)
+        Collections.sort(q, DistanceComparator(latitude, longitude))
+        val addresses = q.subList(0, min(maxResults, q.size))
+        return ArrayList<Address>(addresses)
+    }
+
+    private fun createDistanceFilter(
+        latitude: Double,
+        longitude: Double,
+        distanceMax: Float
+    ): CursorFilter {
+        return object : CursorFilter {
             private val distance = FloatArray(1)
 
             override fun accept(cursor: Cursor): Boolean {
@@ -82,7 +94,7 @@ class DatabaseGeocoder(
                     locationLongitude,
                     distance
                 )
-                if (distance[0] <= SAME_PLATEAU) {
+                if (distance[0] <= distanceMax) {
                     return true
                 }
                 val addressLatitude = cursor.getDouble(INDEX_ADDRESS_LATITUDE)
@@ -94,13 +106,9 @@ class DatabaseGeocoder(
                     addressLongitude,
                     distance
                 )
-                return distance[0] <= SAME_PLATEAU
+                return distance[0] <= distanceMax
             }
         }
-        val q = queryAddresses(filter)
-        Collections.sort(q, DistanceComparator(latitude, longitude))
-        val addresses = q.subList(0, min(maxResults, q.size))
-        return ArrayList<Address>(addresses)
     }
 
     override fun createAddressResponseParser(): AddressResponseParser {
@@ -252,7 +260,6 @@ class DatabaseGeocoder(
         if (address is Country) {
             return
         }
-        val insert = id == 0L
         val latitude: Double
         val longitude: Double
         if (location == null) {
@@ -262,6 +269,8 @@ class DatabaseGeocoder(
             latitude = location.latitude
             longitude = location.longitude
         }
+        val addresses = getFromLocation(latitude, longitude, 1)
+        val insert = (id == 0L) && addresses.isEmpty()
         val values = ContentValues().apply {
             if (insert) {
                 put(AddressColumns.LOCATION_LATITUDE, latitude)
