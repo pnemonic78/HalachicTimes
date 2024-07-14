@@ -23,7 +23,6 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.Location
-import android.os.Build
 import android.os.Bundle
 import android.view.Display
 import android.view.LayoutInflater
@@ -31,10 +30,12 @@ import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.github.app.findDisplay
 import com.github.math.toDegrees
 import com.github.times.compass.lib.databinding.CompassFragmentBinding
 import com.github.times.compass.preference.CompassPreferences
 import com.github.times.compass.preference.SimpleCompassPreferences
+import com.github.view.findDisplay
 import kotlin.math.min
 
 /**
@@ -167,18 +168,7 @@ open class CompassFragment : Fragment(), SensorEventListener {
     }
 
     private fun updateRotation(activity: Activity?, view: View?) {
-        var display: Display? = null
-        if (view != null) {
-            display = view.display
-        }
-        if (display == null && activity != null) {
-            display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                activity.display
-            } else {
-                @Suppress("DEPRECATION")
-                activity.windowManager.defaultDisplay
-            }
-        }
+        val display: Display? = activity?.findDisplay() ?: view?.findDisplay()
         if (display != null) {
             displayRotation = display.rotation
         }
