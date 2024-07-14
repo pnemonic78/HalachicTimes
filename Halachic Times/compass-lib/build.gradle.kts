@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk = BuildVersions.compileSdkVersion
+    compileSdk = BuildVersions.compileSdk
     namespace = "com.github.times.compass.lib"
 
     defaultConfig {
-        minSdk = BuildVersions.minSdkVersion
-        targetSdk = BuildVersions.targetSdkVersion
+        minSdk = BuildVersions.minSdk
+        targetSdk = BuildVersions.targetSdk
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -60,9 +60,9 @@ dependencies {
     implementation(project(":locations"))
 
     // Testing
-    testImplementation("junit:junit:${BuildVersions.junitVersion}")
-    androidTestImplementation("androidx.test:core:${BuildVersions.androidTestVersion}")
-    androidTestImplementation("androidx.test:rules:${BuildVersions.androidTestVersion}")
-    androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
+    testImplementation("junit:junit:${BuildVersions.junit}")
+    androidTestImplementation("androidx.test:core:${BuildVersions.androidTest}")
+    androidTestImplementation("androidx.test:rules:${BuildVersions.androidTest}")
+    androidTestImplementation("androidx.test:runner:${BuildVersions.androidTest}")
     androidTestImplementation("androidx.test.ext:junit:${BuildVersions.junitExt}")
 }

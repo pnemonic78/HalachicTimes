@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk = BuildVersions.compileSdkVersion
+    compileSdk = BuildVersions.compileSdk
     namespace = "com.github.times.common"
 
     defaultConfig {
-        minSdk = BuildVersions.minSdkVersion
-        targetSdk = BuildVersions.targetSdkVersion
+        minSdk = BuildVersions.minSdk
+        targetSdk = BuildVersions.targetSdk
     }
 
     compileOptions {

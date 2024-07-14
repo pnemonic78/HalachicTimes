@@ -11,17 +11,17 @@ fun joinStrings(values: Collection<String>): String {
     return "{\"" + values.joinToString("\", \"") + "\"}"
 }
 
-val versionMajor = (project.properties["APP_VERSION_MAJOR"] as String).toInt()
-val versionMinor = (project.properties["APP_VERSION_MINOR"] as String).toInt()
+val versionMajor = project.properties["APP_VERSION_MAJOR"].toString().toInt()
+val versionMinor = project.properties["APP_VERSION_MINOR"].toString().toInt()
 
 android {
-    compileSdk = BuildVersions.compileSdkVersion
+    compileSdk = BuildVersions.compileSdk
     namespace = "com.github.times"
 
     defaultConfig {
         applicationId = "net.sf.times"
-        minSdk = BuildVersions.minSdkVersion
-        targetSdk = BuildVersions.targetSdkVersion
+        minSdk = BuildVersions.minSdk
+        targetSdk = BuildVersions.targetSdk
         versionCode = versionMajor * 100 + versionMinor
         versionName = "${versionMajor}." + versionMinor.toString().padStart(2, '0')
 
@@ -128,11 +128,11 @@ dependencies {
     implementation("androidx.work:work-runtime:2.9.0")
 
     // Testing
-    testImplementation("junit:junit:${BuildVersions.junitVersion}")
-    androidTestImplementation("androidx.test:core:${BuildVersions.androidTestVersion}")
-    androidTestImplementation("androidx.test:rules:${BuildVersions.androidTestVersion}")
-    androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
+    testImplementation("junit:junit:${BuildVersions.junit}")
+    androidTestImplementation("androidx.test:core:${BuildVersions.androidTest}")
+    androidTestImplementation("androidx.test:rules:${BuildVersions.androidTest}")
+    androidTestImplementation("androidx.test:runner:${BuildVersions.androidTest}")
     androidTestImplementation("androidx.test.ext:junit:${BuildVersions.junitExt}")
     /// Declare the dependencies for the Crashlytics and Analytics libraries
-    implementation("com.google.firebase:firebase-crashlytics:18.6.1")
+    implementation("com.google.firebase:firebase-crashlytics:19.0.3")
 }

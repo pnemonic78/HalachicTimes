@@ -4,7 +4,7 @@ import java.util.Base64
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("plugin.serialization") version BuildVersions.kotlinVersion
+    kotlin("plugin.serialization") version BuildVersions.kotlin
 }
 
 fun LibraryDefaultConfig.encodeApiKey(name: String) {
@@ -15,12 +15,12 @@ fun LibraryDefaultConfig.encodeApiKey(name: String) {
 }
 
 android {
-    compileSdk = BuildVersions.compileSdkVersion
+    compileSdk = BuildVersions.compileSdk
     namespace = "com.github.times.location"
 
     defaultConfig {
-        minSdk = BuildVersions.minSdkVersion
-        targetSdk = BuildVersions.targetSdkVersion
+        minSdk = BuildVersions.minSdk
+        targetSdk = BuildVersions.targetSdk
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         encodeApiKey("BING_API_KEY")
@@ -85,10 +85,10 @@ dependencies {
     implementation("androidx.work:work-runtime:2.9.0")
 
     // Testing
-    testImplementation("junit:junit:${BuildVersions.junitVersion}")
-    androidTestImplementation("androidx.test:core:${BuildVersions.androidTestVersion}")
-    androidTestImplementation("androidx.test:rules:${BuildVersions.androidTestVersion}")
-    androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
+    testImplementation("junit:junit:${BuildVersions.junit}")
+    androidTestImplementation("androidx.test:core:${BuildVersions.androidTest}")
+    androidTestImplementation("androidx.test:rules:${BuildVersions.androidTest}")
+    androidTestImplementation("androidx.test:runner:${BuildVersions.androidTest}")
     androidTestImplementation("androidx.test.ext:junit:${BuildVersions.junitExt}")
     androidTestImplementation(kotlin("reflect"))
 }

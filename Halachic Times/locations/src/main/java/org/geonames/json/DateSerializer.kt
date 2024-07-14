@@ -13,7 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @OptIn(ExperimentalSerializationApi::class)
-open class DateSerializer(private val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)) : KSerializer<Date?> {
+open class DateSerializer : KSerializer<Date?> {
+    private val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+
     init {
         formatter.timeZone = TimeZone.getTimeZone("UTC")
     }

@@ -3,17 +3,17 @@ plugins {
     kotlin("android")
 }
 
-val versionMajor = (project.properties["APP_VERSION_MAJOR"] as String).toInt()
-val versionMinor = (project.properties["APP_VERSION_MINOR"] as String).toInt()
+val versionMajor = project.properties["APP_VERSION_MAJOR"].toString().toInt()
+val versionMinor = project.properties["APP_VERSION_MINOR"].toString().toInt()
 
 android {
-    compileSdk = BuildVersions.compileSdkVersion
+    compileSdk = BuildVersions.compileSdk
     namespace = "com.github.compass"
 
     defaultConfig {
         applicationId = "net.sf.compass"
-        minSdk = BuildVersions.minSdkVersion
-        targetSdk = BuildVersions.targetSdkVersion
+        minSdk = BuildVersions.minSdk
+        targetSdk = BuildVersions.targetSdk
         versionCode = versionMajor * 100 + versionMinor
         versionName = "${versionMajor}." + versionMinor.toString().padStart(2, '0')
     }
