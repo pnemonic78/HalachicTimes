@@ -82,7 +82,7 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
 
     // Background tasks
-    implementation("androidx.work:work-runtime:2.9.0")
+    implementation("androidx.work:work-runtime:${BuildVersions.work}")
 
     // Testing
     testImplementation("junit:junit:${BuildVersions.junit}")

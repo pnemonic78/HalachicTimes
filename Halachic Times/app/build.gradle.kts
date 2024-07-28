@@ -125,7 +125,7 @@ dependencies {
     implementation(project(":compass-lib"))
 
     // Background tasks
-    implementation("androidx.work:work-runtime:2.9.0")
+    implementation("androidx.work:work-runtime:${BuildVersions.work}")
 
     // Testing
     testImplementation("junit:junit:${BuildVersions.junit}")
