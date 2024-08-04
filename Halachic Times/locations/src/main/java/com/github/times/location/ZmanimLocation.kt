@@ -240,9 +240,7 @@ class ZmanimLocation : Location {
             if (eleD >= EPSILON) return 1
             if (eleD <= -EPSILON) return -1
 
-            val t1 = l1.time
-            val t2 = l2.time
-            return t1.compareTo(t2)
+            return 0
         }
 
         fun toDecimal(degrees: Int, minutes: Int, seconds: Double): Double {
