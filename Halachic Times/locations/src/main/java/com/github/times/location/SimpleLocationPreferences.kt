@@ -18,6 +18,18 @@ package com.github.times.location
 import android.content.Context
 import android.location.Location
 import com.github.preference.SimplePreferences
+import com.github.times.location.LocationPreferences.Companion.KEY_COORDS_ELEVATION
+import com.github.times.location.LocationPreferences.Companion.KEY_COORDS_FORMAT
+import com.github.times.location.LocationPreferences.Companion.KEY_ELEVATION
+import com.github.times.location.LocationPreferences.Companion.KEY_LATITUDE
+import com.github.times.location.LocationPreferences.Companion.KEY_LONGITUDE
+import com.github.times.location.LocationPreferences.Companion.KEY_PROVIDER
+import com.github.times.location.LocationPreferences.Companion.KEY_TIME
+import com.github.times.location.LocationPreferences.Values.Companion.ELEVATION_VISIBLE_DEFAULT
+import com.github.times.location.LocationPreferences.Values.Companion.FORMAT_DECIMAL
+import com.github.times.location.LocationPreferences.Values.Companion.FORMAT_DEFAULT
+import com.github.times.location.LocationPreferences.Values.Companion.FORMAT_NONE
+import com.github.times.location.LocationPreferences.Values.Companion.FORMAT_SEXAGESIMAL
 import timber.log.Timber
 
 /**
@@ -34,8 +46,8 @@ class SimpleLocationPreferences(context: Context) : SimplePreferences(context),
 
     override var location: Location?
         get() {
-            if (!preferences.contains(LocationPreferences.KEY_LATITUDE)
-                || !preferences.contains(LocationPreferences.KEY_LONGITUDE)
+            if (!preferences.contains(KEY_LATITUDE)
+                || !preferences.contains(KEY_LONGITUDE)
             ) {
                 return null
             }
@@ -43,21 +55,21 @@ class SimpleLocationPreferences(context: Context) : SimplePreferences(context),
             val longitude: Double
             val elevation: Double
             try {
-                latitude = preferences.getString(LocationPreferences.KEY_LATITUDE, "0")!!.toDouble()
+                latitude = preferences.getString(KEY_LATITUDE, "0")!!.toDouble()
                 longitude =
-                    preferences.getString(LocationPreferences.KEY_LONGITUDE, "0")!!.toDouble()
+                    preferences.getString(KEY_LONGITUDE, "0")!!.toDouble()
                 elevation =
-                    preferences.getString(LocationPreferences.KEY_ELEVATION, "0")!!.toDouble()
+                    preferences.getString(KEY_ELEVATION, "0")!!.toDouble()
             } catch (nfe: NumberFormatException) {
                 Timber.e(nfe)
                 return null
             }
-            val provider = preferences.getString(LocationPreferences.KEY_PROVIDER, "")
+            val provider = preferences.getString(KEY_PROVIDER, "")
             val location = Location(provider)
             location.latitude = latitude
             location.longitude = longitude
             location.altitude = elevation
-            location.time = preferences.getLong(LocationPreferences.KEY_TIME, 0L)
+            location.time = preferences.getLong(KEY_TIME, 0L)
             return location
         }
         set(value) = putLocation(value)
@@ -65,26 +77,20 @@ class SimpleLocationPreferences(context: Context) : SimplePreferences(context),
     private fun putLocation(location: Location?) {
         val editor = preferences.edit()
         if (location != null) {
-            editor.putString(LocationPreferences.KEY_PROVIDER, location.provider)
+            editor.putString(KEY_PROVIDER, location.provider)
+                .putString(KEY_LATITUDE, location.latitude.toString())
+                .putString(KEY_LONGITUDE, location.longitude.toString())
                 .putString(
-                    LocationPreferences.KEY_LATITUDE,
-                    location.latitude.toString()
-                )
-                .putString(
-                    LocationPreferences.KEY_LONGITUDE,
-                    location.longitude.toString()
-                )
-                .putString(
-                    LocationPreferences.KEY_ELEVATION,
+                    KEY_ELEVATION,
                     (if (location.hasAltitude()) location.altitude else 0.0).toString()
                 )
-                .putLong(LocationPreferences.KEY_TIME, location.time)
+                .putLong(KEY_TIME, location.time)
         } else {
-            editor.remove(LocationPreferences.KEY_PROVIDER)
-                .remove(LocationPreferences.KEY_LATITUDE)
-                .remove(LocationPreferences.KEY_LONGITUDE)
-                .remove(LocationPreferences.KEY_ELEVATION)
-                .remove(LocationPreferences.KEY_TIME)
+            editor.remove(KEY_PROVIDER)
+                .remove(KEY_LATITUDE)
+                .remove(KEY_LONGITUDE)
+                .remove(KEY_ELEVATION)
+                .remove(KEY_TIME)
         }
         editor.apply()
     }
@@ -95,7 +101,7 @@ class SimpleLocationPreferences(context: Context) : SimplePreferences(context),
      * @return `true` to show coordinates.
      */
     override val isCoordinatesVisible: Boolean
-        get() = LocationPreferences.Values.FORMAT_NONE != coordinatesFormat
+        get() = FORMAT_NONE != coordinatesFormat
 
     /**
      * Get the notation of latitude and longitude.
@@ -104,14 +110,14 @@ class SimpleLocationPreferences(context: Context) : SimplePreferences(context),
      */
     override val coordinatesFormat: String
         get() = preferences.getString(
-            LocationPreferences.KEY_COORDS_FORMAT,
-            LocationPreferences.Values.FORMAT_DEFAULT
+            KEY_COORDS_FORMAT,
+            FORMAT_DEFAULT
         ).orEmpty()
 
     override val isElevationVisible: Boolean
         get() = preferences.getBoolean(
-            LocationPreferences.KEY_COORDS_ELEVATION,
-            LocationPreferences.Values.ELEVATION_VISIBLE_DEFAULT
+            KEY_COORDS_ELEVATION,
+            ELEVATION_VISIBLE_DEFAULT
         )
 
     companion object {
@@ -122,15 +128,15 @@ class SimpleLocationPreferences(context: Context) : SimplePreferences(context),
          */
         fun init(context: Context) {
             val res = context.resources
-            LocationPreferences.Values.FORMAT_DEFAULT =
+            FORMAT_DEFAULT =
                 res.getString(R.string.coords_format_defaultValue)
-            LocationPreferences.Values.FORMAT_NONE =
+            FORMAT_NONE =
                 res.getString(R.string.coords_format_value_none)
-            LocationPreferences.Values.FORMAT_DECIMAL =
+            FORMAT_DECIMAL =
                 res.getString(R.string.coords_format_value_decimal)
-            LocationPreferences.Values.FORMAT_SEXAGESIMAL =
+            FORMAT_SEXAGESIMAL =
                 res.getString(R.string.coords_format_value_sexagesimal)
-            LocationPreferences.Values.ELEVATION_VISIBLE_DEFAULT =
+            ELEVATION_VISIBLE_DEFAULT =
                 res.getBoolean(R.bool.coords_elevation_visible_defaultValue)
         }
     }

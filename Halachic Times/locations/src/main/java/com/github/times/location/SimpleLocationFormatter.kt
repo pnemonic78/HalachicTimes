@@ -16,6 +16,7 @@
 package com.github.times.location
 
 import android.content.Context
+import com.github.times.location.LocationPreferences.Values.Companion.FORMAT_SEXAGESIMAL
 import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.floor
@@ -125,13 +126,13 @@ class SimpleLocationFormatter(context: Context, notation: String, isElevationVis
     }
 
     override fun parseLatitude(coordinate: String): Double {
-        return if (LocationPreferences.Values.FORMAT_SEXAGESIMAL == notation) {
+        return if (FORMAT_SEXAGESIMAL == notation) {
             parseLatitudeSexagesimal(coordinate)
         } else super.parseLatitude(coordinate)
     }
 
     override fun parseLongitude(coordinate: String): Double {
-        return if (LocationPreferences.Values.FORMAT_SEXAGESIMAL == notation) {
+        return if (FORMAT_SEXAGESIMAL == notation) {
             parseLongitudeSexagesimal(coordinate)
         } else super.parseLongitude(coordinate)
     }

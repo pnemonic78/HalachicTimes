@@ -20,6 +20,12 @@ import androidx.annotation.Keep
 import androidx.preference.ListPreference
 import com.github.preference.NumberPickerPreference
 import com.github.times.R
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_AFTER
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_MINUTES
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_SUNSET
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_TWILIGHT
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_NONE
 
 /**
  * This fragment shows the preferences for the Shabbath Ends screen.
@@ -37,7 +43,7 @@ class ZmanShabbathPreferenceFragment : ZmanPreferenceFragment() {
 
         // Must be in reverse order for non-null dependencies.
         minutesPreference =
-            findPreference<NumberPickerPreference>(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES)!!.apply {
+            findPreference<NumberPickerPreference>(KEY_OPINION_SHABBATH_ENDS_MINUTES)!!.apply {
                 setOnPreferenceChangeListener { _, newValue: Any? ->
                     val shabbathAfterId = preferences.toId(afterPreference.value)
                     onMinutesChanged(shabbathAfterId, newValue as Int)
@@ -45,27 +51,27 @@ class ZmanShabbathPreferenceFragment : ZmanPreferenceFragment() {
                 }
             }
         sunsetPreference =
-            addDefaultOption(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_SUNSET).apply {
+            addDefaultOption(KEY_OPINION_SHABBATH_ENDS_SUNSET).apply {
                 setOnPreferenceChangeListener { _, _: Any? ->
                     onMinutesChanged(R.string.sunset)
                     true
                 }
             }
         twilightPreference =
-            addDefaultOption(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_TWILIGHT).apply {
+            addDefaultOption(KEY_OPINION_SHABBATH_ENDS_TWILIGHT).apply {
                 setOnPreferenceChangeListener { _, _: Any? ->
                     onMinutesChanged(R.string.twilight)
                     true
                 }
             }
         nightfallPreference =
-            addDefaultOption(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL).apply {
+            addDefaultOption(KEY_OPINION_SHABBATH_ENDS_NIGHTFALL).apply {
                 setOnPreferenceChangeListener { _, _: Any? ->
                     onMinutesChanged(R.string.nightfall)
                     true
                 }
             }
-        afterPreference = findPreference<ListPreference>(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER)!!.apply {
+        afterPreference = findPreference<ListPreference>(KEY_OPINION_SHABBATH_ENDS_AFTER)!!.apply {
             setOnPreferenceChangeListener { _, newValue: Any? ->
                 val shabbathAfterId = preferences.toId(newValue?.toString())
                 onMinutesChanged(shabbathAfterId)
@@ -114,7 +120,7 @@ class ZmanShabbathPreferenceFragment : ZmanPreferenceFragment() {
             opinionValue = nightfallPreference.value
             opinionLabel = nightfallPreference.entry
         }
-        return if (opinionLabel.isNullOrEmpty() || ZmanimPreferences.Values.OPINION_NONE == opinionValue) {
+        return if (opinionLabel.isNullOrEmpty() || OPINION_NONE == opinionValue) {
             resources.getQuantityString(
                 R.plurals.shabbath_ends_summary,
                 minutes,

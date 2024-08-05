@@ -30,7 +30,7 @@ import androidx.preference.Preference
 import com.github.app.LocaleHelper
 import com.github.app.PERMISSION_WALLPAPER
 import com.github.app.restart
-import com.github.preference.LocalePreferences
+import com.github.preference.LocalePreferences.Companion.KEY_LOCALE
 import com.github.times.BuildConfig
 import com.github.times.R
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_THEME_WIDGET
@@ -61,7 +61,7 @@ class AppearancePreferenceFragment : AbstractPreferenceFragment() {
                 checkWallpaperPermission(context)
             }
         }
-        initLocaleList(LocalePreferences.KEY_LOCALE)
+        initLocaleList(KEY_LOCALE)
         findPreference<Preference>(KEY_THEME_WIDGET_RATIONALE)?.apply {
             setOnPreferenceClickListener {
                 val context = it.context

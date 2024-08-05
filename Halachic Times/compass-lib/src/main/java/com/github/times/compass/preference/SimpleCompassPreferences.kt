@@ -20,6 +20,9 @@ import com.github.preference.SimpleThemePreferences
 import com.github.preference.ThemePreferences.Values.THEME_DARK
 import com.github.preference.ThemePreferences.Values.THEME_LIGHT
 import com.github.times.compass.lib.R
+import com.github.times.compass.preference.CompassPreferences.Companion.KEY_COMPASS_BEARING
+import com.github.times.compass.preference.CompassPreferences.Companion.KEY_SUMMARIES
+import com.github.times.compass.preference.CompassPreferences.Companion.KEY_THEME_COMPASS
 import com.github.times.compass.preference.CompassPreferences.Values.BEARING_DEFAULT
 import com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE
 import com.github.times.compass.preference.CompassPreferences.Values.BEARING_RHUMB_LINE
@@ -43,7 +46,7 @@ open class SimpleCompassPreferences(context: Context) : SimpleThemePreferences(c
     }
 
     override val compassThemeValue: String?
-        get() = preferences.getString(CompassPreferences.KEY_THEME_COMPASS, THEME_COMPASS_DEFAULT)
+        get() = preferences.getString(KEY_THEME_COMPASS, THEME_COMPASS_DEFAULT)
 
     override fun getCompassTheme(value: String?): Int {
         return when (value) {
@@ -58,11 +61,11 @@ open class SimpleCompassPreferences(context: Context) : SimpleThemePreferences(c
         get() = getCompassTheme(compassThemeValue)
 
     override val bearing: String
-        get() = preferences.getString(CompassPreferences.KEY_COMPASS_BEARING, BEARING_DEFAULT)
+        get() = preferences.getString(KEY_COMPASS_BEARING, BEARING_DEFAULT)
             .orEmpty()
 
     override val isSummariesVisible: Boolean
-        get() = preferences.getBoolean(CompassPreferences.KEY_SUMMARIES, SUMMARIES_DEFAULT)
+        get() = preferences.getBoolean(KEY_SUMMARIES, SUMMARIES_DEFAULT)
 
     override fun getTheme(value: String?): Int {
         return when (value) {

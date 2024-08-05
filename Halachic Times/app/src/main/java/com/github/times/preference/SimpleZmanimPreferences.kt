@@ -34,6 +34,52 @@ import com.github.preference.TimePreference.Companion.parseTime
 import com.github.times.R
 import com.github.times.TimeMillis
 import com.github.times.ZmanimItem
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_ANIM_CANDLES
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_EMPHASIS_SCALE
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_HOUR
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_NOTIFICATION_UPCOMING
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_BURN
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_CANDLES
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_CANDLES_CHANUKKA
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_DAWN
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EARLIEST_LEVANA
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EARLIEST_MINCHA
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EAT
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_FAST_BEGINS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_FAST_ENDS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_GUARDS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_HOUR
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_LATEST_LEVANA
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_MIDNIGHT
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_MIDNIGHT_GUARD
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_MINCHA
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_MOLAD
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_MORNING_GUARD
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_NIGHTFALL
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_NOON
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_OMER
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_PLUG_MINCHA
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_AFTER
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_MINUTES
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_SUNSET
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_TWILIGHT
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHEMA
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SUNRISE
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SUNSET
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_TALLIS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_TFILA
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_TWILIGHT
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_PAST
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_LATEST
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_RINGTONE
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_SILENCE
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_STREAM
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_SECONDS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_SUMMARIES
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_THEME_WIDGET
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_YEAR_FINAL
 import com.github.times.preference.ZmanimPreferences.Values.OMER_B
 import com.github.times.preference.ZmanimPreferences.Values.OMER_L
 import com.github.times.preference.ZmanimPreferences.Values.OMER_NONE
@@ -113,7 +159,8 @@ import java.util.Locale
  *
  * @author Moshe Waisberg
  */
-open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context), ZmanimPreferences {
+open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context),
+    ZmanimPreferences {
 
     private val themePreferences: ThemePreferences = SimpleThemePreferences(context)
     private val localePreferences: LocalePreferences = SimpleLocalePreferences(context)
@@ -124,25 +171,25 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
 
     override val isSeconds: Boolean
         get() = preferences.getBoolean(
-            ZmanimPreferences.KEY_SECONDS,
+            KEY_SECONDS,
             context.resources.getBoolean(R.bool.seconds_visible_defaultValue)
         )
 
     override val isSummaries: Boolean
         get() = preferences.getBoolean(
-            ZmanimPreferences.KEY_SUMMARIES,
+            KEY_SUMMARIES,
             context.resources.getBoolean(com.github.times.common.R.bool.summaries_visible_defaultValue)
         )
 
     override val isPast: Boolean
         get() = preferences.getBoolean(
-            ZmanimPreferences.KEY_PAST,
+            KEY_PAST,
             context.resources.getBoolean(R.bool.past_defaultValue)
         )
 
     override val isUpcomingNotification: Boolean
         get() = preferences.getBoolean(
-            ZmanimPreferences.KEY_NOTIFICATION_UPCOMING,
+            KEY_NOTIFICATION_UPCOMING,
             context.resources.getBoolean(R.bool.notification_upcoming_defaultValue)
         )
 
@@ -180,25 +227,25 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
 
     override val isHour: Boolean
         get() = preferences.getBoolean(
-            ZmanimPreferences.KEY_HOUR,
+            KEY_HOUR,
             context.resources.getBoolean(R.bool.hour_visible_defaultValue)
         )
 
     override val candleLightingOffset: Int
         get() = preferences.getInt(
-            ZmanimPreferences.KEY_OPINION_CANDLES,
+            KEY_OPINION_CANDLES,
             context.resources.getInteger(R.integer.candles_defaultValue)
         )
 
     override val chanukkaCandles: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_CANDLES_CHANUKKA,
+            KEY_OPINION_CANDLES_CHANUKKA,
             context.getString(R.string.candles_chanukka_defaultValue)
         )
 
     override val hour: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_HOUR,
+            KEY_OPINION_HOUR,
             context.getString(R.string.hour_defaultValue)
         )
 
@@ -257,141 +304,141 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
 
     override val dawn: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_DAWN,
+            KEY_OPINION_DAWN,
             context.getString(R.string.dawn_defaultValue)
         )
 
     override val tallis: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_TALLIS,
+            KEY_OPINION_TALLIS,
             context.getString(R.string.tallis_defaultValue)
         )
 
     override val sunrise: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_SUNRISE,
+            KEY_OPINION_SUNRISE,
             context.getString(R.string.sunrise_defaultValue)
         )
 
     override val lastShema: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_SHEMA,
+            KEY_OPINION_SHEMA,
             context.getString(R.string.shema_defaultValue)
         )
 
     override val lastTfila: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_TFILA,
+            KEY_OPINION_TFILA,
             context.getString(R.string.prayers_defaultValue)
         )
 
     override val eatChametz: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_EAT,
+            KEY_OPINION_EAT,
             context.getString(R.string.eat_chametz_defaultValue)
         )
 
     override val burnChametz: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_BURN,
+            KEY_OPINION_BURN,
             context.getString(R.string.burn_chametz_defaultValue)
         )
 
     override val midday: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_NOON,
+            KEY_OPINION_NOON,
             context.getString(R.string.midday_defaultValue)
         )
 
     override val earliestMincha: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_EARLIEST_MINCHA,
+            KEY_OPINION_EARLIEST_MINCHA,
             context.getString(R.string.earliest_mincha_defaultValue)
         )
 
     override val mincha: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_MINCHA,
+            KEY_OPINION_MINCHA,
             context.getString(R.string.mincha_defaultValue)
         )
 
     override val plugHamincha: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_PLUG_MINCHA,
+            KEY_OPINION_PLUG_MINCHA,
             context.getString(R.string.plug_hamincha_defaultValue)
         )
 
     override val sunset: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_SUNSET,
+            KEY_OPINION_SUNSET,
             context.getString(R.string.sunset_defaultValue)
         )
 
     override val twilight: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_TWILIGHT,
+            KEY_OPINION_TWILIGHT,
             context.getString(R.string.twilight_defaultValue)
         )
 
     override val nightfall: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_NIGHTFALL,
+            KEY_OPINION_NIGHTFALL,
             context.getString(R.string.nightfall_defaultValue)
         )
 
     override val shabbathEndsAfter: Int
         get() = toId(
             preferences.getString(
-                ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER,
+                KEY_OPINION_SHABBATH_ENDS_AFTER,
                 context.getString(R.string.shabbath_ends_after_defaultValue)
             )
         )
 
     override val shabbathEndsSunset: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_SUNSET,
+            KEY_OPINION_SHABBATH_ENDS_SUNSET,
             context.getString(R.string.shabbath_ends_sunset_defaultValue)
         )
 
     override val shabbathEndsTwilight: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_TWILIGHT,
+            KEY_OPINION_SHABBATH_ENDS_TWILIGHT,
             context.getString(R.string.shabbath_ends_twilight_defaultValue)
         )
 
     override val shabbathEndsNightfall: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL,
+            KEY_OPINION_SHABBATH_ENDS_NIGHTFALL,
             context.getString(R.string.shabbath_ends_nightfall_defaultValue)
         )
 
     override val shabbathEnds: Int
         get() = preferences.getInt(
-            ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES,
+            KEY_OPINION_SHABBATH_ENDS_MINUTES,
             context.resources.getInteger(R.integer.shabbath_ends_defaultValue)
         )
 
     override val midnight: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_MIDNIGHT,
+            KEY_OPINION_MIDNIGHT,
             context.getString(R.string.midnight_defaultValue)
         )
 
     override val earliestKiddushLevana: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_EARLIEST_LEVANA,
+            KEY_OPINION_EARLIEST_LEVANA,
             context.getString(R.string.levana_earliest_defaultValue)
         )
 
     override val latestKiddushLevana: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_LATEST_LEVANA,
+            KEY_OPINION_LATEST_LEVANA,
             context.getString(R.string.levana_latest_defaultValue)
         )
 
     override val guardsCount: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_GUARDS,
+            KEY_OPINION_GUARDS,
             context.getString(R.string.guards_defaultValue)
         )
 
@@ -437,20 +484,20 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
     }
 
     override var latestReminder: Long
-        get() = preferences.getLong(ZmanimPreferences.KEY_REMINDER_LATEST, 0L)
+        get() = preferences.getLong(KEY_REMINDER_LATEST, 0L)
         set(time) {
-            preferences.edit().putLong(ZmanimPreferences.KEY_REMINDER_LATEST, time).apply()
+            preferences.edit().putLong(KEY_REMINDER_LATEST, time).apply()
         }
 
     override val isCandlesAnimated: Boolean
         get() = preferences.getBoolean(
-            ZmanimPreferences.KEY_ANIM_CANDLES,
+            KEY_ANIM_CANDLES,
             context.resources.getBoolean(R.bool.animate_defaultValue)
         )
 
     override val reminderStream: Int
         get() = preferences.getString(
-            ZmanimPreferences.KEY_REMINDER_STREAM,
+            KEY_REMINDER_STREAM,
             context.getString(R.string.reminder_stream_defaultValue)
         )?.toInt() ?: RingtoneManager.TYPE_ALARM
 
@@ -463,7 +510,7 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
 
     override val reminderSilenceOffset: Int
         get() = preferences.getInt(
-            ZmanimPreferences.KEY_REMINDER_SILENCE,
+            KEY_REMINDER_SILENCE,
             context.resources.getInteger(R.integer.reminder_silence_defaultValue)
         )
 
@@ -477,75 +524,75 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
 
     override val emphasisScale: Float
         get() = preferences.getString(
-            ZmanimPreferences.KEY_EMPHASIS_SCALE,
+            KEY_EMPHASIS_SCALE,
             context.getString(R.string.emphasis_scale_defaultValue)
         )?.toFloat() ?: 1f
 
     override fun toKey(id: Int): String? {
         return when (id) {
-            R.string.burn_chametz -> ZmanimPreferences.KEY_OPINION_BURN
-            R.string.candles -> ZmanimPreferences.KEY_OPINION_CANDLES
-            R.string.chanukka -> ZmanimPreferences.KEY_OPINION_CANDLES_CHANUKKA
-            R.string.chanukka_count -> ZmanimPreferences.KEY_OPINION_CANDLES_CHANUKKA
-            R.string.dawn -> ZmanimPreferences.KEY_OPINION_DAWN
-            R.string.earliest_mincha -> ZmanimPreferences.KEY_OPINION_EARLIEST_MINCHA
-            R.string.eat_chametz -> ZmanimPreferences.KEY_OPINION_EAT
-            R.string.fast_begins -> ZmanimPreferences.KEY_OPINION_FAST_BEGINS
-            R.string.fast_ends -> ZmanimPreferences.KEY_OPINION_FAST_ENDS
-            R.string.festival_ends -> ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS
-            R.string.hour -> ZmanimPreferences.KEY_OPINION_HOUR
-            R.string.levana_earliest -> ZmanimPreferences.KEY_OPINION_EARLIEST_LEVANA
-            R.string.levana_latest -> ZmanimPreferences.KEY_OPINION_LATEST_LEVANA
-            R.string.midday -> ZmanimPreferences.KEY_OPINION_NOON
-            R.string.midnight -> ZmanimPreferences.KEY_OPINION_MIDNIGHT
-            R.string.midnight_guard -> ZmanimPreferences.KEY_OPINION_MIDNIGHT_GUARD
-            R.string.mincha -> ZmanimPreferences.KEY_OPINION_MINCHA
-            R.string.molad -> ZmanimPreferences.KEY_OPINION_MOLAD
-            R.string.morning_guard -> ZmanimPreferences.KEY_OPINION_MORNING_GUARD
-            R.string.nightfall -> ZmanimPreferences.KEY_OPINION_NIGHTFALL
-            R.string.omer -> ZmanimPreferences.KEY_OPINION_OMER
-            R.string.plug_hamincha -> ZmanimPreferences.KEY_OPINION_PLUG_MINCHA
-            R.string.prayers -> ZmanimPreferences.KEY_OPINION_TFILA
-            R.string.shabbath_ends -> ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS
-            R.string.shema -> ZmanimPreferences.KEY_OPINION_SHEMA
-            R.string.sunrise -> ZmanimPreferences.KEY_OPINION_SUNRISE
-            R.string.sunset -> ZmanimPreferences.KEY_OPINION_SUNSET
-            R.string.tallis -> ZmanimPreferences.KEY_OPINION_TALLIS
-            R.string.tallis_only -> ZmanimPreferences.KEY_OPINION_TALLIS
-            R.string.twilight -> ZmanimPreferences.KEY_OPINION_TWILIGHT
+            R.string.burn_chametz -> KEY_OPINION_BURN
+            R.string.candles -> KEY_OPINION_CANDLES
+            R.string.chanukka -> KEY_OPINION_CANDLES_CHANUKKA
+            R.string.chanukka_count -> KEY_OPINION_CANDLES_CHANUKKA
+            R.string.dawn -> KEY_OPINION_DAWN
+            R.string.earliest_mincha -> KEY_OPINION_EARLIEST_MINCHA
+            R.string.eat_chametz -> KEY_OPINION_EAT
+            R.string.fast_begins -> KEY_OPINION_FAST_BEGINS
+            R.string.fast_ends -> KEY_OPINION_FAST_ENDS
+            R.string.festival_ends -> KEY_OPINION_SHABBATH_ENDS
+            R.string.hour -> KEY_OPINION_HOUR
+            R.string.levana_earliest -> KEY_OPINION_EARLIEST_LEVANA
+            R.string.levana_latest -> KEY_OPINION_LATEST_LEVANA
+            R.string.midday -> KEY_OPINION_NOON
+            R.string.midnight -> KEY_OPINION_MIDNIGHT
+            R.string.midnight_guard -> KEY_OPINION_MIDNIGHT_GUARD
+            R.string.mincha -> KEY_OPINION_MINCHA
+            R.string.molad -> KEY_OPINION_MOLAD
+            R.string.morning_guard -> KEY_OPINION_MORNING_GUARD
+            R.string.nightfall -> KEY_OPINION_NIGHTFALL
+            R.string.omer -> KEY_OPINION_OMER
+            R.string.plug_hamincha -> KEY_OPINION_PLUG_MINCHA
+            R.string.prayers -> KEY_OPINION_TFILA
+            R.string.shabbath_ends -> KEY_OPINION_SHABBATH_ENDS
+            R.string.shema -> KEY_OPINION_SHEMA
+            R.string.sunrise -> KEY_OPINION_SUNRISE
+            R.string.sunset -> KEY_OPINION_SUNSET
+            R.string.tallis -> KEY_OPINION_TALLIS
+            R.string.tallis_only -> KEY_OPINION_TALLIS
+            R.string.twilight -> KEY_OPINION_TWILIGHT
             else -> null
         }
     }
 
     override fun toId(key: String?): Int {
         return when (key) {
-            ZmanimPreferences.KEY_OPINION_HOUR -> R.string.hour
-            ZmanimPreferences.KEY_OPINION_DAWN -> R.string.dawn
-            ZmanimPreferences.KEY_OPINION_TALLIS -> R.string.tallis
-            ZmanimPreferences.KEY_OPINION_SUNRISE -> R.string.sunrise
-            ZmanimPreferences.KEY_OPINION_SHEMA -> R.string.shema
-            ZmanimPreferences.KEY_OPINION_TFILA -> R.string.prayers
-            ZmanimPreferences.KEY_OPINION_EAT -> R.string.eat_chametz
-            ZmanimPreferences.KEY_OPINION_BURN -> R.string.burn_chametz
-            ZmanimPreferences.KEY_OPINION_NOON -> R.string.midday
-            ZmanimPreferences.KEY_OPINION_EARLIEST_MINCHA -> R.string.earliest_mincha
-            ZmanimPreferences.KEY_OPINION_MINCHA -> R.string.mincha
-            ZmanimPreferences.KEY_OPINION_PLUG_MINCHA -> R.string.plug_hamincha
-            ZmanimPreferences.KEY_OPINION_CANDLES -> R.string.candles
-            ZmanimPreferences.KEY_OPINION_CANDLES_CHANUKKA -> R.string.chanukka
-            ZmanimPreferences.KEY_OPINION_SUNSET, ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_SUNSET -> R.string.sunset
-            ZmanimPreferences.KEY_OPINION_TWILIGHT, ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_TWILIGHT -> R.string.twilight
-            ZmanimPreferences.KEY_OPINION_NIGHTFALL, ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL -> R.string.nightfall
-            ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS, ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER, ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES -> R.string.shabbath_ends
-            ZmanimPreferences.KEY_OPINION_MIDNIGHT -> R.string.midnight
-            ZmanimPreferences.KEY_OPINION_MIDNIGHT_GUARD -> R.string.midnight_guard
-            ZmanimPreferences.KEY_OPINION_MORNING_GUARD -> R.string.morning_guard
-            ZmanimPreferences.KEY_OPINION_MOLAD -> R.string.molad
-            ZmanimPreferences.KEY_OPINION_EARLIEST_LEVANA -> R.string.levana_earliest
-            ZmanimPreferences.KEY_OPINION_LATEST_LEVANA -> R.string.levana_latest
-            ZmanimPreferences.KEY_OPINION_OMER -> R.string.omer
-            ZmanimPreferences.KEY_OPINION_FAST_BEGINS -> R.string.fast_begins
-            ZmanimPreferences.KEY_OPINION_FAST_ENDS -> R.string.fast_ends
+            KEY_OPINION_HOUR -> R.string.hour
+            KEY_OPINION_DAWN -> R.string.dawn
+            KEY_OPINION_TALLIS -> R.string.tallis
+            KEY_OPINION_SUNRISE -> R.string.sunrise
+            KEY_OPINION_SHEMA -> R.string.shema
+            KEY_OPINION_TFILA -> R.string.prayers
+            KEY_OPINION_EAT -> R.string.eat_chametz
+            KEY_OPINION_BURN -> R.string.burn_chametz
+            KEY_OPINION_NOON -> R.string.midday
+            KEY_OPINION_EARLIEST_MINCHA -> R.string.earliest_mincha
+            KEY_OPINION_MINCHA -> R.string.mincha
+            KEY_OPINION_PLUG_MINCHA -> R.string.plug_hamincha
+            KEY_OPINION_CANDLES -> R.string.candles
+            KEY_OPINION_CANDLES_CHANUKKA -> R.string.chanukka
+            KEY_OPINION_SUNSET, KEY_OPINION_SHABBATH_ENDS_SUNSET -> R.string.sunset
+            KEY_OPINION_TWILIGHT, KEY_OPINION_SHABBATH_ENDS_TWILIGHT -> R.string.twilight
+            KEY_OPINION_NIGHTFALL, KEY_OPINION_SHABBATH_ENDS_NIGHTFALL -> R.string.nightfall
+            KEY_OPINION_SHABBATH_ENDS, KEY_OPINION_SHABBATH_ENDS_AFTER, KEY_OPINION_SHABBATH_ENDS_MINUTES -> R.string.shabbath_ends
+            KEY_OPINION_MIDNIGHT -> R.string.midnight
+            KEY_OPINION_MIDNIGHT_GUARD -> R.string.midnight_guard
+            KEY_OPINION_MORNING_GUARD -> R.string.morning_guard
+            KEY_OPINION_MOLAD -> R.string.molad
+            KEY_OPINION_EARLIEST_LEVANA -> R.string.levana_earliest
+            KEY_OPINION_LATEST_LEVANA -> R.string.levana_latest
+            KEY_OPINION_OMER -> R.string.omer
+            KEY_OPINION_FAST_BEGINS -> R.string.fast_begins
+            KEY_OPINION_FAST_ENDS -> R.string.fast_ends
             else -> 0
         }
     }
@@ -554,7 +601,7 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
         get() {
             val type = reminderType
             var path = preferences.getString(
-                ZmanimPreferences.KEY_REMINDER_RINGTONE,
+                KEY_REMINDER_RINGTONE,
                 RingtoneManager.DEFAULT_PATH
             )
             if (path === RingtoneManager.DEFAULT_PATH) {
@@ -665,13 +712,13 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
 
     override val omerSuffix: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_OPINION_OMER,
+            KEY_OPINION_OMER,
             context.getString(R.string.omer_defaultValue)
         )
 
     override val appWidgetThemeValue: String?
         get() = preferences.getString(
-            ZmanimPreferences.KEY_THEME_WIDGET,
+            KEY_THEME_WIDGET,
             context.getString(R.string.appwidget_theme_defaultValue)
         )
 
@@ -700,7 +747,7 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
 
     override val isYearFinalForm: Boolean
         get() = preferences.getBoolean(
-            ZmanimPreferences.KEY_YEAR_FINAL,
+            KEY_YEAR_FINAL,
             context.resources.getBoolean(R.bool.year_final_defaultValue)
         )
 

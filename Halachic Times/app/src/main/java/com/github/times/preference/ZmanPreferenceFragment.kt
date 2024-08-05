@@ -35,6 +35,37 @@ import com.github.preference.NumberPickerPreference
 import com.github.preference.SimplePreferences
 import com.github.preference.TimePreference
 import com.github.times.R
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_BURN
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_CANDLES
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_DAWN
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EARLIEST_MINCHA
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EAT
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_GUARDS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_HOUR
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_MINCHA
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_NIGHTFALL
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_NOON
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_PLUG_MINCHA
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_AFTER
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_MINUTES
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SHEMA
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SUNRISE
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SUNSET
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_TALLIS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_TFILA
+import com.github.times.preference.ZmanimPreferences.Companion.REMINDER_FRIDAY_SUFFIX
+import com.github.times.preference.ZmanimPreferences.Companion.REMINDER_MONDAY_SUFFIX
+import com.github.times.preference.ZmanimPreferences.Companion.REMINDER_SATURDAY_SUFFIX
+import com.github.times.preference.ZmanimPreferences.Companion.REMINDER_SUNDAY_SUFFIX
+import com.github.times.preference.ZmanimPreferences.Companion.REMINDER_THURSDAY_SUFFIX
+import com.github.times.preference.ZmanimPreferences.Companion.REMINDER_TUESDAY_SUFFIX
+import com.github.times.preference.ZmanimPreferences.Companion.REMINDER_WEDNESDAY_SUFFIX
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_3
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_8_5
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_BAAL_HATANYA
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_NIGHT
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_SEA
 import com.github.times.remind.ZmanimReminder
 import com.github.times.remind.ZmanimReminderService.Companion.enqueueWork
 
@@ -143,19 +174,19 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
     private fun initReminderDays(reminderTime: Preference) {
         val namePrefix = reminderTime.key
         preferenceReminderSunday =
-            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_SUNDAY_SUFFIX)
+            initReminderDay(namePrefix + REMINDER_SUNDAY_SUFFIX)
         preferenceReminderMonday =
-            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_MONDAY_SUFFIX)
+            initReminderDay(namePrefix + REMINDER_MONDAY_SUFFIX)
         preferenceReminderTuesday =
-            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_TUESDAY_SUFFIX)
+            initReminderDay(namePrefix + REMINDER_TUESDAY_SUFFIX)
         preferenceReminderWednesday =
-            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_WEDNESDAY_SUFFIX)
+            initReminderDay(namePrefix + REMINDER_WEDNESDAY_SUFFIX)
         preferenceReminderThursday =
-            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_THURSDAY_SUFFIX)
+            initReminderDay(namePrefix + REMINDER_THURSDAY_SUFFIX)
         preferenceReminderFriday =
-            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_FRIDAY_SUFFIX)
+            initReminderDay(namePrefix + REMINDER_FRIDAY_SUFFIX)
         preferenceReminderSaturday =
-            initReminderDay(namePrefix + ZmanimPreferences.REMINDER_SATURDAY_SUFFIX)
+            initReminderDay(namePrefix + REMINDER_SATURDAY_SUFFIX)
     }
 
     private fun initReminderDay(key: String?): Preference? {
@@ -204,7 +235,7 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
     }
 
     private fun maybeChooseMultipleOpinions(context: Context, newValue: Any?) {
-        val opinionBaalHatanya = ZmanimPreferences.Values.OPINION_BAAL_HATANYA
+        val opinionBaalHatanya = OPINION_BAAL_HATANYA
         if (opinionBaalHatanya == newValue) {
             maybeChooseOpinionsBaalHatanya(context)
         }
@@ -224,34 +255,28 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
      * Select all relevant preferences to use Baal HaTanya's opinion.
      */
     private fun chooseBaalHatanyaOpinions(context: Context) {
-        val opinion = ZmanimPreferences.Values.OPINION_BAAL_HATANYA
+        val opinion = OPINION_BAAL_HATANYA
         val preferences = getSharedPreferences(context)
         preferences.edit()
-            .putString(ZmanimPreferences.KEY_OPINION_HOUR, opinion)
-            .putString(ZmanimPreferences.KEY_OPINION_DAWN, opinion)
-            .putString(ZmanimPreferences.KEY_OPINION_TALLIS, opinion)
-            .putString(ZmanimPreferences.KEY_OPINION_SUNRISE, ZmanimPreferences.Values.OPINION_SEA)
-            .putString(ZmanimPreferences.KEY_OPINION_SHEMA, opinion)
-            .putString(ZmanimPreferences.KEY_OPINION_TFILA, opinion)
-            .putString(ZmanimPreferences.KEY_OPINION_EAT, opinion)
-            .putString(ZmanimPreferences.KEY_OPINION_BURN, opinion)
-            .putString(ZmanimPreferences.KEY_OPINION_NOON, opinion)
-            .putString(ZmanimPreferences.KEY_OPINION_EARLIEST_MINCHA, opinion)
-            .putString(ZmanimPreferences.KEY_OPINION_MINCHA, opinion)
-            .putString(ZmanimPreferences.KEY_OPINION_PLUG_MINCHA, opinion)
-            .putString(ZmanimPreferences.KEY_OPINION_SUNSET, ZmanimPreferences.Values.OPINION_SEA)
-            .putString(ZmanimPreferences.KEY_OPINION_NIGHTFALL, opinion)
-            .putString(
-                ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER,
-                ZmanimPreferences.Values.OPINION_NIGHT
-            )
-            .putString(
-                ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL,
-                ZmanimPreferences.Values.OPINION_8_5
-            )
-            .putString(ZmanimPreferences.KEY_OPINION_GUARDS, ZmanimPreferences.Values.OPINION_3)
-            .putInt(ZmanimPreferences.KEY_OPINION_CANDLES, 30)
-            .putInt(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES, 0)
+            .putString(KEY_OPINION_HOUR, opinion)
+            .putString(KEY_OPINION_DAWN, opinion)
+            .putString(KEY_OPINION_TALLIS, opinion)
+            .putString(KEY_OPINION_SUNRISE, OPINION_SEA)
+            .putString(KEY_OPINION_SHEMA, opinion)
+            .putString(KEY_OPINION_TFILA, opinion)
+            .putString(KEY_OPINION_EAT, opinion)
+            .putString(KEY_OPINION_BURN, opinion)
+            .putString(KEY_OPINION_NOON, opinion)
+            .putString(KEY_OPINION_EARLIEST_MINCHA, opinion)
+            .putString(KEY_OPINION_MINCHA, opinion)
+            .putString(KEY_OPINION_PLUG_MINCHA, opinion)
+            .putString(KEY_OPINION_SUNSET, OPINION_SEA)
+            .putString(KEY_OPINION_NIGHTFALL, opinion)
+            .putString(KEY_OPINION_SHABBATH_ENDS_AFTER, OPINION_NIGHT)
+            .putString(KEY_OPINION_SHABBATH_ENDS_NIGHTFALL, OPINION_8_5)
+            .putString(KEY_OPINION_GUARDS, OPINION_3)
+            .putInt(KEY_OPINION_CANDLES, 30)
+            .putInt(KEY_OPINION_SHABBATH_ENDS_MINUTES, 0)
             .apply()
     }
 
