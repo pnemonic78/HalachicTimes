@@ -15,16 +15,11 @@
  */
 package com.github.times.location
 
-import android.app.job.JobService
-import android.content.ComponentName
-import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationManager
 import android.os.Build
 import android.text.format.DateUtils
 import com.github.BaseTests
 import java.util.concurrent.TimeUnit
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 
@@ -39,7 +34,7 @@ class AddressTests : BaseTests() {
             11 * DateUtils.MINUTE_IN_MILLIS +
             57 * DateUtils.SECOND_IN_MILLIS +
             6 //+4d0h11m57s6ms
-        val location: Location = ZmanimLocation(LocationManager.GPS_PROVIDER).apply {
+        val location: Location = ZmanimLocation(GeocoderBase.USER_PROVIDER).apply {
             latitude = 36.9
             longitude = 120.7
             accuracy = 14f

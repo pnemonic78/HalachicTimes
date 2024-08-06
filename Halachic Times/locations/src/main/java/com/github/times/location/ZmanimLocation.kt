@@ -115,7 +115,7 @@ class ZmanimLocation : Location {
         /**
          * Double subtraction error.
          */
-        private const val EPSILON = 1e-6
+        private const val EPSILON = 1e-5
         private const val RADIANS_180 = PI
         private const val RADIANS_360 = RADIANS_180 * 2
         private const val RADIANS_45 = RADIANS_180 / 4
