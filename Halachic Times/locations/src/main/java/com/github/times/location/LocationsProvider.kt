@@ -536,65 +536,50 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     val isInIsrael: Boolean
         get() = isInIsrael(timeZone)
 
-    override fun formatCoordinates(location: Location): String {
-        return formatterHelper.formatCoordinates(location)
-    }
+    override fun formatCoordinates(location: Location) =
+        formatterHelper.formatCoordinates(location)
 
-    override fun formatCoordinates(address: Address): String {
-        return formatterHelper.formatCoordinates(address)
-    }
+    override fun formatCoordinates(address: Address) =
+        formatterHelper.formatCoordinates(address)
 
-    override fun formatCoordinates(latitude: Double, longitude: Double, elevation: Double): String {
-        return formatterHelper.formatCoordinates(latitude, longitude, elevation)
-    }
+    override fun formatCoordinates(latitude: Double, longitude: Double, elevation: Double) =
+        formatterHelper.formatCoordinates(latitude, longitude, elevation)
 
-    override fun formatLatitude(latitude: Double): String {
-        return formatterHelper.formatLatitude(latitude)
-    }
+    override fun formatLatitude(latitude: Double) =
+        formatterHelper.formatLatitude(latitude)
 
-    override fun formatLatitudeDecimal(latitude: Double): String {
-        return formatterHelper.formatLatitudeDecimal(latitude)
-    }
+    override fun formatLatitudeDecimal(latitude: Double) =
+        formatterHelper.formatLatitudeDecimal(latitude)
 
-    override fun formatLatitudeSexagesimal(latitude: Double): String {
-        return formatterHelper.formatLatitudeSexagesimal(latitude)
-    }
+    override fun formatLatitudeSexagesimal(latitude: Double) =
+        formatterHelper.formatLatitudeSexagesimal(latitude)
 
-    override fun formatLongitude(longitude: Double): String {
-        return formatterHelper.formatLongitude(longitude)
-    }
+    override fun formatLongitude(longitude: Double) =
+        formatterHelper.formatLongitude(longitude)
 
-    override fun formatLongitudeDecimal(longitude: Double): String {
-        return formatterHelper.formatLongitudeDecimal(longitude)
-    }
+    override fun formatLongitudeDecimal(longitude: Double) =
+        formatterHelper.formatLongitudeDecimal(longitude)
 
-    override fun formatLongitudeSexagesimal(longitude: Double): String {
-        return formatterHelper.formatLongitudeSexagesimal(longitude)
-    }
+    override fun formatLongitudeSexagesimal(longitude: Double) =
+        formatterHelper.formatLongitudeSexagesimal(longitude)
 
-    override fun formatElevation(elevation: Double): String {
-        return formatterHelper.formatElevation(elevation)
-    }
+    override fun formatElevation(elevation: Double) =
+        formatterHelper.formatElevation(elevation)
 
-    override fun formatBearing(azimuth: Double): String {
-        return formatterHelper.formatBearing(azimuth)
-    }
+    override fun formatBearing(azimuth: Double) =
+        formatterHelper.formatBearing(azimuth)
 
-    override fun formatBearingDecimal(azimuth: Double): String {
-        return formatterHelper.formatBearingDecimal(azimuth)
-    }
+    override fun formatBearingDecimal(azimuth: Double) =
+        formatterHelper.formatBearingDecimal(azimuth)
 
-    override fun formatBearingSexagesimal(azimuth: Double): String {
-        return formatterHelper.formatBearingSexagesimal(azimuth)
-    }
+    override fun formatBearingSexagesimal(azimuth: Double) =
+        formatterHelper.formatBearingSexagesimal(azimuth)
 
-    override fun parseLatitude(coordinate: String): Double {
-        return formatterHelper.parseLatitude(coordinate)
-    }
+    override fun parseLatitude(coordinate: String) =
+        formatterHelper.parseLatitude(coordinate)
 
-    override fun parseLongitude(coordinate: String): Double {
-        return formatterHelper.parseLongitude(coordinate)
-    }
+    override fun parseLongitude(coordinate: String) =
+        formatterHelper.parseLongitude(coordinate)
 
     /**
      * Set the location.

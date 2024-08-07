@@ -37,7 +37,6 @@ android {
             "no",
             "pl",
             "pt",
-            "pt_PT",
             "ro",
             "ru",
             "sv",

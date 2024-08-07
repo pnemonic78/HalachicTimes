@@ -26,6 +26,38 @@ android {
         encodeApiKey("BING_API_KEY")
         encodeApiKey("GEONAMES_USERNAME")
         encodeApiKey("GOOGLE_API_KEY")
+
+        val locales = listOf(
+            "ar",
+            "bg",
+            "cs",
+            "da",
+            "de",
+            "el",
+            "en",
+            "es",
+            "es_US",
+            "et",
+            "fa",
+            "fi",
+            "fr",
+            "hi",
+            "hu",
+            "it",
+            "iw",
+            "lt",
+            "nb",
+            "nl",
+            "no",
+            "pl",
+            "pt",
+            "ro",
+            "ru",
+            "sv",
+            "tr",
+            "uk"
+        )
+        resourceConfigurations += locales
     }
 
     buildFeatures {

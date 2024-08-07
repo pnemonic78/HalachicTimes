@@ -17,6 +17,7 @@ package com.github.times.location
 
 import android.app.Application
 import android.content.Context
+import android.content.res.Configuration
 import com.github.app.SimpleThemeCallbacks
 import com.github.app.ThemeCallbacks
 import com.github.preference.ThemePreferences
@@ -76,6 +77,11 @@ abstract class LocationApplication<TP : ThemePreferences, AP : AddressProvider, 
     override fun onTerminate() {
         super.onTerminate()
         stopLocationHolder()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        locationHolder?.onConfigurationChanged(newConfig)
     }
 
     private fun stopLocationHolder() {
