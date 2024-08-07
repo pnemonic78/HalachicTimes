@@ -3,7 +3,7 @@ package org.geonames
 import java.util.Date
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import org.geonames.json.DateSerializer
+import org.geonames.json.DefaultDateSerializer
 
 @Serializable
 data class TimeZone(
@@ -28,21 +28,21 @@ data class TimeZone(
      * @return the time
      */
     @SerialName("time")
-    @Serializable(with = DateSerializer::class)
+    @Serializable(with = DefaultDateSerializer::class)
     var time: Date? = null,
 
     /**
      * @return the sunrise
      */
     @SerialName("sunrise")
-    @Serializable(with = DateSerializer::class)
+    @Serializable(with = DefaultDateSerializer::class)
     var sunrise: Date? = null,
 
     /**
      * @return the sunset
      */
     @SerialName("sunset")
-    @Serializable(with = DateSerializer::class)
+    @Serializable(with = DefaultDateSerializer::class)
     var sunset: Date? = null,
 
     /**
