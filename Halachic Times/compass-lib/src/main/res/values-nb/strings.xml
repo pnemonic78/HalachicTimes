@@ -3,7 +3,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">Kompass</string>
-    <string name="title_activity_compass">Retning av bønn</string>
+    <string name="title_activity_direction">Retning av bønn</string>
     <string name="compass_bearing">Peiling</string>
     <string name="compass_bearing_circle">Storsirkel (korteste avstanden)</string>
     <string name="compass_bearing_rhumb">Loksodrom (samme vinkel)</string>

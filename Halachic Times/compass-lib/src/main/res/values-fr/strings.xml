@@ -3,7 +3,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">Boussole</string>
-    <string name="title_activity_compass">Direction de la prière</string>
+    <string name="title_activity_direction">Direction de la prière</string>
     <string name="compass_bearing">Relèvement</string>
     <string name="compass_bearing_circle">Grand cercle (distance la plus courte)</string>
     <string name="compass_bearing_rhumb">Loxodromie (angle constant)</string>

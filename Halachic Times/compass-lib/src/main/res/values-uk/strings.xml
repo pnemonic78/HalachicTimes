@@ -3,7 +3,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">Компас</string>
-    <string name="title_activity_compass">Напрям молитви</string>
+    <string name="title_activity_direction">Напрям молитви</string>
     <string name="compass_bearing">Пеленг</string>
     <string name="compass_bearing_circle">Велике коло (найкоротшим шляхом)</string>
     <string name="compass_bearing_rhumb">Локсодрома (постійний кут)</string>

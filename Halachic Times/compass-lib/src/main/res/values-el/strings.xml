@@ -3,7 +3,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">Πυξίδα</string>
-    <string name="title_activity_compass">Κατεύθυνση της προσευχής</string>
+    <string name="title_activity_direction">Κατεύθυνση της προσευχής</string>
     <string name="compass_bearing">Διόπτευση</string>
     <string name="compass_bearing_circle">Μεγάλη κύκλο (συντομότερο μονοπάτι)</string>
     <string name="compass_bearing_rhumb">Λοξοδρομία (σταθερή γωνία)</string>

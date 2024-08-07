@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
-    <string name="app_name">@string/title_activity_compass</string>
-    <string name="title_activity_compass">@string/menu_compass</string>
+    <string name="app_name" translatable="false">@string/title_activity_compass</string>
 
     <!-- About -->
     <string name="issue_url" translatable="false">mailto:pnemonic@gmail.com?subject=Compass</string>

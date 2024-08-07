@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
     <string name="app_name">Halachic Prayer Times</string>
     <string name="title_activity_zmanim">Halachic Times</string>
@@ -355,10 +355,10 @@
     <string name="reminder_silence">Silence after reminder</string>
     <string name="reminder_stream_title">Reminder type</string>
     <string name="reminder_tone">Reminder ringtone</string>
-    <string name="alarm_volume_title">Alarm</string>
-    <string name="notification_volume_title">Notification</string>
-    <string name="reminder_stream_alarm" translatable="false">@string/alarm_volume_title</string>
-    <string name="reminder_stream_notification" translatable="false">@string/notification_volume_title</string>
+    <string name="alarm_title" translatable="false">@string/menu_alarm</string>
+    <string name="notification_title">Notification</string>
+    <string name="reminder_stream_alarm" translatable="false">@string/alarm_title</string>
+    <string name="reminder_stream_notification" translatable="false">@string/notification_title</string>
     <string name="reminder_off" translatable="false">@string/off</string>
     <string name="reminder_on_time">On time</string>
     <string name="reminder_minutes_zero" translatable="false">@string/reminder_minutes_other</string>
@@ -376,7 +376,7 @@
     <string name="reminder_wednesday">Remind on Wednesday</string>
     <string name="notification_upcoming_title">The upcoming time as a notification</string>
     <string name="notifications_title" translatable="false">@string/reminder</string>
-    <string name="title_activity_alarm" translatable="false">@string/alarm_volume_title</string>
+    <string name="title_activity_alarm" translatable="false">@string/alarm_title</string>
     <string name="reminder_settings" translatable="false">@string/reminder</string>
     <string name="dismiss" translatable="false">@string/cancel</string>
 

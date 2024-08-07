@@ -217,8 +217,6 @@
     <string name="reminder_silence">Silencio tras recordatorio</string>
     <string name="reminder_stream_title">Tipo de recordatorio</string>
     <string name="reminder_tone">Tono de recordatorio</string>
-    <string name="alarm_volume_title" msgid="2285597478377758706">"Alarma"</string>
-    <string name="notification_volume_title" msgid="2012640760341080408">"Notificación"</string>
     <string name="reminder_on_time">a tiempo</string>
     <string name="reminder_minutes_one">%d minuto antes</string>
     <string name="reminder_minutes_other">%d minutos antes</string>

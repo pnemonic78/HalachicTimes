@@ -10,6 +10,39 @@ android {
     defaultConfig {
         minSdk = BuildVersions.minSdk
         targetSdk = BuildVersions.targetSdk
+
+        val locales = listOf(
+            "ar",
+            "bg",
+            "cs",
+            "da",
+            "de",
+            "el",
+            "en",
+            "es",
+            "es_US",
+            "et",
+            "fa",
+            "fi",
+            "fr",
+            "hi",
+            "hu",
+            "it",
+            "iw",
+            "lt",
+            "nb",
+            "nl",
+            "no",
+            "pl",
+            "pt",
+            "pt_PT",
+            "ro",
+            "ru",
+            "sv",
+            "tr",
+            "uk"
+        )
+        resourceConfigurations += locales
     }
 
     compileOptions {

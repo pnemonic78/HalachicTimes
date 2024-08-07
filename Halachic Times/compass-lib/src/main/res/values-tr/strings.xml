@@ -3,7 +3,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">Pusula</string>
-    <string name="title_activity_compass">Namaz yönü</string>
+    <string name="title_activity_direction">Namaz yönü</string>
     <string name="compass_bearing">Kerteriz</string>
     <string name="compass_bearing_circle">Büyük daire (kısa yol)</string>
     <string name="compass_bearing_rhumb">Kerte hattı (aynı açı)</string>

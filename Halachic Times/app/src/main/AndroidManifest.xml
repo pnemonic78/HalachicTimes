@@ -63,7 +63,7 @@
         <activity
             android:name="com.github.times.compass.CompassActivity"
             android:exported="true"
-            android:label="@string/title_activity_compass"
+            android:label="@string/title_activity_direction"
             android:parentActivityName="com.github.times.ZmanimActivity"
             android:theme="@style/Theme.CompassApp.DayNight">
             <meta-data

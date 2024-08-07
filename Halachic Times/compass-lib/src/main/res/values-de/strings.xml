@@ -3,7 +3,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">Kompass</string>
-    <string name="title_activity_compass">Gebetsrichtung</string>
+    <string name="title_activity_direction">Gebetsrichtung</string>
     <string name="compass_bearing">Peilung</string>
     <string name="compass_bearing_circle">Großkreis (als kürzeste Verbindung)</string>
     <string name="compass_bearing_rhumb">Loxodrome (gleichen Winkel)</string>

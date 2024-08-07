@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
     <!-- Compass -->
     <string name="menu_compass">Compass</string>
-    <string name="title_activity_compass">Direction of Prayer</string>
+    <string name="title_activity_compass" translatable="false">@string/menu_compass</string>
     <string name="compass_summary" translatable="false"/>
     <string name="compass_bearing">Bearing</string>
     <string name="compass_bearing_circle">Great circle (shortest path)</string>
     <string name="compass_bearing_rhumb">Rhumb line (constant angle)</string>
+
+    <!-- Prayer Direction -->
+    <string name="title_activity_direction">Prayer Direction</string>
 
     <!-- Theme -->
     <string name="compass_theme_title">Compass theme</string>

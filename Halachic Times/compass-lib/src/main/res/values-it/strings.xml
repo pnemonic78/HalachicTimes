@@ -3,7 +3,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">Bussola</string>
-    <string name="title_activity_compass">Direzione di orazione</string>
+    <string name="title_activity_direction">Direzione di orazione</string>
     <string name="compass_bearing">Rotta navale</string>
     <string name="compass_bearing_circle">Cerchio massimo (distanza più breve)</string>
     <string name="compass_bearing_rhumb">Lossodromia (stesso angolo)</string>

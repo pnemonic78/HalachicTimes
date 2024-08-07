@@ -3,7 +3,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">قطب نما</string>
-    <string name="title_activity_compass">جهت نماز</string>
+    <string name="title_activity_direction">جهت نماز</string>
     <string name="compass_bearing">یاتاقان</string>
     <string name="compass_bearing_circle">دایره بزرگ (کوتاه ترین مسیر)</string>
     <string name="compass_bearing_rhumb">خط هم‌گوشه (شیب ثابت)</string>

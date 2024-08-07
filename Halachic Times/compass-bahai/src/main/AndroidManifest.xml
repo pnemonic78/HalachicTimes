@@ -17,7 +17,7 @@
         <activity
             android:name="com.github.compass.bahai.CompassActivity"
             android:exported="true"
-            android:label="@string/title_activity_compass">
+            android:label="@string/title_activity_direction">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

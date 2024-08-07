@@ -101,9 +101,9 @@ class AlarmActivity<P : ZmanimPreferences> : AppCompatActivity(), ThemeCallbacks
         if (prefs.isSeconds) {
             val time24 = DateFormat.is24HourFormat(context)
             val pattern = if (time24) {
-                context.getString(R.string.twenty_four_hour_time_format)
+                DateFormat.getBestDateTimePattern(locale, "Hms")
             } else {
-                context.getString(R.string.twelve_hour_time_format)
+                DateFormat.getBestDateTimePattern(locale, "hms")
             }
             timeFormat = SimpleDateFormat(pattern, locale)
             timeFormatGranularity = DateUtils.SECOND_IN_MILLIS

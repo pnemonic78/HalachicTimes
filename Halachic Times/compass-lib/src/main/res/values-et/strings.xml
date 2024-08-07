@@ -3,7 +3,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">Kompass</string>
-    <string name="title_activity_compass">Suund palve</string>
+    <string name="title_activity_direction">Suund palve</string>
     <string name="compass_bearing">Kurss</string>
     <string name="compass_bearing_circle">Suurring (lühim tee)</string>
     <string name="compass_bearing_rhumb">Loksodroomi (sama nurga all)</string>

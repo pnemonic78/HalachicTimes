@@ -11,6 +11,37 @@ android {
         minSdk = BuildVersions.minSdk
         targetSdk = BuildVersions.targetSdk
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val locales = listOf(
+            "ar",
+            "bg",
+            "cs",
+            "da",
+            "de",
+            "el",
+            "en",
+            "es",
+            "et",
+            "fa",
+            "fi",
+            "fr",
+            "hi",
+            "hu",
+            "it",
+            "iw",
+            "lt",
+            "nb",
+            "nl",
+            "no",
+            "pl",
+            "pt",
+            "ro",
+            "ru",
+            "sv",
+            "tr",
+            "uk"
+        )
+        resourceConfigurations += locales
     }
 
     buildTypes {

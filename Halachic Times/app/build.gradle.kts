@@ -53,6 +53,7 @@ android {
             "uk"
         )
         resourceConfigurations += locales
+
         buildConfigField("String[]", "LOCALES", joinStrings(locales))
     }
 

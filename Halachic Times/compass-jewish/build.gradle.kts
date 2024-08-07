@@ -16,6 +16,7 @@ android {
         targetSdk = BuildVersions.targetSdk
         versionCode = versionMajor * 100 + versionMinor
         versionName = "${versionMajor}." + versionMinor.toString().padStart(2, '0')
+
         val locales = listOf(
             "bg",
             "cs",

@@ -3,7 +3,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>
-    <string name="title_activity_compass">Retning af bøn</string>
+    <string name="title_activity_direction">Retning af bøn</string>
     <string name="compass_bearing">Kurs</string>
     <string name="compass_bearing_circle">Storcirkel (korteste kurve)</string>
     <string name="compass_bearing_rhumb">Kompaslinje (samme vinkel)</string>

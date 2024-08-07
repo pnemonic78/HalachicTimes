@@ -3,7 +3,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">कंपास</string>
-    <string name="title_activity_compass">प्रार्थना की दिशा</string>
+    <string name="title_activity_direction">प्रार्थना की दिशा</string>
     <string name="compass_bearing">अभिविन्यास</string>
     <string name="compass_bearing_circle">महावृत्त (कम से कम पथ)</string>
     <string name="compass_bearing_rhumb">रूंब लाइन (निरंतर कोण)</string>

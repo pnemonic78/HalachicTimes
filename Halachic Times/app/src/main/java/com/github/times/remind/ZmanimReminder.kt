@@ -780,7 +780,7 @@ class ZmanimReminder(private val context: Context) {
                 context.getString(R.string.reminder),
                 NotificationManager.IMPORTANCE_HIGH
             )
-            channel.description = context.getString(R.string.notification_volume_title)
+            channel.description = context.getString(com.github.lib.R.string.notifications)
             channel.enableLights(true)
             channel.lightColor = LED_COLOR
             channel.enableVibration(true)
@@ -801,7 +801,7 @@ class ZmanimReminder(private val context: Context) {
                 context.getString(R.string.reminder),
                 NotificationManager.IMPORTANCE_HIGH
             )
-            channel.description = context.getString(R.string.notification_volume_title)
+            channel.description = context.getString(com.github.lib.R.string.notifications)
             channel.enableLights(true)
             channel.lightColor = LED_COLOR
             channel.enableVibration(true)

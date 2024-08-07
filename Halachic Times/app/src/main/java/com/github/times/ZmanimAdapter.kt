@@ -16,6 +16,7 @@
 package com.github.times
 
 import android.content.Context
+import android.text.format.DateFormat
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -31,7 +32,6 @@ import com.kosherjava.zmanim.ComplexZmanimCalendar
 import com.kosherjava.zmanim.hebrewcalendar.HebrewDateFormatter
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.GregorianCalendar
 
@@ -68,8 +68,8 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     var inIsrael = false
     private val summaries: Boolean = settings.isSummaries
     private val showElapsed: Boolean = settings.isPast
-    private val timeFormat: DateFormat
-    private val timeFormatSeasonalHour: DateFormat
+    private val timeFormat: java.text.DateFormat
+    private val timeFormatSeasonalHour: java.text.DateFormat
     private val timeFormatGranularity: Long
     private val comparator: Comparator<ZmanimItem?> by lazy { ZmanimComparator() }
 
@@ -91,20 +91,20 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     var candles = CandleData()
 
     init {
-        val time24 = android.text.format.DateFormat.is24HourFormat(context)
+        val time24 = DateFormat.is24HourFormat(context)
         val locale = context.getDefaultLocale()
         if (settings.isSeconds) {
             val pattern = if (time24) {
-                context.getString(com.github.lib.R.string.twenty_four_hour_time_format)
+                DateFormat.getBestDateTimePattern(locale, "Hms")
             } else {
-                context.getString(com.github.lib.R.string.twelve_hour_time_format)
+                DateFormat.getBestDateTimePattern(locale, "hms")
             }
             timeFormat = SimpleDateFormat(pattern, locale)
             timeFormatGranularity = DateUtils.SECOND_IN_MILLIS
             timeFormatSeasonalHour =
                 SimpleDateFormat(context.getString(R.string.hour_format_seconds), locale)
         } else {
-            timeFormat = android.text.format.DateFormat.getTimeFormat(context)
+            timeFormat = DateFormat.getTimeFormat(context)
             timeFormatGranularity = DateUtils.MINUTE_IN_MILLIS
             timeFormatSeasonalHour =
                 SimpleDateFormat(context.getString(R.string.hour_format), locale)
