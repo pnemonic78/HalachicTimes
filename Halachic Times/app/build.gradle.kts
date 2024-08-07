@@ -22,6 +22,7 @@ android {
         applicationId = "net.sf.times"
         minSdk = BuildVersions.minSdk
         targetSdk = BuildVersions.targetSdk
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = versionMajor * 100 + versionMinor
         versionName = "${versionMajor}." + versionMinor.toString().padStart(2, '0')
 
@@ -53,8 +54,6 @@ android {
         )
         resourceConfigurations += locales
         buildConfigField("String[]", "LOCALES", joinStrings(locales))
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -133,6 +132,7 @@ dependencies {
     androidTestImplementation("androidx.test:rules:${BuildVersions.androidTest}")
     androidTestImplementation("androidx.test:runner:${BuildVersions.androidTest}")
     androidTestImplementation("androidx.test.ext:junit:${BuildVersions.junitExt}")
+    androidTestImplementation(project(":android-lib:lib"))
     /// Declare the dependencies for the Crashlytics and Analytics libraries
     implementation("com.google.firebase:firebase-crashlytics:19.0.3")
 }

@@ -123,4 +123,5 @@ dependencies {
     androidTestImplementation("androidx.test:runner:${BuildVersions.androidTest}")
     androidTestImplementation("androidx.test.ext:junit:${BuildVersions.junitExt}")
     androidTestImplementation(kotlin("reflect"))
+    androidTestImplementation(project(":android-lib:lib"))
 }
