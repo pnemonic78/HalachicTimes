@@ -7,10 +7,6 @@ plugins {
     id("com.google.firebase.crashlytics")
 }
 
-fun joinStrings(values: Collection<String>): String {
-    return "{\"" + values.joinToString("\", \"") + "\"}"
-}
-
 val versionMajor = project.properties["APP_VERSION_MAJOR"].toString().toInt()
 val versionMinor = project.properties["APP_VERSION_MINOR"].toString().toInt()
 
@@ -53,8 +49,7 @@ android {
             "uk"
         )
         resourceConfigurations += locales
-
-        buildConfigField("String[]", "LOCALES", joinStrings(locales))
+        buildConfigField("String[]", "LOCALES", locales.toJavaString())
     }
 
     compileOptions {
