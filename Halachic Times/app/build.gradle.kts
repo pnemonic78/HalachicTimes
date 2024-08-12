@@ -52,6 +52,16 @@ android {
         buildConfigField("String[]", "LOCALES", locales.toJavaString())
     }
 
+    bundle {
+        language {
+            // Specifies that the app bundle should not support
+            // configuration APKs for language resources. These
+            // resources are instead packaged with each base and
+            // dynamic feature APK.
+            enableSplit = false
+        }
+    }
+
     compileOptions {
         sourceCompatibility = BuildVersions.jvm
         targetCompatibility = BuildVersions.jvm
