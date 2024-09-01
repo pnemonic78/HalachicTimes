@@ -49,8 +49,7 @@ abstract class SpecificLocationAdapter(
     /**
      * Is the address specific to this adapter?
      *
-     * @param item
-     * the location item.
+     * @param item the location item.
      * @return `true` to include the location.
      */
     protected abstract fun isSpecific(item: LocationItem): Boolean

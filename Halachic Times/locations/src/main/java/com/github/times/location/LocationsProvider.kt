@@ -536,10 +536,10 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     val isInIsrael: Boolean
         get() = isInIsrael(timeZone)
 
-    override fun formatCoordinates(location: Location) =
+    override fun formatCoordinates(location: Location?) =
         formatterHelper.formatCoordinates(location)
 
-    override fun formatCoordinates(address: Address) =
+    override fun formatCoordinates(address: Address?) =
         formatterHelper.formatCoordinates(address)
 
     override fun formatCoordinates(latitude: Double, longitude: Double, elevation: Double) =

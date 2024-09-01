@@ -184,7 +184,7 @@ class GeoNamesParser {
         private const val FIELD_GEONAME_CC = 8
 
         /**
-         * alternate country codes, comma separated, ISO-3166 2-letter country code, 200 characters
+         * Alternate country codes, comma separated, ISO-3166 2-letter country code, 200 characters
          */
         private const val FIELD_GEONAME_CC2 = 9
 
@@ -194,17 +194,17 @@ class GeoNamesParser {
         private const val FIELD_GEONAME_ADMIN1_CODE = 10
 
         /**
-         * code for the second administrative division, a county in the US, see file admin2Codes.txt; varchar(80)
+         * Code for the second administrative division, a county in the US, see file admin2Codes.txt; varchar(80)
          */
         private const val FIELD_GEONAME_ADMIN2_CODE = 11
 
         /**
-         * code for third level administrative division, varchar(20)
+         * Code for third level administrative division, varchar(20)
          */
         private const val FIELD_GEONAME_ADMIN3_CODE = 12
 
         /**
-         * code for fourth level administrative division, varchar(20)
+         * Code for fourth level administrative division, varchar(20)
          */
         private const val FIELD_GEONAME_ADMIN4_CODE = 13
 
@@ -214,22 +214,22 @@ class GeoNamesParser {
         private const val FIELD_GEONAME_POPULATION = 14
 
         /**
-         * in meters, integer
+         * Elevation in meters, integer
          */
         private const val FIELD_GEONAME_ELEVATION = 15
 
         /**
-         * digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat.
+         * Digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat.
          */
         private const val FIELD_GEONAME_DEM = 16
 
         /**
-         * the iana timezone id (see file timeZone.txt) varchar(40)
+         * The iana timezone id (see file timeZone.txt) varchar(40)
          */
         private const val FIELD_GEONAME_TIMEZONE = 17
 
         /**
-         * date of last modification in yyyy-MM-dd format
+         * Date of last modification in yyyy-MM-dd format
          */
         private const val FIELD_GEONAME_MODIFICATION = 18
     }

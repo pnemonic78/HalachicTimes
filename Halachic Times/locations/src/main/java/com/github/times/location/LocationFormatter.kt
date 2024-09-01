@@ -28,30 +28,25 @@ interface LocationFormatter {
     /**
      * Format the coordinates.
      *
-     * @param location
-     * the location.
+     * @param location the location.
      * @return the coordinates text.
      */
-    fun formatCoordinates(location: Location): String
+    fun formatCoordinates(location: Location?): String
 
     /**
      * Format the coordinates.
      *
-     * @param address
-     * the address.
+     * @param address the address.
      * @return the coordinates text.
      */
-    fun formatCoordinates(address: Address): String
+    fun formatCoordinates(address: Address?): String
 
     /**
      * Format the coordinates.
      *
-     * @param latitude
-     * the latitude.
-     * @param longitude
-     * the longitude.
-     * @param elevation
-     * the elevation or altitude.
+     * @param latitude the latitude.
+     * @param longitude the longitude.
+     * @param elevation the elevation or altitude.
      * @return the coordinates text.
      */
     fun formatCoordinates(
@@ -63,8 +58,7 @@ interface LocationFormatter {
     /**
      * Format a latitude coordinate.
      *
-     * @param latitude
-     * the coordinate.
+     * @param latitude the coordinate.
      * @return the coordinate text.
      */
     fun formatLatitude(@FloatRange(from = -90.0, to = 90.0) latitude: Double): String
@@ -72,8 +66,7 @@ interface LocationFormatter {
     /**
      * Format a latitude coordinate using the decimal notation.
      *
-     * @param latitude
-     * the coordinate.
+     * @param latitude the coordinate.
      * @return the coordinate text.
      */
     fun formatLatitudeDecimal(@FloatRange(from = -90.0, to = 90.0) latitude: Double): String
@@ -81,8 +74,7 @@ interface LocationFormatter {
     /**
      * Format a latitude coordinate using the sexagesimal notation.
      *
-     * @param latitude
-     * the coordinate.
+     * @param latitude the coordinate.
      * @return the coordinate text.
      */
     fun formatLatitudeSexagesimal(@FloatRange(from = -90.0, to = 90.0) latitude: Double): String
@@ -90,8 +82,7 @@ interface LocationFormatter {
     /**
      * Format a longitude coordinate.
      *
-     * @param longitude
-     * the coordinate.
+     * @param longitude the coordinate.
      * @return the coordinate text.
      */
     fun formatLongitude(@FloatRange(from = -180.0, to = 180.0) longitude: Double): String
@@ -99,8 +90,7 @@ interface LocationFormatter {
     /**
      * Format a longitude coordinate using the decimal notation.
      *
-     * @param longitude
-     * the coordinate.
+     * @param longitude the coordinate.
      * @return the coordinate text.
      */
     fun formatLongitudeDecimal(@FloatRange(from = -180.0, to = 180.0) longitude: Double): String
@@ -108,8 +98,7 @@ interface LocationFormatter {
     /**
      * Format a longitude coordinate using the sexagesimal notation.
      *
-     * @param longitude
-     * the coordinate.
+     * @param longitude the coordinate.
      * @return the coordinate text.
      */
     fun formatLongitudeSexagesimal(@FloatRange(from = -180.0, to = 180.0) longitude: Double): String
@@ -117,8 +106,7 @@ interface LocationFormatter {
     /**
      * Format an elevation.
      *
-     * @param elevation
-     * the elevation.
+     * @param elevation the elevation.
      * @return the elevation text.
      */
     fun formatElevation(elevation: Double): String
@@ -126,8 +114,7 @@ interface LocationFormatter {
     /**
      * Format a azimuth (bearing or yaw or compass angle).
      *
-     * @param azimuth
-     * the azimuth, in degrees.
+     * @param azimuth the azimuth, in degrees.
      * @return the azimuth text.
      */
     fun formatBearing(azimuth: Double): String
@@ -135,8 +122,7 @@ interface LocationFormatter {
     /**
      * Format a azimuth (bearing or yaw or compass angle) using the decimal notation.
      *
-     * @param azimuth
-     * the azimuth, in degrees.
+     * @param azimuth the azimuth, in degrees.
      * @return the azimuth text.
      */
     fun formatBearingDecimal(azimuth: Double): String
@@ -144,8 +130,7 @@ interface LocationFormatter {
     /**
      * Format a azimuth (bearing or yaw or compass angle) using the sexagesimal notation.
      *
-     * @param azimuth
-     * the azimuth, in degrees.
+     * @param azimuth the azimuth, in degrees.
      * @return the azimuth text.
      */
     fun formatBearingSexagesimal(azimuth: Double): String

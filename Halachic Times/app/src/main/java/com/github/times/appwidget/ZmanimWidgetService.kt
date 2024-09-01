@@ -23,8 +23,7 @@ import com.github.app.LocaleHelper
 import com.github.preference.LocalePreferences
 
 /**
- * Service that provides the list of halachic times (*zmanim*) items for
- * the scrollable widget.
+ * Service that provides the list of halachic times (*zmanim*) items for the scrollable widget.
  *
  * @author Moshe Waisberg
  */

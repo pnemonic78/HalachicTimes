@@ -8,7 +8,7 @@ import org.geonames.json.DefaultDateSerializer
 @Serializable
 data class TimeZone(
     /**
-     * the timezoneId (example : "Pacific/Honolulu")
+     * The timezoneId (example : "Pacific/Honolulu")
      * <p>
      * see also [java.util.TimeZone] and
      * http://www.twinsun.com/tz/tz-link.htm
@@ -46,7 +46,7 @@ data class TimeZone(
     var sunset: Date? = null,
 
     /**
-     * the gmtOffset as of first of January of current year
+     * The gmtOffset as of first of January of current year
      *
      * @return the gmtOffset
      */
@@ -56,7 +56,7 @@ data class TimeZone(
     var gmtOffset: Double = 0.0,
 
     /**
-     * the dstOffset as of first of July of current year
+     * The dstOffset as of first of July of current year
      *
      * @return the dstOffset
      */

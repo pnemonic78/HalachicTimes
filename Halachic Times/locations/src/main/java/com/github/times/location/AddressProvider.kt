@@ -464,9 +464,8 @@ class AddressProvider @JvmOverloads constructor(
     )
 
     /**
-     * Find elevation of nearest locations cached in the database. Calculates
-     * the average elevation of neighbouring locations if more than `1` is
-     * found.
+     * Find elevation of nearest locations cached in the database.
+     * Calculates the average elevation of neighbouring locations if more than `1` is found.
      *
      * @param location the location.
      * @return the elevated location - `null` otherwise.

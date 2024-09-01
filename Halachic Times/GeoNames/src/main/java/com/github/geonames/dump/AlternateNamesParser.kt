@@ -97,7 +97,7 @@ class AlternateNamesParser {
 
     companion object {
         /**
-         * the id of this alternate name, int
+         * The id of this alternate name, int
          */
         private const val FIELD_ALTERNATE_NAMES_ID = 0
 
@@ -107,12 +107,12 @@ class AlternateNamesParser {
         private const val FIELD_ALTERNATE_NAMES_GEONAME_ID = 1
 
         /**
-         * iso 639 language code 2- or 3-characters; 4-characters 'post' for postal codes and 'iata','icao' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link to a website (mostly to wikipedia), wkdt for the wikidataid, varchar(7)
+         * ISO 639 language code 2- or 3-characters; 4-characters 'post' for postal codes and 'iata','icao' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link to a website (mostly to wikipedia), wkdt for the wikidataid, varchar(7)
          */
         private const val FIELD_ALTERNATE_NAMES_LANGUAGE = 2
 
         /**
-         * alternate name or name variant, varchar(400)
+         * Alternate name or name variant, varchar(400)
          */
         private const val FIELD_ALTERNATE_NAMES_NAME = 3
 
@@ -137,12 +137,12 @@ class AlternateNamesParser {
         private const val FIELD_ALTERNATE_NAMES_HISTORIC = 7
 
         /**
-         * from period when the name was used
+         * From period when the name was used
          */
         private const val FIELD_ALTERNATE_NAMES_FROM = 8
 
         /**
-         * to period when the name was used
+         * To period when the name was used
          */
         private const val FIELD_ALTERNATE_NAMES_TO = 9
 

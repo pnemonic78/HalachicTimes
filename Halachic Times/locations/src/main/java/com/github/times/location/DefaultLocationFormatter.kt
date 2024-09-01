@@ -75,14 +75,25 @@ open class DefaultLocationFormatter(
      */
     private val formatBearingDecimal: DecimalFormat = DecimalFormat("###.#\u00B0")
 
-    override fun formatCoordinates(location: Location): String {
+    /**
+     * Unknown location.
+     */
+    private val formatUnknown = context.getString(R.string.location_unknown)
+
+    override fun formatCoordinates(location: Location?): String {
+        if (location == null) {
+            return formatUnknown
+        }
         val latitude = location.latitude
         val longitude = location.longitude
         val elevation = location.altitude
         return formatCoordinates(latitude, longitude, elevation)
     }
 
-    override fun formatCoordinates(address: Address): String {
+    override fun formatCoordinates(address: Address?): String {
+        if (address == null) {
+            return formatUnknown
+        }
         val latitude = address.latitude
         val longitude = address.longitude
         var elevation = 0.0

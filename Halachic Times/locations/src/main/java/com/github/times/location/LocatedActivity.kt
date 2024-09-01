@@ -160,7 +160,6 @@ abstract class LocatedActivity<P : ThemePreferences> : AppCompatActivity(),
         addressLocation = location
         val updateLocation = createUpdateLocationRunnable(location)
         runOnUiThread(updateLocation)
-        locations.findAddress(location)
     }
 
     protected abstract fun createUpdateLocationRunnable(location: Location): Runnable
@@ -250,11 +249,10 @@ abstract class LocatedActivity<P : ThemePreferences> : AppCompatActivity(),
      * @param location the location to format.
      */
     protected fun bindHeader(location: Location?) {
-        if (location == null) return
         val locationLabel = headerLocation ?: return
         val addressLabel = headerAddress ?: return
-        val formatter: LocationFormatter = locations
-        val locationText: CharSequence = formatter.formatCoordinates(location)
+        val formatter = locations as LocationFormatter
+        val locationText = formatter.formatCoordinates(location)
         val locationName = formatAddress(address)
         Timber.d("header [$locationText] => [$locationName]")
 
