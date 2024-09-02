@@ -22,6 +22,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteException
 import android.location.Address
 import android.location.Location
+import android.os.Bundle
 import android.provider.BaseColumns
 import com.github.database.CursorFilter
 import com.github.times.location.AddressResponseParser
@@ -31,6 +32,7 @@ import com.github.times.location.GeocoderBase
 import com.github.times.location.LocationException
 import com.github.times.location.ZmanimAddress
 import com.github.times.location.ZmanimLocation
+import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_LOCATION
 import com.github.times.location.country.Country
 import com.github.times.location.provider.LocationContract
 import com.github.times.location.provider.LocationContract.AddressColumns
@@ -40,7 +42,6 @@ import com.github.times.location.provider.LocationContract.Elevations
 import com.github.util.getDefaultLocale
 import java.io.Closeable
 import java.io.IOException
-import java.util.Collections
 import java.util.Locale
 import kotlin.math.min
 import timber.log.Timber
@@ -48,6 +49,8 @@ import timber.log.Timber
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
  * Android SQLite database.
+ *
+ * The local database is supposed to reduce redundant network requests.
  *
  * @author Moshe Waisberg
  */
@@ -69,11 +72,13 @@ class DatabaseGeocoder(
     ): List<Address> {
         require(latitude in LATITUDE_MIN..LATITUDE_MAX) { "latitude == $latitude" }
         require(longitude in LONGITUDE_MIN..LONGITUDE_MAX) { "longitude == $longitude" }
-        val filter: CursorFilter = createDistanceFilter(latitude, longitude, SAME_PLATEAU)
+        val filter = createDistanceFilter(latitude, longitude, SAME_PLATEAU)
         val q = queryAddresses(filter)
-        Collections.sort(q, DistanceComparator(latitude, longitude))
-        val addresses = q.subList(0, min(maxResults, q.size))
-        return ArrayList<Address>(addresses)
+        if (q.size <= 1) {
+            return q
+        }
+        val sorted = q.sortedWith(DistanceComparator(latitude, longitude))
+        return sorted.subList(0, min(maxResults, sorted.size))
     }
 
     private fun createDistanceFilter(
@@ -209,24 +214,30 @@ class DatabaseGeocoder(
         }
         try {
             if (cursor.moveToFirst()) {
-                var locationLanguage: String?
-                var locale: Locale
                 do {
                     if (filter != null && !filter.accept(cursor)) {
                         continue
                     }
-                    locationLanguage = cursor.getString(INDEX_ADDRESS_LANGUAGE)
-                    locale = if (locationLanguage == null) {
+                    val locationLanguage = cursor.getString(INDEX_ADDRESS_LANGUAGE)
+                    val locale = if (locationLanguage.isNullOrEmpty()) {
                         this.locale
                     } else {
                         Locale(locationLanguage, country)
                     }
-                    val address = ZmanimAddress(locale)
-                    address.setFormatted(cursor.getString(INDEX_ADDRESS_ADDRESS))
-                    address.id = cursor.getLong(INDEX_ADDRESS_ID)
-                    address.latitude = cursor.getDouble(INDEX_ADDRESS_LATITUDE)
-                    address.longitude = cursor.getDouble(INDEX_ADDRESS_LONGITUDE)
-                    address.isFavorite = cursor.getInt(INDEX_ADDRESS_FAVORITE) != 0
+                    val location = Location(USER_PROVIDER).apply {
+                        latitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LATITUDE)
+                        longitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LONGITUDE)
+                    }
+                    val address = ZmanimAddress(locale).apply {
+                        id = cursor.getLong(INDEX_ADDRESS_ID)
+                        latitude = cursor.getDouble(INDEX_ADDRESS_LATITUDE)
+                        longitude = cursor.getDouble(INDEX_ADDRESS_LONGITUDE)
+                        isFavorite = cursor.getInt(INDEX_ADDRESS_FAVORITE) != 0
+                        setFormatted(cursor.getString(INDEX_ADDRESS_ADDRESS))
+                        extras = Bundle().apply {
+                            putParcelable(EXTRA_LOCATION, location)
+                        }
+                    }
                     addresses.add(address)
                 } while (cursor.moveToNext())
             }
@@ -239,16 +250,15 @@ class DatabaseGeocoder(
     }
 
     /**
-     * Insert or update the address in the local database. The local database is
-     * supposed to reduce redundant network requests.
+     * Insert the address into the local database.
      *
      * @param location the location.
      * @param address  the address.
      */
-    fun insertOrUpdateAddress(location: Location?, address: ZmanimAddress?) {
+    fun insertAddress(location: Location?, address: ZmanimAddress?) {
         if (address == null) return
         var id = address.id
-        if (id < 0L) {
+        if (id != 0L) {
             return
         }
         // Cities have their own table.
@@ -269,13 +279,14 @@ class DatabaseGeocoder(
             latitude = location.latitude
             longitude = location.longitude
         }
-        val addresses = getFromLocation(latitude, longitude, 1)
-        val insert = (id == 0L) && addresses.isEmpty()
+        val addresses = getFromLocation(latitude, longitude, 10)
+        val nearest = findNearestAddress(latitude, longitude, addresses, SAME_STREET)
+        if (nearest != null) {
+            return
+        }
         val values = ContentValues().apply {
-            if (insert) {
-                put(AddressColumns.LOCATION_LATITUDE, latitude)
-                put(AddressColumns.LOCATION_LONGITUDE, longitude)
-            }
+            put(AddressColumns.LOCATION_LATITUDE, latitude)
+            put(AddressColumns.LOCATION_LONGITUDE, longitude)
             put(AddressColumns.ADDRESS, formatAddress(address).toString())
             put(AddressColumns.LANGUAGE, address.locale.language)
             put(AddressColumns.LATITUDE, address.latitude)
@@ -287,23 +298,13 @@ class DatabaseGeocoder(
         val context: Context = context
         val resolver = context.contentResolver
         try {
-            if (insert) {
-                val uri = resolver.insert(
-                    LocationContract.Addresses.CONTENT_URI(context),
-                    values
-                )
-                if (uri != null) {
-                    id = ContentUris.parseId(uri)
-                    if (id > 0L) {
-                        address.id = id
-                    }
+            val uri = resolver.insert(LocationContract.Addresses.CONTENT_URI(context), values)
+            if (uri != null) {
+                id = ContentUris.parseId(uri)
+                // Insert succeeded?
+                if (id > 0L) {
+                    address.id = id
                 }
-            } else {
-                val uri = ContentUris.withAppendedId(
-                    LocationContract.Addresses.CONTENT_URI(context),
-                    id
-                )
-                resolver.update(uri, values, null, null)
             }
         } catch (e: Exception) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address

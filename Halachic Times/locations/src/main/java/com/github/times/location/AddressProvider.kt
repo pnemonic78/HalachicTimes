@@ -23,6 +23,10 @@ import android.location.Location.distanceBetween
 import com.github.database.CursorFilter
 import com.github.lang.isTrue
 import com.github.times.location.City.Companion.generateCityId
+import com.github.times.location.GeocoderBase.Companion.SAME_CITY
+import com.github.times.location.GeocoderBase.Companion.SAME_PLANET
+import com.github.times.location.GeocoderBase.Companion.SAME_PLATEAU
+import com.github.times.location.GeocoderBase.Companion.SAME_STREET
 import com.github.times.location.ZmanimAddress.Companion.compare
 import com.github.times.location.ZmanimLocation.Companion.compare
 import com.github.times.location.bing.BingGeocoder
@@ -99,89 +103,98 @@ class AddressProvider @JvmOverloads constructor(
 
         var addresses: List<Address>
         var best: Address?
-        var bestPlateau: Address? = null
-        var bestCached: Address? = null
+        var bestStreet: Address? = null
 
-        // Find the best country.
+        // Find a country.
         addresses = findNearestCountries(location)
-        best = findBestAddress(location, addresses, GeocoderBase.SAME_PLANET)
+        best = findBestAddress(location, addresses, SAME_PLANET)
         if (best != null) {
             notifyAddressFound(listener, location, best)
         }
         var bestCountry = best
 
-        // Find the best XML city.
+        // Find a city.
         addresses = findNearestCity(location)
-        best = findBestAddress(location, addresses, GeocoderBase.SAME_CITY)
+        best = findBestAddress(location, addresses, SAME_CITY)
         if (best != null) {
             notifyAddressFound(listener, location, best)
         }
         var bestCity = best
 
         // Find the best cached location.
-        addresses = findNearestAddressDatabase(location)
-        best = findBestAddress(location, addresses, GeocoderBase.SAME_PLATEAU)
+        addresses = findNearestAddress(location, geocoderDatabase)
+        best = findBestAddress(location, addresses, SAME_PLATEAU)
         if (best != null) {
-            bestPlateau = best
-            bestCached = best
             notifyAddressFound(listener, location, best)
         }
-        best = findBestAddress(location, addresses, GeocoderBase.SAME_CITY)
-        if (best != null && best !== bestPlateau) {
+        var bestPlateau = best
+        best = findBestAddress(location, addresses, SAME_CITY)
+        if (best != null) {
             bestCity = best
-            bestCached = best
             notifyAddressFound(listener, location, best)
         }
-        if (forceFetch) {
-            best = null
-            bestCached = null
+        best = findBestAddress(location, addresses, SAME_STREET)
+        if (best != null) {
+            bestStreet = best
+            notifyAddressFound(listener, location, best)
         }
 
-        // Find the best city from some Geocoder provider.
-        if (best == null && isOnline) {
+        // Find the best address from some Geocoder provider.
+        if ((bestStreet == null || forceFetch) && isOnline) {
             addresses = findNearestAddressGeocoder(location)
             if (bestCountry == null) {
-                bestCountry = findBestAddress(location, addresses, GeocoderBase.SAME_PLANET)
+                bestCountry = findBestAddress(location, addresses, SAME_PLANET)
             }
-            best = findBestAddress(location, addresses, GeocoderBase.SAME_PLATEAU)
+            best = findBestAddress(location, addresses, SAME_PLATEAU)
             if (best != null && compare(best, bestPlateau) != 0) {
                 bestPlateau = best
                 notifyAddressFound(listener, location, best)
             }
-            best = findBestAddress(location, addresses, GeocoderBase.SAME_CITY)
-            if (best != null && best !== bestPlateau && compare(best, bestCached) != 0) {
+            best = findBestAddress(location, addresses, SAME_CITY)
+            if (best != null && compare(best, bestCity) != 0) {
+                bestCity = best
+                notifyAddressFound(listener, location, best)
+            }
+            best = findBestAddress(location, addresses, SAME_STREET)
+            if (best != null && compare(best, bestStreet) != 0) {
+                bestStreet = best
                 notifyAddressFound(listener, location, best)
             }
         }
 
-        // Find the best city from remote Geocoder providers.
-        if ((best == null || forceFetch) && isOnline) {
+        // Find the best address from remote Geocoder providers.
+        if ((bestStreet == null || forceFetch) && isOnline) {
+            var foundBest = false
             for (geocoder in remoteAddressProviders) {
-                addresses = try {
-                    geocoder.getFromLocation(latitude, longitude, 10)
-                } catch (e: Exception) {
-                    Timber.e(
-                        e,
-                        "Address geocoder: $geocoder error: ${e.message} at $latitude,$longitude"
-                    )
-                    continue
-                }
-                best = findBestAddress(location, addresses, GeocoderBase.SAME_PLATEAU)
+                addresses = findNearestAddress(location, geocoder)
+                best = findBestAddress(location, addresses, SAME_PLATEAU)
                 if (best != null && compare(best, bestPlateau) != 0) {
                     bestPlateau = best
                     notifyAddressFound(listener, location, best)
                 }
-                best = findBestAddress(location, addresses, GeocoderBase.SAME_CITY)
+                best = findBestAddress(location, addresses, SAME_CITY)
                 if (best != null) {
-                    if (best !== bestPlateau && compare(best, bestCached) != 0) {
+                    if (compare(best, bestCity) != 0) {
+                        bestCity = best
                         notifyAddressFound(listener, location, best)
                     }
+                    foundBest = true
+                }
+                best = findBestAddress(location, addresses, SAME_STREET)
+                if (best != null) {
+                    if (compare(best, bestStreet) != 0) {
+                        bestStreet = best
+                        notifyAddressFound(listener, location, best)
+                    }
+                    foundBest = true
+                }
+                if (foundBest) {
                     break
                 }
             }
         }
 
-        return best ?: bestCity ?: bestPlateau ?: bestCountry
+        return bestStreet ?: bestCity ?: bestPlateau ?: bestCountry
     }
 
     private fun notifyAddressFound(
@@ -205,8 +218,32 @@ class AddressProvider @JvmOverloads constructor(
         val latitude = location.latitude
         val longitude = location.longitude
         try {
-            return geocoder.getFromLocation(latitude, longitude, 5) ?: emptyList()
+            return geocoder.getFromLocation(latitude, longitude, maxResults) ?: emptyList()
         } catch (ignore: Exception) {
+        }
+        return emptyList()
+    }
+
+    /**
+     * Find addresses that are known to describe the area immediately
+     * surrounding the given latitude and longitude.
+     *
+     * Uses the built-in Android [Geocoder] API.
+     *
+     * @param location the location.
+     * @param geocoder the geocoder.
+     * @return the list of addresses.
+     */
+    private fun findNearestAddress(location: Location, geocoder: GeocoderBase): List<Address> {
+        val latitude = location.latitude
+        val longitude = location.longitude
+        try {
+            return geocoder.getFromLocation(latitude, longitude, maxResults)
+        } catch (e: Exception) {
+            Timber.e(
+                e,
+                "Address geocoder: $geocoder error: ${e.message} at $latitude,$longitude"
+            )
         }
         return emptyList()
     }
@@ -223,7 +260,7 @@ class AddressProvider @JvmOverloads constructor(
     )
 
     /**
-     * Find the best address by checking relevant fields.
+     * Find the nearest address, and checking relevant fields.
      *
      * @param location  the location.
      * @param addresses the list of addresses.
@@ -243,7 +280,7 @@ class AddressProvider @JvmOverloads constructor(
         val latitude = location.latitude
         val longitude = location.longitude
         var distanceMin = radius
-        var addrMin: Address? = null
+        var candidate: Address? = null
         val distances = FloatArray(1)
         val near = mutableListOf<Address>()
         for (a in addresses) {
@@ -253,66 +290,34 @@ class AddressProvider @JvmOverloads constructor(
                 near.add(a)
                 if (distances[0] <= distanceMin) {
                     distanceMin = distances[0]
-                    addrMin = a
+                    candidate = a
                 }
             }
         }
-        if (addrMin != null) return addrMin
+        if (candidate != null) return candidate
         if (near.isEmpty()) return null
         if (near.size == 1) return near[0]
 
         // Next, find the best address part.
         for (a in near) {
             if (a.featureName != null) return a
-        }
-        for (a in near) {
             if (a.locality != null) return a
-        }
-        for (a in near) {
             if (a.subLocality != null) return a
-        }
-        for (a in near) {
             if (a.adminArea != null) return a
-        }
-        for (a in near) {
             if (a.subAdminArea != null) return a
-        }
-        for (a in near) {
             if (a.countryName != null) return a
         }
         return near[0]
     }
 
     /**
-     * Find addresses that are known to describe the area immediately
-     * surrounding the given latitude and longitude.
-     *
-     * Uses the local database.
-     *
-     * @param location the location.
-     * @return the list of addresses.
-     */
-    private fun findNearestAddressDatabase(location: Location): List<Address> {
-        val latitude = location.latitude
-        val longitude = location.longitude
-        val geocoder: GeocoderBase = geocoderDatabase
-        try {
-            return geocoder.getFromLocation(latitude, longitude, 10)
-        } catch (e: Exception) {
-            Timber.e(e, "Database geocoder: ${e.message} at $latitude,$longitude")
-        }
-        return emptyList()
-    }
-
-    /**
-     * Insert or update the address in the local database. The local database is
-     * supposed to reduce redundant network requests.
+     * Insert or update the address in the local database.
      *
      * @param location the location.
      * @param address  the address.
      */
     fun insertOrUpdateAddress(location: Location?, address: ZmanimAddress) {
-        geocoderDatabase.insertOrUpdateAddress(location, address)
+        geocoderDatabase.insertAddress(location, address)
     }
 
     /**
@@ -352,7 +357,7 @@ class AddressProvider @JvmOverloads constructor(
         val longitude = location.longitude
         val geocoder: GeocoderBase = geocoderCountries
         try {
-            return geocoder.getFromLocation(latitude, longitude, 10)
+            return geocoder.getFromLocation(latitude, longitude, maxResults)
         } catch (e: Exception) {
             Timber.e(e, "City: ${e.message} at $latitude,$longitude")
         }
@@ -563,5 +568,7 @@ class AddressProvider @JvmOverloads constructor(
         private const val FORCE_DEFAULT = false
 
         private const val PARAMETER_FORCE = ZmanimLocationListener.EXTRA_FORCE
+
+        private const val maxResults = 10
     }
 }

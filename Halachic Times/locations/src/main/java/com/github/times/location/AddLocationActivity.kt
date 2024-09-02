@@ -43,7 +43,6 @@ import com.github.times.location.country.Country
 import com.github.times.location.databinding.LocationAddBinding
 import com.github.times.location.text.LatitudeInputFilter
 import com.github.times.location.text.LongitudeInputFilter
-import com.github.util.getDefaultLocale
 import java.text.NumberFormat
 import java.util.Locale
 import kotlin.math.abs

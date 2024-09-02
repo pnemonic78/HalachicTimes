@@ -17,6 +17,7 @@ package com.github.times.location
 
 import android.location.Address
 import android.location.Location
+import android.location.Location.distanceBetween
 import android.util.Base64
 import androidx.annotation.FloatRange
 import com.github.net.HTTPReader
@@ -320,9 +321,14 @@ abstract class GeocoderBase(protected val locale: Locale) {
         const val USER_PROVIDER = "user"
 
         /**
+         * Maximum radius to consider a location near the same street.
+         */
+        internal const val SAME_STREET = 250f // 250 metres.
+
+        /**
          * Maximum radius to consider a location near the same neighbourhood.
          */
-        internal const val SAME_HOOD = 2000f // 2 kilometres.
+        internal const val SAME_HOOD = 1000f // 1 kilometre.
 
         /**
          * Maximum radius to consider a location near the same city.
@@ -354,6 +360,39 @@ abstract class GeocoderBase(protected val locale: Locale) {
         internal fun decodeApiKey(encoded: String): String {
             val bytes = Base64.decode(encoded, Base64.DEFAULT)
             return String(bytes, StandardCharsets.UTF_8)
+        }
+
+        /**
+         * Find the nearest address.
+         *
+         * @param latitude  the latitude.
+         * @param longitude  the longitude.
+         * @param addresses the list of addresses.
+         * @param radius    the maximum radius.
+         * @return the best address - `null` otherwise.
+         */
+        fun findNearestAddress(
+            latitude: Double,
+            longitude: Double,
+            addresses: List<Address>,
+            radius: Float
+        ): Address? {
+            if (addresses.isEmpty()) {
+                return null
+            }
+
+            var distanceMin = radius
+            var candidate: Address? = null
+            val distances = FloatArray(1)
+            for (a in addresses) {
+                if (!a.hasLatitude() || !a.hasLongitude()) continue
+                distanceBetween(latitude, longitude, a.latitude, a.longitude, distances)
+                if (distances[0] <= distanceMin) {
+                    distanceMin = distances[0]
+                    candidate = a
+                }
+            }
+            return candidate
         }
     }
 }
