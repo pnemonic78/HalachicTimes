@@ -416,7 +416,7 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
         get() = preferences.getInt(
             KEY_OPINION_SHABBATH_ENDS_MINUTES,
             context.resources.getInteger(R.integer.shabbath_ends_defaultValue)
-        )
+        ).coerceAtLeast(0)
 
     override val midnight: String?
         get() = preferences.getString(
