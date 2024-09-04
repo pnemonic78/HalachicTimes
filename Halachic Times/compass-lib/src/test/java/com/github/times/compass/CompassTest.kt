@@ -16,6 +16,7 @@
 package com.github.times.compass
 
 import android.hardware.SensorManager
+import com.github.times.BaseTests
 import kotlin.math.PI
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -26,7 +27,7 @@ import org.junit.Test
  *
  * @author Moshe Waisberg
  */
-class CompassTest {
+class CompassTest : BaseTests() {
     @Test
     fun rotationMatrixPortrait0() {
         val gravity = floatArrayOf(0.0f, 9.8f, 0.0f)

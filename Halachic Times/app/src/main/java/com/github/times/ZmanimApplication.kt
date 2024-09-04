@@ -28,6 +28,7 @@ import com.github.times.location.LocationApplication
 import com.github.times.location.LocationsProviderFactory
 import com.github.times.location.ZmanimLocations
 import com.github.times.util.CrashlyticsTree
+import com.google.firebase.FirebaseApp
 import timber.log.Timber
 
 /**
@@ -41,11 +42,12 @@ class ZmanimApplication :
     private lateinit var localeCallbacks: LocaleCallbacks<LocalePreferences>
 
     @TargetApi(Build.VERSION_CODES.O_MR1)
-    private val wallpaperHelper: ZmanimWallpaperHelper? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-        ZmanimWallpaperHelper(this)
-    } else {
-        null
-    }
+    private val wallpaperHelper: ZmanimWallpaperHelper? =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            ZmanimWallpaperHelper(this)
+        } else {
+            null
+        }
 
     override fun attachBaseContext(newBase: Context) {
         localeCallbacks = LocaleHelper(newBase)
@@ -55,6 +57,9 @@ class ZmanimApplication :
 
     override fun onPreCreate() {
         super.onPreCreate()
+        if (BuildConfig.DEBUG && Build.FINGERPRINT == "robolectric") {
+            FirebaseApp.initializeApp(this)
+        }
         Timber.plant(CrashlyticsTree(BuildConfig.DEBUG))
         localeCallbacks.onPreCreate(this)
         LocaleHelper.registerReceiver(this)

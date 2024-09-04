@@ -17,13 +17,12 @@ package com.github.times.location
 
 import android.location.Address
 import android.location.Location
-import com.github.BaseTests
+import com.github.times.BaseTests
 import com.github.times.location.bing.BingGeocoder
 import com.github.times.location.bing.BingResponse
 import com.github.times.location.country.CountriesGeocoder
 import com.github.times.location.geonames.GeoNamesGeocoder
 import com.github.times.location.google.GoogleGeocoder
-import com.github.times.location.test.R
 import java.util.Locale
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -37,14 +36,13 @@ class GeocoderTestCase : BaseTests() {
      */
     @Test
     fun testGoogleAddress_Holon() {
-        assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = GoogleGeocoder(locale)
         val parser = geocoder.addressResponseParser
         assertNotNull(parser)
         val maxResults = 10
 
-        val input = context.resources.openRawResource(R.raw.google_holon)
+        val input = openRawResource("google_holon.json")
         assertNotNull(input)
         val results = parser.parse(input, maxResults, locale)
         input.close()
@@ -64,14 +62,13 @@ class GeocoderTestCase : BaseTests() {
 
     @Test
     fun testGoogleAddress_Elad() {
-        assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = GoogleGeocoder(locale)
         val parser = geocoder.addressResponseParser
         assertNotNull(parser)
         val maxResults = 10
 
-        val input = context.resources.openRawResource(R.raw.google_near_elad)
+        val input = openRawResource("google_near_elad.json")
         assertNotNull(input)
         val results = parser.parse(input, maxResults, locale)
         input.close()
@@ -91,14 +88,13 @@ class GeocoderTestCase : BaseTests() {
 
     @Test
     fun testGoogleAddress_Bar_Yochai() {
-        assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = GoogleGeocoder(locale)
         val parser = geocoder.addressResponseParser
         assertNotNull(parser)
         val maxResults = 10
 
-        val input = context.resources.openRawResource(R.raw.google_bar_yohai).buffered()
+        val input = openRawResource("google_bar_yohai.json")
         assertNotNull(input)
         val results = parser.parse(input, maxResults, locale)
         input.close()
@@ -126,11 +122,12 @@ class GeocoderTestCase : BaseTests() {
         assertNotNull(address!!)
         assertTrue(address is ZmanimAddress)
         assertEquals(results[0], address)
+
+        addressProvider.close()
     }
 
     @Test
     fun testGoogleAddress_Jerusalem() {
-        assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = GoogleGeocoder(locale)
         val parser = geocoder.addressResponseParser
@@ -138,7 +135,7 @@ class GeocoderTestCase : BaseTests() {
         val maxResults = 10
 
         // Near Jerusalem
-        val input = context.resources.openRawResource(R.raw.google_jerusalem)
+        val input = openRawResource("google_jerusalem.json")
         assertNotNull(input)
         val results = parser.parse(input, maxResults, locale)
         input.close()
@@ -152,7 +149,6 @@ class GeocoderTestCase : BaseTests() {
      */
     @Test
     fun testGoogleElevation() {
-        assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = GoogleGeocoder(locale)
         val parser = geocoder.elevationResponseParser
@@ -162,7 +158,7 @@ class GeocoderTestCase : BaseTests() {
         val results: List<Location>
 
         // Near Elad
-        val input = context.resources.openRawResource(R.raw.google_elevation_near_elad)
+        val input = openRawResource("google_elevation_near_elad.json")
         assertNotNull(input)
         results = parser.parse(input, 0.0, 0.0, 1)
         input.close()
@@ -180,7 +176,6 @@ class GeocoderTestCase : BaseTests() {
      */
     @Test
     fun testGeoNamesAddress() {
-        assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = GeoNamesGeocoder(locale)
         val parser = geocoder.addressResponseParser
@@ -189,7 +184,7 @@ class GeocoderTestCase : BaseTests() {
         var results: List<Address>
 
         // Near Elad
-        var input = context.resources.openRawResource(R.raw.geonames_near_elad)
+        var input = openRawResource("geonames_near_elad.json")
         assertNotNull(input)
         results = parser.parse(input, maxResults, locale)
         input.close()
@@ -204,7 +199,7 @@ class GeocoderTestCase : BaseTests() {
         assertEquals("El‘ad", address.featureName)
 
         // Tel-Aviv
-        input = context.resources.openRawResource(R.raw.geonames_telaviv)
+        input = openRawResource("geonames_telaviv.json")
         assertNotNull(input)
         results = parser.parse(input, maxResults, locale)
         input.close()
@@ -219,7 +214,7 @@ class GeocoderTestCase : BaseTests() {
         assertEquals("Kerem HaTemanim", address.featureName)
 
         // Arctic Ocean
-        input = context.resources.openRawResource(R.raw.geonames_arctic)
+        input = openRawResource("geonames_arctic.json")
         assertNotNull(input)
         results = parser.parse(input, 89.89511, -36.3637, maxResults, locale)
         input.close()
@@ -233,7 +228,7 @@ class GeocoderTestCase : BaseTests() {
         assertEquals("Arctic Ocean", address.featureName)
 
         // Empty
-        input = context.resources.openRawResource(R.raw.geonames_empty)
+        input = openRawResource("geonames_empty.json")
         assertNotNull(input)
         results = parser.parse(input, maxResults, locale)
         input.close()
@@ -247,7 +242,6 @@ class GeocoderTestCase : BaseTests() {
      */
     @Test
     fun testGeoNamesElevation() {
-        assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = GeoNamesGeocoder(locale)
         val parser = geocoder.elevationResponseParser
@@ -255,7 +249,7 @@ class GeocoderTestCase : BaseTests() {
         val results: List<Location>
 
         // Near Elad
-        val input = context.resources.openRawResource(R.raw.geonames_elevation_near_elad)
+        val input = openRawResource("geonames_elevation_near_elad.txt")
         assertNotNull(input)
         results = parser.parse(input, 32.04984, 34.95382, 1)
         input.close()
@@ -284,7 +278,6 @@ class GeocoderTestCase : BaseTests() {
      */
     @Test
     fun testBingAddress() {
-        assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = BingGeocoder(locale)
         val parser = geocoder.addressResponseParser
@@ -293,7 +286,7 @@ class GeocoderTestCase : BaseTests() {
         var results: List<Address>
 
         // Holon
-        var input = context.resources.openRawResource(R.raw.bing_holon)
+        var input = openRawResource("bing_holon.json")
         assertNotNull(input)
         results = parser.parse(input, maxResults, locale)
         input.close()
@@ -311,7 +304,7 @@ class GeocoderTestCase : BaseTests() {
         )
 
         // Near Elad
-        input = context.resources.openRawResource(R.raw.bing_near_elad)
+        input = openRawResource("bing_near_elad.json")
         assertNotNull(input)
         results = parser.parse(input, maxResults, locale)
         input.close()
@@ -334,7 +327,6 @@ class GeocoderTestCase : BaseTests() {
      */
     @Test
     fun testBingElevation() {
-        assertNotNull(context)
         val locale = Locale.US
         val geocoder: GeocoderBase = BingGeocoder(locale)
         val parser = geocoder.elevationResponseParser
@@ -342,7 +334,7 @@ class GeocoderTestCase : BaseTests() {
         val results: List<Location>
 
         // Holon
-        val input = context.resources.openRawResource(R.raw.bing_elevation_holon)
+        val input = openRawResource("bing_elevation_holon.json")
         assertNotNull(input)
         results = parser.parse(input, 32.0236, 34.776698, 1)
         input.close()
@@ -360,7 +352,6 @@ class GeocoderTestCase : BaseTests() {
      */
     @Test
     fun testInternalGeocoderAddress() {
-        assertNotNull(context)
         val maxResults = 5
 
         // Bar Yochai
@@ -449,7 +440,6 @@ class GeocoderTestCase : BaseTests() {
      */
     @Test
     fun testCountries_Holiest() {
-        assertNotNull(context)
         val geocoder = CountriesGeocoder(context)
 
         val country = geocoder.findCountry(HOLIEST_LATITUDE, HOLIEST_LONGITUDE)
@@ -462,7 +452,6 @@ class GeocoderTestCase : BaseTests() {
      */
     @Test
     fun testCountries_Delhi() {
-        assertNotNull(context)
         val geocoder = CountriesGeocoder(context)
 
         val country = geocoder.findCountry(28.65195, 77.23149)
@@ -475,7 +464,6 @@ class GeocoderTestCase : BaseTests() {
      */
     @Test
     fun testCountries_SanJose() {
-        assertNotNull(context)
         val geocoder = CountriesGeocoder(context)
 
         val country = geocoder.findCountry(37.38754, -122.06)
@@ -488,7 +476,6 @@ class GeocoderTestCase : BaseTests() {
      */
     @Test
     fun testCities() {
-        assertNotNull(context)
         val geocoder = CountriesGeocoder(context)
 
         val city = geocoder.findCity(HOLIEST_LATITUDE, HOLIEST_LONGITUDE)

@@ -71,6 +71,12 @@ android {
         disable += "UnusedAttribute"
         disable += "UnusedResources"
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -86,10 +92,9 @@ dependencies {
 
     // Testing
     testImplementation("junit:junit:${BuildVersions.junit}")
-    androidTestImplementation("androidx.test:core:${BuildVersions.androidTest}")
+    testImplementation("org.robolectric:robolectric:${BuildVersions.robolectric}")
+    testImplementation(kotlin("reflect"))
+    androidTestImplementation("androidx.test:core-ktx:${BuildVersions.androidTest}")
     androidTestImplementation("androidx.test:rules:${BuildVersions.androidTest}")
-    androidTestImplementation("androidx.test:runner:${BuildVersions.androidTest}")
     androidTestImplementation("androidx.test.ext:junit:${BuildVersions.junitExt}")
-    androidTestImplementation(kotlin("reflect"))
-    androidTestImplementation(project(":android-lib:lib"))
 }

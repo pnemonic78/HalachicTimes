@@ -71,4 +71,7 @@ android {
 
 dependencies {
     implementation(project(":android-lib:lib"))
+
+    testImplementation("junit:junit:${BuildVersions.junit}")
+    testImplementation("org.robolectric:robolectric:${BuildVersions.robolectric}")
 }

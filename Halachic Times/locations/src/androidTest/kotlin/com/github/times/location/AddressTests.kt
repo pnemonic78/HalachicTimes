@@ -18,9 +18,8 @@ package com.github.times.location
 import android.location.Location
 import android.os.Build
 import android.text.format.DateUtils
-import com.github.BaseTests
+import com.github.times.BaseTests
 import java.util.concurrent.TimeUnit
-import org.junit.Assert.assertNotNull
 import org.junit.Test
 
 class AddressTests : BaseTests() {
@@ -29,7 +28,6 @@ class AddressTests : BaseTests() {
      */
     @Test
     fun testLocationChanged() {
-        assertNotNull(context)
         val ms = 4 * DateUtils.DAY_IN_MILLIS +
             11 * DateUtils.MINUTE_IN_MILLIS +
             57 * DateUtils.SECOND_IN_MILLIS +

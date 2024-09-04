@@ -16,7 +16,7 @@
 package com.github.times.location
 
 import android.location.Location
-import com.github.BaseTests
+import com.github.times.BaseTests
 import java.util.TimeZone
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -39,7 +39,6 @@ class LocationsTestCase : BaseTests() {
      */
     @Test
     fun testApp() {
-        assertNotNull(context)
         assertEquals("com.github.times.location.test", context.packageName)
         val app = application
         assertNotNull(app)

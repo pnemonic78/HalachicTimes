@@ -2,7 +2,6 @@ package com.github.times
 
 import android.text.format.DateFormat
 import android.text.format.DateUtils
-import com.github.BaseTests
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
 import com.github.util.dayOfMonth
@@ -27,7 +26,6 @@ import org.junit.Test
 class ZmanimTests : BaseTests() {
     @Test
     fun molad2019() {
-        assertNotNull(context)
         val preferences: ZmanimPreferences = SimpleZmanimPreferences(context)
         assertNotNull(preferences)
         val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences)
@@ -57,7 +55,6 @@ class ZmanimTests : BaseTests() {
         hour: Int,
         minute: Int
     ) {
-        assertNotNull(context)
         val settings: ZmanimPreferences = SimpleZmanimPreferences(context)
         assertNotNull(settings)
         val adapter = ZmanimAdapter<ZmanViewHolder>(context, settings)
@@ -83,7 +80,6 @@ class ZmanimTests : BaseTests() {
 
     @Test
     fun kosherCalendar() {
-        assertNotNull(context)
         val preferences: ZmanimPreferences = SimpleZmanimPreferences(context)
         assertNotNull(preferences)
         val populater: ZmanimPopulater<*> =
@@ -154,7 +150,6 @@ class ZmanimTests : BaseTests() {
         val diffMidday = (diffMiddayMillis - DateUtils.DAY_IN_MILLIS).absoluteValue
         assertEquals(16_502L, diffMidday)   // ~16sec
 
-        assertNotNull(context)
         val preferences: ZmanimPreferences = object : SimpleZmanimPreferences(context) {
             override val dawn: String? = null
             override val midday: String? = null

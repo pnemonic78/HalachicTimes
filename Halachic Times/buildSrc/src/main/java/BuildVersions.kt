@@ -16,8 +16,9 @@ object BuildVersions {
     const val okhttp = "4.12.0"
     const val retrofit = "2.9.0"
     const val room = "2.6.1"
+    const val robolectric = "4.13"
     const val timber = "5.0.1"
-    const val work = "2.9.0"
+    const val work = "2.9.1"
 }
 
 object Flavors {

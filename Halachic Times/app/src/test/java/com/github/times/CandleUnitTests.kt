@@ -2,7 +2,7 @@ package com.github.times
 
 import org.junit.Test
 
-class CandleUnitTests {
+class CandleUnitTests : BaseTests() {
     @Test
     fun lightNothing() {
         //TODO implement me!

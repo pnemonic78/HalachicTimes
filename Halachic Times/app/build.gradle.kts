@@ -120,6 +120,12 @@ android {
         disable += "PluralsCandidate"
         disable += "UnusedAttribute"
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -134,11 +140,9 @@ dependencies {
 
     // Testing
     testImplementation("junit:junit:${BuildVersions.junit}")
-    androidTestImplementation("androidx.test:core:${BuildVersions.androidTest}")
+    testImplementation("org.robolectric:robolectric:${BuildVersions.robolectric}")
+    androidTestImplementation("androidx.test:core-ktx:${BuildVersions.androidTest}")
     androidTestImplementation("androidx.test:rules:${BuildVersions.androidTest}")
-    androidTestImplementation("androidx.test:runner:${BuildVersions.androidTest}")
-    androidTestImplementation("androidx.test.ext:junit:${BuildVersions.junitExt}")
-    androidTestImplementation(project(":android-lib:lib"))
     /// Declare the dependencies for the Crashlytics and Analytics libraries
     implementation("com.google.firebase:firebase-crashlytics:19.0.3")
 }
