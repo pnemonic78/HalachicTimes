@@ -22,7 +22,6 @@ import android.location.Location
 import android.location.Location.distanceBetween
 import com.github.database.CursorFilter
 import com.github.lang.isTrue
-import com.github.times.location.City.Companion.generateCityId
 import com.github.times.location.GeocoderBase.Companion.SAME_CITY
 import com.github.times.location.GeocoderBase.Companion.SAME_PLANET
 import com.github.times.location.GeocoderBase.Companion.SAME_PLATEAU
@@ -36,6 +35,7 @@ import com.github.times.location.geonames.GeoNamesGeocoder
 import com.github.times.location.google.GoogleGeocoder
 import com.github.util.getDefaultLocale
 import java.util.Locale
+import kotlin.math.absoluteValue
 import timber.log.Timber
 
 /**
@@ -502,24 +502,15 @@ class AddressProvider @JvmOverloads constructor(
      *
      * @param cities the list of cities to populate.
      */
-    private fun populateCities(cities: Collection<City>) {
-        val citiesById = mutableMapOf<Long, City>()
-        var id: Long
-        for (city in cities) {
-            id = city.id
-            if (id == 0L) {
-                id = generateCityId(city)
-            }
-            citiesById[id] = city
-        }
+    private fun populateCities(cities: List<City>): List<City> {
+        val citiesById: Map<Long, City> = cities.associateBy { it.id }
         val citiesDb = geocoderDatabase.queryCities(null)
-        var city: City?
         for (cityDb in citiesDb) {
-            id = cityDb.id
-            city = citiesById[id] ?: continue
-            city.id = id
+            val city = citiesById[-cityDb.id] ?: continue
+            city.id = cityDb.id
             city.isFavorite = cityDb.isFavorite
         }
+        return cities
     }
 
     /**
@@ -541,12 +532,7 @@ class AddressProvider @JvmOverloads constructor(
      *
      * @return the list of cities.
      */
-    val cities: List<City>
-        get() {
-            val cities = geocoderCountries.cities
-            populateCities(cities)
-            return cities
-        }
+    val cities: List<City> = populateCities(geocoderCountries.cities)
 
     /**
      * Delete the list of cached cities and re-populate.

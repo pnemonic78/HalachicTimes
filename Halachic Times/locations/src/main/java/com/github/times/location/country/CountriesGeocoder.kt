@@ -161,8 +161,6 @@ class CountriesGeocoder @JvmOverloads constructor(
         return Country(locale).apply {
             this.latitude = fromFixedPoint(middle.y)
             this.longitude = fromFixedPoint(middle.x)
-            this.countryCode = locale.country
-            this.countryName = locale.getDisplayCountry(locale)
             this.id = generateCountryId(this)
         }
     }
@@ -477,12 +475,11 @@ class CountriesGeocoder @JvmOverloads constructor(
         }
         if (nearestCityIndex >= 0) {
             cityLocale = Locale(language, countries[nearestCityIndex])
-            return City(locale).apply {
+            return City(cityLocale).apply {
                 this.latitude = latitudes[nearestCityIndex]
                 this.longitude = longitudes[nearestCityIndex]
                 this.elevation = elevations[nearestCityIndex]
                 this.timeZone = timeZones[nearestCityIndex]
-                this.countryCode = cityLocale.country
                 this.countryName = cityLocale.getDisplayCountry(locale)
                 this.locality = names[nearestCityIndex]
             }
@@ -510,14 +507,14 @@ class CountriesGeocoder @JvmOverloads constructor(
             val languageCode = locale.language
             for (i in 0 until citiesCount) {
                 cityLocale = Locale(languageCode, countries[i])
-                City(locale).apply {
+                City(cityLocale).apply {
                     this.latitude = latitudes[i]
                     this.longitude = longitudes[i]
                     this.elevation = elevations[i]
                     this.timeZone = timeZones[i]
-                    this.countryCode = cityLocale.country
                     this.countryName = cityLocale.getDisplayCountry(locale)
                     this.locality = names[i]
+                    this.id = -generateCityId(this)
                     cities.add(this)
                 }
             }
@@ -551,12 +548,11 @@ class CountriesGeocoder @JvmOverloads constructor(
             Location.distanceBetween(latitude, longitude, cityLatitude, cityLongitude, distances)
             if (distances[INDEX_DISTANCE] <= CITY_RADIUS) {
                 cityLocale = Locale(language, countries[i])
-                City(locale).apply {
+                City(cityLocale).apply {
                     this.latitude = cityLatitude
                     this.longitude = cityLongitude
                     this.elevation = elevations[i]
                     this.timeZone = timeZones[i]
-                    this.countryCode = cityLocale.country
                     this.countryName = cityLocale.getDisplayCountry(locale)
                     this.locality = names[i]
                     this.id = (-1 - i).toLong() //Don't persist in db.
@@ -616,7 +612,7 @@ class CountriesGeocoder @JvmOverloads constructor(
                 this.latitude = cityNearest.latitude
                 this.longitude = cityNearest.longitude
                 this.altitude = cityNearest.elevation
-                this.id = -if (cityId != 0L) cityId else generateCityId(cityNearest)
+                this.id = -cityId
             }
         }
         if (n <= 1) return null

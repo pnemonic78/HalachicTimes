@@ -87,11 +87,11 @@ class LocationOpenHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, 
     override fun onOpen(db: SQLiteDatabase) {
         super.onOpen(db)
 
-        // Delete stale records older than 1 year.
-        val olderThanYear =
-            (System.currentTimeMillis() - (DateUtils.DAY_IN_MILLIS * 365)).toString()
-        db.delete(TABLE_ADDRESSES, "${AddressColumns.TIMESTAMP} < $olderThanYear", null)
-        db.delete(TABLE_ELEVATIONS, "${ElevationColumns.TIMESTAMP} < $olderThanYear", null)
+        // Delete stale records.
+        val staleDate = (System.currentTimeMillis() - STALE_IN_MILLIS).toString()
+        db.delete(TABLE_ADDRESSES, "${AddressColumns.TIMESTAMP} < $staleDate", null)
+        db.delete(TABLE_CITIES, "${CityColumns.TIMESTAMP} < $staleDate", null)
+        db.delete(TABLE_ELEVATIONS, "${ElevationColumns.TIMESTAMP} < $staleDate", null)
     }
 
     companion object {
@@ -124,5 +124,8 @@ class LocationOpenHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, 
          * Database table for cities.
          */
         const val TABLE_CITIES = "cities"
+
+        /** Stale records are older than 1 year. */
+        private const val STALE_IN_MILLIS = DateUtils.DAY_IN_MILLIS * 365
     }
 }

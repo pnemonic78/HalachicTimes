@@ -18,10 +18,10 @@ package com.github.times.location.country
 import android.location.Address
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.FloatRange
 import com.github.times.location.ZmanimAddress
 import com.github.times.location.country.CountryPolygon.Companion.toFixedPoint
 import java.util.Locale
-import kotlin.math.round
 
 /**
  * Country that is stored in the application binary.
@@ -30,8 +30,19 @@ import kotlin.math.round
  */
 class Country : ZmanimAddress {
     constructor(locale: Locale) : super(locale)
-    constructor(address: Address) : super(address)
-    constructor(address: ZmanimAddress) : super(address)
+
+    constructor(address: Address) : super(address) {
+        id = generateCountryId(this)
+    }
+
+    constructor(address: ZmanimAddress) : super(address) {
+        id = generateCountryId(this)
+    }
+
+    init {
+        countryCode = locale.country
+        countryName = locale.getDisplayCountry(locale)
+    }
 
     companion object {
         @JvmField
@@ -50,7 +61,10 @@ class Country : ZmanimAddress {
             return generateCountryId(country.latitude, country.longitude)
         }
 
-        fun generateCountryId(latitude: Double, longitude: Double): Long {
+        fun generateCountryId(
+            @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+            @FloatRange(from = -180.0, to = 180.0) longitude: Double
+        ): Long {
             val fixedPointLatitude = toFixedPoint(latitude).toLong() and 0x7FFFFFFFL
             val fixedPointLongitude = toFixedPoint(longitude).toLong() and 0xFFFFFFFFL
             return -((fixedPointLatitude shl 31) or fixedPointLongitude)

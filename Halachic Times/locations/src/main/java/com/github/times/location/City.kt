@@ -31,10 +31,21 @@ import java.util.TimeZone
 class City : ZmanimAddress {
 
     constructor(locale: Locale) : super(locale)
-    constructor(address: Address) : super(address)
-    constructor(address: ZmanimAddress) : super(address)
+
+    constructor(address: Address) : super(address) {
+        id = generateCityId(this)
+    }
+
+    constructor(address: ZmanimAddress) : super(address) {
+        id = generateCityId(this)
+    }
 
     var timeZone: TimeZone = TimeZone.getDefault()
+
+    init {
+        countryCode = locale.country
+        countryName = locale.getDisplayCountry(locale)
+    }
 
     companion object {
         @JvmField
@@ -53,9 +64,13 @@ class City : ZmanimAddress {
             return generateCityId(city.latitude, city.longitude)
         }
 
-        fun generateCityId(@FloatRange(from = -90.0, to = 90.0) latitude: Double, @FloatRange(from = -180.0, to = 180.0) longitude: Double): Long {
+        fun generateCityId(
+            @FloatRange(from = -90.0, to = 90.0) latitude: Double,
+            @FloatRange(from = -180.0, to = 180.0) longitude: Double
+        ): Long {
             val fixedPointLatitude = CountryPolygon.toFixedPoint(latitude).toLong() and 0x7FFFFFFFL
-            val fixedPointLongitude = CountryPolygon.toFixedPoint(longitude).toLong() and 0xFFFFFFFFL
+            val fixedPointLongitude =
+                CountryPolygon.toFixedPoint(longitude).toLong() and 0xFFFFFFFFL
             return (fixedPointLatitude shl 31) or fixedPointLongitude
         }
     }

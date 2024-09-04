@@ -281,7 +281,7 @@ class DatabaseGeocoder(
         }
         val addresses = getFromLocation(latitude, longitude, 10)
         val nearest = findNearestAddress(latitude, longitude, addresses, SAME_STREET)
-        if (nearest != null) {
+        if (nearest != null && ZmanimAddress.compare(nearest, address) == 0) {
             return
         }
         val values = ContentValues().apply {
@@ -300,11 +300,7 @@ class DatabaseGeocoder(
         try {
             val uri = resolver.insert(LocationContract.Addresses.CONTENT_URI(context), values)
             if (uri != null) {
-                id = ContentUris.parseId(uri)
-                // Insert succeeded?
-                if (id > 0L) {
-                    address.id = id
-                }
+                address.id = ContentUris.parseId(uri)
             }
         } catch (e: Exception) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
@@ -428,10 +424,11 @@ class DatabaseGeocoder(
                     if (filter != null && !filter.accept(cursor)) {
                         continue
                     }
-                    val city = City(locale)
-                    city.id = cursor.getLong(INDEX_CITY_ID)
-                    city.isFavorite = cursor.getInt(INDEX_CITY_FAVORITE) != 0
-                    cities.add(city)
+                    City(locale).apply {
+                        this.id = cursor.getLong(INDEX_CITY_ID)
+                        this.isFavorite = cursor.getInt(INDEX_CITY_FAVORITE) != 0
+                        cities.add(this)
+                    }
                 } while (cursor.moveToNext())
             }
         } catch (e: SQLiteException) {
@@ -458,13 +455,11 @@ class DatabaseGeocoder(
         var id = city.id
         try {
             if (id == 0L) {
-                values.put(BaseColumns._ID, City.generateCityId(city))
+                id = City.generateCityId(city)
+                values.put(BaseColumns._ID, id)
                 val uri = resolver.insert(LocationContract.Cities.CONTENT_URI(context), values)
                 if (uri != null) {
-                    id = ContentUris.parseId(uri)
-                    if (id > 0L) {
-                        city.id = id
-                    }
+                    city.id = id
                 }
             } else {
                 val uri = ContentUris.withAppendedId(
