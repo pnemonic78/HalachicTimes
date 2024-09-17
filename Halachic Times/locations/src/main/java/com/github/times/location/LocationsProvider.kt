@@ -743,9 +743,11 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         }
     }
 
-    fun findAddress(location: Location, persist: Boolean = true, force: Boolean = false) {
-        enqueueAddress(context, location, persist, force)
-    }
+    fun findAddress(
+        location: Location,
+        persist: Boolean = true,
+        force: Boolean = false
+    ) = enqueueAddress(context, location, persist, force)
 
     fun findElevation(location: Location) {
         if (location.hasAltitude()) {

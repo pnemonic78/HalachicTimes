@@ -22,18 +22,6 @@ android {
         }
     }
 
-    flavorDimensions += Flavors.Internet.dimension
-    productFlavors {
-        create(Flavors.Internet.online) {
-            dimension = Flavors.Internet.dimension
-            isDefault = true
-        }
-
-        create(Flavors.Internet.offline) {
-            dimension = Flavors.Internet.dimension
-        }
-    }
-
     buildFeatures {
         buildConfig = true
         viewBinding = true

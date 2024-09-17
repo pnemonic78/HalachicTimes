@@ -29,7 +29,7 @@ class ZmanimProviderFactoryImpl(context: Context) :
     private val context: Context = context.applicationContext
 
     override fun createAddressProvider(): AddressProvider {
-        return AddressProvider(context)
+        return AddressProvider(context = context, isOnline = BuildConfig.INTERNET)
     }
 
     override fun createLocationsProvider(): ZmanimLocations {

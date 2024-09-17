@@ -74,20 +74,11 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
     private lateinit var longitudeDirection: Spinner
     private lateinit var addressView: TextView
 
-    /**
-     * Provider for locations.
-     */
     private val locations: LocationsProvider by lazy {
-        val app = application as LocationApplication<*, *, *>
-        app.locations
+        (application as LocationApplication<*, *, *>).locations
     }
-
-    /**
-     * Provider for addresses.
-     */
     private val addresses: AddressProvider by lazy {
-        val app = application as LocationApplication<*, *, *>
-        app.addresses
+        (application as LocationApplication<*, *, *>).addresses
     }
     private var location: Location = Location(GeocoderBase.USER_PROVIDER)
     private var address: ZmanimAddress? = null
@@ -277,7 +268,7 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
 
             R.id.menu_location_show -> {
                 if (saveLocation(location, coordsFormatSpinner.selectedItemPosition)) {
-                    fetchAddress(location, false)
+                    fetchAddress(location, persist = false)
                 }
                 true
             }
@@ -335,7 +326,11 @@ open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
         return true
     }
 
-    private fun fetchAddress(location: Location, persist: Boolean, force: Boolean = false) {
+    private fun fetchAddress(
+        location: Location,
+        persist: Boolean,
+        force: Boolean = false
+    ) {
         addressView.setText(R.string.location_unknown)
         locations.findAddress(location, persist, force)
     }

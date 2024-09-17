@@ -103,10 +103,12 @@ android {
         create(Flavors.Internet.online) {
             dimension = Flavors.Internet.dimension
             isDefault = true
+            buildConfigField("Boolean", "INTERNET", "true")
         }
 
         create(Flavors.Internet.offline) {
             dimension = Flavors.Internet.dimension
+            buildConfigField("Boolean", "INTERNET", "false")
         }
     }
 

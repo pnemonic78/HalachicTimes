@@ -75,7 +75,9 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
     private val locations: LocationsProvider by lazy {
         (application as LocationApplication<*, *, *>).locations
     }
-    private val addressProvider: AddressProvider by lazy { AddressProvider(this) }
+    private val addresses: AddressProvider by lazy {
+        (application as LocationApplication<*, *, *>).addresses
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         onPreCreate()
@@ -179,7 +181,7 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
      */
     private fun populateLists(binding: LocationsBinding) {
         val context: Context = binding.root.context
-        val provider = addressProvider
+        val provider = addresses
         val formatter: LocationFormatter = locations
         val addresses = provider.queryAddresses(null)
         val cities = provider.cities
@@ -356,14 +358,14 @@ abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
     }
 
     private fun saveAddress(address: ZmanimAddress) {
-        addressProvider.insertOrUpdateAddress(null, address)
+        addresses.insertOrUpdateAddress(null, address)
         adapterAll?.notifyItemChanged(address)
         adapterFavorites?.notifyItemChanged(address)
         adapterHistory?.notifyItemChanged(address)
     }
 
     private fun deleteAddress(address: ZmanimAddress) {
-        if (addressProvider.deleteAddress(address)) {
+        if (addresses.deleteAddress(address)) {
             adapterAll?.delete(address)
             adapterFavorites?.delete(address)
             adapterHistory?.delete(address)

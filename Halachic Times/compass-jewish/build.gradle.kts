@@ -18,18 +18,6 @@ android {
         versionName = "${versionMajor}." + versionMinor.toString().padStart(2, '0')
     }
 
-    flavorDimensions += Flavors.Internet.dimension
-    productFlavors {
-        create(Flavors.Internet.online) {
-            dimension = Flavors.Internet.dimension
-            isDefault = true
-        }
-
-        create(Flavors.Internet.offline) {
-            dimension = Flavors.Internet.dimension
-        }
-    }
-
     compileOptions {
         sourceCompatibility = BuildVersions.jvm
         targetCompatibility = BuildVersions.jvm

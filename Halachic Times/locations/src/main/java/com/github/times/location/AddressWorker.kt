@@ -28,22 +28,22 @@ import timber.log.Timber
  */
 class AddressWorker(context: Context, params: WorkerParameters) : Worker(context, params),
     OnFindAddressListener {
-    private val addressProvider: AddressProvider = AddressProvider(context)
 
     override fun doWork(): Result {
         val data = inputData
         val action = data.getString(DATA_ACTION)
         val location = data.getLocation(DATA_LOCATION) ?: return Result.failure()
-        val provider = addressProvider
+        val app = applicationContext as LocationApplication<*, *, *>
+        val provider = app.addresses
 
         when (action) {
             ACTION_ADDRESS -> {
                 val force = data.getBoolean(DATA_FORCE, FORCE_DEFAULT)
                 val persist = data.getBoolean(DATA_PERSIST, PERSIST_DEFAULT)
-                val extras = location.extras ?: Bundle()
-                extras.putBoolean(EXTRA_FORCE, force)
-                extras.putBoolean(EXTRA_PERSIST, persist)
-                location.extras = extras
+                location.extras = (location.extras ?: Bundle()).apply {
+                    putBoolean(EXTRA_FORCE, force)
+                    putBoolean(EXTRA_PERSIST, persist)
+                }
                 provider.findNearestAddress(location, this)
             }
 

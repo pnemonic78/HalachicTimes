@@ -35,7 +35,6 @@ import com.github.times.location.geonames.GeoNamesGeocoder
 import com.github.times.location.google.GoogleGeocoder
 import com.github.util.getDefaultLocale
 import java.util.Locale
-import kotlin.math.absoluteValue
 import timber.log.Timber
 
 /**
@@ -46,7 +45,8 @@ import timber.log.Timber
  */
 class AddressProvider @JvmOverloads constructor(
     private val context: Context,
-    private val locale: Locale = context.getDefaultLocale()
+    private val locale: Locale = context.getDefaultLocale(),
+    private val isOnline: Boolean = true
 ) {
     interface OnFindAddressListener {
         /**
@@ -77,7 +77,6 @@ class AddressProvider @JvmOverloads constructor(
     private val geocoderGoogle by lazy { GoogleGeocoder(locale) }
     private val geocoderBing by lazy { BingGeocoder(locale) }
     private val geocoderGeonames by lazy { GeoNamesGeocoder(locale) }
-    private val isOnline = BuildConfig.INTERNET
 
     /**
      * Find the nearest address of the location.
