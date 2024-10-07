@@ -1,6 +1,5 @@
 package com.github.times.appwidget
 
-import android.Manifest
 import android.annotation.TargetApi
 import android.app.AlertDialog
 import android.appwidget.AppWidgetManager
@@ -9,6 +8,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -69,6 +70,21 @@ class ZmanimWidgetConfigure : AppCompatActivity() {
             } else {
                 requestPermission.launch(PERMISSION_WALLPAPER)
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.widget_config, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_save -> {
+                finish()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
