@@ -2,6 +2,7 @@
 <resources>
     <!--Generated from geonames.org data-->
     <string-array name="cities">
+        <item>Lakewood</item>
         <item>Anchorage</item>
         <item>Vancouver</item>
         <item>Portland</item>
@@ -145,6 +146,7 @@
     </string-array>
     <string-array name="cities_countries" translatable="false">
         <item>US</item>
+        <item>US</item>
         <item>CA</item>
         <item>US</item>
         <item>US</item>
@@ -286,6 +288,7 @@
         <item>NZ</item>
     </string-array>
     <integer-array name="cities_latitudes" translatable="false">
+        <item>4007652</item>
         <item>6121806</item>
         <item>4924966</item>
         <item>4542756</item>
@@ -428,6 +431,7 @@
         <item>-3684853</item>
     </integer-array>
     <integer-array name="cities_longitudes" translatable="false">
+        <item>-7420326</item>
         <item>-14990028</item>
         <item>-12311934</item>
         <item>-12281466</item>
@@ -570,6 +574,7 @@
         <item>17476349</item>
     </integer-array>
     <integer-array name="cities_elevations" translatable="false">
+        <item>17</item>
         <item>31</item>
         <item>70</item>
         <item>12</item>
@@ -712,6 +717,7 @@
         <item>43</item>
     </integer-array>
     <string-array name="cities_time_zones" translatable="false">
+        <item>America/New York</item>
         <item>America/Anchorage</item>
         <item>America/Vancouver</item>
         <item>America/Los_Angeles</item>
