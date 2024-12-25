@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.plugin.extraProperties
+import java.util.Locale
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -100,15 +103,26 @@ android {
 
     flavorDimensions += Flavors.Internet.dimension
     productFlavors {
-        create(Flavors.Internet.online) {
+        create(Flavors.Internet.development) {
             dimension = Flavors.Internet.dimension
             isDefault = true
             buildConfigField("Boolean", "INTERNET", "true")
+            buildConfigField("Boolean", "GOOGLE_GCM", "false")
+            extraProperties["useGoogleGcm" ] = false
+        }
+
+        create(Flavors.Internet.online) {
+            dimension = Flavors.Internet.dimension
+            buildConfigField("Boolean", "INTERNET", "true")
+            buildConfigField("Boolean", "GOOGLE_GCM", "true")
+            extraProperties["useGoogleGcm" ] = true
         }
 
         create(Flavors.Internet.offline) {
             dimension = Flavors.Internet.dimension
             buildConfigField("Boolean", "INTERNET", "false")
+            buildConfigField("Boolean", "GOOGLE_GCM", "false")
+            extraProperties["useGoogleGcm" ] = false
         }
     }
 
@@ -147,4 +161,16 @@ dependencies {
     androidTestImplementation("androidx.test:rules:${BuildVersions.androidTest}")
     /// Declare the dependencies for the Crashlytics and Analytics libraries
     implementation("com.google.firebase:firebase-crashlytics:19.3.0")
+}
+
+// Disable Google Services plugin for some flavors.
+afterEvaluate {
+    android.productFlavors.forEach { flavor ->
+        val flavorName = flavor.name.capitalize(Locale.US)
+        tasks.matching { task ->
+            task.name.endsWith("GoogleServices") && task.name.contains(flavorName)
+        }.forEach { task ->
+            task.enabled = flavor.extraProperties["useGoogleGcm"] as Boolean
+        }
+    }
 }

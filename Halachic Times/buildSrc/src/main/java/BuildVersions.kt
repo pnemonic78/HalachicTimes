@@ -24,6 +24,7 @@ object BuildVersions {
 object Flavors {
     object Internet {
         const val dimension = "internet"
+        const val development = "development"
         const val online = "online"
         const val offline = "offline"
     }

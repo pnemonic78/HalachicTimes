@@ -28,6 +28,7 @@ import com.github.times.location.LocationApplication
 import com.github.times.location.LocationsProviderFactory
 import com.github.times.location.ZmanimLocations
 import com.github.times.util.CrashlyticsTree
+import com.github.util.LogTree
 import com.google.firebase.FirebaseApp
 import timber.log.Timber
 
@@ -57,10 +58,11 @@ class ZmanimApplication :
 
     override fun onPreCreate() {
         super.onPreCreate()
-        if (BuildConfig.DEBUG && Build.FINGERPRINT == "robolectric") {
+        if (BuildConfig.DEBUG && BuildConfig.GOOGLE_GCM && Build.FINGERPRINT == "robolectric") {
             FirebaseApp.initializeApp(this)
         }
-        Timber.plant(CrashlyticsTree(BuildConfig.DEBUG))
+        val tree = if (BuildConfig.GOOGLE_GCM) CrashlyticsTree(BuildConfig.DEBUG) else LogTree(BuildConfig.DEBUG)
+        Timber.plant(tree)
         localeCallbacks.onPreCreate(this)
         LocaleHelper.registerReceiver(this)
     }
