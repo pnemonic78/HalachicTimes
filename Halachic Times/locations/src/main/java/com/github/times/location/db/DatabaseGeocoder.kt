@@ -38,7 +38,6 @@ import com.github.times.location.provider.LocationContract
 import com.github.times.location.provider.LocationContract.AddressColumns
 import com.github.times.location.provider.LocationContract.CityColumns
 import com.github.times.location.provider.LocationContract.ElevationColumns
-import com.github.times.location.provider.LocationContract.Elevations
 import com.github.util.getDefaultLocale
 import java.io.Closeable
 import java.io.IOException
@@ -257,7 +256,7 @@ class DatabaseGeocoder(
      */
     fun insertAddress(location: Location?, address: ZmanimAddress?) {
         if (address == null) return
-        var id = address.id
+        val id = address.id
         if (id != 0L) {
             return
         }
@@ -326,7 +325,7 @@ class DatabaseGeocoder(
         val locations = mutableListOf<ZmanimLocation>()
         val context: Context = context
         val cursor = context.contentResolver.query(
-            Elevations.CONTENT_URI(context), PROJECTION_ELEVATION, null, null, null
+            LocationContract.Elevations.CONTENT_URI(context), PROJECTION_ELEVATION, null, null, null
         )
         if (cursor == null || cursor.isClosed) {
             return locations
@@ -372,7 +371,7 @@ class DatabaseGeocoder(
         }
         val context: Context = context
         val resolver = context.contentResolver
-        val contentUri = Elevations.CONTENT_URI(context)
+        val contentUri = LocationContract.Elevations.CONTENT_URI(context)
         try {
             if (id == 0L) {
                 val uri = resolver.insert(contentUri, values)
@@ -400,7 +399,7 @@ class DatabaseGeocoder(
      */
     fun deleteElevations() {
         val context: Context = context
-        context.contentResolver.delete(Elevations.CONTENT_URI(context), null, null)
+        context.contentResolver.delete(LocationContract.Elevations.CONTENT_URI(context), null, null)
     }
 
     /**
@@ -444,7 +443,7 @@ class DatabaseGeocoder(
      *
      * @param city the city.
      */
-    fun insertOrUpdateCity(city: City?) {
+    private fun insertOrUpdateCity(city: City?) {
         if (city == null) return
         val values = ContentValues().apply {
             put(CityColumns.TIMESTAMP, System.currentTimeMillis())
@@ -501,18 +500,43 @@ class DatabaseGeocoder(
         if (address is Country) {
             return false
         }
-        val resolver = context.contentResolver
         try {
+            val resolver = context.contentResolver
+            // Delete the address from its table.
             val uri = ContentUris.withAppendedId(
                 LocationContract.Addresses.CONTENT_URI(context), id
             )
-            return resolver.delete(uri, null, null) > 0
-            // TODO also delete the related elevation
+            val result = resolver.delete(uri, null, null) > 0
+            // Also delete the related elevation from its table.
+            deleteElevation(context, address)
+            return result
         } catch (e: Exception) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
             Timber.e(
                 e,
                 "Error deleting address " + address.id + " at " + address.latitude + "," + address.longitude + ": " + e.message
+            )
+        }
+        return false
+    }
+
+    private fun deleteElevation(context: Context, address: Address): Boolean {
+        val latitude = address.latitude
+        val longitude = address.longitude
+        val resolver = context.contentResolver
+        try {
+            val uri = LocationContract.Elevations.CONTENT_URI(context)
+            val args: Array<String> = arrayOf(
+                (latitude - ELEVATION_BOUNDS).toString(),
+                (latitude + ELEVATION_BOUNDS).toString(),
+                (longitude - ELEVATION_BOUNDS).toString(),
+                (longitude + ELEVATION_BOUNDS).toString()
+            )
+            return resolver.delete(uri, ELEVATION_BOX, args) > 0
+        } catch (e: Exception) {
+            Timber.e(
+                e,
+                "Error deleting elevation at " + latitude + "," + longitude + ": " + e.message
             )
         }
         return false
@@ -590,5 +614,12 @@ class DatabaseGeocoder(
         private const val INDEX_CITY_ID = 0
         private const val INDEX_CITY_TIMESTAMP = 1
         private const val INDEX_CITY_FAVORITE = 2
+
+        private const val ELEVATION_BOUNDS = 1.0 // degrees, not meters.
+        private const val ELEVATION_TOP = ElevationColumns.LATITUDE + " > ?"
+        private const val ELEVATION_BOTTOM = ElevationColumns.LATITUDE + " < ?"
+        private const val ELEVATION_LEFT = ElevationColumns.LONGITUDE + " > ?"
+        private const val ELEVATION_RIGHT = ElevationColumns.LONGITUDE + " < ?"
+        private const val ELEVATION_BOX = "$ELEVATION_TOP AND $ELEVATION_BOTTOM AND $ELEVATION_LEFT AND $ELEVATION_RIGHT"
     }
 }
