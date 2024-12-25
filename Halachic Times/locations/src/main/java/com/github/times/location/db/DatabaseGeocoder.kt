@@ -507,6 +507,7 @@ class DatabaseGeocoder(
                 LocationContract.Addresses.CONTENT_URI(context), id
             )
             return resolver.delete(uri, null, null) > 0
+            // TODO also delete the related elevation
         } catch (e: Exception) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
             Timber.e(
