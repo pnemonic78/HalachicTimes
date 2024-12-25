@@ -17,27 +17,27 @@ import org.geonames.TimeZone
 /**
  * Parse the tab-delimited file with GeoName records.
  * `
- * The main 'geoname' table has the following fields :<br></br>
- * ---------------------------------------------------<br></br>
- * geonameid         : integer id of record in geonames database<br></br>
- * name              : name of geographical point (utf8) varchar(200)<br></br>
- * asciiname         : name of geographical point in plain ascii characters, varchar(200)<br></br>
- * alternatenames    : alternatenames, comma separated varchar(5000)<br></br>
- * latitude          : latitude in decimal degrees (wgs84)<br></br>
- * longitude         : longitude in decimal degrees (wgs84)<br></br>
- * feature class     : see http://www.geonames.org/export/codes.html, char(1)<br></br>
- * feature code      : see http://www.geonames.org/export/codes.html, varchar(10)<br></br>
- * country code      : ISO-3166 2-letter country code, 2 characters<br></br>
- * cc2               : alternate country codes, comma separated, ISO-3166 2-letter country code, 60 characters<br></br>
- * admin1 code       : fipscode (subject to change to iso code), see exceptions below, see file admin1Codes.txt for display names of this code; varchar(20)<br></br>
- * admin2 code       : code for the second administrative division, a county in the US, see file admin2Codes.txt; varchar(80)<br></br>
- * admin3 code       : code for third level administrative division, varchar(20)<br></br>
- * admin4 code       : code for fourth level administrative division, varchar(20)<br></br>
- * population        : bigint (8 byte int)<br></br>
- * elevation         : in meters, integer<br></br>
- * dem               : digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat.<br></br>
- * timezone          : the timezone id (see file timeZone.txt) varchar(40)<br></br>
- * modification date : date of last modification in yyyy-MM-dd format<br></br>
+ * The main 'geoname' table has the following fields :<br/>
+ * ---------------------------------------------------<br/>
+ * geonameid         : integer id of record in geonames database<br/>
+ * name              : name of geographical point (utf8) varchar(200)<br/>
+ * asciiname         : name of geographical point in plain ascii characters, varchar(200)<br/>
+ * alternatenames    : alternatenames, comma separated varchar(5000)<br/>
+ * latitude          : latitude in decimal degrees (wgs84)<br/>
+ * longitude         : longitude in decimal degrees (wgs84)<br/>
+ * feature class     : see http://www.geonames.org/export/codes.html, char(1)<br/>
+ * feature code      : see http://www.geonames.org/export/codes.html, varchar(10)<br/>
+ * country code      : ISO-3166 2-letter country code, 2 characters<br/>
+ * cc2               : alternate country codes, comma separated, ISO-3166 2-letter country code, 60 characters<br/>
+ * admin1 code       : fipscode (subject to change to iso code), see exceptions below, see file admin1Codes.txt for display names of this code; varchar(20)<br/>
+ * admin2 code       : code for the second administrative division, a county in the US, see file admin2Codes.txt; varchar(80)<br/>
+ * admin3 code       : code for third level administrative division, varchar(20)<br/>
+ * admin4 code       : code for fourth level administrative division, varchar(20)<br/>
+ * population        : bigint (8 byte int)<br/>
+ * elevation         : in meters, integer<br/>
+ * dem               : digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat.<br/>
+ * timezone          : the timezone id (see file timeZone.txt) varchar(40)<br/>
+ * modification date : date of last modification in yyyy-MM-dd format<br/>
  */
 class GeoNamesParser {
     /**

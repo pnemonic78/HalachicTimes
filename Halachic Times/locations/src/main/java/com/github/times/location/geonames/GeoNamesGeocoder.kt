@@ -77,7 +77,7 @@ class GeoNamesGeocoder(locale: Locale) : GeocoderBase(locale) {
 
         /**
          * URL that accepts latitude and longitude coordinates as parameters for an
-         * elevation.<br></br>
+         * elevation.<br/>
          * Uses Shuttle Radar Topography Mission (SRTM) elevation data.
          */
         private const val URL_ELEVATION_SRTM3 =

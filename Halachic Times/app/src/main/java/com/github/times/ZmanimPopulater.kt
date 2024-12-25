@@ -58,7 +58,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
     private val calendarTemp = Calendar.getInstance()
 
     /**
-     * Is the current location in Israel?<br></br>
+     * Is the current location in Israel?<br/>
      * Used to determine if user is in diaspora for 2-day festivals.
      *
      * @return `true` if user is in Israel - `false` otherwise.
@@ -1562,8 +1562,8 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
     /**
      * A method that returns "the midnight guard" (ashmurat hatichona).
      *
-     * Nocturnal guard is from sunset until 22:00.<br></br>
-     * Midnight guard is from 22:00 until 02:00.<br></br>
+     * Nocturnal guard is from sunset until 22:00.<br/>
+     * Midnight guard is from 22:00 until 02:00.<br/>
      * Morning guard is from 02:00 until sunrise.
      *
      * @return the Second Guard.
@@ -1599,8 +1599,8 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
     /**
      * A method that returns "the morning guard" (ashmurat haboker).
      *
-     * Nocturnal guard is from sunset until 22:00.<br></br>
-     * Midnight guard is from 22:00 until 02:00.<br></br>
+     * Nocturnal guard is from sunset until 22:00.<br/>
+     * Midnight guard is from 22:00 until 02:00.<br/>
      * Morning guard is from 02:00 until sunrise.
      *
      * @return the Third Guard.

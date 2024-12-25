@@ -692,7 +692,7 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
     }
 
     /**
-     * Is the details list populated for a valid date?<br></br>
+     * Is the details list populated for a valid date?<br/>
      * For example, candle lighting for a Friday or Erev Chag.
      *
      * @return `true` if valid.

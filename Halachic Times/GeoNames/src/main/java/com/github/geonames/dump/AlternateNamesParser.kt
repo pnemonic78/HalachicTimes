@@ -15,16 +15,16 @@ class AlternateNamesParser {
     /**
      * Parse the file with GeoName alternate names.
      * `
-     * The table 'alternate names' :<br></br>
+     * The table 'alternate names' :<br/>
      * -----------------------------
-     * alternateNameId   : the id of this alternate name, int<br></br>
-     * geonameid         : geonameId referring to id in table 'geoname', int<br></br>
-     * isolanguage       : iso 639 language code 2- or 3-characters; 4-characters 'post' for postal codes and 'iata','icao' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link for a website, varchar(7)<br></br>
-     * alternate name    : alternate name or name variant, varchar(200)<br></br>
-     * isPreferredName   : '1', if this alternate name is an official/preferred name<br></br>
-     * isShortName       : '1', if this is a short name like 'California' for 'State of California'<br></br>
-     * isColloquial      : '1', if this alternate name is a colloquial or slang term<br></br>
-     * isHistoric        : '1', if this alternate name is historic and was used in the past<br></br>
+     * alternateNameId   : the id of this alternate name, int<br/>
+     * geonameid         : geonameId referring to id in table 'geoname', int<br/>
+     * isolanguage       : iso 639 language code 2- or 3-characters; 4-characters 'post' for postal codes and 'iata','icao' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link for a website, varchar(7)<br/>
+     * alternate name    : alternate name or name variant, varchar(200)<br/>
+     * isPreferredName   : '1', if this alternate name is an official/preferred name<br/>
+     * isShortName       : '1', if this is a short name like 'California' for 'State of California'<br/>
+     * isColloquial      : '1', if this alternate name is a colloquial or slang term<br/>
+     * isHistoric        : '1', if this alternate name is historic and was used in the past<br/>
      *
      * @param reader the reader.
      * @param filter the name filter.

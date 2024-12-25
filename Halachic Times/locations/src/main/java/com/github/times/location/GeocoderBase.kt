@@ -334,9 +334,9 @@ abstract class GeocoderBase(protected val locale: Locale) {
          * Maximum radius to consider a location near the same city.
          *
          * New York city, USA, is <tt>8,683 km<sup>2</sup></tt>, thus radius is
-         * about <tt>37.175 km</tt>.<br></br>
+         * about <tt>37.175 km</tt>.<br/>
          * Johannesburg/East Rand, ZA, is <tt>2,396 km<sup>2</sup></tt>, thus radius
-         * is about <tt>19.527 km</tt>..<br></br>
+         * is about <tt>19.527 km</tt>..<br/>
          * Cape Town, ZA, is <tt>686 km<sup>2</sup></tt>, thus radius is about
          * <tt>10.449 km</tt>.
          */

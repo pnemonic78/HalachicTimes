@@ -910,7 +910,7 @@ class ZmanimReminder(private val context: Context) {
 
     companion object {
         /**
-         * Id for reminder notifications.<br></br>
+         * Id for reminder notifications.<br/>
          * Newer notifications will override current notifications.
          */
         private const val ID_NOTIFY = 1
@@ -921,7 +921,7 @@ class ZmanimReminder(private val context: Context) {
         private const val ID_ALARM_REMINDER = 2
 
         /**
-         * Id for upcoming time notification.<br></br>
+         * Id for upcoming time notification.<br/>
          * Newer notifications will override current notifications.
          */
         private const val ID_NOTIFY_UPCOMING = 3

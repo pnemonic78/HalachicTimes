@@ -37,7 +37,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 
 /**
- * Clock widget with hour and title underneath.<br></br>
+ * Clock widget with hour and title underneath.<br/>
  * Based on the default Android digital clock widget.
  *
  * @author Moshe Waisberg

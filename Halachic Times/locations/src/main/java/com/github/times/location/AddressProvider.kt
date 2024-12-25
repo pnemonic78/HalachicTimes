@@ -38,7 +38,7 @@ import java.util.Locale
 import timber.log.Timber
 
 /**
- * Address provider.<br></br>
+ * Address provider.<br/>
  * Fetches addresses from various Internet providers, such as Google Maps.
  *
  * @author Moshe Waisberg

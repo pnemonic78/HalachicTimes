@@ -26,7 +26,7 @@ import android.provider.BaseColumns
 import com.github.times.location.provider.LocationContract.Elevations
 
 /**
- * Location content provider.<br></br>
+ * Location content provider.<br/>
  * Fetches addresses, cities, and elevations from the database.
  *
  * @author Moshe Waisberg

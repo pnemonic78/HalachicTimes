@@ -156,9 +156,6 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         }
         val locationOld = this.locationLocal
         var locationNew = location
-        if (compareAll(locationNew, locationOld) == 0) {
-            return
-        }
         // Ignore non-user locations after user selected from locations list.
         if (locationOld != null && GeocoderBase.USER_PROVIDER == locationOld.provider) {
             if (GeocoderBase.USER_PROVIDER != locationNew.provider) {
@@ -493,7 +490,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     }
 
     /**
-     * Is the location in Israel?<br></br>
+     * Is the location in Israel?<br/>
      * Used to determine if user is in diaspora for 2-day festivals.
      *
      * @param location the location.
@@ -517,7 +514,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     }
 
     /**
-     * Is the current location in Israel?<br></br>
+     * Is the current location in Israel?<br/>
      * Used to determine if user is in diaspora for 2-day festivals.
      *
      * @param timeZone the time zone.
@@ -528,7 +525,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     }
 
     /**
-     * Is the current location in Israel?<br></br>
+     * Is the current location in Israel?<br/>
      * Used to determine if user is in diaspora for 2-day festivals.
      *
      * @return `true` if user is in Israel - `false` otherwise.
@@ -860,7 +857,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         private const val UPDATE_INTERVAL_START = 30 * DateUtils.SECOND_IN_MILLIS
 
         /**
-         * The duration to receive updates, in milliseconds.<br></br>
+         * The duration to receive updates, in milliseconds.<br/>
          * Should be enough time to get a sufficiently accurate location.
          */
         private const val UPDATE_DURATION = DateUtils.MINUTE_IN_MILLIS
