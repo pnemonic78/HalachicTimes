@@ -53,6 +53,8 @@ android {
         )
         resourceConfigurations += locales
         buildConfigField("String[]", "LOCALES", locales.toJavaString())
+        buildConfigField("Boolean", "GOOGLE_GCM", "false")
+        buildConfigField("Boolean", "INTERNET", "true")
     }
 
     bundle {
@@ -106,14 +108,11 @@ android {
         create(Flavors.Internet.development) {
             dimension = Flavors.Internet.dimension
             isDefault = true
-            buildConfigField("Boolean", "INTERNET", "true")
-            buildConfigField("Boolean", "GOOGLE_GCM", "false")
             extraProperties["useGoogleGcm" ] = false
         }
 
         create(Flavors.Internet.online) {
             dimension = Flavors.Internet.dimension
-            buildConfigField("Boolean", "INTERNET", "true")
             buildConfigField("Boolean", "GOOGLE_GCM", "true")
             extraProperties["useGoogleGcm" ] = true
         }
@@ -121,7 +120,6 @@ android {
         create(Flavors.Internet.offline) {
             dimension = Flavors.Internet.dimension
             buildConfigField("Boolean", "INTERNET", "false")
-            buildConfigField("Boolean", "GOOGLE_GCM", "false")
             extraProperties["useGoogleGcm" ] = false
         }
     }
