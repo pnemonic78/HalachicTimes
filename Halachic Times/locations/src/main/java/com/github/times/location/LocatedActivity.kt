@@ -24,8 +24,8 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.github.app.InsetsActivity
 import com.github.app.SimpleThemeCallbacks
 import com.github.app.ThemeCallbacks
 import com.github.preference.ThemePreferences
@@ -39,7 +39,7 @@ import timber.log.Timber
  *
  * @author Moshe Waisberg
  */
-abstract class LocatedActivity<P : ThemePreferences> : AppCompatActivity(),
+abstract class LocatedActivity<P : ThemePreferences> : InsetsActivity(),
     ThemeCallbacks<P>,
     ZmanimLocationListener {
 

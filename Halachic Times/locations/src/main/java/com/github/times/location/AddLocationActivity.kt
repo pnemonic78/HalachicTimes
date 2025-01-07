@@ -30,7 +30,7 @@ import android.widget.NumberPicker
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.ViewSwitcher
-import androidx.appcompat.app.AppCompatActivity
+import com.github.app.InsetsActivity
 import com.github.app.SimpleThemeCallbacks
 import com.github.app.ThemeCallbacks
 import com.github.lang.isTrue
@@ -53,7 +53,7 @@ import kotlin.math.floor
  *
  * @author Moshe Waisberg
  */
-open class AddLocationActivity<P : ThemePreferences> : AppCompatActivity(),
+open class AddLocationActivity<P : ThemePreferences> : InsetsActivity(),
     ThemeCallbacks<P>,
     ZmanimLocationListener {
     private val themeCallbacks: ThemeCallbacks<P> by lazy { createThemeCallbacks(this) }

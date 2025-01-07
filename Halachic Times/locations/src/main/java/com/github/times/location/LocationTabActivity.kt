@@ -31,10 +31,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
 import android.widget.TabHost
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.github.app.InsetsActivity
 import com.github.app.SimpleThemeCallbacks
 import com.github.app.ThemeCallbacks
 import com.github.preference.ThemePreferences
@@ -53,7 +53,7 @@ import timber.log.Timber
  * @author Moshe Waisberg
  */
 @SuppressLint("DiscouragedApi", "PrivateApi")
-abstract class LocationTabActivity<P : ThemePreferences> : AppCompatActivity(),
+abstract class LocationTabActivity<P : ThemePreferences> : InsetsActivity(),
     ThemeCallbacks<P>,
     LocationItemListener,
     SearchView.OnQueryTextListener,

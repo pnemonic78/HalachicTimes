@@ -31,13 +31,12 @@ import android.text.format.DateUtils
 import android.text.style.RelativeSizeSpan
 import android.view.Window
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker
+import com.github.app.InsetsActivity
 import com.github.app.LocaleCallbacks
 import com.github.app.LocaleHelper
 import com.github.app.SimpleThemeCallbacks
 import com.github.app.ThemeCallbacks
-import com.github.lib.R
 import com.github.text.style.TypefaceSpan
 import com.github.times.BuildConfig
 import com.github.times.TimeMillis
@@ -57,7 +56,7 @@ import timber.log.Timber
  *
  * @author Moshe Waisberg
  */
-class AlarmActivity<P : ZmanimPreferences> : AppCompatActivity(), ThemeCallbacks<P> {
+class AlarmActivity<P : ZmanimPreferences> : InsetsActivity(), ThemeCallbacks<P> {
 
     private lateinit var localeCallbacks: LocaleCallbacks<P>
     private val themeCallbacks: ThemeCallbacks<P> by lazy { createThemeCallbacks(this) }

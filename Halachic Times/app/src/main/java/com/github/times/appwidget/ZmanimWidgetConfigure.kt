@@ -11,9 +11,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
+import com.github.app.InsetsActivity
 import com.github.app.PERMISSION_WALLPAPER
 import com.github.times.R
 import timber.log.Timber
@@ -23,7 +23,7 @@ import timber.log.Timber
  *
  * @author Moshe Waisberg
  */
-class ZmanimWidgetConfigure : AppCompatActivity() {
+class ZmanimWidgetConfigure : InsetsActivity() {
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             Timber.i("Permission to read wallpaper: %s", isGranted)
