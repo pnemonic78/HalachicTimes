@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/pref_general_title">
 
-    <SwitchPreference
-        android:defaultValue="@bool/past_defaultValue"
-        android:icon="@drawable/ic_settings_history"
-        android:key="past"
-        android:title="@string/past_title" />
-    <SwitchPreference
-        android:defaultValue="@bool/seconds_visible_defaultValue"
-        android:key="seconds.visible"
-        android:title="@string/seconds_title" />
-    <SwitchPreference
-        android:defaultValue="@bool/year_final_defaultValue"
-        android:key="year.final"
-        android:summaryOff="@string/year_final_summary_off"
-        android:summaryOn="@string/year_final_summary_on"
-        android:title="@string/year_final_title" />
-    <SwitchPreference
-        android:defaultValue="@bool/summaries_visible_defaultValue"
-        android:key="summaries.visible"
-        android:title="@string/summaries_title" />
-    <Preference
-        android:key="date_time_settings"
-        android:title="@string/date_and_time">
-        <intent android:action="android.settings.DATE_SETTINGS" />
-    </Preference>
+    <PreferenceCategory android:title="@string/pref_general_title">
+        <SwitchPreference
+            android:defaultValue="@bool/past_defaultValue"
+            android:icon="@drawable/ic_settings_history"
+            android:key="past"
+            android:title="@string/past_title" />
+        <SwitchPreference
+            android:defaultValue="@bool/seconds_visible_defaultValue"
+            android:key="seconds.visible"
+            android:title="@string/seconds_title" />
+        <SwitchPreference
+            android:defaultValue="@bool/year_final_defaultValue"
+            android:key="year.final"
+            android:summaryOff="@string/year_final_summary_off"
+            android:summaryOn="@string/year_final_summary_on"
+            android:title="@string/year_final_title" />
+        <SwitchPreference
+            android:defaultValue="@bool/summaries_visible_defaultValue"
+            android:key="summaries.visible"
+            android:title="@string/summaries_title" />
+        <Preference
+            android:key="date_time_settings"
+            android:title="@string/date_and_time">
+            <intent android:action="android.settings.DATE_SETTINGS" />
+        </Preference>
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/notifications_title">
         <SwitchPreference
