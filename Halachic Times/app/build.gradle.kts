@@ -164,9 +164,9 @@ dependencies {
 // Disable Google Services plugin for some flavors.
 afterEvaluate {
     android.productFlavors.forEach { flavor ->
-        val flavorName = flavor.name.capitalize(Locale.US)
+        val flavorName = flavor.name.capitalize(Locale.ROOT)
         tasks.matching { task ->
-            task.name.endsWith("GoogleServices") && task.name.contains(flavorName)
+            (task.name.endsWith("GoogleServices") || task.name.contains("Crashlytics")) && task.name.contains(flavorName)
         }.forEach { task ->
             task.enabled = flavor.extraProperties["useGoogleGcm"] as Boolean
         }
