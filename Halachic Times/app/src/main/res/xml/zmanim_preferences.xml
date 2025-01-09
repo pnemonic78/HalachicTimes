@@ -301,16 +301,16 @@
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
-        android:title="@string/burn_chametz">
+        android:title="@string/destroy_chametz">
         <extra
             android:name="xml"
             android:value="zman_chametz_preferences" />
         <extra
             android:name="opinion"
-            android:value="@string/opinion_name_burn_chametz" />
+            android:value="@string/opinion_name_destroy_chametz" />
         <extra
             android:name="reminder"
-            android:value="burn_chametz.reminder" />
+            android:value="destroy_chametz.reminder" />
     </PreferenceScreen>
 
     <ListPreference

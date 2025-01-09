@@ -192,17 +192,17 @@
         <item>@string/eat_chametz_72</item>
     </string-array>
 
-    <string-array name="burn_chametz_values" translatable="false">
+    <string-array name="destroy_chametz_values" translatable="false">
         <item>@string/opinion_value_baal_hatanya</item>
         <item>@string/opinion_value_gra</item>
         <item>@string/opinion_value_16</item>
         <item>@string/opinion_value_72</item>
     </string-array>
-    <string-array name="burn_chametz_entries" translatable="false">
-        <item>@string/burn_chametz_baal_hatanya</item>
-        <item>@string/burn_chametz_gra</item>
-        <item>@string/burn_chametz_16</item>
-        <item>@string/burn_chametz_72</item>
+    <string-array name="destroy_chametz_entries" translatable="false">
+        <item>@string/destroy_chametz_baal_hatanya</item>
+        <item>@string/destroy_chametz_gra</item>
+        <item>@string/destroy_chametz_16</item>
+        <item>@string/destroy_chametz_72</item>
     </string-array>
 
     <string-array name="midday_values" translatable="false">

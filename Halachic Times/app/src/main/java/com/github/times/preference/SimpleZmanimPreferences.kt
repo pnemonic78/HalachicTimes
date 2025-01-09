@@ -38,10 +38,10 @@ import com.github.times.preference.ZmanimPreferences.Companion.KEY_ANIM_CANDLES
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_EMPHASIS_SCALE
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_HOUR
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_NOTIFICATION_UPCOMING
-import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_BURN
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_CANDLES
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_CANDLES_CHANUKKA
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_DAWN
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_DESTROY
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EARLIEST_LEVANA
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EARLIEST_MINCHA
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EAT
@@ -338,10 +338,10 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
             context.getString(R.string.eat_chametz_defaultValue)
         )
 
-    override val burnChametz: String?
+    override val destroyChametz: String?
         get() = preferences.getString(
-            KEY_OPINION_BURN,
-            context.getString(R.string.burn_chametz_defaultValue)
+            KEY_OPINION_DESTROY,
+            context.getString(R.string.destroy_chametz_defaultValue)
         )
 
     override val midday: String?
@@ -530,11 +530,12 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
 
     override fun toKey(id: Int): String? {
         return when (id) {
-            R.string.burn_chametz -> KEY_OPINION_BURN
+            R.string.burn_chametz -> KEY_OPINION_DESTROY
             R.string.candles -> KEY_OPINION_CANDLES
             R.string.chanukka -> KEY_OPINION_CANDLES_CHANUKKA
             R.string.chanukka_count -> KEY_OPINION_CANDLES_CHANUKKA
             R.string.dawn -> KEY_OPINION_DAWN
+            R.string.destroy_chametz -> KEY_OPINION_DESTROY
             R.string.earliest_mincha -> KEY_OPINION_EARLIEST_MINCHA
             R.string.eat_chametz -> KEY_OPINION_EAT
             R.string.fast_begins -> KEY_OPINION_FAST_BEGINS
@@ -573,7 +574,7 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
             KEY_OPINION_SHEMA -> R.string.shema
             KEY_OPINION_TFILA -> R.string.prayers
             KEY_OPINION_EAT -> R.string.eat_chametz
-            KEY_OPINION_BURN -> R.string.burn_chametz
+            KEY_OPINION_DESTROY -> R.string.destroy_chametz
             KEY_OPINION_NOON -> R.string.midday
             KEY_OPINION_EARLIEST_MINCHA -> R.string.earliest_mincha
             KEY_OPINION_MINCHA -> R.string.mincha

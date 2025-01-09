@@ -156,6 +156,7 @@
     <!-- Pesach -->
     <string name="eat_chametz">סוף זמן אכילת חמץ</string>
     <string name="burn_chametz">סוף זמן ביעור חמץ</string>
+    <string name="destroy_chametz">סוף זמן ביעור חמץ</string>
 
     <!-- Moon -->
     <string name="molad">לידת ירח החדש (מולד)</string>

@@ -94,7 +94,7 @@ class ZmanimDetailsFragment<A : ZmanimDetailsAdapter, P : ZmanimDetailsPopulater
             R.string.shema ->
                 list.setBackgroundColor(ContextCompat.getColor(context, R.color.shema))
 
-            R.string.prayers, R.string.eat_chametz, R.string.burn_chametz ->
+            R.string.prayers, R.string.eat_chametz, R.string.burn_chametz, R.string.destroy_chametz ->
                 list.setBackgroundColor(ContextCompat.getColor(context, R.color.prayers))
 
             R.string.midday ->
@@ -147,7 +147,7 @@ class ZmanimDetailsFragment<A : ZmanimDetailsAdapter, P : ZmanimDetailsPopulater
 
             R.string.prayers,
             R.string.eat_chametz,
-            R.string.burn_chametz ->
+            R.string.destroy_chametz ->
                 list.setBackgroundColor(ContextCompat.getColor(context, R.color.prayers_light))
 
             R.string.midday ->

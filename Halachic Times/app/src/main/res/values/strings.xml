@@ -274,10 +274,11 @@
     <string name="eat_chametz_72" translatable="false">@string/opinion_72</string>
     <string name="eat_chametz_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
     <string name="burn_chametz">Latest time to burn <i>chametz</i></string>
-    <string name="burn_chametz_gra" translatable="false">@string/opinion_gra</string>
-    <string name="burn_chametz_16" translatable="false">@string/opinion_16</string>
-    <string name="burn_chametz_72" translatable="false">@string/opinion_72</string>
-    <string name="burn_chametz_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
+    <string name="destroy_chametz">Latest time to destroy <i>chametz</i></string>
+    <string name="destroy_chametz_gra" translatable="false">@string/opinion_gra</string>
+    <string name="destroy_chametz_16" translatable="false">@string/opinion_16</string>
+    <string name="destroy_chametz_72" translatable="false">@string/opinion_72</string>
+    <string name="destroy_chametz_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Moon -->
     <string name="molad">Birth of new moon (מולד)</string>

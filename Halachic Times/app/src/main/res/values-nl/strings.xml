@@ -156,6 +156,7 @@
     <!-- Pesach -->
     <string name="eat_chametz">Laatste tijd om <i>chameets</i> te eten</string>
     <string name="burn_chametz">Laatste tijd om <i>chameets</i> te branden</string>
+    <string name="destroy_chametz">Laatste tijd om <i>chamez</i> te vernietigen</string>
 
     <!-- Moon -->
     <string name="molad">Geboorte van de nieuwe maan (מולד)</string>

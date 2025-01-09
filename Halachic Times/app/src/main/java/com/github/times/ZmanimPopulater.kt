@@ -1041,30 +1041,35 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             )
         }
 
-        // Not allowed to burn chametz on Shabbat.
-        if (holidayToday == JewishCalendar.EREV_PESACH && dayOfWeek != Calendar.SATURDAY || holidayTomorrow == JewishCalendar.EREV_PESACH && dayOfWeek == Calendar.FRIDAY) {
-            when (settings.burnChametz) {
+        if ((holidayToday == JewishCalendar.EREV_PESACH)
+            || (holidayTomorrow == JewishCalendar.EREV_PESACH && dayOfWeek == Calendar.FRIDAY)) {
+            when (settings.destroyChametz) {
                 OPINION_16_1 -> {
                     date = cal.sofZmanBiurChametzMGA16Point1Degrees
-                    summary = R.string.burn_chametz_16
+                    summary = R.string.destroy_chametz_16
                 }
 
                 OPINION_72 -> {
                     date = cal.sofZmanBiurChametzMGA72Minutes
-                    summary = R.string.burn_chametz_72
+                    summary = R.string.destroy_chametz_72
                 }
 
                 OPINION_BAAL_HATANYA -> {
                     date = cal.sofZmanBiurChametzBaalHatanya
-                    summary = R.string.burn_chametz_baal_hatanya
+                    summary = R.string.destroy_chametz_baal_hatanya
                 }
 
                 else -> {
                     date = cal.sofZmanBiurChametzGRA
-                    summary = R.string.burn_chametz_gra
+                    summary = R.string.destroy_chametz_gra
                 }
             }
-            adapter.add(R.string.burn_chametz, summary, date, jewishDate, remote)
+            // Not allowed to burn chametz on Shabbat, but can nullify it.
+            if (dayOfWeek == Calendar.SATURDAY) {
+                adapter.add(R.string.destroy_chametz, summary, date, jewishDate, remote)
+            } else {
+                adapter.add(R.string.burn_chametz, summary, date, jewishDate, remote)
+            }
         }
 
         // Molad.

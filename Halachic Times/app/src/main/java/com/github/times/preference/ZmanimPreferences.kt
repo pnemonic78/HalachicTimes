@@ -339,11 +339,11 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
     val eatChametz: String?
 
     /**
-     * Get the opinion for burning chametz (*biur chametz*).
+     * Get the opinion for destroying chametz (*biur chametz*).
      *
      * @return the opinion.
      */
-    val burnChametz: String?
+    val destroyChametz: String?
 
     /**
      * Get the opinion for noon (*chatzos*).
@@ -669,7 +669,7 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
         const val KEY_OPINION_EAT = "eat_chametz"
 
         /** Preference name for Last Biur Chametz type.  */
-        const val KEY_OPINION_BURN = "burn_chametz"
+        const val KEY_OPINION_DESTROY = "destroy_chametz"
 
         /** Preference name for midday / noon type.  */
         const val KEY_OPINION_NOON = "midday"

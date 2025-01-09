@@ -35,9 +35,9 @@ import com.github.preference.NumberPickerPreference
 import com.github.preference.SimplePreferences
 import com.github.preference.TimePreference
 import com.github.times.R
-import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_BURN
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_CANDLES
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_DAWN
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_DESTROY
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EARLIEST_MINCHA
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EAT
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_GUARDS
@@ -265,7 +265,7 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
             .putString(KEY_OPINION_SHEMA, opinion)
             .putString(KEY_OPINION_TFILA, opinion)
             .putString(KEY_OPINION_EAT, opinion)
-            .putString(KEY_OPINION_BURN, opinion)
+            .putString(KEY_OPINION_DESTROY, opinion)
             .putString(KEY_OPINION_NOON, opinion)
             .putString(KEY_OPINION_EARLIEST_MINCHA, opinion)
             .putString(KEY_OPINION_MINCHA, opinion)

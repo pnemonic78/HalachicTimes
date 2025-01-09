@@ -78,7 +78,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
             R.string.levana_earliest -> populateEarliestKiddushLevana(adapter, calendar, settings)
             R.string.levana_latest -> populateLatestKiddushLevana(adapter, calendar, settings)
             R.string.eat_chametz -> populateEatChametz(adapter, calendar)
-            R.string.burn_chametz -> populateBurnChametz(adapter, calendar)
+            R.string.burn_chametz, R.string.destroy_chametz -> populateDestroyChametz(adapter, calendar)
         }
         adapter.sort()
     }
@@ -920,25 +920,25 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
-    private fun populateBurnChametz(adapter: A, cal: ComplexZmanimCalendar) {
+    private fun populateDestroyChametz(adapter: A, cal: ComplexZmanimCalendar) {
         var date: KosherDate
         var title: Int
         val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.sofZmanBiurChametzBaalHatanya
-        title = R.string.burn_chametz_baal_hatanya
+        title = R.string.destroy_chametz_baal_hatanya
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.sofZmanBiurChametzMGA16Point1Degrees
-        title = R.string.burn_chametz_16
+        title = R.string.destroy_chametz_16
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.sofZmanBiurChametzMGA72Minutes
-        title = R.string.burn_chametz_72
+        title = R.string.destroy_chametz_72
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.sofZmanBiurChametzGRA
-        title = R.string.burn_chametz_gra
+        title = R.string.destroy_chametz_gra
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
