@@ -39,6 +39,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
+import android.os.PowerManager.WakeLock
 import android.provider.Settings
 import android.text.format.DateUtils
 import androidx.annotation.RequiresApi
@@ -77,6 +78,7 @@ class ZmanimReminder(private val context: Context) {
 
     private var largeIconSolar: Bitmap? = null
     private var largeIconReminder: Bitmap? = null
+    private var wakeLock: WakeLock? = null
 
     private val notificationManager: NotificationManager?
         get() = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
@@ -208,6 +210,7 @@ class ZmanimReminder(private val context: Context) {
      */
     fun cancel() {
         Timber.i("cancel")
+        cancelWake()
         cancelAlarm()
         cancelNotification()
         cancelUpcoming()
@@ -235,6 +238,11 @@ class ZmanimReminder(private val context: Context) {
             alarms.cancel(upcomingIntent)
         }
         notificationManager?.cancel(ID_NOTIFY_UPCOMING)
+    }
+
+    private fun cancelWake() {
+        wakeLock?.release()
+        wakeLock = null
     }
 
     /**
@@ -267,6 +275,7 @@ class ZmanimReminder(private val context: Context) {
         if (pm != null) {
             val wake = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, WAKE_TAG)
             wake.acquire(5000L) // enough time to also hear a tone
+            wakeLock = wake
         }
         when (settings.reminderType) {
             RingtoneManager.TYPE_ALARM -> alarmNow(item, silenceAt)
