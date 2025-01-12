@@ -1,5 +1,8 @@
 package com.github.times
 
+import com.kosherjava.zmanim.AstronomicalCalendar
+import com.kosherjava.zmanim.hebrewcalendar.JewishDate
+import java.util.Calendar
 import java.util.Date
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
@@ -87,3 +90,17 @@ val TimeMillis.isTime: Boolean
 
 val TimeMillis?.isTime: Boolean
     get() = (this != null) && this.isTime
+
+@Suppress("UNCHECKED_CAST")
+fun <C : Calendar> C.copy(): C = clone() as C
+
+@Suppress("UNCHECKED_CAST")
+fun <C : AstronomicalCalendar> C.copy(): C = clone() as C
+
+@Suppress("UNCHECKED_CAST")
+fun <D : JewishDate> D.copy(): D = clone() as D
+
+fun <C : AstronomicalCalendar> C.add(field: Int, amount: Int): C {
+    calendar.add(field, amount)
+    return this
+}

@@ -53,6 +53,8 @@ import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_FAST_
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_FAST_ENDS_SUNSET
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_FAST_ENDS_TWILIGHT
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_GUARDS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_GUARD_BEGINS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_GUARD_ENDS
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_HOUR
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_LATEST_LEVANA
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_MIDNIGHT
@@ -139,6 +141,7 @@ import com.github.times.preference.ZmanimPreferences.Values.OPINION_9_5
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_9_75
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_ATERET
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_BAAL_HATANYA
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_DAWN
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_FIXED
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_GRA
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_HALF
@@ -147,6 +150,8 @@ import com.github.times.preference.ZmanimPreferences.Values.OPINION_MGA
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_NIGHT
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_NONE
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_SEA
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_SUNRISE
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_SUNSET
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_TWILIGHT
 import com.github.times.preference.ZmanimPreferences.Values.THEME_NONE
 import com.github.times.preference.ZmanimPreferences.Values.THEME_WHITE
@@ -477,6 +482,18 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
         get() = preferences.getString(
             KEY_OPINION_GUARDS,
             context.getString(R.string.guards_defaultValue)
+        )
+
+    override val guardBegins: String?
+        get() = preferences.getString(
+            KEY_OPINION_GUARD_BEGINS,
+            context.getString(R.string.guard_begins_defaultValue)
+        )
+
+    override val guardEnds: String?
+        get() = preferences.getString(
+            KEY_OPINION_GUARD_ENDS,
+            context.getString(R.string.guard_ends_defaultValue)
         )
 
     override fun getReminder(id: Int, time: TimeMillis): Long {
@@ -854,6 +871,7 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
             OPINION_168 = res.getString(R.string.opinion_value_168)
             OPINION_ATERET = res.getString(R.string.opinion_value_ateret)
             OPINION_BAAL_HATANYA = res.getString(R.string.opinion_value_baal_hatanya)
+            OPINION_DAWN = res.getString(R.string.opinion_value_dawn)
             OPINION_FIXED = res.getString(R.string.opinion_value_fixed)
             OPINION_GRA = res.getString(R.string.opinion_value_gra)
             OPINION_HALF = res.getString(R.string.opinion_value_half)
@@ -862,6 +880,8 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
             OPINION_NIGHT = res.getString(R.string.opinion_value_nightfall)
             OPINION_NONE = res.getString(R.string.opinion_value_none)
             OPINION_SEA = res.getString(R.string.opinion_value_sea)
+            OPINION_SUNRISE = res.getString(R.string.opinion_value_sunrise)
+            OPINION_SUNSET = res.getString(R.string.opinion_value_sunset)
             OPINION_TWILIGHT = res.getString(R.string.opinion_value_twilight)
 
             THEME_NONE = res.getString(R.string.theme_value_none)

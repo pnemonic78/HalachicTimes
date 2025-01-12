@@ -29,6 +29,7 @@ import com.github.times.ZmanViewHolder
 import com.github.times.ZmanimAdapter
 import com.github.times.ZmanimDays.getName
 import com.github.times.ZmanimItem
+import com.github.times.copy
 import com.github.times.isNullOrEmptyOrElapsed
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate
 import java.util.Calendar
@@ -67,7 +68,7 @@ open class ZmanimWidget : ZmanimAppWidget() {
         val holidayTomorrow = adapterToday.holidayTomorrow
         val candlesTomorrow = adapterToday.candlesCount
         val omerTomorrow = adapterTomorrow.dayOfOmerToday
-        val jewishDateOvermorrow = (jewishDateTomorrow.clone() as JewishDate).apply {
+        val jewishDateOvermorrow = (jewishDateTomorrow.copy()).apply {
             forward(Calendar.DATE, 1)
         }
         val holidayOvermorrow = adapterTomorrow.holidayTomorrow

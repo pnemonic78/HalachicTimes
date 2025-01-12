@@ -10,6 +10,7 @@ import com.github.util.minute
 import com.github.util.month
 import com.github.util.second
 import com.github.util.year
+import com.kosherjava.zmanim.ComplexZmanimCalendar
 import com.kosherjava.zmanim.ShaahZmanis
 import com.kosherjava.zmanim.ZmanimCalendar
 import com.kosherjava.zmanim.util.GeoLocation
@@ -161,16 +162,252 @@ class ZmanimTests : BaseTests() {
         val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences)
         populater.isInIsrael = false
 
-        val adapter1 = ZmanimAdapter<ZmanViewHolder>(context, preferences)
-        assertEquals(0, adapter1.itemCount)
+        val adapter = ZmanimAdapter<ZmanViewHolder>(context, preferences)
+        assertEquals(0, adapter.itemCount)
         populater.setCalendar(date1)
         populater.setGeoLocation(loc1)
-        populater.populate(adapter1, false)
-        assertEquals(15, adapter1.itemCount)
-        val item1 = adapter1.getItemById(R.string.midday)
+        populater.populate(adapter, false)
+        assertEquals(15, adapter.itemCount)
+        val item1 = adapter.getItemById(R.string.midday)
         assertNotNull(item1!!)
         assertEquals(mid1.time, item1.time)
         assertEquals(if (is24) "12:57:57" else "12:57:57 PM", item1.timeLabel)
         assertEquals("16:57:57", df.format(Date(item1.time)))
+    }
+
+    @Test
+    fun `3 guards from sunset to sunrise`() {
+        val tz = TimeZone.getTimeZone("Asia/Jerusalem")
+        val cal = Calendar.getInstance(tz).apply {
+            year = 2025
+            month = Calendar.JANUARY
+            dayOfMonth = 1
+            hour = 12
+            minute = 0
+            second = 0
+        }
+        val loc = GeoLocation("Jerusalem", 31.76904, 35.21633, 786.0, tz)
+        val zcal = ComplexZmanimCalendar(loc).apply {
+            calendar = cal
+            isUseElevation = true
+        }
+        val sunsetToday = zcal.sunset
+        zcal.add(Calendar.DATE, 1)
+        val sunriseTomorrow = zcal.sunrise
+        zcal.add(Calendar.DATE, -1)
+
+        val df = SimpleDateFormat("HH:mm").apply {
+            timeZone = tz
+        }
+        assertEquals("16:51", df.format(sunsetToday))
+        assertEquals("06:34", df.format(sunriseTomorrow))
+
+        val preferences: ZmanimPreferences = object : SimpleZmanimPreferences(context) {
+            override val guardsCount: String? = ZmanimPreferences.Values.OPINION_3
+            override val guardBegins: String? = ZmanimPreferences.Values.OPINION_SUNSET
+            override val guardEnds: String? = ZmanimPreferences.Values.OPINION_SUNRISE
+        }
+        assertNotNull(preferences)
+        val populater = ZmanimDetailsPopulater<ZmanimDetailsAdapter>(context, preferences)
+        populater.isInIsrael = true
+
+        val adapter = ZmanimDetailsAdapter(context, preferences, isHour24 = true)
+        assertEquals(0, adapter.itemCount)
+        populater.setCalendar(cal)
+        populater.setGeoLocation(loc)
+        populater.itemId = R.string.midnight_guard
+        populater.populate(adapter, false)
+        assertEquals(3, adapter.itemCount)
+        val item0 = adapter.getItem(0)
+        assertNotNull(item0!!)
+        assertEquals(R.string.guard_first, item0.titleId)
+        assertEquals("16:51", item0.timeLabel)
+        val item1 = adapter.getItem(1)
+        assertNotNull(item1!!)
+        assertEquals(R.string.guard_second, item1.titleId)
+        assertEquals("21:25", item1.timeLabel)
+        val item2 = adapter.getItem(2)
+        assertNotNull(item2!!)
+        assertEquals(R.string.guard_third, item2.titleId)
+        assertEquals("02:00", item2.timeLabel)
+    }
+
+    @Test
+    fun `3 guards from night to dawn`() {
+        val tz = TimeZone.getTimeZone("Asia/Jerusalem")
+        val cal = Calendar.getInstance(tz).apply {
+            year = 2025
+            month = Calendar.JANUARY
+            dayOfMonth = 1
+            hour = 12
+            minute = 0
+            second = 0
+        }
+        val loc = GeoLocation("Jerusalem", 31.76904, 35.21633, 786.0, tz)
+        val zcal = ComplexZmanimCalendar(loc).apply {
+            calendar = cal
+            isUseElevation = true
+        }
+        val nightToday = zcal.tzaisGeonim8Point5Degrees
+        zcal.add(Calendar.DATE, 1)
+        val dawnTomorrow = zcal.alos72
+        zcal.add(Calendar.DATE, -1)
+
+        val df = SimpleDateFormat("HH:mm").apply {
+            timeZone = tz
+        }
+        assertEquals("17:26", df.format(nightToday))
+        assertEquals("05:22", df.format(dawnTomorrow))
+
+        val preferences: ZmanimPreferences = object : SimpleZmanimPreferences(context) {
+            override val guardsCount: String? = ZmanimPreferences.Values.OPINION_3
+            override val guardBegins: String? = ZmanimPreferences.Values.OPINION_NIGHT
+            override val guardEnds: String? = ZmanimPreferences.Values.OPINION_DAWN
+        }
+        assertNotNull(preferences)
+        val populater = ZmanimDetailsPopulater<ZmanimDetailsAdapter>(context, preferences)
+        populater.isInIsrael = true
+
+        val adapter = ZmanimDetailsAdapter(context, preferences, isHour24 = true)
+        assertEquals(0, adapter.itemCount)
+        populater.setCalendar(cal)
+        populater.setGeoLocation(loc)
+        populater.itemId = R.string.midnight_guard
+        populater.populate(adapter, false)
+        assertEquals(3, adapter.itemCount)
+        val item0 = adapter.getItem(0)
+        assertNotNull(item0!!)
+        assertEquals(R.string.guard_first, item0.titleId)
+        assertEquals("17:26", item0.timeLabel)
+        val item1 = adapter.getItem(1)
+        assertNotNull(item1!!)
+        assertEquals(R.string.guard_second, item1.titleId)
+        assertEquals("21:25", item1.timeLabel)
+        val item2 = adapter.getItem(2)
+        assertNotNull(item2!!)
+        assertEquals(R.string.guard_third, item2.titleId)
+        assertEquals("01:24", item2.timeLabel)
+    }
+
+    @Test
+    fun `4 guards from sunset to sunrise`() {
+        val tz = TimeZone.getTimeZone("Asia/Jerusalem")
+        val cal = Calendar.getInstance(tz).apply {
+            year = 2025
+            month = Calendar.JANUARY
+            dayOfMonth = 1
+            hour = 12
+            minute = 0
+            second = 0
+        }
+        val loc = GeoLocation("Jerusalem", 31.76904, 35.21633, 786.0, tz)
+        val zcal = ComplexZmanimCalendar(loc).apply {
+            calendar = cal
+            isUseElevation = true
+        }
+        val sunsetToday = zcal.sunset
+        zcal.add(Calendar.DATE, 1)
+        val sunriseTomorrow = zcal.sunrise
+        zcal.add(Calendar.DATE, -1)
+
+        val df = SimpleDateFormat("HH:mm").apply {
+            timeZone = tz
+        }
+        assertEquals("16:51", df.format(sunsetToday))
+        assertEquals("06:34", df.format(sunriseTomorrow))
+
+        val preferences: ZmanimPreferences = object : SimpleZmanimPreferences(context) {
+            override val guardsCount: String? = ZmanimPreferences.Values.OPINION_4
+            override val guardBegins: String? = ZmanimPreferences.Values.OPINION_SUNSET
+            override val guardEnds: String? = ZmanimPreferences.Values.OPINION_SUNRISE
+        }
+        assertNotNull(preferences)
+        val populater = ZmanimDetailsPopulater<ZmanimDetailsAdapter>(context, preferences)
+        populater.isInIsrael = true
+
+        val adapter = ZmanimDetailsAdapter(context, preferences, isHour24 = true)
+        assertEquals(0, adapter.itemCount)
+        populater.setCalendar(cal)
+        populater.setGeoLocation(loc)
+        populater.itemId = R.string.midnight_guard
+        populater.populate(adapter, false)
+        assertEquals(4, adapter.itemCount)
+        val item0 = adapter.getItem(0)
+        assertNotNull(item0!!)
+        assertEquals(R.string.guard_first, item0.titleId)
+        assertEquals("16:51", item0.timeLabel)
+        val item1 = adapter.getItem(1)
+        assertNotNull(item1!!)
+        assertEquals(R.string.guard_second, item1.titleId)
+        assertEquals("20:17", item1.timeLabel)
+        val item2 = adapter.getItem(2)
+        assertNotNull(item2!!)
+        assertEquals(R.string.guard_third, item2.titleId)
+        assertEquals("23:43", item2.timeLabel)
+        val item3 = adapter.getItem(3)
+        assertNotNull(item3!!)
+        assertEquals(R.string.guard_fourth, item3.titleId)
+        assertEquals("03:08", item3.timeLabel)
+    }
+
+    @Test
+    fun `4 guards from night to dawn`() {
+        val tz = TimeZone.getTimeZone("Asia/Jerusalem")
+        val cal = Calendar.getInstance(tz).apply {
+            year = 2025
+            month = Calendar.JANUARY
+            dayOfMonth = 1
+            hour = 12
+            minute = 0
+            second = 0
+        }
+        val loc = GeoLocation("Jerusalem", 31.76904, 35.21633, 786.0, tz)
+        val zcal = ComplexZmanimCalendar(loc).apply {
+            calendar = cal
+            isUseElevation = true
+        }
+        val nightToday = zcal.tzaisGeonim8Point5Degrees
+        zcal.add(Calendar.DATE, 1)
+        val dawnTomorrow = zcal.alos72
+        zcal.add(Calendar.DATE, -1)
+
+        val df = SimpleDateFormat("HH:mm").apply {
+            timeZone = tz
+        }
+        assertEquals("17:26", df.format(nightToday))
+        assertEquals("05:22", df.format(dawnTomorrow))
+
+        val preferences: ZmanimPreferences = object : SimpleZmanimPreferences(context) {
+            override val guardsCount: String? = ZmanimPreferences.Values.OPINION_4
+            override val guardBegins: String? = ZmanimPreferences.Values.OPINION_NIGHT
+            override val guardEnds: String? = ZmanimPreferences.Values.OPINION_DAWN
+        }
+        assertNotNull(preferences)
+        val populater = ZmanimDetailsPopulater<ZmanimDetailsAdapter>(context, preferences)
+        populater.isInIsrael = true
+
+        val adapter = ZmanimDetailsAdapter(context, preferences, isHour24 = true)
+        assertEquals(0, adapter.itemCount)
+        populater.setCalendar(cal)
+        populater.setGeoLocation(loc)
+        populater.itemId = R.string.midnight_guard
+        populater.populate(adapter, false)
+        assertEquals(4, adapter.itemCount)
+        val item0 = adapter.getItem(0)
+        assertNotNull(item0!!)
+        assertEquals(R.string.guard_first, item0.titleId)
+        assertEquals("17:26", item0.timeLabel)
+        val item1 = adapter.getItem(1)
+        assertNotNull(item1!!)
+        assertEquals(R.string.guard_second, item1.titleId)
+        assertEquals("20:34", item1.timeLabel)
+        val item2 = adapter.getItem(2)
+        assertNotNull(item2!!)
+        assertEquals(R.string.guard_third, item2.titleId)
+        assertEquals("23:43", item2.timeLabel)
+        val item3 = adapter.getItem(3)
+        assertNotNull(item3!!)
+        assertEquals(R.string.guard_fourth, item3.titleId)
+        assertEquals("02:32", item3.timeLabel)
     }
 }

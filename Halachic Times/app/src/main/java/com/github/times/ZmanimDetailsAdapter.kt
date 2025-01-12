@@ -16,6 +16,7 @@
 package com.github.times
 
 import android.content.Context
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.github.times.databinding.TimesDetailBinding
@@ -26,8 +27,11 @@ import com.github.times.preference.ZmanimPreferences
  *
  * @author Moshe Waisberg
  */
-class ZmanimDetailsAdapter(context: Context, settings: ZmanimPreferences) :
-    ZmanimAdapter<ZmanDetailsViewHolder>(context, settings, null) {
+class ZmanimDetailsAdapter(
+    context: Context,
+    settings: ZmanimPreferences,
+    isHour24: Boolean = DateFormat.is24HourFormat(context)
+) : ZmanimAdapter<ZmanDetailsViewHolder>(context, settings, null, isHour24) {
 
     override fun createArrayViewHolder(
         inflater: LayoutInflater,

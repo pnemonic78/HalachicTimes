@@ -185,6 +185,9 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
         var OPINION_BAAL_HATANYA: String? = null
 
         @JvmField
+        var OPINION_DAWN: String? = null
+
+        @JvmField
         var OPINION_FIXED: String? = null
 
         @JvmField
@@ -207,6 +210,12 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
 
         @JvmField
         var OPINION_SEA: String? = null
+
+        @JvmField
+        var OPINION_SUNRISE: String? = null
+
+        @JvmField
+        var OPINION_SUNSET: String? = null
 
         @JvmField
         var OPINION_TWILIGHT: String? = null
@@ -477,6 +486,20 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
      * @return the opinion.
      */
     val guardsCount: String?
+
+    /**
+     * Get the opinion for when the night guards begin.
+     *
+     * @return the opinion.
+     */
+    val guardBegins: String?
+
+    /**
+     * Get the opinion for when the night guards end.
+     *
+     * @return the opinion.
+     */
+    val guardEnds: String?
 
     /**
      * Get the opinion for earliest kiddush levana.
@@ -767,6 +790,12 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
 
         /** Preference name for guard count.  */
         const val KEY_OPINION_GUARDS = "guards"
+
+        /** Preference name for beginning of guards.  */
+        const val KEY_OPINION_GUARD_BEGINS = "guard_begins"
+
+        /** Preference name for ending of guards.  */
+        const val KEY_OPINION_GUARD_ENDS = "guard_ends"
 
         /** Preference name for beginning of fast type.  */
         const val KEY_OPINION_FAST_BEGINS = "fast_begins"

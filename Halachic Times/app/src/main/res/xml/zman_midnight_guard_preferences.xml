@@ -12,6 +12,24 @@
             android:key="@string/opinion_name_guards"
             android:title="@string/opinion"
             app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            android:defaultValue="@string/guard_begins_defaultValue"
+            android:dialogIcon="@drawable/ic_settings_begin"
+            android:entries="@array/guard_begins_entries"
+            android:entryValues="@array/guard_begins_values"
+            android:icon="@drawable/ic_settings_begin"
+            android:key="guard_begins"
+            android:title="@string/guard_first"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            android:defaultValue="@string/guard_ends_defaultValue"
+            android:dialogIcon="@drawable/ic_settings_end"
+            android:entries="@array/guard_ends_entries"
+            android:entryValues="@array/guard_ends_values"
+            android:icon="@drawable/ic_settings_end"
+            android:key="guard_ends"
+            android:title="@string/guard_third"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/reminder">
         <com.github.times.preference.ZmanReminderPreference

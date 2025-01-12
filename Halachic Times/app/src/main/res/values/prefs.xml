@@ -77,6 +77,7 @@
     <string name="opinion_value_168" translatable="false">168</string>
     <string name="opinion_value_ateret" translatable="false">AT</string>
     <string name="opinion_value_baal_hatanya" translatable="false">baal_hatanya</string>
+    <string name="opinion_value_dawn" translatable="false">dawn</string>
     <string name="opinion_value_default" translatable="false" />
     <string name="opinion_value_elevation" translatable="false">elevation</string>
     <string name="opinion_value_fixed" translatable="false">fixed</string>
@@ -90,6 +91,7 @@
     <string name="opinion_value_sea" translatable="false">sea</string>
     <string name="opinion_value_solar" translatable="false">@string/opinion_value_default</string>
     <string name="opinion_value_sunset" translatable="false">sunset</string>
+    <string name="opinion_value_sunrise" translatable="false">sunrise</string>
     <string name="opinion_value_twilight" translatable="false">twilight</string>
 
     <string name="eat_chametz_defaultValue" translatable="false">@string/opinion_value_gra</string>
@@ -125,6 +127,8 @@
     <string name="tallis_defaultValue" translatable="false">@string/opinion_value_11_5</string>
     <string name="twilight_defaultValue" translatable="false">@string/opinion_value_2_stars</string>
     <string name="guards_defaultValue" translatable="false">@string/opinion_value_3</string>
+    <string name="guard_begins_defaultValue" translatable="false">@string/opinion_value_sunset</string>
+    <string name="guard_ends_defaultValue" translatable="false">@string/opinion_value_sunrise</string>
 
     <string name="reminder_stream_value_alarm" translatable="false">4</string>
     <string name="reminder_stream_value_notification" translatable="false">5</string>

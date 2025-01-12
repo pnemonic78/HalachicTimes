@@ -20,6 +20,7 @@ import android.text.format.DateUtils
 import com.github.times.preference.ZmanimPreferences
 import com.github.util.TimeUtils.isSameDay
 import com.kosherjava.zmanim.ComplexZmanimCalendar
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate
 import java.util.Calendar
 
@@ -41,9 +42,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         remote: Boolean,
         context: Context,
         settings: ZmanimPreferences
-    ) {
-        populateImpl(adapter, settings, itemId)
-    }
+    ) = populateImpl(adapter, settings, itemId)
 
     private fun populateImpl(
         adapter: A,
@@ -51,35 +50,52 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         itemId: Int
     ) {
         val calendar = calendar
+        val jewishDate: JewishCalendar = jewishCalendar ?: return
         val calendarYesterday = cloneZmanimYesterday(calendar)
         when (itemId) {
             R.string.hour -> populateHour(adapter, calendar)
-            R.string.dawn -> populateDawn(adapter, calendar)
+            R.string.dawn -> populateDawn(adapter, calendar, jewishDate)
             R.string.tallis,
-            R.string.tallis_only -> populateTallis(adapter, calendar)
+            R.string.tallis_only -> populateTallis(adapter, calendar, jewishDate)
 
-            R.string.sunrise -> populateSunrise(adapter, calendar)
-            R.string.shema -> populateShema(adapter, calendar)
-            R.string.prayers -> populatePrayers(adapter, calendar)
-            R.string.midday -> populateMidday(adapter, calendar)
-            R.string.earliest_mincha -> populateEarliestMincha(adapter, calendar)
-            R.string.mincha -> populateMincha(adapter, calendar)
-            R.string.plug_hamincha -> populatePlugHamincha(adapter, calendar)
-            R.string.sunset -> populateSunset(adapter, calendar)
-            R.string.twilight -> populateTwilight(adapter, calendar)
-            R.string.nightfall -> populateNightfall(adapter, calendar)
+            R.string.sunrise -> populateSunrise(adapter, calendar, jewishDate)
+            R.string.shema -> populateShema(adapter, calendar, jewishDate)
+            R.string.prayers -> populatePrayers(adapter, calendar, jewishDate)
+            R.string.midday -> populateMidday(adapter, calendar, jewishDate)
+            R.string.earliest_mincha -> populateEarliestMincha(adapter, calendar, jewishDate)
+            R.string.mincha -> populateMincha(adapter, calendar, jewishDate)
+            R.string.plug_hamincha -> populatePlugHamincha(adapter, calendar, jewishDate)
+            R.string.sunset -> populateSunset(adapter, calendar, jewishDate)
+            R.string.twilight -> populateTwilight(adapter, calendar, jewishDate)
+            R.string.nightfall -> populateNightfall(adapter, calendar, jewishDate)
             R.string.shabbath_ends,
-            R.string.festival_ends -> populateShabbathEnds(adapter, calendar, settings)
-            R.string.fast_ends -> populateFastEnds(adapter, calendar, settings)
+            R.string.festival_ends -> populateShabbathEnds(adapter, calendar, jewishDate, settings)
 
-            R.string.midnight -> populateMidnight(adapter, calendar, calendarYesterday, settings)
+            R.string.fast_ends -> populateFastEnds(adapter, calendar, jewishDate, settings)
+
+            R.string.midnight -> populateMidnight(
+                adapter,
+                calendar,
+                calendarYesterday,
+                jewishDate,
+                settings
+            )
+
             R.string.midnight_guard,
-            R.string.morning_guard -> populateGuards(adapter, calendar, settings)
+            R.string.morning_guard -> populateGuards(adapter, calendar, jewishDate, settings)
 
-            R.string.levana_earliest -> populateEarliestKiddushLevana(adapter, calendar, settings)
+            R.string.levana_earliest -> populateEarliestKiddushLevana(
+                adapter,
+                calendar,
+                jewishDate,
+                settings
+            )
+
             R.string.levana_latest -> populateLatestKiddushLevana(adapter, calendar, settings)
-            R.string.eat_chametz -> populateEatChametz(adapter, calendar)
-            R.string.burn_chametz, R.string.destroy_chametz -> populateDestroyChametz(adapter, calendar)
+            R.string.eat_chametz -> populateEatChametz(adapter, calendar, jewishDate)
+            R.string.burn_chametz,
+            R.string.destroy_chametz ->
+                populateDestroyChametz(adapter, calendar, jewishDate)
         }
         adapter.sort()
     }
@@ -159,10 +175,9 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter.addHour(title, SUMMARY_NONE, time - offset)
     }
 
-    private fun populateDawn(adapter: A, cal: ComplexZmanimCalendar) {
+    private fun populateDawn(adapter: A, cal: ComplexZmanimCalendar, jewishDate: JewishDate) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.alosBaalHatanya
         title = R.string.dawn_baal_hatanya
@@ -225,10 +240,9 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
-    private fun populateTallis(adapter: A, cal: ComplexZmanimCalendar) {
+    private fun populateTallis(adapter: A, cal: ComplexZmanimCalendar, jewishDate: JewishDate) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.misheyakir10Point2Degrees
         title = R.string.tallis_baal_hatanya
@@ -255,10 +269,9 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
-    private fun populateSunrise(adapter: A, cal: ComplexZmanimCalendar) {
+    private fun populateSunrise(adapter: A, cal: ComplexZmanimCalendar, jewishDate: JewishDate) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.seaLevelSunrise
         title = R.string.sunrise_sea
@@ -269,10 +282,9 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
-    private fun populateShema(adapter: A, cal: ComplexZmanimCalendar) {
+    private fun populateShema(adapter: A, cal: ComplexZmanimCalendar, jewishDate: JewishDate) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.sofZmanShmaBaalHatanya
         title = R.string.shema_baal_hatanya
@@ -347,10 +359,9 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
-    private fun populatePrayers(adapter: A, cal: ComplexZmanimCalendar) {
+    private fun populatePrayers(adapter: A, cal: ComplexZmanimCalendar, jewishDate: JewishDate) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.sofZmanTfilaBaalHatanya
         title = R.string.prayers_baal_hatanya
@@ -417,10 +428,9 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
-    private fun populateMidday(adapter: A, cal: ComplexZmanimCalendar) {
+    private fun populateMidday(adapter: A, cal: ComplexZmanimCalendar, jewishDate: JewishDate) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.chatzosBaalHatanya
         title = R.string.midday_baal_hatanya
@@ -435,10 +445,13 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
-    private fun populateEarliestMincha(adapter: A, cal: ComplexZmanimCalendar) {
+    private fun populateEarliestMincha(
+        adapter: A,
+        cal: ComplexZmanimCalendar,
+        jewishDate: JewishDate
+    ) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.minchaGedolaBaalHatanyaGreaterThan30
         title = R.string.earliest_mincha_baal_hatanya
@@ -465,10 +478,9 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
-    private fun populateMincha(adapter: A, cal: ComplexZmanimCalendar) {
+    private fun populateMincha(adapter: A, cal: ComplexZmanimCalendar, jewishDate: JewishDate) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.minchaKetanaBaalHatanya
         title = R.string.mincha_baal_hatanya
@@ -491,10 +503,13 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
-    private fun populatePlugHamincha(adapter: A, cal: ComplexZmanimCalendar) {
+    private fun populatePlugHamincha(
+        adapter: A,
+        cal: ComplexZmanimCalendar,
+        jewishDate: JewishDate
+    ) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.plagHaminchaBaalHatanya
         title = R.string.plug_hamincha_baal_hatanya
@@ -569,10 +584,14 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
-    private fun populateSunset(adapter: A, cal: ComplexZmanimCalendar, offset: Long = 0) {
+    private fun populateSunset(
+        adapter: A,
+        cal: ComplexZmanimCalendar,
+        jewishDate: JewishDate,
+        offset: Long = 0
+    ) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.seaLevelSunset
         if (date != null) {
@@ -587,10 +606,14 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         }
     }
 
-    private fun populateTwilight(adapter: A, cal: ComplexZmanimCalendar, offset: Long = 0) {
+    private fun populateTwilight(
+        adapter: A,
+        cal: ComplexZmanimCalendar,
+        jewishDate: JewishDate,
+        offset: Long = 0
+    ) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate = jewishCalendar!!
         jewishDate.forward(Calendar.DATE, 1)
 
         date = cal.bainHasmashosRT13Point5MinutesBefore7Point083Degrees
@@ -618,10 +641,14 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         }
     }
 
-    private fun populateNightfall(adapter: A, cal: ComplexZmanimCalendar, offset: Long = 0) {
+    private fun populateNightfall(
+        adapter: A,
+        cal: ComplexZmanimCalendar,
+        jewishDate: JewishDate,
+        offset: Long = 0
+    ) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate = jewishCalendar!!
         jewishDate.forward(Calendar.DATE, 1)
 
         date = cal.tzaisBaalHatanya
@@ -809,13 +836,13 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter: A,
         cal: ComplexZmanimCalendar,
         calYesterday: ComplexZmanimCalendar,
+        jewishDate: JewishDate,
         settings: ZmanimPreferences
     ) {
         val gcal = cal.calendar
         val gcal2 = Calendar.getInstance(gcal.timeZone)
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = getMidday(cal, settings)
         if (date.isDate()) {
@@ -861,23 +888,30 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     private fun populateGuards(
         adapter: A,
         cal: ComplexZmanimCalendar,
+        jewishDate: JewishDate,
         settings: ZmanimPreferences
     ) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate = jewishCalendar!!
         jewishDate.forward(Calendar.DATE, 1)
-        val sunset = getSunset(cal, settings)
-        val sunrise = getSunriseTomorrow(cal, settings)
+        val first = when (settings.guardBegins) {
+            OPINION_TWILIGHT -> getTwilight(cal, settings)
+            OPINION_NIGHT -> getNightfall(cal, settings)
+            else -> getSunset(cal, settings)
+        }
+        val finish = when (settings.guardEnds) {
+            OPINION_DAWN -> getDawnTomorrow(cal, settings)
+            else -> getSunriseTomorrow(cal, settings)
+        }
 
-        date = sunset
+        date = first
         title = R.string.guard_first
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         val opinion = settings.guardsCount
         if (OPINION_4 == opinion) {
             val midnight = getMidnight(cal, settings)
-            date = getMidnightGuard4(sunset, midnight)
+            date = getMidnightGuard4(first, midnight)
             title = R.string.guard_second
             adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
@@ -885,24 +919,23 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
             title = R.string.guard_third
             adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-            date = getMorningGuard4(midnight, sunrise)
+            date = getMorningGuard4(midnight, finish)
             title = R.string.guard_fourth
             adapter.add(title, SUMMARY_NONE, date, jewishDate)
         } else {
-            date = getMidnightGuard3(sunset, sunrise)
+            date = getMidnightGuard3(first, finish)
             title = R.string.guard_second
             adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-            date = getMorningGuard3(sunset, sunrise)
+            date = getMorningGuard3(first, finish)
             title = R.string.guard_third
             adapter.add(title, SUMMARY_NONE, date, jewishDate)
         }
     }
 
-    private fun populateEatChametz(adapter: A, cal: ComplexZmanimCalendar) {
+    private fun populateEatChametz(adapter: A, cal: ComplexZmanimCalendar, jewishDate: JewishDate) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.sofZmanAchilasChametzBaalHatanya
         title = R.string.eat_chametz_baal_hatanya
@@ -921,10 +954,13 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
-    private fun populateDestroyChametz(adapter: A, cal: ComplexZmanimCalendar) {
+    private fun populateDestroyChametz(
+        adapter: A,
+        cal: ComplexZmanimCalendar,
+        jewishDate: JewishDate
+    ) {
         var date: KosherDate
         var title: Int
-        val jewishDate: JewishDate? = jewishCalendar
 
         date = cal.sofZmanBiurChametzBaalHatanya
         title = R.string.destroy_chametz_baal_hatanya
@@ -946,17 +982,17 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     private fun populateEarliestKiddushLevana(
         adapter: A,
         cal: ComplexZmanimCalendar,
+        jewishDate: JewishCalendar,
         settings: ZmanimPreferences
     ) {
         var date: KosherDate
         var title: Int
-        val jcal = jewishCalendar
 
         date = cal.tchilasZmanKidushLevana3Days
-        if (date == null && jcal != null) {
-            date = jcal.tchilasZmanKidushLevana3Days
+        if (date == null) {
+            date = jewishDate.tchilasZmanKidushLevana3Days
             if (date.isDate()) {
-                val cal2 = cal.clone() as ComplexZmanimCalendar
+                val cal2 = cal.copy()
                 cal2.calendar.time = date
                 date = cal2.tchilasZmanKidushLevana3Days
             }
@@ -967,10 +1003,10 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         }
 
         date = cal.tchilasZmanKidushLevana7Days
-        if (date == null && jcal != null) {
-            date = jcal.tchilasZmanKidushLevana7Days
+        if (date == null && jewishDate != null) {
+            date = jewishDate.tchilasZmanKidushLevana7Days
             if (date.isDate()) {
-                val cal2 = cal.clone() as ComplexZmanimCalendar
+                val cal2 = cal.copy()
                 cal2.calendar.time = date
                 date = cal2.tchilasZmanKidushLevana7Days
             }
@@ -1005,22 +1041,24 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
     private fun populateShabbathEnds(
         adapter: A,
         cal: ComplexZmanimCalendar,
+        jewishDate: JewishDate,
         settings: ZmanimPreferences
     ) {
         val offset = settings.shabbathEnds * DateUtils.MINUTE_IN_MILLIS
-        populateSunset(adapter, cal, offset)
-        populateTwilight(adapter, cal, offset)
-        populateNightfall(adapter, cal, offset)
+        populateSunset(adapter, cal, jewishDate, offset)
+        populateTwilight(adapter, cal, jewishDate, offset)
+        populateNightfall(adapter, cal, jewishDate, offset)
     }
 
     private fun populateFastEnds(
         adapter: A,
         cal: ComplexZmanimCalendar,
+        jewishDate: JewishDate,
         settings: ZmanimPreferences
     ) {
         val offset = settings.fastEnds * DateUtils.MINUTE_IN_MILLIS
-        populateSunset(adapter, cal, offset)
-        populateTwilight(adapter, cal, offset)
-        populateNightfall(adapter, cal, offset)
+        populateSunset(adapter, cal, jewishDate, offset)
+        populateTwilight(adapter, cal, jewishDate, offset)
+        populateNightfall(adapter, cal, jewishDate, offset)
     }
 }

@@ -59,7 +59,6 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         setShaahZmanisType(settings.hourType)
         isUseElevation = settings.isUseElevation
     }
-    private val calendarTemp = Calendar.getInstance()
 
     /**
      * Is the current location in Israel?<br/>
@@ -71,8 +70,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
 
     protected open fun prePopulate(adapter: A) {
         adapter.clear()
-        val cal = calendar.clone() as ComplexZmanimCalendar
-        adapter.calendar = cal
+        adapter.calendar = calendar.copy()
         adapter.inIsrael = isInIsrael
     }
 
@@ -118,7 +116,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             // Ignore potential "IllegalArgumentException".
             return
         }
-        val jewishDate = jcal.clone() as JewishCalendar
+        val jewishDate = jcal.copy()
         val jewishDayOfMonth = jewishDate.jewishDayOfMonth
         val dayOfWeek = jewishDate.dayOfWeek
         val jewishDateTomorrow = cloneJewishTomorrow(jewishDate)
@@ -228,87 +226,10 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             adapter.addHour(R.string.hour, summary, time - gcal.timeZone.rawOffset, remote)
         }
 
-        when (settings.dawn) {
-            OPINION_19 -> {
-                date = cal.alos19Degrees
-                summary = R.string.dawn_19
-            }
+        dateAndSummary = getDawn(cal, settings.dawn)
+        date = dateAndSummary.first
+        summary = dateAndSummary.second
 
-            OPINION_19_8 -> {
-                date = cal.alos19Point8Degrees
-                summary = R.string.dawn_19_8
-            }
-
-            OPINION_120 -> {
-                date = cal.alos120
-                summary = R.string.dawn_120
-            }
-
-            OPINION_120_ZMANIS -> {
-                date = cal.alos120Zmanis
-                summary = R.string.dawn_120_zmanis
-            }
-
-            OPINION_18 -> {
-                date = cal.alos18Degrees
-                summary = R.string.dawn_18
-            }
-
-            OPINION_26 -> {
-                date = cal.alos26Degrees
-                summary = R.string.dawn_26
-            }
-
-            OPINION_16_1 -> {
-                date = cal.alos16Point1Degrees
-                summary = R.string.dawn_16
-            }
-
-            OPINION_96 -> {
-                date = cal.alos96
-                summary = R.string.dawn_96
-            }
-
-            OPINION_96_ZMANIS -> {
-                date = cal.alos96Zmanis
-                summary = R.string.dawn_96_zmanis
-            }
-
-            OPINION_90 -> {
-                date = cal.alos90
-                summary = R.string.dawn_90
-            }
-
-            OPINION_90_ZMANIS -> {
-                date = cal.alos90Zmanis
-                summary = R.string.dawn_90_zmanis
-            }
-
-            OPINION_72 -> {
-                date = cal.alos72
-                summary = R.string.dawn_72
-            }
-
-            OPINION_72_ZMANIS -> {
-                date = cal.alos72Zmanis
-                summary = R.string.dawn_72_zmanis
-            }
-
-            OPINION_60 -> {
-                date = cal.alos60
-                summary = R.string.dawn_60
-            }
-
-            OPINION_BAAL_HATANYA -> {
-                date = cal.alosBaalHatanya
-                summary = R.string.dawn_baal_hatanya
-            }
-
-            else -> {
-                date = cal.alosHashachar
-                summary = R.string.dawn_16
-            }
-        }
         if (date == null) {
             date = cal.alos120Zmanis
             summary = R.string.dawn_120_zmanis
@@ -1058,7 +979,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             if (moladYear == y && moladMonth == m && moladDay == d) {
                 val moladSeconds = (molad.moladChalakim * 10.0) / 3.0
                 val moladSecondsFloor = floor(moladSeconds)
-                val calMolad = gcal.clone() as Calendar
+                val calMolad = gcal.copy()
                 calMolad[moladYear, moladMonth, moladDay, molad.moladHours, molad.moladMinutes] =
                     moladSecondsFloor.toInt()
                 calMolad.millisecond =
@@ -1121,7 +1042,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
      * @param calendar the calendar.
      */
     fun setCalendar(calendar: Calendar) {
-        this.calendar.calendar = calendar
+        this.calendar.calendar = calendar.copy()
     }
 
     /**
@@ -1198,6 +1119,104 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         return jewishDate
     }
 
+    private fun getDawn(cal: ComplexZmanimCalendar, opinion: String?): Pair<KosherDate, Int> {
+        val date: KosherDate
+        val summary: Int
+        when (opinion) {
+            OPINION_19 -> {
+                date = cal.alos19Degrees
+                summary = R.string.dawn_19
+            }
+
+            OPINION_19_8 -> {
+                date = cal.alos19Point8Degrees
+                summary = R.string.dawn_19_8
+            }
+
+            OPINION_120 -> {
+                date = cal.alos120
+                summary = R.string.dawn_120
+            }
+
+            OPINION_120_ZMANIS -> {
+                date = cal.alos120Zmanis
+                summary = R.string.dawn_120_zmanis
+            }
+
+            OPINION_18 -> {
+                date = cal.alos18Degrees
+                summary = R.string.dawn_18
+            }
+
+            OPINION_26 -> {
+                date = cal.alos26Degrees
+                summary = R.string.dawn_26
+            }
+
+            OPINION_16_1 -> {
+                date = cal.alos16Point1Degrees
+                summary = R.string.dawn_16
+            }
+
+            OPINION_96 -> {
+                date = cal.alos96
+                summary = R.string.dawn_96
+            }
+
+            OPINION_96_ZMANIS -> {
+                date = cal.alos96Zmanis
+                summary = R.string.dawn_96_zmanis
+            }
+
+            OPINION_90 -> {
+                date = cal.alos90
+                summary = R.string.dawn_90
+            }
+
+            OPINION_90_ZMANIS -> {
+                date = cal.alos90Zmanis
+                summary = R.string.dawn_90_zmanis
+            }
+
+            OPINION_72 -> {
+                date = cal.alos72
+                summary = R.string.dawn_72
+            }
+
+            OPINION_72_ZMANIS -> {
+                date = cal.alos72Zmanis
+                summary = R.string.dawn_72_zmanis
+            }
+
+            OPINION_60 -> {
+                date = cal.alos60
+                summary = R.string.dawn_60
+            }
+
+            OPINION_BAAL_HATANYA -> {
+                date = cal.alosBaalHatanya
+                summary = R.string.dawn_baal_hatanya
+            }
+
+            else -> {
+                date = cal.alosHashachar
+                summary = R.string.dawn_16
+            }
+        }
+        return Pair.create(toTime(date), summary)
+    }
+
+    private fun getDawn(cal: ComplexZmanimCalendar, settings: ZmanimPreferences) =
+        getDawn(cal, settings.dawn).first
+
+    protected fun getDawnTomorrow(
+        cal: ComplexZmanimCalendar,
+        settings: ZmanimPreferences
+    ): KosherDate {
+        val calTomorrow = cal.copy().add(Calendar.DATE, 1)
+        return getDawn(calTomorrow, settings)
+    }
+
     private fun getSunrise(cal: ComplexZmanimCalendar, opinion: String?): Pair<KosherDate, Int> {
         val date: KosherDate
         val summary: Int
@@ -1220,21 +1239,18 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         return Pair.create(toTime(date), summary)
     }
 
-    private fun getSunrise(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): KosherDate {
-        val opinion = settings.sunrise
-        return getSunrise(cal, opinion).first
-    }
+    private fun getSunrise(cal: ComplexZmanimCalendar, settings: ZmanimPreferences) =
+        getSunrise(cal, settings.sunrise).first
 
     protected fun getSunriseTomorrow(
         cal: ComplexZmanimCalendar,
         settings: ZmanimPreferences
     ): KosherDate {
-        val calTomorrow = cal.clone() as ComplexZmanimCalendar
-        calTomorrow.calendar.add(Calendar.DATE, 1)
+        val calTomorrow = cal.copy().add(Calendar.DATE, 1)
         return getSunrise(calTomorrow, settings)
     }
 
-    protected fun getMidday(cal: ComplexZmanimCalendar, opinion: String?): Pair<KosherDate, Int> {
+    private fun getMidday(cal: ComplexZmanimCalendar, opinion: String?): Pair<KosherDate, Int> {
         val date: KosherDate
         val summary: Int
         when (opinion) {
@@ -1256,10 +1272,8 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         return Pair.create(toTime(date), summary)
     }
 
-    protected fun getMidday(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): KosherDate {
-        val opinion = settings.midday
-        return getMidday(cal, opinion).first
-    }
+    protected fun getMidday(cal: ComplexZmanimCalendar, settings: ZmanimPreferences) =
+        getMidday(cal, settings.midday).first
 
     private fun getSunset(cal: ComplexZmanimCalendar, opinion: String?): Pair<KosherDate, Int> {
         val date: KosherDate
@@ -1283,10 +1297,8 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         return Pair.create(toTime(date), summary)
     }
 
-    protected fun getSunset(cal: ComplexZmanimCalendar, settings: ZmanimPreferences): KosherDate {
-        val opinion = settings.sunset
-        return getSunset(cal, opinion).first
-    }
+    protected fun getSunset(cal: ComplexZmanimCalendar, settings: ZmanimPreferences) =
+        getSunset(cal, settings.sunset).first
 
     private fun getTwilight(cal: ComplexZmanimCalendar, opinion: String?): Pair<KosherDate, Int> {
         val date: KosherDate
@@ -1314,6 +1326,9 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
         return Pair.create(toTime(date), summary)
     }
+
+    protected fun getTwilight(cal: ComplexZmanimCalendar, settings: ZmanimPreferences) =
+        getNightfall(cal, settings.twilight).first
 
     private fun getNightfall(cal: ComplexZmanimCalendar, opinion: String?): Pair<KosherDate, Int> {
         val date: KosherDate
@@ -1477,13 +1492,8 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         return Pair.create(toTime(date), summary)
     }
 
-    protected fun getNightfall(
-        cal: ComplexZmanimCalendar,
-        settings: ZmanimPreferences
-    ): KosherDate {
-        val opinion = settings.nightfall
-        return getNightfall(cal, opinion).first
-    }
+    protected fun getNightfall(cal: ComplexZmanimCalendar, settings: ZmanimPreferences) =
+        getNightfall(cal, settings.nightfall).first
 
     private fun getMidnight(
         cal: ComplexZmanimCalendar,
@@ -1547,19 +1557,18 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
     }
 
-    protected fun getMidnightGuard3(sunset: KosherDate, sunrise: KosherDate): KosherDate {
-        if (sunset.isNever() || sunrise.isNever()) {
+    protected fun getMidnightGuard3(start: KosherDate, finish: KosherDate): KosherDate {
+        if (start.isNever() || finish.isNever()) {
             return NEVER
         }
-        val night = sunrise - sunset
-        return sunset + night / 3L
+        return start + ((finish - start) / 3)
     }
 
-    protected fun getMidnightGuard4(sunset: KosherDate, midnight: KosherDate): KosherDate {
-        if (sunset.isNever() || midnight.isNever()) {
+    protected fun getMidnightGuard4(start: KosherDate, midnight: KosherDate): KosherDate {
+        if (start.isNever() || midnight.isNever()) {
             return NEVER
         }
-        return sunset + (midnight - sunset / 2L)
+        return start + ((midnight - start) / 2)
     }
 
     /**
@@ -1584,39 +1593,32 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
     }
 
-    protected fun getMorningGuard3(sunset: KosherDate, sunrise: KosherDate): KosherDate {
-        if (sunset.isNever() || sunrise.isNever()) {
+    protected fun getMorningGuard3(start: KosherDate, finish: KosherDate): KosherDate {
+        if (start.isNever() || finish.isNever()) {
             return NEVER
         }
-        val night = sunrise - sunset
-        return sunset + (night * 2) / 3L //sunset + (night * 2 / 3)
+        return start + (((finish - start) * 2) / 3)
     }
 
-    protected fun getMorningGuard4(midnight: KosherDate, sunrise: KosherDate): KosherDate {
-        if (midnight.isNever() || sunrise.isNever()) {
+    protected fun getMorningGuard4(midnight: KosherDate, finish: KosherDate): KosherDate {
+        if (midnight.isNever() || finish.isNever()) {
             return NEVER
         }
-        return midnight + (sunrise - midnight / 2)
+        return midnight + ((finish - midnight) / 2)
     }
 
     protected fun getSofZmanBiurChametz(startOfDay: KosherDate, shaahZmanis: Long): KosherDate {
         return AstronomicalCalendar.getTimeOffset(startOfDay, shaahZmanis * 5)
     }
 
-    private fun toTime(date: KosherDate): KosherDate {
-        return date ?: NEVER
-    }
+    private fun toTime(date: KosherDate) = date ?: NEVER
 
     private fun cloneZmanimTomorrow(cal: ComplexZmanimCalendar): ComplexZmanimCalendar {
-        val calTomorrow = cal.clone() as ComplexZmanimCalendar
-        calTomorrow.calendar.add(Calendar.DAY_OF_MONTH, 1)
-        return calTomorrow
+        return cal.copy().add(Calendar.DAY_OF_MONTH, 1)
     }
 
     protected fun cloneZmanimYesterday(cal: ComplexZmanimCalendar): ComplexZmanimCalendar {
-        val calYesterday = cal.clone() as ComplexZmanimCalendar
-        calYesterday.calendar.add(Calendar.DAY_OF_MONTH, -1)
-        return calYesterday
+        return cal.copy().add(Calendar.DAY_OF_MONTH, -1)
     }
 
     private fun addShabbathEnds(
@@ -1781,11 +1783,27 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
          */
         internal const val SIX_HOURS = DateUtils.DAY_IN_MILLIS shr 2
 
+        //TODO remove unused, and their strings
+        internal val OPINION_10_2 = ZmanimPreferences.Values.OPINION_10_2
+        internal val OPINION_11 = ZmanimPreferences.Values.OPINION_11
+        internal val OPINION_12 = ZmanimPreferences.Values.OPINION_12
+        internal val OPINION_120 = ZmanimPreferences.Values.OPINION_120
+        internal val OPINION_120_ZMANIS = ZmanimPreferences.Values.OPINION_120_ZMANIS
+        internal val OPINION_13 = ZmanimPreferences.Values.OPINION_13
+        internal val OPINION_15 = ZmanimPreferences.Values.OPINION_15
+        internal val OPINION_15_ALOS = ZmanimPreferences.Values.OPINION_15_ALOS
+        internal val OPINION_168 = ZmanimPreferences.Values.OPINION_168
+        internal val OPINION_16_1 = ZmanimPreferences.Values.OPINION_16_1
+        internal val OPINION_16_1_ALOS = ZmanimPreferences.Values.OPINION_16_1_ALOS
+        internal val OPINION_16_1_SUNSET = ZmanimPreferences.Values.OPINION_16_1_SUNSET
+        internal val OPINION_18 = ZmanimPreferences.Values.OPINION_18
+        internal val OPINION_19 = ZmanimPreferences.Values.OPINION_19
+        internal val OPINION_19_8 = ZmanimPreferences.Values.OPINION_19_8
         internal val OPINION_2 = ZmanimPreferences.Values.OPINION_2
-
-        //TODO remove unused, and its strings
+        internal val OPINION_26 = ZmanimPreferences.Values.OPINION_26
         internal val OPINION_2_STARS = ZmanimPreferences.Values.OPINION_2_STARS
         internal val OPINION_3 = ZmanimPreferences.Values.OPINION_3
+        internal val OPINION_30 = ZmanimPreferences.Values.OPINION_30
         internal val OPINION_3_65 = ZmanimPreferences.Values.OPINION_3_65
         internal val OPINION_3_676 = ZmanimPreferences.Values.OPINION_3_676
         internal val OPINION_3_7 = ZmanimPreferences.Values.OPINION_3_7
@@ -1794,60 +1812,40 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         internal val OPINION_4_37 = ZmanimPreferences.Values.OPINION_4_37
         internal val OPINION_4_61 = ZmanimPreferences.Values.OPINION_4_61
         internal val OPINION_4_8 = ZmanimPreferences.Values.OPINION_4_8
+        internal val OPINION_58 = ZmanimPreferences.Values.OPINION_58
         internal val OPINION_5_88 = ZmanimPreferences.Values.OPINION_5_88
         internal val OPINION_5_95 = ZmanimPreferences.Values.OPINION_5_95
         internal val OPINION_6 = ZmanimPreferences.Values.OPINION_6
+        internal val OPINION_60 = ZmanimPreferences.Values.OPINION_60
         internal val OPINION_6_45 = ZmanimPreferences.Values.OPINION_6_45
         internal val OPINION_7 = ZmanimPreferences.Values.OPINION_7
+        internal val OPINION_72 = ZmanimPreferences.Values.OPINION_72
+        internal val OPINION_72_ZMANIS = ZmanimPreferences.Values.OPINION_72_ZMANIS
         internal val OPINION_7_083 = ZmanimPreferences.Values.OPINION_7_083
-
-        //TODO remove unused, and its strings
         internal val OPINION_7_083_ZMANIS = ZmanimPreferences.Values.OPINION_7_083_ZMANIS
         internal val OPINION_7_65 = ZmanimPreferences.Values.OPINION_7_65
         internal val OPINION_7_67 = ZmanimPreferences.Values.OPINION_7_67
         internal val OPINION_8_5 = ZmanimPreferences.Values.OPINION_8_5
-        internal val OPINION_9_3 = ZmanimPreferences.Values.OPINION_9_3
-        internal val OPINION_9_5 = ZmanimPreferences.Values.OPINION_9_5
-        internal val OPINION_9_75 = ZmanimPreferences.Values.OPINION_9_75
-        internal val OPINION_10_2 = ZmanimPreferences.Values.OPINION_10_2
-        internal val OPINION_11 = ZmanimPreferences.Values.OPINION_11
-        internal val OPINION_12 = ZmanimPreferences.Values.OPINION_12
-        internal val OPINION_13 = ZmanimPreferences.Values.OPINION_13
-        internal val OPINION_15 = ZmanimPreferences.Values.OPINION_15
-        internal val OPINION_15_ALOS = ZmanimPreferences.Values.OPINION_15_ALOS
-        internal val OPINION_16_1 = ZmanimPreferences.Values.OPINION_16_1
-        internal val OPINION_16_1_ALOS = ZmanimPreferences.Values.OPINION_16_1_ALOS
-        internal val OPINION_16_1_SUNSET = ZmanimPreferences.Values.OPINION_16_1_SUNSET
-        internal val OPINION_18 = ZmanimPreferences.Values.OPINION_18
-        internal val OPINION_19 = ZmanimPreferences.Values.OPINION_19
-        internal val OPINION_19_8 = ZmanimPreferences.Values.OPINION_19_8
-        internal val OPINION_26 = ZmanimPreferences.Values.OPINION_26
-        internal val OPINION_30 = ZmanimPreferences.Values.OPINION_30
-        internal val OPINION_58 = ZmanimPreferences.Values.OPINION_58
-        internal val OPINION_60 = ZmanimPreferences.Values.OPINION_60
-        internal val OPINION_72 = ZmanimPreferences.Values.OPINION_72
-        internal val OPINION_72_ZMANIS = ZmanimPreferences.Values.OPINION_72_ZMANIS
         internal val OPINION_90 = ZmanimPreferences.Values.OPINION_90
         internal val OPINION_90_ZMANIS = ZmanimPreferences.Values.OPINION_90_ZMANIS
         internal val OPINION_96 = ZmanimPreferences.Values.OPINION_96
         internal val OPINION_96_ZMANIS = ZmanimPreferences.Values.OPINION_96_ZMANIS
-        internal val OPINION_120 = ZmanimPreferences.Values.OPINION_120
-        internal val OPINION_120_ZMANIS = ZmanimPreferences.Values.OPINION_120_ZMANIS
-        internal val OPINION_168 = ZmanimPreferences.Values.OPINION_168
+        internal val OPINION_9_3 = ZmanimPreferences.Values.OPINION_9_3
+        internal val OPINION_9_5 = ZmanimPreferences.Values.OPINION_9_5
+        internal val OPINION_9_75 = ZmanimPreferences.Values.OPINION_9_75
         internal val OPINION_ATERET = ZmanimPreferences.Values.OPINION_ATERET
         internal val OPINION_BAAL_HATANYA = ZmanimPreferences.Values.OPINION_BAAL_HATANYA
+        internal val OPINION_DAWN = ZmanimPreferences.Values.OPINION_DAWN
         internal val OPINION_FIXED = ZmanimPreferences.Values.OPINION_FIXED
         internal val OPINION_GRA = ZmanimPreferences.Values.OPINION_GRA
-
-        //TODO remove unused, and its strings
         internal val OPINION_HALF = ZmanimPreferences.Values.OPINION_HALF
-
-        //TODO remove unused, and its strings
         internal val OPINION_LEVEL = ZmanimPreferences.Values.OPINION_LEVEL
         internal val OPINION_MGA = ZmanimPreferences.Values.OPINION_MGA
         internal val OPINION_NIGHT = ZmanimPreferences.Values.OPINION_NIGHT
         internal val OPINION_NONE = ZmanimPreferences.Values.OPINION_NONE
         internal val OPINION_SEA = ZmanimPreferences.Values.OPINION_SEA
+        internal val OPINION_SUNRISE = ZmanimPreferences.Values.OPINION_SUNRISE
+        internal val OPINION_SUNSET = ZmanimPreferences.Values.OPINION_SUNSET
         internal val OPINION_TWILIGHT = ZmanimPreferences.Values.OPINION_TWILIGHT
 
         /**
@@ -2011,7 +2009,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
 
         internal fun cloneJewishTomorrow(jcal: JewishCalendar): JewishCalendar {
-            val jcalTomorrow = jcal.clone() as JewishCalendar
+            val jcalTomorrow = jcal.copy()
             jcalTomorrow.forward(Calendar.DATE, 1)
             return jcalTomorrow
         }

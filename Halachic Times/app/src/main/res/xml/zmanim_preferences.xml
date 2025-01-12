@@ -189,7 +189,7 @@
             android:value="zman_shabbath_preferences" />
         <extra
             android:name="opinion"
-            android:value="shabbath_ends.after;shabbath_ends.sunset;shabbath_ends.twilight;shabbath_ends.nightfall;shabbath_ends.minutes" />
+            android:value="shabbath_ends.after,shabbath_ends.sunset,shabbath_ends.twilight,shabbath_ends.nightfall,shabbath_ends.minutes" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
@@ -205,7 +205,7 @@
             android:value="midnight.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanGuardPreferenceFragment"
         android:title="@string/midnight_guard">
         <extra
             android:name="xml"
@@ -218,7 +218,7 @@
             android:value="midnight_guard.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanGuardPreferenceFragment"
         android:title="@string/morning_guard">
         <extra
             android:name="xml"
@@ -287,7 +287,7 @@
             android:value="fast_ends.reminder" />
         <extra
             android:name="opinion"
-            android:value="fast_ends.after;fast_ends.sunset;fast_ends.twilight;fast_ends.nightfall;fast_ends.minutes" />
+            android:value="fast_ends.after,fast_ends.sunset,fast_ends.twilight,fast_ends.nightfall,fast_ends.minutes" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"

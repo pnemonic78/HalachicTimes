@@ -41,6 +41,8 @@ import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_DESTR
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EARLIEST_MINCHA
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EAT
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_GUARDS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_GUARD_BEGINS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_GUARD_ENDS
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_HOUR
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_MINCHA
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_NIGHTFALL
@@ -66,6 +68,8 @@ import com.github.times.preference.ZmanimPreferences.Values.OPINION_8_5
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_BAAL_HATANYA
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_NIGHT
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_SEA
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_SUNRISE
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_SUNSET
 import com.github.times.remind.ZmanimReminder
 import com.github.times.remind.ZmanimReminderService.Companion.enqueueWork
 
@@ -275,6 +279,8 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
             .putString(KEY_OPINION_SHABBATH_ENDS_AFTER, OPINION_NIGHT)
             .putString(KEY_OPINION_SHABBATH_ENDS_NIGHTFALL, OPINION_8_5)
             .putString(KEY_OPINION_GUARDS, OPINION_3)
+            .putString(KEY_OPINION_GUARD_BEGINS, OPINION_SUNSET)
+            .putString(KEY_OPINION_GUARD_ENDS, OPINION_SUNRISE)
             .putInt(KEY_OPINION_CANDLES, 30)
             .putInt(KEY_OPINION_SHABBATH_ENDS_MINUTES, 0)
             .apply()
@@ -305,6 +311,6 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
         const val EXTRA_OPINION = "opinion"
         const val EXTRA_REMINDER = "reminder"
         private const val REQUEST_PERMISSIONS = 0x702E // TONE
-        private val OPINION_REGEX = ";".toRegex()
+        private val OPINION_REGEX = ",".toRegex()
     }
 }

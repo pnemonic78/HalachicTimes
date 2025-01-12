@@ -499,6 +499,25 @@
         <item>@string/omer_l</item>
     </string-array>
 
+    <string-array name="guard_begins_values" translatable="false">
+        <item>@string/opinion_value_sunset</item>
+        <item>@string/opinion_value_twilight</item>
+        <item>@string/opinion_value_nightfall</item>
+    </string-array>
+    <string-array name="guard_begins_entries" translatable="false">
+        <item>@string/sunset</item>
+        <item>@string/twilight</item>
+        <item>@string/nightfall</item>
+    </string-array>
+    <string-array name="guard_ends_values" translatable="false">
+        <item>@string/opinion_value_dawn</item>
+        <item>@string/opinion_value_sunrise</item>
+    </string-array>
+    <string-array name="guard_ends_entries" translatable="false">
+        <item>@string/dawn</item>
+        <item>@string/sunrise</item>
+    </string-array>
+
     <string-array name="emphasis_scale_values" translatable="false">
         <item>@string/emphasis_scale_value_100</item>
         <item>@string/emphasis_scale_value_110</item>

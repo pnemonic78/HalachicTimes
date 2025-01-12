@@ -46,7 +46,8 @@ import java.util.GregorianCalendar
 open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     protected val context: Context,
     protected val settings: ZmanimPreferences,
-    protected val listener: OnZmanItemClickListener? = null
+    protected val listener: OnZmanItemClickListener? = null,
+    isHour24: Boolean = DateFormat.is24HourFormat(context)
 ) : ArrayAdapter<ZmanimItem, VH>(R.layout.times_item) {
 
     /**
@@ -91,10 +92,9 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     var candles = CandleData()
 
     init {
-        val time24 = DateFormat.is24HourFormat(context)
         val locale = context.getDefaultLocale()
         if (settings.isSeconds) {
-            val pattern = if (time24) {
+            val pattern = if (isHour24) {
                 DateFormat.getBestDateTimePattern(locale, "Hms")
             } else {
                 DateFormat.getBestDateTimePattern(locale, "hms")
@@ -104,7 +104,12 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
             timeFormatSeasonalHour =
                 SimpleDateFormat(context.getString(R.string.hour_format_seconds), locale)
         } else {
-            timeFormat = DateFormat.getTimeFormat(context)
+            val pattern = if (isHour24) {
+                DateFormat.getBestDateTimePattern(locale, "Hm")
+            } else {
+                DateFormat.getBestDateTimePattern(locale, "hm")
+            }
+            timeFormat = SimpleDateFormat(pattern, locale)
             timeFormatGranularity = DateUtils.MINUTE_IN_MILLIS
             timeFormatSeasonalHour =
                 SimpleDateFormat(context.getString(R.string.hour_format), locale)
