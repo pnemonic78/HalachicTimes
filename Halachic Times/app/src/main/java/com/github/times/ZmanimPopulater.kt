@@ -16,8 +16,12 @@
 package com.github.times
 
 import android.content.Context
+import android.content.res.Resources
 import android.text.format.DateUtils
 import android.util.Pair
+import androidx.annotation.StringRes
+import androidx.core.util.component1
+import androidx.core.util.component2
 import com.github.times.ZmanimDays.NO_HOLIDAY
 import com.github.times.ZmanimDays.SHABBATH
 import com.github.times.preference.ZmanimPreferences
@@ -128,11 +132,10 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         val candlesWhen = candles.whenCandles
         adapter.candles = candles
         var date: KosherDate
-        var summary: Int
+        @StringRes var summary: Int
         var dateAndSummary: Pair<KosherDate, Int>
         var summaryText: CharSequence?
         val res = context.resources
-        val shabbathAfterName = res.getString(shabbathAfter)
         val calDate = Calendar.getInstance(gcal.timeZone)
         if (!remote && settings.isHour) {
             val time: TimeMillis
@@ -752,53 +755,17 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 getNightfall(cal, opinionNightfall).first
             }
         }
-        var shabbatEnds: KosherDate = NEVER
-        var summaryShabbatEnds: CharSequence? = null
-        if (date.isDate()) {
-            if (dayOfWeek == Calendar.SATURDAY) {
-                shabbatEnds = AstronomicalCalendar.getTimeOffset(
-                    date,
-                    shabbathOffset * DateUtils.MINUTE_IN_MILLIS
-                )
-                summaryText = res.getQuantityString(
-                    R.plurals.shabbath_ends_summary,
-                    shabbathOffset,
-                    shabbathOffset,
-                    shabbathAfterName
-                )
-                adapter.add(
-                    R.string.shabbath_ends,
-                    summaryText,
-                    shabbatEnds,
-                    jewishDateTomorrow,
-                    remote
-                )
-                summaryShabbatEnds = summaryText
-            } else if (holidayToday >= 0) {
-                when (holidayToday) {
-                    JewishCalendar.PESACH, JewishCalendar.SHAVUOS, JewishCalendar.ROSH_HASHANA, JewishCalendar.YOM_KIPPUR, JewishCalendar.SUCCOS, JewishCalendar.SHEMINI_ATZERES, JewishCalendar.SIMCHAS_TORAH -> {
-                        shabbatEnds = AstronomicalCalendar.getTimeOffset(
-                            date,
-                            shabbathOffset * DateUtils.MINUTE_IN_MILLIS
-                        )
-                        summaryText = res.getQuantityString(
-                            R.plurals.shabbath_ends_summary,
-                            shabbathOffset,
-                            shabbathOffset,
-                            shabbathAfterName
-                        )
-                        adapter.add(
-                            R.string.festival_ends,
-                            summaryText,
-                            shabbatEnds,
-                            jewishDateTomorrow,
-                            remote
-                        )
-                        summaryShabbatEnds = summaryText
-                    }
-                }
-            }
-        }
+        val (shabbathEnds, summaryShabbathEnds) = addShabbathEnds(
+            res,
+            adapter,
+            date,
+            dayOfWeek,
+            holidayToday,
+            jewishDateTomorrow,
+            shabbathAfter,
+            shabbathOffset,
+            remote
+        )
         if (candlesTomorrow > 0) {
             when (candlesWhen) {
                 CandleData.BEFORE_SUNSET -> if (sunset.isDate()) {
@@ -826,9 +793,9 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                             candlesTomorrow,
                             candlesTomorrow
                         )
-                        adapter.add(R.string.candles, summaryText, sunset, jewishDate, remote)
+                        adapter.add(R.string.candles, summaryText, sunset - 1, jewishDate, remote)
                     } else {
-                        adapter.add(R.string.candles, summarySunset, sunset, jewishDate, remote)
+                        adapter.add(R.string.candles, summarySunset, sunset - 1, jewishDate, remote)
                     }
                 }
 
@@ -842,7 +809,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                         adapter.add(
                             R.string.candles,
                             summaryText,
-                            twilight,
+                            twilight + 1,
                             jewishDateTomorrow,
                             remote
                         )
@@ -850,7 +817,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                         adapter.add(
                             R.string.candles,
                             summaryTwilight,
-                            twilight,
+                            twilight + 1,
                             jewishDateTomorrow,
                             remote
                         )
@@ -867,7 +834,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                         adapter.add(
                             R.string.candles,
                             summaryText,
-                            nightfall,
+                            nightfall + 1,
                             jewishDateTomorrow,
                             remote
                         )
@@ -875,14 +842,14 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                         adapter.add(
                             R.string.candles,
                             summaryNightfall,
-                            nightfall,
+                            nightfall + 1,
                             jewishDateTomorrow,
                             remote
                         )
                     }
                 }
 
-                CandleData.MOTZE_SHABBATH -> if (shabbatEnds.isDate()) {
+                CandleData.MOTZE_SHABBATH -> if (shabbathEnds.isDate()) {
                     if (holidayTomorrow == JewishCalendar.CHANUKAH) {
                         summaryText = res.getQuantityString(
                             R.plurals.candles_chanukka,
@@ -892,15 +859,15 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                         adapter.add(
                             R.string.candles,
                             summaryText,
-                            shabbatEnds,
+                            shabbathEnds + 1,
                             jewishDateTomorrow,
                             remote
                         )
                     } else {
                         adapter.add(
                             R.string.candles,
-                            summaryShabbatEnds,
-                            shabbatEnds,
+                            summaryShabbathEnds,
+                            shabbathEnds + 1,
                             jewishDateTomorrow,
                             remote
                         )
@@ -1015,7 +982,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             JewishCalendar.YOM_KIPPUR -> adapter.add(
                 R.string.fast_ends,
                 SUMMARY_NONE,
-                shabbatEnds,
+                shabbathEnds,
                 jewishDateTomorrow,
                 remote
             )
@@ -1042,7 +1009,8 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
 
         if ((holidayToday == JewishCalendar.EREV_PESACH)
-            || (holidayTomorrow == JewishCalendar.EREV_PESACH && dayOfWeek == Calendar.FRIDAY)) {
+            || (holidayTomorrow == JewishCalendar.EREV_PESACH && dayOfWeek == Calendar.FRIDAY)
+        ) {
             when (settings.destroyChametz) {
                 OPINION_16_1 -> {
                     date = cal.sofZmanBiurChametzMGA16Point1Degrees
@@ -1656,6 +1624,76 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         val calYesterday = cal.clone() as ComplexZmanimCalendar
         calYesterday.calendar.add(Calendar.DAY_OF_MONTH, -1)
         return calYesterday
+    }
+
+    private fun addShabbathEnds(
+        res: Resources,
+        adapter: A,
+        date: KosherDate,
+        dayOfWeek: Int,
+        holidayToday: Int,
+        jewishDateTomorrow: JewishCalendar,
+        @StringRes shabbathAfter: Int,
+        shabbathOffset: Int,
+        remote: Boolean
+    ): Pair<KosherDate, CharSequence> {
+        if (!date.isDate()) {
+            return Pair(NEVER, null)
+        }
+
+        var shabbathEnds: KosherDate = NEVER
+        var summaryText: CharSequence? = null
+        val shabbathAfterName = res.getString(shabbathAfter)
+
+        if (dayOfWeek == Calendar.SATURDAY) {
+            shabbathEnds = AstronomicalCalendar.getTimeOffset(
+                date,
+                (shabbathOffset * DateUtils.MINUTE_IN_MILLIS) + 1
+            )
+            summaryText = res.getQuantityString(
+                R.plurals.shabbath_ends_summary,
+                shabbathOffset,
+                shabbathOffset,
+                shabbathAfterName
+            )
+            adapter.add(
+                R.string.shabbath_ends,
+                summaryText,
+                shabbathEnds,
+                jewishDateTomorrow,
+                remote
+            )
+        } else if (holidayToday >= 0) {
+            when (holidayToday) {
+                JewishCalendar.PESACH,
+                JewishCalendar.SHAVUOS,
+                JewishCalendar.ROSH_HASHANA,
+                JewishCalendar.YOM_KIPPUR,
+                JewishCalendar.SUCCOS,
+                JewishCalendar.SHEMINI_ATZERES,
+                JewishCalendar.SIMCHAS_TORAH -> {
+                    shabbathEnds = AstronomicalCalendar.getTimeOffset(
+                        date,
+                        (shabbathOffset * DateUtils.MINUTE_IN_MILLIS) + 1
+                    )
+                    summaryText = res.getQuantityString(
+                        R.plurals.shabbath_ends_summary,
+                        shabbathOffset,
+                        shabbathOffset,
+                        shabbathAfterName
+                    )
+                    adapter.add(
+                        R.string.festival_ends,
+                        summaryText,
+                        shabbathEnds,
+                        jewishDateTomorrow,
+                        remote
+                    )
+                }
+            }
+        }
+
+        return Pair(shabbathEnds, summaryText)
     }
 
     companion object {

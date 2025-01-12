@@ -93,15 +93,10 @@ class ZmanimItem @JvmOverloads constructor(
     override fun compareTo(other: ZmanimItem): Int {
         val t1 = time
         val t2 = other.time
-        var c = t1.compareTo(t2)
+        val c = t1.compareTo(t2)
         if (c != 0) return c
 
-        val j1 = jewishDate
-        val j2 = other.jewishDate
-        c = if (j1 != null && j2 != null) j1.compareTo(j2) else 0
-        if (c != 0) return c
-
-        return titleId - other.titleId
+        return titleId.compareTo(other.titleId)
     }
 
     /**
