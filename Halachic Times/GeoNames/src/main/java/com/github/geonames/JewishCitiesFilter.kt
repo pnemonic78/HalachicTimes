@@ -141,6 +141,7 @@ class JewishCitiesFilter : ToponymFilter {
             294514,  // Kfar Saba, Israel
             294492,  // Kfar Yona, Israel
             KIEV,  // Kiev, Ukraine
+            5100280,  // Lakewood, NJ, United States
             5475433,  // Las Vegas, United States
             2267057,  // Lisbon, Portugal
             294421,  // Lod, Israel

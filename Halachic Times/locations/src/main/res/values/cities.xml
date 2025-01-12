@@ -15,7 +15,7 @@
         <item>Mexico City</item>
         <item>Dallas</item>
         <item>Houston</item>
-        <item>St Louis</item>
+        <item>St. Louis</item>
         <item>Chicago</item>
         <item>Atlanta</item>
         <item>Detroit</item>
@@ -23,12 +23,13 @@
         <item>Miami</item>
         <item>Pittsburgh</item>
         <item>Toronto</item>
-        <item>Washington D.C.</item>
+        <item>Washington</item>
         <item>Baltimore</item>
         <item>Philadelphia</item>
+        <item>Lakewood</item>
         <item>Bogotá</item>
-        <item>New York</item>
-        <item>Montreal</item>
+        <item>New York City</item>
+        <item>Montréal</item>
         <item>Boston</item>
         <item>Buenos Aires</item>
         <item>São Paulo</item>
@@ -40,13 +41,13 @@
         <item>Manchester</item>
         <item>London</item>
         <item>Paris</item>
-        <item>Antwerp</item>
+        <item>Antwerpen</item>
         <item>Lyon</item>
         <item>Amsterdam</item>
         <item>Marseille</item>
-        <item>Geneva</item>
+        <item>Genève</item>
         <item>Bern</item>
-        <item>Zurich</item>
+        <item>Zürich</item>
         <item>Oslo</item>
         <item>Munich</item>
         <item>Rome</item>
@@ -61,40 +62,40 @@
         <item>Helsinki</item>
         <item>Johannesburg</item>
         <item>Istanbul</item>
-        <item>St.-Petersburg</item>
+        <item>Saint Petersburg</item>
         <item>Kyiv</item>
         <item>Durban</item>
-        <item>Ashqelon</item>
+        <item>Ashkelon</item>
         <item>Netivot</item>
         <item>Sderot</item>
-        <item>Ofakim</item>
+        <item>Ofaqim</item>
         <item>Ashdod</item>
         <item>Gan Yavne</item>
         <item>Yavné</item>
         <item>Bat Yam</item>
         <item>Jaffa</item>
         <item>Kiryat Gat</item>
-        <item>Holon</item>
+        <item>H̱olon</item>
         <item>Gedera</item>
         <item>Tel Aviv</item>
-        <item>Rishon LeZiyyon</item>
+        <item>Rishon LeTsiyyon</item>
         <item>Beersheba</item>
         <item>Ness Ziona</item>
         <item>Azor</item>
         <item>Ramat Gan</item>
-        <item>Rehovot</item>
-        <item>Giv‘atayim</item>
+        <item>Reẖovot</item>
+        <item>Givatayim</item>
         <item>Herzliya</item>
         <item>Bnei Brak</item>
         <item>Ramat HaSharon</item>
-        <item>Giv‘at Shmuel</item>
+        <item>Giv\'at Shmuel</item>
         <item>Kiryat Ono</item>
         <item>Or Yehuda</item>
         <item>Netanya</item>
         <item>Ganei Tikva</item>
-        <item>Raanana</item>
+        <item>Ra\'anana</item>
         <item>Yehud-Monosson</item>
-        <item>Petah Tikva</item>
+        <item>Petaẖ Tiqva</item>
         <item>Even Yehuda</item>
         <item>Lod</item>
         <item>Yehud</item>
@@ -104,35 +105,35 @@
         <item>Kfar Yona</item>
         <item>Shoham</item>
         <item>Eilat</item>
-        <item>Tirah</item>
-        <item>Rosh HaAyin</item>
-        <item>Tirat Carmel</item>
+        <item>Eṭ Ṭīra</item>
+        <item>Rosh Ha‘Ayin</item>
+        <item>Tirat Karmel</item>
         <item>Haifa</item>
         <item>Bet Shemesh</item>
-        <item>Modiin</item>
+        <item>Modi‘in Makkabbim Re‘ut</item>
         <item>Dimona</item>
         <item>Modiin Ilit</item>
         <item>Nesher</item>
         <item>Qiryat Yam</item>
         <item>Acre</item>
-        <item>Kiryat Motzkin</item>
-        <item>Kiryat Bialik</item>
-        <item>Nahariya</item>
-        <item>Kiryat Ata</item>
-        <item>Mevaseret Zion</item>
+        <item>Qiryat Motsqin</item>
+        <item>Qiryat Bialik</item>
+        <item>Nahariyya</item>
+        <item>Qiryat Ata</item>
+        <item>Mevasseret Tsiyyon</item>
         <item>Ariel</item>
         <item>Tamra</item>
         <item>Arad</item>
         <item>Jerusalem</item>
-        <item>Migdal HaEmeq</item>
+        <item>Migdal Ha‘Emeq</item>
         <item>Afula</item>
         <item>Nazareth</item>
-        <item>Karmiel</item>
+        <item>Karmi’el</item>
         <item>Safed</item>
-        <item>Bet Shean</item>
+        <item>Bet She’an</item>
         <item>Tiberias</item>
-        <item>Kiryat Shmona</item>
-        <item>Qatzrin</item>
+        <item>Qiryat Shmona</item>
+        <item>Katzrin</item>
         <item>Moscow</item>
         <item>Addis Ababa</item>
         <item>Mumbai</item>
@@ -165,6 +166,7 @@
         <item>US</item>
         <item>US</item>
         <item>CA</item>
+        <item>US</item>
         <item>US</item>
         <item>US</item>
         <item>US</item>
@@ -310,6 +312,7 @@
         <item>3889511</item>
         <item>3929038</item>
         <item>3995238</item>
+        <item>4009789</item>
         <item>460971</item>
         <item>4071427</item>
         <item>4550884</item>
@@ -452,6 +455,7 @@
         <item>-7703637</item>
         <item>-7661219</item>
         <item>-7516362</item>
+        <item>-7421764</item>
         <item>-7408175</item>
         <item>-7400597</item>
         <item>-7358781</item>
@@ -594,6 +598,7 @@
         <item>7</item>
         <item>10</item>
         <item>12</item>
+        <item>23</item>
         <item>2582</item>
         <item>10</item>
         <item>216</item>
@@ -733,6 +738,7 @@
         <item>America/New_York</item>
         <item>America/New_York</item>
         <item>America/Toronto</item>
+        <item>America/New_York</item>
         <item>America/New_York</item>
         <item>America/New_York</item>
         <item>America/New_York</item>
