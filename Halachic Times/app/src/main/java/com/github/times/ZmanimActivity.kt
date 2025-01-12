@@ -779,7 +779,6 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
     private fun hasDetails(itemId: Int): Boolean {
         return itemId != 0
             && itemId != R.string.fast_begins
-            && itemId != R.string.fast_ends
             && itemId != R.string.molad
     }
 

@@ -2,6 +2,62 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <PreferenceCategory android:title="@string/opinion">
+        <ListPreference
+            android:defaultValue="@string/fast_ends_after_defaultValue"
+            android:dialogIcon="@drawable/ic_settings_opinion"
+            android:entries="@array/fast_ends_after_entries"
+            android:entryValues="@array/fast_ends_after_values"
+            android:icon="@drawable/ic_settings_opinion"
+            android:key="fast_ends.after"
+            android:title="@string/opinion"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            android:defaultValue="@string/fast_ends_sunset_defaultValue"
+            android:dependency="fast_ends.after"
+            android:dialogIcon="@drawable/ic_settings_opinion"
+            android:enabled="false"
+            android:entries="@array/sunset_entries"
+            android:entryValues="@array/sunset_values"
+            android:icon="@drawable/ic_settings_opinion"
+            android:key="fast_ends.sunset"
+            android:title="@string/sunset"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            android:defaultValue="@string/fast_ends_twilight_defaultValue"
+            android:dependency="fast_ends.after"
+            android:dialogIcon="@drawable/ic_settings_opinion"
+            android:enabled="false"
+            android:entries="@array/twilight_entries"
+            android:entryValues="@array/twilight_values"
+            android:icon="@drawable/ic_settings_opinion"
+            android:key="fast_ends.twilight"
+            android:title="@string/twilight"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            android:defaultValue="@string/fast_ends_nightfall_defaultValue"
+            android:dependency="fast_ends.after"
+            android:dialogIcon="@drawable/ic_settings_opinion"
+            android:enabled="false"
+            android:entries="@array/nightfall_entries"
+            android:entryValues="@array/nightfall_values"
+            android:icon="@drawable/ic_settings_opinion"
+            android:key="fast_ends.nightfall"
+            android:title="@string/nightfall"
+            app:useSimpleSummaryProvider="true" />
+        <com.github.preference.NumberPickerPreference
+            android:defaultValue="@integer/fast_ends_defaultValue"
+            android:dependency="fast_ends.after"
+            android:dialogIcon="@drawable/ic_settings_opinion"
+            android:icon="@drawable/ic_settings_opinion"
+            android:key="fast_ends.minutes"
+            android:max="120"
+            android:negativeButtonText="@string/cancel"
+            android:positiveButtonText="@string/ok"
+            android:title="@string/opinion"
+            app:useSimpleSummaryProvider="false" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/reminder">
         <com.github.times.preference.ZmanReminderPreference
             android:defaultValue="@integer/reminder_defaultValue"

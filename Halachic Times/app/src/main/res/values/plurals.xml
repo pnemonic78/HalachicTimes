@@ -36,6 +36,24 @@
         <item quantity="other">@string/minutes_after_specific_other</item>
     </plurals>
 
+    <!-- Fast. -->
+    <plurals name="fast_ends_summary" translatable="false">
+        <item quantity="zero">@string/minutes_after_zero</item>
+        <item quantity="one">@string/minutes_after_one</item>
+        <item quantity="two">@string/minutes_after_two</item>
+        <item quantity="few">@string/minutes_after_few</item>
+        <item quantity="many">@string/minutes_after_many</item>
+        <item quantity="other">@string/minutes_after_other</item>
+    </plurals>
+    <plurals name="fast_ends_specific_summary" translatable="false">
+        <item quantity="zero">@string/minutes_after_specific_zero</item>
+        <item quantity="one">@string/minutes_after_specific_one</item>
+        <item quantity="two">@string/minutes_after_specific_two</item>
+        <item quantity="few">@string/minutes_after_specific_few</item>
+        <item quantity="many">@string/minutes_after_specific_many</item>
+        <item quantity="other">@string/minutes_after_specific_other</item>
+    </plurals>
+
     <!-- Reminder -->
     <plurals name="reminder_minutes" translatable="false">
         <item quantity="zero">@string/reminder_minutes_zero</item>

@@ -122,8 +122,6 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         val jewishDayOfMonth = jewishDate.jewishDayOfMonth
         val dayOfWeek = jewishDate.dayOfWeek
         val jewishDateTomorrow = cloneJewishTomorrow(jewishDate)
-        val shabbathAfter = settings.shabbathEndsAfter
-        val shabbathOffset = settings.shabbathEnds
         val candles = calculateCandles(jewishDate, jewishDateTomorrow, settings)
         val candlesTomorrow = candles.countTomorrow
         val holidayToday = candles.holidayToday
@@ -733,37 +731,18 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         val nightfall: KosherDate = date
         val summaryNightfall = summary
         val nightfallYesterday = getNightfall(calYesterday, opinionNightfall).first
-        if (shabbathAfter == R.string.sunset) {
-            opinionNightfall = settings.shabbathEndsSunset
-            date = if (OPINION_NONE == opinionNightfall) {
-                sunset
-            } else {
-                getSunset(cal, opinionNightfall).first
-            }
-        } else if (shabbathAfter == R.string.twilight) {
-            opinionNightfall = settings.shabbathEndsTwilight
-            date = if (OPINION_NONE == opinionNightfall) {
-                twilight
-            } else {
-                getTwilight(cal, opinionNightfall).first
-            }
-        } else {
-            opinionNightfall = settings.shabbathEndsNightfall
-            date = if (OPINION_NONE == opinionNightfall) {
-                nightfall
-            } else {
-                getNightfall(cal, opinionNightfall).first
-            }
-        }
+
         val (shabbathEnds, summaryShabbathEnds) = addShabbathEnds(
             res,
+            settings,
             adapter,
-            date,
+            cal,
+            sunset,
+            twilight,
+            nightfall,
             dayOfWeek,
             holidayToday,
             jewishDateTomorrow,
-            shabbathAfter,
-            shabbathOffset,
             remote
         )
         if (candlesTomorrow > 0) {
@@ -967,22 +946,36 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             JewishCalendar.FAST_OF_GEDALYAH,
             JewishCalendar.TENTH_OF_TEVES,
             JewishCalendar.FAST_OF_ESTHER -> {
-                adapter.add(R.string.fast_begins, SUMMARY_NONE, dawn, jewishDate, remote)
-                adapter.add(R.string.fast_ends, SUMMARY_NONE, twilight, jewishDateTomorrow, remote)
+                adapter.add(R.string.fast_begins, SUMMARY_NONE, dawn + 1, jewishDate, remote)
+                addFastEnds(
+                    res,
+                    settings,
+                    adapter,
+                    cal,
+                    sunset,
+                    twilight,
+                    nightfall,
+                    jewishDateTomorrow,
+                    remote
+                )
             }
 
-            JewishCalendar.TISHA_BEAV -> adapter.add(
-                R.string.fast_ends,
-                SUMMARY_NONE,
+            JewishCalendar.TISHA_BEAV -> addFastEnds(
+                res,
+                settings,
+                adapter,
+                cal,
+                sunset,
                 twilight,
+                nightfall,
                 jewishDateTomorrow,
                 remote
             )
 
             JewishCalendar.YOM_KIPPUR -> adapter.add(
                 R.string.fast_ends,
-                SUMMARY_NONE,
-                shabbathEnds,
+                summaryShabbathEnds,
+                shabbathEnds + 1,
                 jewishDateTomorrow,
                 remote
             )
@@ -991,7 +984,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             JewishCalendar.TISHA_BEAV -> adapter.add(
                 R.string.fast_begins,
                 SUMMARY_NONE,
-                sunset,
+                sunset + 1,
                 jewishDate,
                 remote
             )
@@ -1628,34 +1621,66 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
 
     private fun addShabbathEnds(
         res: Resources,
+        settings: ZmanimPreferences,
         adapter: A,
-        date: KosherDate,
+        cal: ComplexZmanimCalendar,
+        sunset: KosherDate,
+        twilight: KosherDate,
+        nightfall: KosherDate,
         dayOfWeek: Int,
         holidayToday: Int,
         jewishDateTomorrow: JewishCalendar,
-        @StringRes shabbathAfter: Int,
-        shabbathOffset: Int,
         remote: Boolean
     ): Pair<KosherDate, CharSequence> {
+        val shabbathAfter = settings.shabbathEndsAfter
+
+        val date: KosherDate
+        when (shabbathAfter) {
+            R.string.sunset -> {
+                val opinion = settings.shabbathEndsSunset
+                date = if (OPINION_NONE == opinion) {
+                    sunset
+                } else {
+                    getSunset(cal, opinion).first
+                }
+            }
+
+            R.string.twilight -> {
+                val opinion = settings.shabbathEndsTwilight
+                date = if (OPINION_NONE == opinion) {
+                    twilight
+                } else {
+                    getTwilight(cal, opinion).first
+                }
+            }
+
+            else -> {
+                val opinion = settings.shabbathEndsNightfall
+                date = if (OPINION_NONE == opinion) {
+                    nightfall
+                } else {
+                    getNightfall(cal, opinion).first
+                }
+            }
+        }
         if (!date.isDate()) {
             return Pair(NEVER, null)
         }
 
-        var shabbathEnds: KosherDate = NEVER
-        var summaryText: CharSequence? = null
+        val shabbathOffset = settings.shabbathEnds
+        val shabbathEnds: KosherDate = AstronomicalCalendar.getTimeOffset(
+            date,
+            (shabbathOffset * DateUtils.MINUTE_IN_MILLIS) + 1
+        )
         val shabbathAfterName = res.getString(shabbathAfter)
+        val summaryText = res.getQuantityString(
+            R.plurals.shabbath_ends_summary,
+            shabbathOffset,
+            shabbathOffset,
+            shabbathAfterName
+        )
 
         if (dayOfWeek == Calendar.SATURDAY) {
-            shabbathEnds = AstronomicalCalendar.getTimeOffset(
-                date,
-                (shabbathOffset * DateUtils.MINUTE_IN_MILLIS) + 1
-            )
-            summaryText = res.getQuantityString(
-                R.plurals.shabbath_ends_summary,
-                shabbathOffset,
-                shabbathOffset,
-                shabbathAfterName
-            )
             adapter.add(
                 R.string.shabbath_ends,
                 summaryText,
@@ -1672,16 +1697,6 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 JewishCalendar.SUCCOS,
                 JewishCalendar.SHEMINI_ATZERES,
                 JewishCalendar.SIMCHAS_TORAH -> {
-                    shabbathEnds = AstronomicalCalendar.getTimeOffset(
-                        date,
-                        (shabbathOffset * DateUtils.MINUTE_IN_MILLIS) + 1
-                    )
-                    summaryText = res.getQuantityString(
-                        R.plurals.shabbath_ends_summary,
-                        shabbathOffset,
-                        shabbathOffset,
-                        shabbathAfterName
-                    )
                     adapter.add(
                         R.string.festival_ends,
                         summaryText,
@@ -1694,6 +1709,65 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
 
         return Pair(shabbathEnds, summaryText)
+    }
+
+    private fun addFastEnds(
+        res: Resources,
+        settings: ZmanimPreferences,
+        adapter: A,
+        cal: ComplexZmanimCalendar,
+        sunset: KosherDate,
+        twilight: KosherDate,
+        nightfall: KosherDate,
+        jewishDateTomorrow: JewishCalendar,
+        remote: Boolean
+    ) {
+        val fastAfter = settings.fastEndsAfter
+
+        val date: KosherDate
+        when (fastAfter) {
+            R.string.sunset -> {
+                val opinion = settings.fastEndsSunset
+                date = if (OPINION_NONE == opinion) {
+                    sunset
+                } else {
+                    getSunset(cal, opinion).first
+                }
+            }
+
+            R.string.twilight -> {
+                val opinion = settings.fastEndsTwilight
+                date = if (OPINION_NONE == opinion) {
+                    twilight
+                } else {
+                    getTwilight(cal, opinion).first
+                }
+            }
+
+            else -> {
+                val opinion = settings.fastEndsNightfall
+                date = if (OPINION_NONE == opinion) {
+                    nightfall
+                } else {
+                    getNightfall(cal, opinion).first
+                }
+            }
+        }
+        if (!date.isDate()) return
+
+        val fastOffset = settings.fastEnds
+        val fastEnds = AstronomicalCalendar.getTimeOffset(
+            date,
+            (fastOffset * DateUtils.MINUTE_IN_MILLIS) + 1
+        )
+        val fastAfterName = res.getString(fastAfter)
+        val summaryText = res.getQuantityString(
+            R.plurals.fast_ends_summary,
+            fastOffset,
+            fastOffset,
+            fastAfterName
+        )
+        adapter.add(R.string.fast_ends, summaryText, fastEnds, jewishDateTomorrow, remote)
     }
 
     companion object {

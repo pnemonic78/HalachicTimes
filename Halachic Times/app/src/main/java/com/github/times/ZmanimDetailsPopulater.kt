@@ -70,6 +70,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
             R.string.nightfall -> populateNightfall(adapter, calendar)
             R.string.shabbath_ends,
             R.string.festival_ends -> populateShabbathEnds(adapter, calendar, settings)
+            R.string.fast_ends -> populateFastEnds(adapter, calendar, settings)
 
             R.string.midnight -> populateMidnight(adapter, calendar, calendarYesterday, settings)
             R.string.midnight_guard,
@@ -1007,6 +1008,17 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         settings: ZmanimPreferences
     ) {
         val offset = settings.shabbathEnds * DateUtils.MINUTE_IN_MILLIS
+        populateSunset(adapter, cal, offset)
+        populateTwilight(adapter, cal, offset)
+        populateNightfall(adapter, cal, offset)
+    }
+
+    private fun populateFastEnds(
+        adapter: A,
+        cal: ComplexZmanimCalendar,
+        settings: ZmanimPreferences
+    ) {
+        val offset = settings.fastEnds * DateUtils.MINUTE_IN_MILLIS
         populateSunset(adapter, cal, offset)
         populateTwilight(adapter, cal, offset)
         populateNightfall(adapter, cal, offset)

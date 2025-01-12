@@ -117,7 +117,7 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
         if (key.isNullOrEmpty()) return
         if (key.indexOf(';') > 0) {
             val tokens =
-                key.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                key.split(OPINION_REGEX).dropLastWhile { it.isEmpty() }.toTypedArray()
             for (token in tokens) {
                 initOpinionPreference(token)
             }
@@ -305,5 +305,6 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
         const val EXTRA_OPINION = "opinion"
         const val EXTRA_REMINDER = "reminder"
         private const val REQUEST_PERMISSIONS = 0x702E // TONE
+        private val OPINION_REGEX = ";".toRegex()
     }
 }

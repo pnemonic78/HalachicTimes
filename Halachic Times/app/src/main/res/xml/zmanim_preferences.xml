@@ -277,7 +277,7 @@
             android:value="fast_begins.reminder" />
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanFastEndsPreferenceFragment"
         android:title="@string/fast_ends">
         <extra
             android:name="xml"
@@ -285,6 +285,9 @@
         <extra
             android:name="reminder"
             android:value="fast_ends.reminder" />
+        <extra
+            android:name="opinion"
+            android:value="fast_ends.after;fast_ends.sunset;fast_ends.twilight;fast_ends.nightfall;fast_ends.minutes" />
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"

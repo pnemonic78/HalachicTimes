@@ -47,6 +47,11 @@ import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EARLI
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_EAT
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_FAST_BEGINS
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_FAST_ENDS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_FAST_ENDS_AFTER
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_FAST_ENDS_MINUTES
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_FAST_ENDS_NIGHTFALL
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_FAST_ENDS_SUNSET
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_FAST_ENDS_TWILIGHT
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_GUARDS
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_HOUR
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_LATEST_LEVANA
@@ -386,6 +391,12 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
             context.getString(R.string.nightfall_defaultValue)
         )
 
+    override val shabbathEnds: Int
+        get() = preferences.getInt(
+            KEY_OPINION_SHABBATH_ENDS_MINUTES,
+            context.resources.getInteger(R.integer.shabbath_ends_defaultValue)
+        ).coerceAtLeast(0)
+
     override val shabbathEndsAfter: Int
         get() = toId(
             preferences.getString(
@@ -412,11 +423,37 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
             context.getString(R.string.shabbath_ends_nightfall_defaultValue)
         )
 
-    override val shabbathEnds: Int
+    override val fastEnds: Int
         get() = preferences.getInt(
-            KEY_OPINION_SHABBATH_ENDS_MINUTES,
-            context.resources.getInteger(R.integer.shabbath_ends_defaultValue)
+            KEY_OPINION_FAST_ENDS_MINUTES,
+            context.resources.getInteger(R.integer.fast_ends_defaultValue)
         ).coerceAtLeast(0)
+
+    override val fastEndsAfter: Int
+        get() = toId(
+            preferences.getString(
+                KEY_OPINION_FAST_ENDS_AFTER,
+                context.getString(R.string.fast_ends_after_defaultValue)
+            )
+        )
+
+    override val fastEndsSunset: String?
+        get() = preferences.getString(
+            KEY_OPINION_FAST_ENDS_SUNSET,
+            context.getString(R.string.fast_ends_sunset_defaultValue)
+        )
+
+    override val fastEndsTwilight: String?
+        get() = preferences.getString(
+            KEY_OPINION_FAST_ENDS_TWILIGHT,
+            context.getString(R.string.fast_ends_twilight_defaultValue)
+        )
+
+    override val fastEndsNightfall: String?
+        get() = preferences.getString(
+            KEY_OPINION_FAST_ENDS_NIGHTFALL,
+            context.getString(R.string.fast_ends_nightfall_defaultValue)
+        )
 
     override val midnight: String?
         get() = preferences.getString(
@@ -593,7 +630,7 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
             KEY_OPINION_LATEST_LEVANA -> R.string.levana_latest
             KEY_OPINION_OMER -> R.string.omer
             KEY_OPINION_FAST_BEGINS -> R.string.fast_begins
-            KEY_OPINION_FAST_ENDS -> R.string.fast_ends
+            KEY_OPINION_FAST_ENDS, KEY_OPINION_FAST_ENDS_AFTER, KEY_OPINION_FAST_ENDS_MINUTES -> R.string.fast_ends
             else -> 0
         }
     }

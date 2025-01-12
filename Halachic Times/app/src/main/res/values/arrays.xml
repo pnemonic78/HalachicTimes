@@ -418,6 +418,17 @@
         <item>@string/nightfall</item>
     </string-array>
 
+    <string-array name="fast_ends_after_values" translatable="false">
+        <item>@string/opinion_value_sunset</item>
+        <item>@string/opinion_value_twilight</item>
+        <item>@string/opinion_value_nightfall</item>
+    </string-array>
+    <string-array name="fast_ends_after_entries" translatable="false">
+        <item>@string/sunset</item>
+        <item>@string/twilight</item>
+        <item>@string/nightfall</item>
+    </string-array>
+
     <string-array name="levana_earliest_values" translatable="false">
         <item>@string/opinion_value_3_days</item>
         <item>@string/opinion_value_7</item>

@@ -88,7 +88,7 @@ class ZmanimDetailsFragment<A : ZmanimDetailsAdapter, P : ZmanimDetailsPopulater
             R.string.tallis_only ->
                 list.setBackgroundColor(ContextCompat.getColor(context, R.color.tallis))
 
-            R.string.sunrise ->
+            R.string.sunrise, R.string.fast_begins ->
                 list.setBackgroundColor(ContextCompat.getColor(context, R.color.sunrise))
 
             R.string.shema ->
@@ -117,7 +117,8 @@ class ZmanimDetailsFragment<A : ZmanimDetailsAdapter, P : ZmanimDetailsPopulater
 
             R.string.nightfall,
             R.string.shabbath_ends,
-            R.string.festival_ends ->
+            R.string.festival_ends,
+            R.string.fast_ends ->
                 list.setBackgroundColor(ContextCompat.getColor(context, R.color.nightfall))
 
             R.string.midnight_guard,
@@ -139,7 +140,7 @@ class ZmanimDetailsFragment<A : ZmanimDetailsAdapter, P : ZmanimDetailsPopulater
             R.string.tallis_only ->
                 list.setBackgroundColor(ContextCompat.getColor(context, R.color.tallis_light))
 
-            R.string.sunrise ->
+            R.string.sunrise, R.string.fast_begins ->
                 list.setBackgroundColor(ContextCompat.getColor(context, R.color.sunrise_light))
 
             R.string.shema ->
@@ -180,7 +181,8 @@ class ZmanimDetailsFragment<A : ZmanimDetailsAdapter, P : ZmanimDetailsPopulater
 
             R.string.nightfall,
             R.string.shabbath_ends,
-            R.string.festival_ends ->
+            R.string.festival_ends,
+            R.string.fast_ends ->
                 list.setBackgroundColor(ContextCompat.getColor(context, R.color.nightfall_light))
 
             R.string.midnight_guard,

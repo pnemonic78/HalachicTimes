@@ -395,18 +395,18 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
     val nightfall: String?
 
     /**
-     * Get the time when Shabbath ends after.
-     *
-     * @return the time id.
-     */
-    val shabbathEndsAfter: Int
-
-    /**
      * Get the number of minutes when Shabbath ends after the specified opinion.
      *
      * @return the opinion.
      */
     val shabbathEnds: Int
+
+    /**
+     * Get the time when Shabbath ends after.
+     *
+     * @return the time id.
+     */
+    val shabbathEndsAfter: Int
 
     /**
      * Get the opinion for Shabbath ends at sunset.
@@ -428,6 +428,41 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
      * @return the opinion.
      */
     val shabbathEndsNightfall: String?
+
+    /**
+     * Get the number of minutes when fast ends after the specified opinion.
+     *
+     * @return the opinion.
+     */
+    val fastEnds: Int
+
+    /**
+     * Get the time when fast ends after.
+     *
+     * @return the time id.
+     */
+    val fastEndsAfter: Int
+
+    /**
+     * Get the opinion for fast ends at sunset.
+     *
+     * @return the opinion.
+     */
+    val fastEndsSunset: String?
+
+    /**
+     * Get the opinion for fast ends at twilight.
+     *
+     * @return the opinion.
+     */
+    val fastEndsTwilight: String?
+
+    /**
+     * Get the opinion for fast ends at nightfall.
+     *
+     * @return the opinion.
+     */
+    val fastEndsNightfall: String?
 
     /**
      * Get the opinion for midnight (*chatzos layla*).
@@ -700,14 +735,14 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
 
         /** Preference name for Shabbath ends after nightfall.  */
         const val KEY_OPINION_SHABBATH_ENDS = "shabbath_ends"
-        const val KEY_OPINION_SHABBATH_ENDS_AFTER = KEY_OPINION_SHABBATH_ENDS + ".after"
+        const val KEY_OPINION_SHABBATH_ENDS_AFTER = "$KEY_OPINION_SHABBATH_ENDS.after"
         const val KEY_OPINION_SHABBATH_ENDS_SUNSET =
-            KEY_OPINION_SHABBATH_ENDS + "." + KEY_OPINION_SUNSET
+            "$KEY_OPINION_SHABBATH_ENDS.$KEY_OPINION_SUNSET"
         const val KEY_OPINION_SHABBATH_ENDS_TWILIGHT =
-            KEY_OPINION_SHABBATH_ENDS + "." + KEY_OPINION_TWILIGHT
+            "$KEY_OPINION_SHABBATH_ENDS.$KEY_OPINION_TWILIGHT"
         const val KEY_OPINION_SHABBATH_ENDS_NIGHTFALL =
-            KEY_OPINION_SHABBATH_ENDS + "." + KEY_OPINION_NIGHTFALL
-        const val KEY_OPINION_SHABBATH_ENDS_MINUTES = KEY_OPINION_SHABBATH_ENDS + ".minutes"
+            "$KEY_OPINION_SHABBATH_ENDS.$KEY_OPINION_NIGHTFALL"
+        const val KEY_OPINION_SHABBATH_ENDS_MINUTES = "$KEY_OPINION_SHABBATH_ENDS.minutes"
 
         /** Preference name for midnight type.  */
         const val KEY_OPINION_MIDNIGHT = "midnight"
@@ -738,6 +773,11 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
 
         /** Preference name for ending of fast type.  */
         const val KEY_OPINION_FAST_ENDS = "fast_ends"
+        const val KEY_OPINION_FAST_ENDS_AFTER = "$KEY_OPINION_FAST_ENDS.after"
+        const val KEY_OPINION_FAST_ENDS_SUNSET = "$KEY_OPINION_FAST_ENDS.$KEY_OPINION_SUNSET"
+        const val KEY_OPINION_FAST_ENDS_TWILIGHT = "$KEY_OPINION_FAST_ENDS.$KEY_OPINION_TWILIGHT"
+        const val KEY_OPINION_FAST_ENDS_NIGHTFALL = "$KEY_OPINION_FAST_ENDS.$KEY_OPINION_NIGHTFALL"
+        const val KEY_OPINION_FAST_ENDS_MINUTES = "$KEY_OPINION_FAST_ENDS.minutes"
 
         const val REMINDER_SUFFIX = ".reminder"
         const val REMINDER_SUNDAY_SUFFIX = ".day." + Calendar.SUNDAY
