@@ -20,6 +20,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.Location.distanceBetween
+import android.os.Build
 import com.github.database.CursorFilter
 import com.github.lang.isTrue
 import com.github.times.location.GeocoderBase.Companion.SAME_CITY
@@ -28,6 +29,7 @@ import com.github.times.location.GeocoderBase.Companion.SAME_PLATEAU
 import com.github.times.location.GeocoderBase.Companion.SAME_STREET
 import com.github.times.location.ZmanimAddress.Companion.compare
 import com.github.times.location.ZmanimLocation.Companion.compare
+import com.github.times.location.android.AndroidGeocoder
 import com.github.times.location.bing.BingGeocoder
 import com.github.times.location.country.CountriesGeocoder
 import com.github.times.location.db.DatabaseGeocoder
@@ -73,7 +75,7 @@ class AddressProvider @JvmOverloads constructor(
      */
     private val geocoderCountries: CountriesGeocoder = CountriesGeocoder(context, locale)
     private val geocoderDatabase: DatabaseGeocoder = DatabaseGeocoder(context, locale)
-    private val geocoder by lazy { Geocoder(context) }
+    private val geocoderAndroid by lazy { AndroidGeocoder(context, locale) }
     private val geocoderGoogle by lazy { GoogleGeocoder(locale) }
     private val geocoderBing by lazy { BingGeocoder(locale) }
     private val geocoderGeonames by lazy { GeoNamesGeocoder(locale) }
@@ -138,34 +140,14 @@ class AddressProvider @JvmOverloads constructor(
             notifyAddressFound(listener, location, best)
         }
 
-        // Find the best address from some Geocoder provider.
-        if ((bestStreet == null || forceFetch) && isOnline) {
-            addresses = findNearestAddressGeocoder(location)
-            if (bestCountry == null) {
-                bestCountry = findBestAddress(location, addresses, SAME_PLANET)
-            }
-            best = findBestAddress(location, addresses, SAME_PLATEAU)
-            if (best != null && compare(best, bestPlateau) != 0) {
-                bestPlateau = best
-                notifyAddressFound(listener, location, best)
-            }
-            best = findBestAddress(location, addresses, SAME_CITY)
-            if (best != null && compare(best, bestCity) != 0) {
-                bestCity = best
-                notifyAddressFound(listener, location, best)
-            }
-            best = findBestAddress(location, addresses, SAME_STREET)
-            if (best != null && compare(best, bestStreet) != 0) {
-                bestStreet = best
-                notifyAddressFound(listener, location, best)
-            }
-        }
-
         // Find the best address from remote Geocoder providers.
         if ((bestStreet == null || forceFetch) && isOnline) {
             var foundBest = false
             for (geocoder in remoteAddressProviders) {
                 addresses = findNearestAddress(location, geocoder)
+                if (bestCountry == null) {
+                    bestCountry = findBestAddress(location, addresses, SAME_PLANET)
+                }
                 best = findBestAddress(location, addresses, SAME_PLATEAU)
                 if (best != null && compare(best, bestPlateau) != 0) {
                     bestPlateau = best
@@ -211,25 +193,6 @@ class AddressProvider @JvmOverloads constructor(
      * Uses the built-in Android [Geocoder] API.
      *
      * @param location the location.
-     * @return the list of addresses.
-     */
-    private fun findNearestAddressGeocoder(location: Location): List<Address> {
-        val latitude = location.latitude
-        val longitude = location.longitude
-        try {
-            return geocoder.getFromLocation(latitude, longitude, maxResults) ?: emptyList()
-        } catch (ignore: Exception) {
-        }
-        return emptyList()
-    }
-
-    /**
-     * Find addresses that are known to describe the area immediately
-     * surrounding the given latitude and longitude.
-     *
-     * Uses the built-in Android [Geocoder] API.
-     *
-     * @param location the location.
      * @param geocoder the geocoder.
      * @return the list of addresses.
      */
@@ -253,6 +216,7 @@ class AddressProvider @JvmOverloads constructor(
      * @return the list of providers.
      */
     private val remoteAddressProviders: List<GeocoderBase> = listOf(
+        geocoderAndroid,
         geocoderGoogle,
         geocoderBing,
         geocoderGeonames
@@ -392,6 +356,11 @@ class AddressProvider @JvmOverloads constructor(
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX) {
             return null
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            if (location.hasMslAltitude() && !location.hasAltitude()) {
+                location.altitude = -location.mslAltitudeMeters
+            }
+        }
         var elevated: Location?
         if (location.hasAltitude()) {
             elevated = findElevationDatabase(location)
@@ -429,7 +398,7 @@ class AddressProvider @JvmOverloads constructor(
                     )
                     continue
                 }
-                if (elevated != null && elevated.hasAltitude()) {
+                if (elevated != null && elevated.hasAltitude() && elevated.altitude >= 0.0) {
                     listener?.onFindElevation(this, location, elevated)
                     return elevated
                 }
@@ -462,6 +431,7 @@ class AddressProvider @JvmOverloads constructor(
      * @return the list of providers.
      */
     private val remoteElevationProviders: List<GeocoderBase> = listOf(
+        geocoderAndroid,
         geocoderBing,
         geocoderGeonames,
         geocoderGoogle

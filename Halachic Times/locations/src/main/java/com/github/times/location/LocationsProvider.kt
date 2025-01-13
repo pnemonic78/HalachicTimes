@@ -748,7 +748,10 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
 
     fun findElevation(location: Location) {
         if (location.hasAltitude()) {
-            return
+            // GPS altitude is not accurate.
+            if (location.provider != LocationManager.GPS_PROVIDER) {
+                return
+            }
         }
         enqueueElevation(context, location)
     }
