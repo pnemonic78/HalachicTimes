@@ -1564,11 +1564,11 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         return start + ((finish - start) / 3)
     }
 
-    protected fun getMidnightGuard4(start: KosherDate, midnight: KosherDate): KosherDate {
-        if (start.isNever() || midnight.isNever()) {
+    protected fun getMidnightGuard4(start: KosherDate, finish: KosherDate): KosherDate {
+        if (start.isNever() || finish.isNever()) {
             return NEVER
         }
-        return start + ((midnight - start) / 2)
+        return start + ((finish - start) / 4)
     }
 
     /**
@@ -1600,11 +1600,11 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         return start + (((finish - start) * 2) / 3)
     }
 
-    protected fun getMorningGuard4(midnight: KosherDate, finish: KosherDate): KosherDate {
-        if (midnight.isNever() || finish.isNever()) {
+    protected fun getMorningGuard4(start: KosherDate, finish: KosherDate): KosherDate {
+        if (start.isNever() || finish.isNever()) {
             return NEVER
         }
-        return midnight + ((finish - midnight) / 2)
+        return start + (((finish - start) * 3) / 4)
     }
 
     protected fun getSofZmanBiurChametz(startOfDay: KosherDate, shaahZmanis: Long): KosherDate {

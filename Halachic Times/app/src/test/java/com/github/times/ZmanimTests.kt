@@ -347,7 +347,7 @@ class ZmanimTests : BaseTests() {
         val item3 = adapter.getItem(3)
         assertNotNull(item3!!)
         assertEquals(R.string.guard_fourth, item3.titleId)
-        assertEquals("03:08", item3.timeLabel)
+        assertEquals("03:09", item3.timeLabel)
     }
 
     @Test
@@ -400,7 +400,7 @@ class ZmanimTests : BaseTests() {
         val item1 = adapter.getItem(1)
         assertNotNull(item1!!)
         assertEquals(R.string.guard_second, item1.titleId)
-        assertEquals("20:34", item1.timeLabel)
+        assertEquals("20:25", item1.timeLabel)
         val item2 = adapter.getItem(2)
         assertNotNull(item2!!)
         assertEquals(R.string.guard_third, item2.titleId)
@@ -408,6 +408,6 @@ class ZmanimTests : BaseTests() {
         val item3 = adapter.getItem(3)
         assertNotNull(item3!!)
         assertEquals(R.string.guard_fourth, item3.titleId)
-        assertEquals("02:32", item3.timeLabel)
+        assertEquals("02:23", item3.timeLabel)
     }
 }

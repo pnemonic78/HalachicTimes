@@ -894,7 +894,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         var date: KosherDate
         var title: Int
         jewishDate.forward(Calendar.DATE, 1)
-        val first = when (settings.guardBegins) {
+        val start = when (settings.guardBegins) {
             OPINION_TWILIGHT -> getTwilight(cal, settings)
             OPINION_NIGHT -> getNightfall(cal, settings)
             else -> getSunset(cal, settings)
@@ -904,30 +904,29 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
             else -> getSunriseTomorrow(cal, settings)
         }
 
-        date = first
+        date = start
         title = R.string.guard_first
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         val opinion = settings.guardsCount
         if (OPINION_4 == opinion) {
-            val midnight = getMidnight(cal, settings)
-            date = getMidnightGuard4(first, midnight)
+            date = getMidnightGuard4(start, finish)
             title = R.string.guard_second
             adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-            date = midnight
+            date = getMidnight(cal, settings)
             title = R.string.guard_third
             adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-            date = getMorningGuard4(midnight, finish)
+            date = getMorningGuard4(start, finish)
             title = R.string.guard_fourth
             adapter.add(title, SUMMARY_NONE, date, jewishDate)
         } else {
-            date = getMidnightGuard3(first, finish)
+            date = getMidnightGuard3(start, finish)
             title = R.string.guard_second
             adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-            date = getMorningGuard3(first, finish)
+            date = getMorningGuard3(start, finish)
             title = R.string.guard_third
             adapter.add(title, SUMMARY_NONE, date, jewishDate)
         }
