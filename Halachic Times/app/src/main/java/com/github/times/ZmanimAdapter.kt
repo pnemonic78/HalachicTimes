@@ -24,6 +24,7 @@ import androidx.annotation.StringRes
 import com.github.times.databinding.TimesItemBinding
 import com.github.times.preference.ZmanimPreferences
 import com.github.util.TimeUtils.roundUp
+import com.github.util.dayOfWeek
 import com.github.util.era
 import com.github.util.getDefaultLocale
 import com.github.util.isLocaleRTL
@@ -90,6 +91,8 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
      * The candles data.
      */
     var candles = CandleData()
+
+    var parsha = JewishCalendar.Parsha.NONE
 
     init {
         val locale = context.getDefaultLocale()
@@ -414,6 +417,14 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
      */
     val dayOfOmerTomorrow: Int
         get() = candles.omerTomorrow
+
+    /**
+     * Get today's day-of-the-week.
+     *
+     * @return the day.
+     */
+    val dayOfWeek: Int
+        get() = calendar.calendar.dayOfWeek
 
     companion object {
         /**

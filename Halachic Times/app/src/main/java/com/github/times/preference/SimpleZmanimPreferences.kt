@@ -84,6 +84,7 @@ import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_RING
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_SILENCE
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_STREAM
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_SECONDS
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_PARSHA
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_SUMMARIES
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_THEME_WIDGET
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_YEAR_FINAL
@@ -183,6 +184,12 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
         get() = preferences.getBoolean(
             KEY_SECONDS,
             context.resources.getBoolean(R.bool.seconds_visible_defaultValue)
+        )
+
+    override val isParshahVisible: Boolean
+        get() = preferences.getBoolean(
+            KEY_PARSHA,
+            context.resources.getBoolean(R.bool.parsha_defaultValue)
         )
 
     override val isSummaries: Boolean

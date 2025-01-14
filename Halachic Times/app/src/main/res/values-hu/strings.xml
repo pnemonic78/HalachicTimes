@@ -181,6 +181,8 @@
     <string name="omer_l">láómer</string>
 
     <!-- Preferences -->
+    <string name="parsha_title">E heti Parsha</string>
+    <string name="parsha_summary">E heti Tóraolvasás</string>
     <string name="past_title">Szor hogy az eltelt</string>
     <string name="seconds_title">Másodperc</string>
     <string name="year_final_title">Héber évszám végleges formájú betűkkel</string>

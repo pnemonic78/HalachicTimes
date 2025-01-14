@@ -181,6 +181,8 @@
     <string name="omer_l">La\'omer</string>
 
     <!-- Preferences -->
+    <string name="parsha_title">Paracha de la semaine</string>
+    <string name="parsha_summary">Lecture de la Torah de la semaine</string>
     <string name="past_title">Temps qui se sont écoulées</string>
     <string name="seconds_title">Secondes</string>
     <string name="year_final_title">Année hébraïque avec lettres types finales</string>
@@ -235,11 +237,11 @@
     <string name="day_chol_hamoed_pesach">Jour intermédiaire de la Pessa\'h</string>
     <string name="day_pesach_sheni">Deuxième Pessa\'h</string>
     <string name="day_shavuos">Chavouot</string>
-    <string name="day_rosh_hashana">Nouvel An</string>
+    <string name="day_rosh_hashana">Roch Hachana</string>
     <string name="day_fast_of_gedalyah">Jeûne de Gedalia</string>
-    <string name="day_yom_kippur">Jour des Expiations</string>
-    <string name="day_succos">Souccot</string>
-    <string name="day_chol_hamoed_succos">Jour intermédiaire de la Souccot</string>
+    <string name="day_yom_kippur">Kippour</string>
+    <string name="day_succos">Soukkot</string>
+    <string name="day_chol_hamoed_succos">Jour intermédiaire de la Soukkot</string>
     <string name="day_hoshana_rabba">Hochana Rabba</string>
     <string name="day_shemini_atzeres">Chemini Atzeres</string>
     <string name="day_simchas_torah">Sim\'hat Torah</string>

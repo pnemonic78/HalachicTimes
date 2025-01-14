@@ -175,7 +175,8 @@ open class ZmanimWidget : ZmanimAppWidget() {
         itemToday.jewishDate = jewishDate
         items.add(index++, itemToday)
 
-        val holidayTodayName = getName(context, holiday, candles)
+        val dayOfWeekToday = jewishDate.dayOfWeek
+        val holidayTodayName = getName(context, dayOfWeekToday, holiday, candles)
         if (holidayTodayName != null) {
             ZmanimItem(holidayTodayName).apply {
                 this.jewishDate = jewishDate

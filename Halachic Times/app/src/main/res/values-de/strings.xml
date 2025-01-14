@@ -181,6 +181,8 @@
     <string name="omer_l">laOmer</string>
 
     <!-- Preferences -->
+    <string name="parsha_title">Parascha dieser Woche</string>
+    <string name="parsha_summary">Tora-Lesung dieser Woche</string>
     <string name="past_title">Vergangenen Zeiten</string>
     <string name="seconds_title">Sekunden</string>
     <string name="year_final_title">Hebräisches Jahr mit Abschlussbriefen</string>

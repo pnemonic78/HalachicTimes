@@ -1,0 +1,75 @@
+<resources>
+    <string-array name="parsha">
+        <item />
+        <item>"Bereshit"</item>
+        <item>"Noaj"</item>
+        <item>"Lej Lejá"</item>
+        <item>"Vaierá"</item>
+        <item>"Jaiei Sará"</item>
+        <item>"Toldot"</item>
+        <item>"Vaietzé"</item>
+        <item>"Vaishlaj"</item>
+        <item>"Vaieshev"</item>
+        <item>"Miketz"</item>
+        <item>"Vaigash"</item>
+        <item>"Vaiejí"</item>
+        <item>"Shemot"</item>
+        <item>"Vaerá"</item>
+        <item>"Bo"</item>
+        <item>"Beshalaj"</item>
+        <item>"Itró"</item>
+        <item>"Mishpatím"</item>
+        <item>"Trumá"</item>
+        <item>"Tetzavé"</item>
+        <item>"Ki Tisá"</item>
+        <item>"Vaiakel"</item>
+        <item>"Pekudei"</item>
+        <item>"Vaikra"</item>
+        <item>"Tzav"</item>
+        <item>"Shemini"</item>
+        <item>"Tazria"</item>
+        <item>"Metzorá"</item>
+        <item>"Ajaréi"</item>
+        <item>"Kedoshim"</item>
+        <item>"Emor"</item>
+        <item>"Behar"</item>
+        <item>"Bejukotái"</item>
+        <item>"Bamidbar"</item>
+        <item>"Naso"</item>
+        <item>"Behaaloteja"</item>
+        <item>"Shlaj"</item>
+        <item>"Koraj"</item>
+        <item>"Jukat"</item>
+        <item>"Balak"</item>
+        <item>"Pinjas"</item>
+        <item>"Matot"</item>
+        <item>"Masei"</item>
+        <item>"Devarim"</item>
+        <item>"Vaetjanán"</item>
+        <item>"Ekev"</item>
+        <item>"Ree"</item>
+        <item>"Shoftím"</item>
+        <item>"Ki Tetzé"</item>
+        <item>"Ki Tavó"</item>
+        <item>"Nitzavím"</item>
+        <item>"Vaiélej"</item>
+        <item>"Haazinu"</item>
+        <item>"Vezot Habrajá"</item>
+        <item>"Vaiakhél - Pekudei"</item>
+        <item>"Tazria - Metzorá"</item>
+        <item>"Ajaréi Mot - Kedoshím"</item>
+        <item>"Behar - Bejukotái"</item>
+        <item>"Jukat - Balak"</item>
+        <item>"Matot - Masei"</item>
+        <item>"Nitzavím - Vaiélej"</item>
+        <item>"Shekalim"</item>
+        <item>"Zajor"</item>
+        <item>"Para"</item>
+        <item>"Hajodesh"</item>
+        <item>"Shuva"</item>
+        <item>"Shira"</item>
+        <item>"Hagadol"</item>
+        <item>"Jazon"</item>
+        <item>"Najamu"</item>
+    </string-array>
+</resources>

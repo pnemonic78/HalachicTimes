@@ -1,0 +1,75 @@
+<resources>
+    <string-array name="parsha">
+        <item />
+        <item>"בראשית"</item>
+        <item>"נח"</item>
+        <item>"לך לך"</item>
+        <item>"וירא"</item>
+        <item>"חיי שרה"</item>
+        <item>"תולדות"</item>
+        <item>"ויצא"</item>
+        <item>"וישלח"</item>
+        <item>"וישב"</item>
+        <item>"מקץ"</item>
+        <item>"ויגש"</item>
+        <item>"ויחי"</item>
+        <item>"שמות"</item>
+        <item>"וארא"</item>
+        <item>"בא"</item>
+        <item>"בשלח"</item>
+        <item>"יתרו"</item>
+        <item>"משפטים"</item>
+        <item>"תרומה"</item>
+        <item>"תצוה"</item>
+        <item>"כי תשא"</item>
+        <item>"ויקהל"</item>
+        <item>"פקודי"</item>
+        <item>"ויקרא"</item>
+        <item>"צו"</item>
+        <item>"שמיני"</item>
+        <item>"תזריע"</item>
+        <item>"מצרע"</item>
+        <item>"אחרי מות"</item>
+        <item>"קדושים"</item>
+        <item>"אמור"</item>
+        <item>"בהר"</item>
+        <item>"בחקתי"</item>
+        <item>"במדבר"</item>
+        <item>"נשא"</item>
+        <item>"בהעלתך"</item>
+        <item>"שלח לך"</item>
+        <item>"קרח"</item>
+        <item>"חוקת"</item>
+        <item>"בלק"</item>
+        <item>"פינחס"</item>
+        <item>"מטות"</item>
+        <item>"מסעי"</item>
+        <item>"דברים"</item>
+        <item>"ואתחנן"</item>
+        <item>"עקב"</item>
+        <item>"ראה"</item>
+        <item>"שופטים"</item>
+        <item>"כי תצא"</item>
+        <item>"כי תבוא"</item>
+        <item>"נצבים"</item>
+        <item>"וילך"</item>
+        <item>"האזינו"</item>
+        <item>"וזאת הברכה "</item>
+        <item>"ויקהל פקודי"</item>
+        <item>"תזריע מצרע"</item>
+        <item>"אחרי מות קדושים"</item>
+        <item>"בהר בחקתי"</item>
+        <item>"חוקת בלק"</item>
+        <item>"מטות מסעי"</item>
+        <item>"נצבים וילך"</item>
+        <item>"שקלים"</item>
+        <item>"זכור"</item>
+        <item>"פרה"</item>
+        <item>"החדש"</item>
+        <item>"שובה"</item>
+        <item>"שירה"</item>
+        <item>"הגדול"</item>
+        <item>"חזון"</item>
+        <item>"נחמו"</item>
+    </string-array>
+</resources>

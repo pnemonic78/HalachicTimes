@@ -127,6 +127,16 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         val candlesOffset = candles.candlesOffset
         val candlesWhen = candles.whenCandles
         adapter.candles = candles
+
+        if (settings.isParshahVisible) {
+            adapter.parsha = if (jcal.dayOfWeek == Calendar.SATURDAY) {
+                val special = jcal.specialShabbos
+                if (special == JewishCalendar.Parsha.NONE) jcal.parshah else special
+            } else {
+                jcal.upcomingParshah
+            }
+        }
+
         var date: KosherDate
         @StringRes var summary: Int
         var dateAndSummary: Pair<KosherDate, Int>
@@ -1934,9 +1944,14 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             var whenCandles = CandleData.BEFORE_SUNSET
             val omerToday = jewishDateToday.dayOfOmer
             val omerTomorrow = jcalTomorrow.dayOfOmer
+
             when (holidayToday) {
-                JewishCalendar.PESACH, JewishCalendar.SHAVUOS, JewishCalendar.ROSH_HASHANA, JewishCalendar.SUCCOS, JewishCalendar.SHEMINI_ATZERES, JewishCalendar.SIMCHAS_TORAH -> countToday =
-                    CandleData.CANDLES_FESTIVAL
+                JewishCalendar.PESACH,
+                JewishCalendar.SHAVUOS,
+                JewishCalendar.ROSH_HASHANA,
+                JewishCalendar.SUCCOS,
+                JewishCalendar.SHEMINI_ATZERES,
+                JewishCalendar.SIMCHAS_TORAH -> countToday = CandleData.CANDLES_FESTIVAL
 
                 JewishCalendar.YOM_KIPPUR -> countToday = CandleData.CANDLES_YOM_KIPPUR
                 JewishCalendar.CHANUKAH -> countToday = jewishDateToday.dayOfChanukah

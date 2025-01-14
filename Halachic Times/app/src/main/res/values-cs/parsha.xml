@@ -1,0 +1,75 @@
+<resources>
+    <string-array name="parsha">
+        <item />
+        <item>"Bereišit"</item>
+        <item>"Noach"</item>
+        <item>"Lech Lecha"</item>
+        <item>"Vayeira"</item>
+        <item>"Chaiei Sarah"</item>
+        <item>"Toldot"</item>
+        <item>"Vaietzei"</item>
+        <item>"Vayišlach"</item>
+        <item>"Vaeišev"</item>
+        <item>"Mikeitz"</item>
+        <item>"Vayigaš"</item>
+        <item>"Vaechi"</item>
+        <item>"Šmot"</item>
+        <item>"Va'eira"</item>
+        <item>"Bo"</item>
+        <item>"Bešalakh"</item>
+        <item>"Yitro"</item>
+        <item>"Mišpatim"</item>
+        <item>"Teruma"</item>
+        <item>"Tetzaveh"</item>
+        <item>"Ki Tisa"</item>
+        <item>"Vayak'hel"</item>
+        <item>"Pekudei"</item>
+        <item>"Vayikra"</item>
+        <item>"Tzav"</item>
+        <item>"Šemini"</item>
+        <item>"Tazria"</item>
+        <item>"Metzora"</item>
+        <item>"Akharei"</item>
+        <item>"Kdošim"</item>
+        <item>"Emor"</item>
+        <item>"Behar"</item>
+        <item>"Bekhukosai"</item>
+        <item>"Bamidbar"</item>
+        <item>"Nasso"</item>
+        <item>"Beha'aloscha"</item>
+        <item>"Šelakh"</item>
+        <item>"Korakh"</item>
+        <item>"Khukat"</item>
+        <item>"Balák"</item>
+        <item>"Pinkhas"</item>
+        <item>"Mattos"</item>
+        <item>"Masei"</item>
+        <item>"Devarim"</item>
+        <item>"Va'eschanan"</item>
+        <item>"Eikev"</item>
+        <item>"Re'eh"</item>
+        <item>"Šoftim"</item>
+        <item>"Ki Seitzei"</item>
+        <item>"Ki Savo"</item>
+        <item>"Nitzavim"</item>
+        <item>"Vayeilech"</item>
+        <item>"Ha'azinu"</item>
+        <item>"Vezos Haberachah"</item>
+        <item>"Vayakhel Pekudei"</item>
+        <item>"Tazria Metzora"</item>
+        <item>"Achrei Mos Kedošim"</item>
+        <item>"Behar Bechukosai"</item>
+        <item>"Chukas Balak"</item>
+        <item>"Mattos Masei"</item>
+        <item>"Nitzavim Vayeilech"</item>
+        <item>"Šekalim"</item>
+        <item>"Zachor"</item>
+        <item>"Parah"</item>
+        <item>"Hachodeš"</item>
+        <item>"Šuvah"</item>
+        <item>"Širah"</item>
+        <item>"Hagadol"</item>
+        <item>"Chazon"</item>
+        <item>"Nachamu"</item>
+    </string-array>
+</resources>

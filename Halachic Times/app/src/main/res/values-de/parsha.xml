@@ -1,0 +1,75 @@
+<resources>
+    <string-array name="parsha">
+        <item />
+        <item>"Bereschit"</item>
+        <item>"Noach"</item>
+        <item>"Lech Lecha"</item>
+        <item>"Wajera"</item>
+        <item>"Chaje Sara"</item>
+        <item>"Toldos"</item>
+        <item>"Wajeze"</item>
+        <item>"Wajischlach"</item>
+        <item>"Wajeschew"</item>
+        <item>"Mikez"</item>
+        <item>"Wajigasch"</item>
+        <item>"Wajechi"</item>
+        <item>"Schmot"</item>
+        <item>"Wa'era"</item>
+        <item>"Bo"</item>
+        <item>"Beschalach"</item>
+        <item>"Jitro"</item>
+        <item>"Mischpatim"</item>
+        <item>"Teruma"</item>
+        <item>"Tezawe"</item>
+        <item>"Ki Tisa"</item>
+        <item>"Wajakhel"</item>
+        <item>"Pekudej"</item>
+        <item>"Wajikra"</item>
+        <item>"Zaw"</item>
+        <item>"Schmini"</item>
+        <item>"Tasria"</item>
+        <item>"Mezora"</item>
+        <item>"Acharej"</item>
+        <item>"Kedoschim"</item>
+        <item>"Emor"</item>
+        <item>"Behar"</item>
+        <item>"Bechukotai"</item>
+        <item>"Bamidbar"</item>
+        <item>"Nasso"</item>
+        <item>"Behaalotcha"</item>
+        <item>"Schlach"</item>
+        <item>"Korach"</item>
+        <item>"Chukat"</item>
+        <item>"Balak"</item>
+        <item>"Pinchas"</item>
+        <item>"Matot"</item>
+        <item>"Masej"</item>
+        <item>"Dwarim"</item>
+        <item>"Waetchanan"</item>
+        <item>"Ekew"</item>
+        <item>"Reeh"</item>
+        <item>"Schoftim"</item>
+        <item>"Ki Teze"</item>
+        <item>"Ki Tawo"</item>
+        <item>"Nizawim"</item>
+        <item>"Wajelech"</item>
+        <item>"Haasinu"</item>
+        <item>"WeSot HaBracha"</item>
+        <item>"Wajakhel - Pekudej"</item>
+        <item>"Tasria - Mezora"</item>
+        <item>"Acharej Mos - Kedoschim"</item>
+        <item>"Behar - Bechukotai"</item>
+        <item>"Chukat - Balak"</item>
+        <item>"Matot - Masej"</item>
+        <item>"Nizawim - Wajelech"</item>
+        <item>"Schekalim"</item>
+        <item>"Sachor"</item>
+        <item>"Para"</item>
+        <item>"Hachodesch"</item>
+        <item>"Schuva"</item>
+        <item>"Schira"</item>
+        <item>"Hagadol"</item>
+        <item>"Chason"</item>
+        <item>"Nachamu"</item>
+    </string-array>
+</resources>

@@ -1,0 +1,75 @@
+<resources>
+    <string-array name="parsha">
+        <item />
+        <item>"Брейшит"</item>
+        <item>"Ноах"</item>
+        <item>"Лех Леха"</item>
+        <item>"Вайера"</item>
+        <item>"Чайей Сара"</item>
+        <item>"Толдот"</item>
+        <item>"Вайеце"</item>
+        <item>"Вайишлах"</item>
+        <item>"Ваеишев"</item>
+        <item>"Микец"</item>
+        <item>"Вайигаш"</item>
+        <item>"Вайехи"</item>
+        <item>"Шмот"</item>
+        <item>"Ваэра"</item>
+        <item>"Бо"</item>
+        <item>"Бешалах"</item>
+        <item>"Итро"</item>
+        <item>"Мишпатим"</item>
+        <item>"Трума"</item>
+        <item>"Тэцавэ"</item>
+        <item>"Ки Тиса"</item>
+        <item>"Вайакгэл"</item>
+        <item>"Пэкудэй"</item>
+        <item>"Вайикра"</item>
+        <item>"Цав"</item>
+        <item>"Шмини"</item>
+        <item>"Тазриа"</item>
+        <item>"Мецора"</item>
+        <item>"Ахарэй"</item>
+        <item>"Кдошим"</item>
+        <item>"Эмор"</item>
+        <item>"Бэар"</item>
+        <item>"Бэхукотай"</item>
+        <item>"Бэмидбар"</item>
+        <item>"Насо"</item>
+        <item>"Бэаалотха"</item>
+        <item>"Шлах"</item>
+        <item>"Корах"</item>
+        <item>"Хукат"</item>
+        <item>"Балак"</item>
+        <item>"Пинхас"</item>
+        <item>"Матот"</item>
+        <item>"Масъэй"</item>
+        <item>"Дварим"</item>
+        <item>"Ваэтханан"</item>
+        <item>"Эйкев"</item>
+        <item>"Рээ"</item>
+        <item>"Шофтим"</item>
+        <item>"Ки Теце"</item>
+        <item>"Ки Таво"</item>
+        <item>"Ницавим"</item>
+        <item>"Вайэлех"</item>
+        <item>"Аазину"</item>
+        <item>"Вэзот-Абраха"</item>
+        <item>"Вайакгэл - Пэкудэй"</item>
+        <item>"Тазриа - Мецора"</item>
+        <item>"Ахрей Мот - Кдошим"</item>
+        <item>"Бэар - Бэхукотай"</item>
+        <item>"Хукат - Балак"</item>
+        <item>"Матот - Масъэй"</item>
+        <item>"Ницавим - Вайэлех"</item>
+        <item>"Шкалим"</item>
+        <item>"Захор"</item>
+        <item>"Пара"</item>
+        <item>"Ааходеш"</item>
+        <item>"Шува"</item>
+        <item>"Шира"</item>
+        <item>"Аагадол"</item>
+        <item>"Чазон"</item>
+        <item>"Начаму"</item>
+    </string-array>
+</resources>

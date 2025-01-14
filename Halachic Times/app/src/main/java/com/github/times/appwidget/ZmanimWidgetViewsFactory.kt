@@ -138,9 +138,10 @@ class ZmanimWidgetViewsFactory(
         itemToday.jewishDate = jcal
         items.add(itemToday)
 
+        val dayOfWeekToday = adapter.dayOfWeek
         val holidayToday = adapter.holidayToday
         val candlesToday = adapter.candlesTodayCount
-        val holidayTodayName = getName(context, holidayToday, candlesToday)
+        val holidayTodayName = getName(context, dayOfWeekToday, holidayToday, candlesToday)
         if (holidayTodayName != null) {
             ZmanimItem(holidayTodayName).apply {
                 jewishDate = jcal
@@ -179,9 +180,10 @@ class ZmanimWidgetViewsFactory(
                         jewishDate = jcal
                         items.add(this)
                     }
+                    val dayOfWeekTomorrow = jcal.dayOfWeek
                     val holidayTomorrow = adapter.holidayTomorrow
                     val candlesTomorrow = adapter.candlesCount
-                    val holidayTomorrowName = getName(context, holidayTomorrow, candlesTomorrow)
+                    val holidayTomorrowName = getName(context, dayOfWeekTomorrow, holidayTomorrow, candlesTomorrow)
                     if (holidayTomorrowName != null) {
                         ZmanimItem(holidayTomorrowName).apply {
                             jewishDate = jcal

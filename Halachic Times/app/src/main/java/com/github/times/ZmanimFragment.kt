@@ -229,10 +229,15 @@ open class ZmanimFragment<VH : ZmanViewHolder, A : ZmanimAdapter<VH>, P : Zmanim
                 jewishDatePrevious = item?.jewishDate
             }
             bindViewGrouping(list, dateHebrew)
+            val dayOfWeekToday = adapter.dayOfWeek
             val holidayToday = adapter.holidayToday
             val candlesToday = adapter.candlesTodayCount
-            val holidayName = getName(context, holidayToday, candlesToday)
+            val holidayName = getName(context, dayOfWeekToday, holidayToday, candlesToday)
             bindViewGrouping(list, holidayName)
+
+            // Parsha of the week.
+            val parshaName = getName(context, adapter.parsha)
+            bindViewGrouping(list, parshaName)
 
             // Sefirat HaOmer?
             val omerToday = adapter.dayOfOmerToday
@@ -258,9 +263,10 @@ open class ZmanimFragment<VH : ZmanViewHolder, A : ZmanimAdapter<VH>, P : Zmanim
                     )
                     dateHebrew = adapter.formatDate(context, jewishDate)
                     bindViewGrouping(list, dateHebrew)
+                    val dayOfWeekTomorrow = jcal.dayOfWeek
                     val holidayTomorrow = adapter.holidayTomorrow
                     val candlesTomorrow = adapter.candlesCount
-                    val holidayTomorrowName = getName(context, holidayTomorrow, candlesTomorrow)
+                    val holidayTomorrowName = getName(context, dayOfWeekTomorrow, holidayTomorrow, candlesTomorrow)
                     bindViewGrouping(list, holidayTomorrowName)
 
                     // Sefirat HaOmer?

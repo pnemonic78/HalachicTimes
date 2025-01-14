@@ -1,0 +1,75 @@
+<resources>
+    <string-array name="parsha">
+        <item />
+        <item>"Bereshìt"</item>
+        <item>"Noach"</item>
+        <item>"Lech Lechà"</item>
+        <item>"Vayerà"</item>
+        <item>"Chayè Sarà"</item>
+        <item>"Toledòt"</item>
+        <item>"Vayetzé"</item>
+        <item>"Vayishlàch"</item>
+        <item>"Vayeshev"</item>
+        <item>"Mikètz"</item>
+        <item>"Vayigash"</item>
+        <item>"Vayechì"</item>
+        <item>"Shemòt"</item>
+        <item>"Vaerà"</item>
+        <item>"Bo"</item>
+        <item>"Beshalàch"</item>
+        <item>"Yitrò"</item>
+        <item>"Mishpatìm"</item>
+        <item>"Terumà"</item>
+        <item>"Tetzavé"</item>
+        <item>"Ki Tissà"</item>
+        <item>"Vayakhèl"</item>
+        <item>"Pekudé"</item>
+        <item>"Vayikrà"</item>
+        <item>"Tzav"</item>
+        <item>"Sheminì"</item>
+        <item>"Tazria"</item>
+        <item>"Metzorà"</item>
+        <item>"Acharè"</item>
+        <item>"Kedoshìm"</item>
+        <item>"Emor"</item>
+        <item>"Behàr"</item>
+        <item>"Bechukotai"</item>
+        <item>"Bamidbar"</item>
+        <item>"Nassò"</item>
+        <item>"Beha'alotechà"</item>
+        <item>"Shelàch"</item>
+        <item>"Korach"</item>
+        <item>"Chukat"</item>
+        <item>"Balak"</item>
+        <item>"Pinchàs"</item>
+        <item>"Matòt"</item>
+        <item>"Massè"</item>
+        <item>"Devarìm"</item>
+        <item>"Va'etchanan"</item>
+        <item>"'Ekev"</item>
+        <item>"Reè"</item>
+        <item>"Shoftìm"</item>
+        <item>"Ki Tetzè"</item>
+        <item>"Ki Tavò"</item>
+        <item>"Nitzavìm"</item>
+        <item>"Vayelech"</item>
+        <item>"Ha'azinu"</item>
+        <item>"Vezòt Haberachà"</item>
+        <item>"Vayakhèl - Pekudé"</item>
+        <item>"Tazria - Metzorà"</item>
+        <item>"Acharè - Kedoshìm"</item>
+        <item>"Behàr - Bechukotai"</item>
+        <item>"Chukàt - Balàk"</item>
+        <item>"Matòt - Massè"</item>
+        <item>"Nitzavìm - Vayelech"</item>
+        <item>"Shekalìm"</item>
+        <item>"Zachòr"</item>
+        <item>"Parà"</item>
+        <item>"Hachodesh"</item>
+        <item>"Shuvà"</item>
+        <item>"Shirà"</item>
+        <item>"Hagadol"</item>
+        <item>"Chazon"</item>
+        <item>"Nachamu"</item>
+    </string-array>
+</resources>

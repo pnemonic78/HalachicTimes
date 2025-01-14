@@ -256,6 +256,13 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
     val isSummaries: Boolean
 
     /**
+     * Is Parshat HaShavuah visible?
+     *
+     * @return `true` to show the parshah name.
+     */
+    val isParshahVisible: Boolean
+
+    /**
      * Are past times enabled?
      *
      * @return `true` if older times are not grayed.
@@ -668,6 +675,9 @@ interface ZmanimPreferences : ThemePreferences, LocalePreferences {
 
         /** Preference name for showing summaries.  */
         const val KEY_SUMMARIES = "summaries.visible"
+
+        /** Preference name for showing Parashat HaShavuah.  */
+        const val KEY_PARSHA = "parsha.visible"
 
         /** Preference name for enabling past times.  */
         const val KEY_PAST = "past"

@@ -3,12 +3,15 @@ package com.github.times
 import android.content.Context
 import androidx.annotation.StringRes
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.Parsha
+import java.util.Calendar
 
 object ZmanimDays {
     /**
      * Holiday none.
      */
     const val NO_HOLIDAY = -1
+
     /**
      * Holiday id for Shabbath.
      */
@@ -46,19 +49,28 @@ object ZmanimDays {
     }
 
     @StringRes
-    fun getNameId(day: Int): Int {
-        if (day < 0) return ID_NONE
-        return names[day] ?: ID_NONE
+    fun getNameId(holiday: Int): Int {
+        if (holiday < 0) return ID_NONE
+        return names[holiday] ?: ID_NONE
     }
 
-    fun getName(context: Context, day: Int): CharSequence? {
-        return getName(context, day, 0)
-    }
-
-    fun getName(context: Context, day: Int, count: Int): CharSequence? {
-        val nameId = getNameId(day)
-        if (nameId == ID_NONE) return null
+    fun getName(context: Context, dayOfWeek: Int, holiday: Int, count: Int): CharSequence? {
+        var nameId = getNameId(holiday)
+        if (nameId == ID_NONE) {
+            if (dayOfWeek == Calendar.SATURDAY) {
+                nameId = getNameId(SHABBATH)
+            } else {
+                return null
+            }
+        }
         if (count <= 0) return context.getText(nameId)
         return context.getString(nameId, count)
+    }
+
+    fun getName(context: Context, parsha: Parsha): CharSequence? {
+        if (parsha == Parsha.NONE) return null
+        val names = context.resources.getStringArray(R.array.parsha)
+        val index = parsha.ordinal
+        return names[index]
     }
 }

@@ -181,6 +181,8 @@
     <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
+    <string name="parsha_title">Šios savaitės Parsha</string>
+    <string name="parsha_summary">Šios savaitės Toros skaitymas</string>
     <string name="past_title">Kartų didesnis praėjo</string>
     <string name="seconds_title">Sekundės</string>
     <string name="year_final_title">Hebrajų metai su galutinės formos raidėmis</string>

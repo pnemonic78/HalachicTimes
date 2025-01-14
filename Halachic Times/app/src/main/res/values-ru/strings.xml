@@ -181,6 +181,8 @@
     <string name="omer_l">ла-Омер</string>
 
     <!-- Preferences -->
+    <string name="parsha_title">Глава этой недели</string>
+    <string name="parsha_summary">Чтение Торы на этой неделе</string>
     <string name="past_title">Прошедшие времена</string>
     <string name="seconds_title">Секунды</string>
     <string name="year_final_title">Год на иврите с буквами окончательной формы</string>

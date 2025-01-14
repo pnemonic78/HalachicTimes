@@ -181,6 +181,8 @@
     <string name="omer_l">laOmer</string>
 
     <!-- Preferences -->
+    <string name="parsha_title">Parsja van deze week</string>
+    <string name="parsha_summary">Torah-lezing van deze week</string>
     <string name="past_title">Tijden dat verstreken is</string>
     <string name="seconds_title">Seconden</string>
     <string name="year_final_title">Hebreeuws jaar met definitieve standaardbrieven</string>

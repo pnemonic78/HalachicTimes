@@ -181,6 +181,8 @@
     <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
+    <string name="parsha_title">Denne uges Parsha</string>
+    <string name="parsha_summary">Denne uges Toralæsning</string>
     <string name="past_title">Tider der er gået</string>
     <string name="seconds_title">Sekunder</string>
     <string name="year_final_title">Hebraisk årstal med afsluttende formbogstaver</string>

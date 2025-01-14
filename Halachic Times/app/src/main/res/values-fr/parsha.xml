@@ -1,0 +1,75 @@
+<resources>
+    <string-array name="parsha">
+        <item />
+        <item>"Béréchit"</item>
+        <item>"Noa'h"</item>
+        <item>"Lekh Lekha"</item>
+        <item>"Vayéra"</item>
+        <item>"‘Hayé Sarah"</item>
+        <item>"Toldot"</item>
+        <item>"Vayetsé"</item>
+        <item>"Vayichla'h"</item>
+        <item>"Vayéchev"</item>
+        <item>"Mikets"</item>
+        <item>"Vayigach"</item>
+        <item>"Vaye'hi"</item>
+        <item>"Chémot"</item>
+        <item>"Vaéra"</item>
+        <item>"Bo"</item>
+        <item>"Bechala'h"</item>
+        <item>"Yitro"</item>
+        <item>"Michpatim"</item>
+        <item>"Terouma"</item>
+        <item>"Tetsavé"</item>
+        <item>"Ki Tissa"</item>
+        <item>"Vayakhel"</item>
+        <item>"Pekoudei"</item>
+        <item>"Vayikra"</item>
+        <item>"Tsav"</item>
+        <item>"Chemini"</item>
+        <item>"Tazria"</item>
+        <item>"Metsora"</item>
+        <item>"A'harei"</item>
+        <item>"Kedochim"</item>
+        <item>"Emor"</item>
+        <item>"Behar"</item>
+        <item>"Be'houkotaï"</item>
+        <item>"Bamidbar"</item>
+        <item>"Nasso"</item>
+        <item>"Béhaalotekha"</item>
+        <item>"Chela'h"</item>
+        <item>"Kora'h"</item>
+        <item>"‘Houkat"</item>
+        <item>"Balak"</item>
+        <item>"Pin'has"</item>
+        <item>"Matot"</item>
+        <item>"Massei"</item>
+        <item>"Devarim"</item>
+        <item>"Vaet'hanane"</item>
+        <item>"Eikev"</item>
+        <item>"Réeh"</item>
+        <item>"Choftim"</item>
+        <item>"Ki Tetsé"</item>
+        <item>"Ki Tavo"</item>
+        <item>"Nitsavim"</item>
+        <item>"Vayelekh"</item>
+        <item>"Haazinou"</item>
+        <item>"Vezot Haberakha"</item>
+        <item>"Vayakhel - Pekoudei"</item>
+        <item>"Tazria - Metsora"</item>
+        <item>"A'harei Mos - Kedochim"</item>
+        <item>"Behar - Be'houkotaï"</item>
+        <item>"‘Houkat - Balak"</item>
+        <item>"Mattos - Masei"</item>
+        <item>"Nitsavim - Vayelekh"</item>
+        <item>"Chekalim"</item>
+        <item>"Zakhor"</item>
+        <item>"Para"</item>
+        <item>"Ha'Hodech"</item>
+        <item>"Chuva"</item>
+        <item>"Chira"</item>
+        <item>"Hagadol"</item>
+        <item>"‘Hazon"</item>
+        <item>"Nachamu"</item>
+    </string-array>
+</resources>

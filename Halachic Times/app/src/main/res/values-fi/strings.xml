@@ -181,6 +181,8 @@
     <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
+    <string name="parsha_title">Tämän viikon Parsha</string>
+    <string name="parsha_summary">Selle nädala Parsha</string>
     <string name="past_title">Ajat että kulunut</string>
     <string name="seconds_title">Sekuntia</string>
     <string name="year_final_title">Heprean vuosiluku lopullisilla kirjaimilla</string>

@@ -181,6 +181,8 @@
     <string name="omer_l">ла-Омер</string>
 
     <!-- Preferences -->
+    <string name="parsha_title">Парша тази седмица</string>
+    <string name="parsha_summary">Тазседмичното четене на Тора</string>
     <string name="past_title">Време са изминали</string>
     <string name="seconds_title">Секунди</string>
     <string name="year_final_title">Година на иврит с окончателни букви</string>

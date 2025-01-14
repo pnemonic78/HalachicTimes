@@ -20,6 +20,12 @@
             android:summaryOn="@string/year_final_summary_on"
             android:title="@string/year_final_title" />
         <SwitchPreference
+            android:defaultValue="@bool/parsha_defaultValue"
+            android:icon="@drawable/ic_settings_parsha"
+            android:key="parsha.visible"
+            android:summary="@string/parsha_summary"
+            android:title="@string/parsha_title" />
+        <SwitchPreference
             android:defaultValue="@bool/summaries_visible_defaultValue"
             android:key="summaries.visible"
             android:title="@string/summaries_title" />

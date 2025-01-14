@@ -304,6 +304,8 @@
 
     <!-- Preferences -->
     <string name="pref_zmanim_title" translatable="false">@string/app_name</string>
+    <string name="parsha_title">Parshat HaShavuah</string>
+    <string name="parsha_summary">Torah reading of the week</string>
     <string name="past_title">Times that have elapsed</string>
     <string name="seconds_title">Seconds</string>
     <string name="year_final_title">Hebrew year with final form letters</string>

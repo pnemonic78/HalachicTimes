@@ -1,0 +1,75 @@
+<resources>
+    <string-array name="parsha">
+        <item />
+        <item>"Bereisjis"</item>
+        <item>"Noach"</item>
+        <item>"Lech Lecha"</item>
+        <item>"Vajeira"</item>
+        <item>"Chajei Sarah"</item>
+        <item>"Toldos"</item>
+        <item>"Vajeitzei"</item>
+        <item>"Vajisjlach"</item>
+        <item>"Vajeisjev"</item>
+        <item>"Mikeitz"</item>
+        <item>"Vajigasj"</item>
+        <item>"Vajechi"</item>
+        <item>"Sjemos"</item>
+        <item>"Va'eira"</item>
+        <item>"Bo"</item>
+        <item>"Besjalach"</item>
+        <item>"Yisro"</item>
+        <item>"Misjpatim"</item>
+        <item>"Terumah"</item>
+        <item>"Tetzaveh"</item>
+        <item>"Ki Sisa"</item>
+        <item>"Vajakhel"</item>
+        <item>"Pekudei"</item>
+        <item>"Vajikra"</item>
+        <item>"Tzav"</item>
+        <item>"Sjemini"</item>
+        <item>"Tazria"</item>
+        <item>"Metzora"</item>
+        <item>"Achrei"</item>
+        <item>"Kedosjim"</item>
+        <item>"Emor"</item>
+        <item>"Behar"</item>
+        <item>"Bechukosai"</item>
+        <item>"Bamidbar"</item>
+        <item>"Nasso"</item>
+        <item>"Beha'aloscha"</item>
+        <item>"Sjelach"</item>
+        <item>"Korach"</item>
+        <item>"Chukas"</item>
+        <item>"Balak"</item>
+        <item>"Pinchas"</item>
+        <item>"Mattos"</item>
+        <item>"Masei"</item>
+        <item>"Devarim"</item>
+        <item>"Va'eschanan"</item>
+        <item>"Eikev"</item>
+        <item>"Re'eh"</item>
+        <item>"Sjoftim"</item>
+        <item>"Ki Seitzei"</item>
+        <item>"Ki Savo"</item>
+        <item>"Nitzavim"</item>
+        <item>"Vajeilech"</item>
+        <item>"Ha'azinu"</item>
+        <item>"Vezos Haberachah"</item>
+        <item>"Vajakhel Pekudei"</item>
+        <item>"Tazria Metzora"</item>
+        <item>"Achrei Mos Kedosjim"</item>
+        <item>"Behar Bechukosai"</item>
+        <item>"Chukas Balak"</item>
+        <item>"Mattos Masei"</item>
+        <item>"Nitzavim Vajeilech"</item>
+        <item>"Sjekalim"</item>
+        <item>"Zachor"</item>
+        <item>"Parah"</item>
+        <item>"Hachodesj"</item>
+        <item>"Sjuvah"</item>
+        <item>"Sjirah"</item>
+        <item>"Hagadol"</item>
+        <item>"Chazon"</item>
+        <item>"Nachamu"</item>
+    </string-array>
+</resources>

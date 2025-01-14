@@ -181,6 +181,8 @@
     <string name="omer_l">la-omer</string>
 
     <!-- Preferences -->
+    <string name="parsha_title">Parsha tohoto týdne</string>
+    <string name="parsha_summary">Tento týden čtení Tóry</string>
     <string name="past_title">Časy, které uplynuly</string>
     <string name="seconds_title">Sekundy</string>
     <string name="year_final_title">Hebrejský rok s písmeny konečné podoby</string>

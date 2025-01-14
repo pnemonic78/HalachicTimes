@@ -181,6 +181,8 @@
     <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
+    <string name="parsha_title">Selle nädala Parsha</string>
+    <string name="parsha_summary">Selle nädala Toora lugemine</string>
     <string name="past_title">Ajad mis on möödunud</string>
     <string name="seconds_title">Sekundit</string>
     <string name="year_final_title">Heebrea aasta lõppvormi tähtedega</string>

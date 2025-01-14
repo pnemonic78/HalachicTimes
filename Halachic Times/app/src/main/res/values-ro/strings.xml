@@ -181,6 +181,8 @@
     <string name="omer_l">Laomer</string>
 
     <!-- Preferences -->
+    <string name="parsha_title">Parașa săptămânii</string>
+    <string name="parsha_summary">Lectura Torei de săptămâna aceasta</string>
     <string name="past_title">Ori care s-au scurs</string>
     <string name="seconds_title">Secunde</string>
     <string name="year_final_title">Anul ebraic cu litere forma finale</string>
