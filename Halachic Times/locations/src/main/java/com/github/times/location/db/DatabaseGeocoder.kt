@@ -58,6 +58,8 @@ class DatabaseGeocoder(
     locale: Locale = context.getDefaultLocale()
 ) : GeocoderBase(locale), Closeable {
 
+    private val updateDebounce = mutableMapOf<Long, Long>()
+
     /**
      * Close database resources.
      */
@@ -249,17 +251,13 @@ class DatabaseGeocoder(
     }
 
     /**
-     * Insert the address into the local database.
+     * Insert/Upate the address into the local database.
      *
      * @param location the location.
      * @param address  the address.
      */
-    fun insertAddress(location: Location?, address: ZmanimAddress?) {
+    fun insertOrUpdateAddress(location: Location?, address: ZmanimAddress?) {
         if (address == null) return
-        val id = address.id
-        if (id != 0L) {
-            return
-        }
         // Cities have their own table.
         if (address is City) {
             insertOrUpdateCity(address)
@@ -278,11 +276,22 @@ class DatabaseGeocoder(
             latitude = location.latitude
             longitude = location.longitude
         }
-        val addresses = getFromLocation(latitude, longitude, 10)
-        val nearest = findNearestAddress(latitude, longitude, addresses, SAME_STREET)
-        if (nearest != null && ZmanimAddress.compare(nearest, address) == 0) {
-            return
+        val now = System.currentTimeMillis()
+        val id = address.id
+        if (id == 0L) {
+            val addresses = getFromLocation(latitude, longitude, 10)
+            val nearest = findNearestAddress(latitude, longitude, addresses, SAME_STREET)
+            if (nearest != null && ZmanimAddress.compare(nearest, address) == 0) {
+                return
+            }
+        } else {
+            val timeUpdated = updateDebounce[id] ?: 0L
+            val dt = now - timeUpdated
+            if (dt < TIMEOUT_DEBOUNCE) {
+                return
+            }
         }
+
         val values = ContentValues().apply {
             put(AddressColumns.LOCATION_LATITUDE, latitude)
             put(AddressColumns.LOCATION_LONGITUDE, longitude)
@@ -290,21 +299,28 @@ class DatabaseGeocoder(
             put(AddressColumns.LANGUAGE, address.locale.language)
             put(AddressColumns.LATITUDE, address.latitude)
             put(AddressColumns.LONGITUDE, address.longitude)
-            put(AddressColumns.TIMESTAMP, System.currentTimeMillis())
+            put(AddressColumns.TIMESTAMP, now)
             put(AddressColumns.FAVORITE, address.isFavorite)
         }
 
         val context: Context = context
         val resolver = context.contentResolver
+        val uri = LocationContract.Addresses.CONTENT_URI(context)
         try {
-            val uri = resolver.insert(LocationContract.Addresses.CONTENT_URI(context), values)
-            if (uri != null) {
-                address.id = ContentUris.parseId(uri)
+            if (id == 0L) {
+                val uriWithId = resolver.insert(uri, values)
+                if (uriWithId != null) {
+                    address.id = ContentUris.parseId(uriWithId)
+                }
+            } else {
+                val uriWithId = ContentUris.withAppendedId(uri, id)
+                resolver.update(uriWithId, values, null, null)
             }
         } catch (e: Exception) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
             Timber.e(e, "Error inserting address at $latitude,$longitude: ${e.message}")
         }
+        updateDebounce[id] = now
     }
 
     /**
@@ -452,19 +468,19 @@ class DatabaseGeocoder(
         val context: Context = context
         val resolver = context.contentResolver
         var id = city.id
+        val uri = LocationContract.Cities.CONTENT_URI(context)
         try {
             if (id == 0L) {
                 id = City.generateCityId(city)
                 values.put(BaseColumns._ID, id)
-                val uri = resolver.insert(LocationContract.Cities.CONTENT_URI(context), values)
-                if (uri != null) {
+
+                val uriWithId = resolver.insert(uri, values)
+                if (uriWithId != null) {
                     city.id = id
                 }
             } else {
-                val uri = ContentUris.withAppendedId(
-                    LocationContract.Cities.CONTENT_URI(context), id
-                )
-                resolver.update(uri, values, null, null)
+                val uriWithId = ContentUris.withAppendedId(uri, id)
+                resolver.update(uriWithId, values, null, null)
             }
         } catch (e: Exception) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/city
@@ -621,5 +637,8 @@ class DatabaseGeocoder(
         private const val ELEVATION_LEFT = ElevationColumns.LONGITUDE + " > ?"
         private const val ELEVATION_RIGHT = ElevationColumns.LONGITUDE + " < ?"
         private const val ELEVATION_BOX = "$ELEVATION_TOP AND $ELEVATION_BOTTOM AND $ELEVATION_LEFT AND $ELEVATION_RIGHT"
+
+        /** Prevent too many updates within timeout time.*/
+        private const val TIMEOUT_DEBOUNCE = 300L
     }
 }

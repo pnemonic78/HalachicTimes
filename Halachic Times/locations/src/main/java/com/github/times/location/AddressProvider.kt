@@ -280,7 +280,7 @@ class AddressProvider @JvmOverloads constructor(
      * @param address  the address.
      */
     fun insertOrUpdateAddress(location: Location?, address: ZmanimAddress) {
-        geocoderDatabase.insertAddress(location, address)
+        geocoderDatabase.insertOrUpdateAddress(location, address)
     }
 
     /**
