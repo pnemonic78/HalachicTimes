@@ -37,6 +37,9 @@ import java.util.Locale
  */
 class BingGeocoder(locale: Locale) : GeocoderBase(locale) {
 
+    /**
+     * [Find a Location by Point](https://learn.microsoft.com/en-us/bingmaps/rest-services/locations/find-a-location-by-point)
+     */
     @Throws(IOException::class)
     override fun getFromLocation(
         latitude: Double,
@@ -54,6 +57,9 @@ class BingGeocoder(locale: Locale) : GeocoderBase(locale) {
         return BingAddressResponseParser()
     }
 
+    /**
+     * [Get Elevations](https://learn.microsoft.com/en-us/bingmaps/rest-services/elevations/get-elevations)
+     */
     @Throws(IOException::class)
     override fun getElevation(latitude: Double, longitude: Double): Location? {
         require(latitude in LATITUDE_MIN..LATITUDE_MAX) { "latitude == $latitude" }
