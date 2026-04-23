@@ -88,7 +88,7 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     private val emphasisScale: Float = settings.emphasisScale
 
     /**
-     * The candles data.
+     * The candle data.
      */
     var candles = CandleData()
 

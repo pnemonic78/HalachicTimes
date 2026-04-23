@@ -1087,6 +1087,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             }
             return JewishCalendar(gcal).apply {
                 inIsrael = isInIsrael
+                isUseModernHolidays = isInIsrael
             }
         }
 
@@ -1955,7 +1956,12 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
 
                 JewishCalendar.YOM_KIPPUR -> countToday = CandleData.CANDLES_YOM_KIPPUR
                 JewishCalendar.CHANUKAH -> countToday = jewishDateToday.dayOfChanukah
-                else -> if (dayOfWeek == Calendar.SATURDAY) {
+                else -> if (jewishDateToday.isRoshChodesh) {
+                    holidayToday = JewishCalendar.ROSH_CHODESH
+                } else if (dayOfWeek == Calendar.SATURDAY) {
+                    if (holidayToday == NO_HOLIDAY) {
+                        holidayToday = SHABBATH
+                    }
                     countToday = CandleData.CANDLES_SHABBATH
                 }
             }
@@ -1991,12 +1997,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             whenCandles = when (dayOfWeek) {
                 Calendar.FRIDAY -> CandleData.BEFORE_SUNSET
 
-                Calendar.SATURDAY -> {
-                    if (holidayToday == NO_HOLIDAY) {
-                        holidayToday = SHABBATH
-                    }
-                    CandleData.MOTZE_SHABBATH
-                }
+                Calendar.SATURDAY -> CandleData.MOTZE_SHABBATH
 
                 else -> when (holidayToday) {
                     JewishCalendar.PESACH,
