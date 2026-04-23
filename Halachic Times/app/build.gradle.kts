@@ -96,7 +96,7 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFile(getDefaultProguardFile("proguard-android.txt"))
+            proguardFile(getDefaultProguardFile("proguard-android-optimize.txt"))
             proguardFile("proguard-rules.pro")
             signingConfig = signingConfigs["release"]
         }
@@ -107,19 +107,19 @@ android {
         create(Flavors.Internet.development) {
             dimension = Flavors.Internet.dimension
             isDefault = true
-            extraProperties["useGoogleGcm" ] = false
+            extraProperties["useGoogleGcm"] = false
         }
 
         create(Flavors.Internet.online) {
             dimension = Flavors.Internet.dimension
             buildConfigField("Boolean", "GOOGLE_GCM", "true")
-            extraProperties["useGoogleGcm" ] = true
+            extraProperties["useGoogleGcm"] = true
         }
 
         create(Flavors.Internet.offline) {
             dimension = Flavors.Internet.dimension
             buildConfigField("Boolean", "INTERNET", "false")
-            extraProperties["useGoogleGcm" ] = false
+            extraProperties["useGoogleGcm"] = false
         }
     }
 
@@ -162,7 +162,8 @@ afterEvaluate {
     android.productFlavors.forEach { flavor ->
         val flavorName = flavor.name.capitalize(Locale.ROOT)
         tasks.matching { task ->
-            (task.name.endsWith("GoogleServices") || task.name.contains("Crashlytics")) && task.name.contains(flavorName)
+            (task.name.endsWith("GoogleServices") || task.name.contains("Crashlytics"))
+                    && task.name.contains(flavorName)
         }.forEach { task ->
             task.enabled = flavor.extraProperties["useGoogleGcm"] as Boolean
         }
