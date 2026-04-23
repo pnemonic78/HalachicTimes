@@ -20,6 +20,7 @@ import android.content.ContentResolver.CURSOR_ITEM_BASE_TYPE
 import android.content.Context
 import android.net.Uri
 import android.provider.BaseColumns
+import androidx.core.net.toUri
 
 /**
  * Location provider contract.
@@ -34,7 +35,7 @@ object LocationContract {
 
     /** A content:// style uri to the authority for the addresses provider  */
     fun AUTHORITY_URI(context: Context): Uri {
-        return Uri.parse("content://" + AUTHORITY(context))
+        return ("content://" + AUTHORITY(context)).toUri()
     }
 
     /**

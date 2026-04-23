@@ -35,7 +35,6 @@ import android.graphics.Rect
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
@@ -47,6 +46,7 @@ import androidx.core.app.AlarmManagerCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
+import androidx.core.net.toUri
 import com.github.times.BuildConfig
 import com.github.times.CandleData
 import com.github.times.R
@@ -66,8 +66,8 @@ import com.github.times.preference.ZmanimPreferences
 import com.github.times.remind.ZmanimReminderItem.Companion.EXTRA_ITEM
 import com.github.times.remind.ZmanimReminderItem.Companion.from
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
-import java.util.Calendar
 import timber.log.Timber
+import java.util.Calendar
 
 /**
  * Check for reminders, and manage the notifications.
@@ -199,8 +199,7 @@ class ZmanimReminder(private val context: Context) {
                 formatDateTime(whenFirst),
                 formatDateTime(item.time)
             )
-            val silenceAt = whenFirst + getSilenceOffsetMillis(settings)
-            notifyFuture(item, whenFirst, silenceAt)
+            notifyFuture(item, whenFirst)
         }
         itemUpcoming?.let { notifyUpcoming(it) }
     }
@@ -225,7 +224,7 @@ class ZmanimReminder(private val context: Context) {
     private fun cancelNotification() {
         Timber.i("cancelNotification")
         alarmManager?.let { alarms ->
-            val alarmIntent = createAlarmIntent(null as ZmanimItem?)
+            val alarmIntent = createAlarmPendingIntent(null as ZmanimItem?)
             alarms.cancel(alarmIntent)
         }
         notificationManager?.cancel(ID_NOTIFY)
@@ -304,23 +303,10 @@ class ZmanimReminder(private val context: Context) {
     /**
      * Set alarm manager to alert us for the next reminder.
      *
-     * @param settings the preferences.
      * @param item      the zmanim item to notify about.
      * @param triggerAt the upcoming reminder, in milliseconds.
      */
-    fun notifyFuture(settings: ZmanimPreferences, item: ZmanimItem, triggerAt: TimeMillis) {
-        val silenceAt = triggerAt + getSilenceOffsetMillis(settings)
-        notifyFuture(item, triggerAt, silenceAt)
-    }
-
-    /**
-     * Set alarm manager to alert us for the next reminder.
-     *
-     * @param item      the zmanim item to notify about.
-     * @param triggerAt the upcoming reminder, in milliseconds.
-     * @param silenceAt when to silence the reminder, in milliseconds.
-     */
-    fun notifyFuture(item: ZmanimItem, triggerAt: TimeMillis, silenceAt: TimeMillis) {
+    fun notifyFuture(item: ZmanimItem, triggerAt: TimeMillis) {
         val alarms = alarmManager ?: return
         val contentTitle = item.title
         Timber.i(
@@ -329,7 +315,7 @@ class ZmanimReminder(private val context: Context) {
             formatDateTime(triggerAt),
             formatDateTime(item.time)
         )
-        val alarmIntent = createAlarmIntent(item)
+        val alarmIntent = createAlarmPendingIntent(item)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (!alarms.canScheduleExactAlarms()) {
                 AlarmManagerCompat.setAndAllowWhileIdle(
@@ -346,6 +332,14 @@ class ZmanimReminder(private val context: Context) {
             AlarmManager.RTC_WAKEUP,
             triggerAt,
             alarmIntent
+        )
+
+        // Schedule in case of reboot and alarms are reset.
+        val workIntent: Intent = createAlarmIntent(item)
+        ZmanimReminderWorker.enqueueFuture(
+            context,
+            workIntent,
+            triggerAt - DateUtils.MINUTE_IN_MILLIS
         )
     }
 
@@ -365,11 +359,10 @@ class ZmanimReminder(private val context: Context) {
         return PendingIntent.getActivity(context, ID_NOTIFY, intent, FLAGS_UPDATE)
     }
 
-    private fun createAlarmIntent(item: ZmanimItem?): PendingIntent {
-        val reminderItem = from(item)
+    private fun createAlarmPendingIntent(item: ZmanimItem?): PendingIntent {
+        val intent = createAlarmIntent(item)
         if (isAlarmService) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val intent = createAlarmServiceIntent(reminderItem)
                 return PendingIntent.getForegroundService(
                     context,
                     ID_ALARM_REMINDER,
@@ -378,10 +371,17 @@ class ZmanimReminder(private val context: Context) {
                 )
             }
         }
-        val intent = Intent(context, receiverClass)
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, FLAGS_UPDATE)
+    }
+
+    private fun createAlarmIntent(item: ZmanimItem?): Intent {
+        val reminderItem = from(item)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return createAlarmServiceIntent(reminderItem)
+        }
+        return Intent(context, receiverClass)
             .setAction(ACTION_REMIND)
             .put(EXTRA_ITEM, reminderItem)
-        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, FLAGS_UPDATE)
     }
 
     private fun createAlarmIntent(
@@ -1042,7 +1042,7 @@ class ZmanimReminder(private val context: Context) {
                 if (!alarms.canScheduleExactAlarms()) {
                     val intent = Intent(
                         Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM,
-                        Uri.parse("package:" + context.packageName)
+                        ("package:" + context.packageName).toUri()
                     )
                     context.startActivity(intent)
                 }

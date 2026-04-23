@@ -19,8 +19,8 @@ import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.widget.RemoteViews
+import androidx.core.net.toUri
 import com.github.app.isBrightWallpaper
 import com.github.times.R
 import com.github.times.ZmanViewHolder
@@ -89,7 +89,7 @@ class ZmanimListWidget : ZmanimWidget() {
     private fun bindListView(context: Context, appWidgetId: Int, list: RemoteViews) {
         val adapter = Intent(context, ZmanimWidgetService::class.java)
             .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-        adapter.data = Uri.parse(adapter.toUri(Intent.URI_INTENT_SCHEME))
+        adapter.data = adapter.toUri(Intent.URI_INTENT_SCHEME).toUri()
         list.setRemoteAdapter(ID_LIST, adapter)
     }
 }

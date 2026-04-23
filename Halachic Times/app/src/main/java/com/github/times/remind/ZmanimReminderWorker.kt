@@ -17,15 +17,17 @@ package com.github.times.remind
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
+import android.text.format.DateUtils
+import androidx.core.net.toUri
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.github.times.BuildConfig
+import com.github.times.TimeMillis
 import com.github.times.location.LocationData
 import com.github.times.location.ZmanimLocationListener
 import com.github.times.location.ZmanimLocationListener.Companion.ACTION_LOCATION_CHANGED
@@ -33,6 +35,7 @@ import com.github.times.remind.ZmanimReminder.Companion.ACTION_REMIND
 import com.github.times.remind.ZmanimReminder.Companion.ACTION_SILENCE
 import com.github.times.remind.ZmanimReminderItem.Companion.EXTRA_ITEM
 import java.io.Serializable
+import java.util.concurrent.TimeUnit
 
 /**
  * Background worker for reminders.
@@ -54,6 +57,7 @@ class ZmanimReminderWorker(context: Context, params: WorkerParameters) : Worker(
         private const val DATA_DATA = "android.intent.data"
 
         private const val WORK_REMINDER_TAG = BuildConfig.APPLICATION_ID + ":reminder"
+        private const val WORK_FUTURE_TAG = BuildConfig.APPLICATION_ID + ":future"
 
         fun toWorkData(intent: Intent): Data {
             val data = Data.Builder()
@@ -176,7 +180,7 @@ class ZmanimReminderWorker(context: Context, params: WorkerParameters) : Worker(
             val intent = Intent(action)
                 .putExtras(extras)
             if (!dataString.isNullOrEmpty()) {
-                intent.data = Uri.parse(dataString)
+                intent.data = dataString.toUri()
             }
             return intent
         }
@@ -191,8 +195,24 @@ class ZmanimReminderWorker(context: Context, params: WorkerParameters) : Worker(
             WorkManager.getInstance(context).enqueue(workRequest)
         }
 
+        fun enqueueFuture(context: Context, intent: Intent, scheduleRequestedAt: TimeMillis) {
+            val delay = scheduleRequestedAt - System.currentTimeMillis()
+            if (delay < 0L) return
+
+            val requestData = toWorkData(intent)
+            val workRequest = OneTimeWorkRequest.Builder(ZmanimReminderWorker::class.java)
+                .setInputData(requestData)
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .addTag(WORK_FUTURE_TAG)
+                .build()
+
+            WorkManager.getInstance(context).enqueue(workRequest)
+        }
+
         fun cancel(context: Context) {
-            WorkManager.getInstance(context).cancelAllWorkByTag(WORK_REMINDER_TAG)
+            val workManager = WorkManager.getInstance(context)
+            workManager.cancelAllWorkByTag(WORK_REMINDER_TAG)
+            workManager.cancelAllWorkByTag(WORK_FUTURE_TAG)
         }
     }
 }

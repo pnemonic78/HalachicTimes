@@ -164,6 +164,7 @@ import com.kosherjava.zmanim.ShaahZmanis
 import java.io.File
 import java.util.Calendar
 import java.util.Locale
+import androidx.core.net.toUri
 
 /**
  * Simple application preferences implementation.
@@ -677,7 +678,7 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
             } else if (path[0] == File.separatorChar) {
                 Uri.fromFile(File(path))
             } else {
-                Uri.parse(path)
+                path.toUri()
             }
         }
 
