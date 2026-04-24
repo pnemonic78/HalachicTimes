@@ -22,7 +22,7 @@ android {
         targetSdk = libs.versions.targetSdk.toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = versionMajor * 100 + versionMinor
-        versionName = "${versionMajor}." + versionMinor.toString().padStart(2, '0')
+        versionName = "${versionMajor}.${versionMinor}"
 
         val locales = listOf(
             "bg",
