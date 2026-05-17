@@ -1,19 +1,21 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    alias(alibs.plugins.android.application)
+    alias(alibs.plugins.kotlin.android)
 }
 
 val versionMajor = project.properties["APP_VERSION_MAJOR"].toString().toInt()
 val versionMinor = project.properties["APP_VERSION_MINOR"].toString().toInt()
 
 android {
-    compileSdk = libs.versions.compileSdk.toInt()
+    compileSdk = libs.versions.android.compileSdk.toInt()
     namespace = "com.github.compass"
 
     defaultConfig {
         applicationId = "net.sf.compass"
-        minSdk = libs.versions.minSdk.toInt()
-        targetSdk = libs.versions.targetSdk.toInt()
+        minSdk = libs.versions.android.minSdk.toInt()
+        targetSdk = libs.versions.android.targetSdk.toInt()
         versionCode = versionMajor * 100 + versionMinor
         versionName = "${versionMajor}." + versionMinor.toString().padStart(2, '0')
     }
@@ -23,8 +25,10 @@ android {
         targetCompatibility = BuildVersions.jvm
     }
 
-    kotlinOptions {
-        jvmTarget = BuildVersions.jvm.toString()
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
+        }
     }
 
     signingConfigs {
@@ -47,7 +51,7 @@ android {
         }
         release {
             isMinifyEnabled = true
-            proguardFile(getDefaultProguardFile("proguard-android.txt"))
+            proguardFile(getDefaultProguardFile("proguard-android-optimize.txt"))
             proguardFile("proguard-rules.pro")
             signingConfig = signingConfigs["release"]
         }

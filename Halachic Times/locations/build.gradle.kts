@@ -1,10 +1,11 @@
 import com.android.build.api.dsl.LibraryDefaultConfig
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Base64
 
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.serialization)
+    alias(alibs.plugins.android.library)
+    alias(alibs.plugins.kotlin.android)
+    alias(alibs.plugins.kotlin.serialization)
 }
 
 fun LibraryDefaultConfig.encodeApiKey(name: String) {
@@ -15,11 +16,11 @@ fun LibraryDefaultConfig.encodeApiKey(name: String) {
 }
 
 android {
-    compileSdk = libs.versions.compileSdk.toInt()
+    compileSdk = libs.versions.android.compileSdk.toInt()
     namespace = "com.github.times.location"
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.toInt()
+        minSdk = libs.versions.android.minSdk.toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         encodeApiKey("BING_API_KEY")
@@ -35,7 +36,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFile(getDefaultProguardFile("proguard-android.txt"))
+            proguardFile(getDefaultProguardFile("proguard-android-optimize.txt"))
             proguardFile("proguard-rules.pro")
             consumerProguardFiles("proguard-rules.pro")
         }
@@ -46,8 +47,10 @@ android {
         targetCompatibility = BuildVersions.jvm
     }
 
-    kotlinOptions {
-        jvmTarget = BuildVersions.jvm.toString()
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
+        }
     }
 
     lint {
@@ -69,13 +72,13 @@ dependencies {
     implementation(project(":common"))
 
     // Maps
-    implementation(libs.google.maps)
-    implementation(libs.cardview)
+    implementation(alibs.google.maps)
+    implementation(alibs.cardview)
 
     // Background tasks
-    implementation(libs.work.runtime)
+    implementation(alibs.work.runtime)
 
-    testImplementation(libs.bundles.test)
+    testImplementation(alibs.bundles.test)
     testImplementation(kotlin("reflect"))
-    androidTestImplementation(libs.bundles.test.android)
+    androidTestImplementation(alibs.bundles.test.android)
 }

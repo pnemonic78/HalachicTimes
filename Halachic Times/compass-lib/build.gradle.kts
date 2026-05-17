@@ -1,21 +1,23 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(alibs.plugins.android.library)
+    alias(alibs.plugins.kotlin.android)
 }
 
 android {
-    compileSdk = libs.versions.compileSdk.toInt()
+    compileSdk = libs.versions.android.compileSdk.toInt()
     namespace = "com.github.times.compass.lib"
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.toInt()
+        minSdk = libs.versions.android.minSdk.toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFile(getDefaultProguardFile("proguard-android.txt"))
+            proguardFile(getDefaultProguardFile("proguard-android-optimize.txt"))
             proguardFile("proguard-rules.pro")
             consumerProguardFiles("proguard-rules.pro")
         }
@@ -31,8 +33,10 @@ android {
         targetCompatibility = BuildVersions.jvm
     }
 
-    kotlinOptions {
-        jvmTarget = BuildVersions.jvm.toString()
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
+        }
     }
 
     lint {
@@ -47,6 +51,6 @@ dependencies {
     implementation(project(":locations"))
 
     // Testing
-    testImplementation(libs.bundles.test)
-    androidTestImplementation(libs.bundles.test.android)
+    testImplementation(alibs.bundles.test)
+    androidTestImplementation(alibs.bundles.test.android)
 }

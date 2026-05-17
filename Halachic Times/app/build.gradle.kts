@@ -1,25 +1,26 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.extraProperties
 import java.util.Locale
 
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.crashlytics)
-    alias(libs.plugins.google.services)
+    alias(alibs.plugins.android.application)
+    alias(alibs.plugins.kotlin.android)
+    alias(alibs.plugins.kotlin.serialization)
+    alias(alibs.plugins.crashlytics)
+    alias(alibs.plugins.google.services)
 }
 
 val versionMajor = project.properties["APP_VERSION_MAJOR"].toString().toInt()
 val versionMinor = project.properties["APP_VERSION_MINOR"].toString().toInt()
 
 android {
-    compileSdk = libs.versions.compileSdk.toInt()
+    compileSdk = libs.versions.android.compileSdk.toInt()
     namespace = "com.github.times"
 
     defaultConfig {
         applicationId = "net.sf.times"
-        minSdk = libs.versions.minSdk.toInt()
-        targetSdk = libs.versions.targetSdk.toInt()
+        minSdk = libs.versions.android.minSdk.toInt()
+        targetSdk = libs.versions.android.targetSdk.toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = versionMajor * 100 + versionMinor
         versionName = "${versionMajor}.${versionMinor}"
@@ -71,8 +72,10 @@ android {
         targetCompatibility = BuildVersions.jvm
     }
 
-    kotlinOptions {
-        jvmTarget = BuildVersions.jvm.toString()
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
+        }
     }
 
     signingConfigs {
@@ -86,6 +89,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        compose = true
         viewBinding = true
     }
 
@@ -149,12 +153,12 @@ dependencies {
     implementation(project(":compass-lib"))
 
     // Background tasks
-    implementation(libs.work.runtime)
+    implementation(alibs.work.runtime)
 
     // Testing
-    testImplementation(libs.bundles.test)
-    androidTestImplementation(libs.bundles.test.android)
-    implementation(libs.crashlytics)
+    testImplementation(alibs.bundles.test)
+    androidTestImplementation(alibs.bundles.test.android)
+    implementation(alibs.crashlytics)
 }
 
 // Disable Google Services plugin for some flavors.

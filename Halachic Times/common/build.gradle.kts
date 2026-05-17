@@ -1,14 +1,16 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(alibs.plugins.android.library)
+    alias(alibs.plugins.kotlin.android)
 }
 
 android {
-    compileSdk = libs.versions.compileSdk.toInt()
+    compileSdk = libs.versions.android.compileSdk.toInt()
     namespace = "com.github.times.common"
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.toInt()
+        minSdk = libs.versions.android.minSdk.toInt()
 
         val locales = listOf(
             "ar",
@@ -49,14 +51,16 @@ android {
         targetCompatibility = BuildVersions.jvm
     }
 
-    kotlinOptions {
-        jvmTarget = BuildVersions.jvm.toString()
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFile(getDefaultProguardFile("proguard-android.txt"))
+            proguardFile(getDefaultProguardFile("proguard-android-optimize.txt"))
             proguardFile("proguard-rules.pro")
             consumerProguardFile("proguard-rules.pro")
         }
@@ -71,5 +75,5 @@ android {
 dependencies {
     implementation(project(":android-lib:lib"))
 
-    testImplementation(libs.bundles.test)
+    testImplementation(alibs.bundles.test)
 }

@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     application
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.serialization)
+    alias(alibs.plugins.kotlin.jvm)
+    alias(alibs.plugins.kotlin.serialization)
 }
 
 application {
@@ -38,7 +38,7 @@ dependencies {
     implementation(project(":android-lib:kvm"))
 
     // Maps
-    implementation(libs.google.maps)
+    implementation(alibs.google.maps)
 
-    testImplementation(libs.bundles.test)
+    testImplementation(alibs.bundles.test)
 }
