@@ -3,12 +3,15 @@
 
     <Preference
         android:fragment="com.github.times.compass.preference.AppearancePreferenceFragment"
-        android:title="@string/pref_appearance_title"/>
+        android:icon="@drawable/ic_settings_general"
+        android:title="@string/pref_appearance_title" />
     <Preference
         android:fragment="com.github.times.compass.preference.PrivacyPreferenceFragment"
-        android:title="@string/pref_privacy_security_title"/>
+        android:icon="@drawable/ic_settings_privacy"
+        android:title="@string/pref_privacy_security_title" />
     <Preference
         android:fragment="com.github.times.compass.preference.AboutPreferenceFragment"
-        android:title="@string/preferences_about_title"/>
+        android:icon="@drawable/ic_settings_about"
+        android:title="@string/preferences_about_title" />
 
 </PreferenceScreen>

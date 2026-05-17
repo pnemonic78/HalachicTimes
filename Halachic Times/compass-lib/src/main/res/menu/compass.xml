@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_location"
-        android:icon="@android:drawable/ic_menu_myplaces"
+        android:icon="@drawable/ic_menu_locations"
         android:orderInCategory="1"
         android:title="@string/menu_location"
         app:showAsAction="ifRoom" />

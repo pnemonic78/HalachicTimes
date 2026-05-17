@@ -20,7 +20,6 @@ import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -43,9 +42,9 @@ import com.github.times.location.LocationAdapter.LocationItemListener
 import com.github.times.location.databinding.LocationsBinding
 import com.github.times.location.impl.FavoritesLocationAdapter
 import com.github.times.location.impl.HistoryLocationAdapter
+import timber.log.Timber
 import java.lang.ref.WeakReference
 import kotlin.math.abs
-import timber.log.Timber
 
 /**
  * Pick a city from the list.
@@ -97,14 +96,17 @@ abstract class LocationTabActivity<P : ThemePreferences> : InsetsActivity(),
         tabHost = tabs
 
         val tabFavorites = tabs.newTabSpec(TAG_FAVORITES)
-        tabFavorites.setIndicator(null, ResourcesCompat.getDrawable(res, ic_menu_star, null))
+        tabFavorites.setIndicator(
+            null,
+            ResourcesCompat.getDrawable(res, com.github.times.common.R.drawable.ic_favorite, null)
+        )
         tabFavorites.setContent(R.id.list_favorites)
         tabs.addTab(tabFavorites)
 
         val tabAll = tabs.newTabSpec(TAG_ALL)
         tabAll.setIndicator(
             null,
-            ResourcesCompat.getDrawable(res, android.R.drawable.ic_menu_mapmode, null)
+            ResourcesCompat.getDrawable(res, com.github.times.common.R.drawable.ic_globe, null)
         )
         tabAll.setContent(android.R.id.list)
         tabs.addTab(tabAll)
@@ -112,7 +114,7 @@ abstract class LocationTabActivity<P : ThemePreferences> : InsetsActivity(),
         val tabHistory = tabs.newTabSpec(TAG_HISTORY)
         tabHistory.setIndicator(
             null,
-            ResourcesCompat.getDrawable(res, android.R.drawable.ic_menu_recent_history, null)
+            ResourcesCompat.getDrawable(res, com.github.times.common.R.drawable.ic_history, null)
         )
         tabHistory.setContent(R.id.list_history)
         tabs.addTab(tabHistory)
@@ -391,21 +393,5 @@ abstract class LocationTabActivity<P : ThemePreferences> : InsetsActivity(),
         private const val TAB_HISTORY = 2
 
         private const val REQUEST_ADD = 0xADD
-
-        private var ic_menu_star = 0
-
-        init {
-            try {
-                val res = Resources.getSystem()
-                ic_menu_star = res.getIdentifier("ic_menu_star", "drawable", "android")
-                if (ic_menu_star == 0) {
-                    val clazz = Class.forName("com.android.internal.R\$drawable")
-                    val field = clazz.getDeclaredField("ic_menu_star")
-                    ic_menu_star = field.getInt(null)
-                }
-            } catch (e: Exception) {
-                ic_menu_star = android.R.drawable.btn_star_big_off
-            }
-        }
     }
 }

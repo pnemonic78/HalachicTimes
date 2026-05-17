@@ -6,11 +6,13 @@
         android:defaultValue="@string/coords_format_defaultValue"
         android:entries="@array/coords_format_entries"
         android:entryValues="@array/coords_format_values"
+        android:icon="@drawable/ic_settings_measure"
         android:key="coords.format"
         android:title="@string/coords_format_title"
         app:useSimpleSummaryProvider="true" />
     <SwitchPreference
         android:defaultValue="@bool/summaries_visible_defaultValue"
+        android:icon="@drawable/ic_settings_summary"
         android:key="summaries.visible"
         android:title="@string/summaries_title" />
     <ListPreference

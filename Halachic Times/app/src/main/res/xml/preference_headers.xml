@@ -3,18 +3,23 @@
 
     <PreferenceScreen
         android:fragment="com.github.times.preference.GeneralPreferenceFragment"
+        android:icon="@drawable/ic_settings_general"
         android:title="@string/pref_general_title" />
     <PreferenceScreen
         android:fragment="com.github.times.preference.AppearancePreferenceFragment"
+        android:icon="@drawable/ic_settings_appearance"
         android:title="@string/pref_appearance_title" />
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanimPreferenceFragment"
+        android:icon="@drawable/ic_settings_opinion"
         android:title="@string/pref_zmanim_title" />
     <PreferenceScreen
         android:fragment="com.github.times.preference.PrivacyPreferenceFragment"
+        android:icon="@drawable/ic_settings_privacy"
         android:title="@string/pref_privacy_security_title" />
     <PreferenceScreen
         android:fragment="com.github.times.preference.AboutPreferenceFragment"
+        android:icon="@drawable/ic_settings_about"
         android:title="@string/preferences_about_title" />
 
 </PreferenceScreen>

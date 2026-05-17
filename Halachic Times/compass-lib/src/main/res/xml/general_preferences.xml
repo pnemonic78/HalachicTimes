@@ -4,12 +4,17 @@
 
     <ListPreference
         android:defaultValue="@string/compass_bearing_defaultValue"
-        android:dialogIcon="@android:drawable/ic_menu_compass"
+        android:dialogIcon="@drawable/ic_settings_bearing"
         android:entries="@array/compass_bearing_entries"
         android:entryValues="@array/compass_bearing_values"
-        android:icon="@android:drawable/ic_menu_compass"
+        android:icon="@drawable/ic_settings_bearing"
         android:key="compass.bearing"
         android:title="@string/compass_bearing"
         app:useSimpleSummaryProvider="true" />
+    <SwitchPreference
+        android:defaultValue="@bool/coords_elevation_visible_defaultValue"
+        android:icon="@drawable/ic_settings_elevation"
+        android:key="coords.elevation"
+        android:title="@string/coords_elevation_title" />
 
 </PreferenceScreen>
