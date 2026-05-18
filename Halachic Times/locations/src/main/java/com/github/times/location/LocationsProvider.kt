@@ -40,7 +40,6 @@ import com.github.lang.isTrue
 import com.github.times.location.AddressWorker.Companion.enqueueAddress
 import com.github.times.location.AddressWorker.Companion.enqueueElevation
 import com.github.times.location.ZmanimLocation.Companion.compare
-import com.github.times.location.ZmanimLocation.Companion.compareAll
 import com.github.times.location.ZmanimLocation.Companion.distanceBetween
 import com.github.times.location.ZmanimLocationListener.Companion.ACTION_ADDRESS
 import com.github.times.location.ZmanimLocationListener.Companion.ACTION_ELEVATION
@@ -48,10 +47,10 @@ import com.github.times.location.ZmanimLocationListener.Companion.ACTION_LOCATIO
 import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_ADDRESS
 import com.github.times.location.ZmanimLocationListener.Companion.EXTRA_LOCATION
 import com.github.times.location.country.CountriesGeocoder
+import timber.log.Timber
 import java.util.TimeZone
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.math.min
-import timber.log.Timber
 
 /**
  * Locations provider.
@@ -119,7 +118,16 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     /**
      * The location formatter.
      */
-    private val formatterHelper: LocationFormatter by lazy { createLocationFormatter(context) }
+    private var _formatterHelper: LocationFormatter? = null
+    private val formatterHelper: LocationFormatter
+        get() {
+            var helper = _formatterHelper
+            if (helper == null) {
+                helper = createLocationFormatter(context)
+                _formatterHelper = helper
+            }
+            return helper
+        }
 
     /**
      * Register a location listener to receive location notifications.
@@ -460,6 +468,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         if (!hasActiveListeners()) {
             removeUpdates()
         }
+        _formatterHelper = null
     }
 
     /**
@@ -506,7 +515,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
             // "JST" could be "Japan ST".
             val offset = tz.rawOffset + tz.dstSavings
             return (offset in TZ_OFFSET_ISRAEL..TZ_OFFSET_DST_ISRAEL) &&
-                (TZ_IDT == id || TZ_IST == id || TZ_JST == id)
+                    (TZ_IDT == id || TZ_IST == id || TZ_JST == id)
         }
         val latitude = location.latitude
         val longitude = location.longitude
