@@ -81,7 +81,7 @@ open class ZmanimWidget : ZmanimAppWidget() {
         var item: ZmanimItem?
         var position = 0
         while (position < countToday) {
-            item = adapterToday.getItem(position)
+            item = adapterToday[position]
             if (item.isNullOrEmptyOrElapsed()) {
                 position++
                 continue
@@ -92,7 +92,7 @@ open class ZmanimWidget : ZmanimAppWidget() {
         }
         position = 0
         while (position < countTomorrow) {
-            item = adapterTomorrow.getItem(position)
+            item = adapterTomorrow[position]
             if (item.isNullOrEmptyOrElapsed()) {
                 position++
                 continue

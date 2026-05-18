@@ -159,7 +159,7 @@ class ZmanimReminder(private val context: Context) {
             candles = adapter.candles
             count = adapter.itemCount
             for (i in 0 until count) {
-                item = adapter.getItem(i)
+                item = adapter[i]
                 if (item.isNullOrEmptyOrElapsed()) continue
 
                 // Is the zman to be reminded?

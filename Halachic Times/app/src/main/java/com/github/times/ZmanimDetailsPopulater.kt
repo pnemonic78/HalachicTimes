@@ -179,9 +179,9 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         var date: KosherDate
         var title: Int
 
-        date = cal.alosBaalHatanya
-        title = R.string.dawn_baal_hatanya
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+//        date = cal.alosBaalHatanya
+//        title = R.string.dawn_baal_hatanya
+//        adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.alos19Degrees
         title = R.string.dawn_19
@@ -191,13 +191,13 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         title = R.string.dawn_19_8
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.alos120
-        title = R.string.dawn_120
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos120Zmanis
-        title = R.string.dawn_120_zmanis
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+//        date = cal.alos120
+//        title = R.string.dawn_120
+//        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+//
+//        date = cal.alos120Zmanis
+//        title = R.string.dawn_120_zmanis
+//        adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.alos18Degrees
         title = R.string.dawn_18
@@ -211,33 +211,33 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         title = R.string.dawn_16
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.alos96
-        title = R.string.dawn_96
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos96Zmanis
-        title = R.string.dawn_96_zmanis
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos90
-        title = R.string.dawn_90
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos90Zmanis
-        title = R.string.dawn_90_zmanis
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos72
-        title = R.string.dawn_72
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos72Zmanis
-        title = R.string.dawn_72_zmanis
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos60
-        title = R.string.dawn_60
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+//        date = cal.alos96
+//        title = R.string.dawn_96
+//        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+//
+//        date = cal.alos96Zmanis
+//        title = R.string.dawn_96_zmanis
+//        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+//
+//        date = cal.alos90
+//        title = R.string.dawn_90
+//        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+//
+//        date = cal.alos90Zmanis
+//        title = R.string.dawn_90_zmanis
+//        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+//
+//        date = cal.alos72
+//        title = R.string.dawn_72
+//        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+//
+//        date = cal.alos72Zmanis
+//        title = R.string.dawn_72_zmanis
+//        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+//
+//        date = cal.alos60
+//        title = R.string.dawn_60
+//        adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
     private fun populateTallis(adapter: A, cal: ComplexZmanimCalendar, jewishDate: JewishDate) {

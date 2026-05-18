@@ -77,7 +77,7 @@ class ClockWidget : ZmanimAppWidget() {
         val items = mutableListOf<ZmanimItem>()
         var position = 0
         while (position < count) {
-            item = adapter.getItem(position)
+            item = adapter[position]
             if (item.isNullOrEmptyOrElapsed()) {
                 position++
                 continue
@@ -90,7 +90,7 @@ class ClockWidget : ZmanimAppWidget() {
             count = adapter.itemCount
             position = 0
             while (position < count) {
-                item = adapter.getItem(position)
+                item = adapter[position]
                 if (item.isNullOrEmptyOrElapsed()) {
                     position++
                     continue

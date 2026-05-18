@@ -167,7 +167,7 @@ class ZmanimWidgetViewsFactory(
             var jewishDate: JewishDate? = null
             var item: ZmanimItem?
             for (i in 0 until count) {
-                item = adapter.getItem(i)
+                item = adapter[i]
                 if (item.isNullOrEmpty() || item.jewishDate == null) {
                     continue
                 }

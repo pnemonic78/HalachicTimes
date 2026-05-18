@@ -710,7 +710,7 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
                     val count = masterAdapter.itemCount
                     var item: ZmanimItem?
                     for (i in 0 until count) {
-                        item = masterAdapter.getItem(i)
+                        item = masterAdapter[i]
                         if (item != null && item.titleId == masterId) {
                             return true
                         }

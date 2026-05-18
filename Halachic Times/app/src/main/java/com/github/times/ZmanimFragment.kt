@@ -215,7 +215,7 @@ open class ZmanimFragment<VH : ZmanViewHolder, A : ZmanimAdapter<VH>, P : Zmanim
         val timeViews = arrayOfNulls<View>(count)
         var jewishDatePrevious: JewishDate? = null
         if (count > 0) {
-            item = adapter.getItem(position)
+            item = adapter[position]
             if (item != null) {
                 if (item.titleId == R.string.hour) {
                     viewHolder = adapter.onCreateViewHolder(list, 0)
@@ -223,7 +223,7 @@ open class ZmanimFragment<VH : ZmanViewHolder, A : ZmanimAdapter<VH>, P : Zmanim
                     bindView(list, viewHolder, item)
                     position++
                     if (position < count) {
-                        item = adapter.getItem(position)
+                        item = adapter[position]
                     }
                 }
                 jewishDatePrevious = item?.jewishDate
@@ -246,7 +246,7 @@ open class ZmanimFragment<VH : ZmanViewHolder, A : ZmanimAdapter<VH>, P : Zmanim
                 bindViewGrouping(list, omerLabel)
             }
             while (position < count) {
-                item = adapter.getItem(position)
+                item = adapter[position]
                 if (item == null) {
                     position++
                     continue

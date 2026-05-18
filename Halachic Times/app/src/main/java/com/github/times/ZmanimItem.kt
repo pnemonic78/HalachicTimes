@@ -47,7 +47,7 @@ class ZmanimItem @JvmOverloads constructor(
      * The time label.
      */
     var timeLabel: CharSequence? = null
-    //TODO private set
+        internal set
 
     /**
      * Has the time elapsed?
@@ -117,11 +117,11 @@ class ZmanimItem @JvmOverloads constructor(
 
     override fun toString(): String {
         return "ZmanimItem{" +
-            "title=" + (title ?: ("(0x" + Integer.toHexString(titleId) + ")")) +
-            ", summary=" + summary +
-            ", time=" + timeLabel +
-            ", empty=" + isEmptyOrElapsed +
-            '}'
+                "title=" + (title ?: ("(0x" + Integer.toHexString(titleId) + ")")) +
+                ", summary=" + summary +
+                ", time=" + timeLabel +
+                ", empty=" + isEmptyOrElapsed +
+                '}'
     }
 
     companion object {

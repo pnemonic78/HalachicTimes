@@ -198,12 +198,12 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
         var item: ZmanimItem?
         var time: TimeMillis
         for (i in 0 until count) {
-            item = adapter.getItem(i)
+            item = adapter[i]
             if (item.isNullOrEmptyOrElapsed()) {
                 continue
             }
             time = item.time
-            if (now < time && time < whenUpdate) {
+            if (time in (now + 1)..<whenUpdate) {
                 whenUpdate = time
             }
         }
