@@ -2,8 +2,10 @@
 android-compileSdk = "37"
 android-minSdk = "23"
 android-targetSdk = "37"
+desugar = "2.1.5"
 
 [libraries]
+desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 
 [bundles]
 

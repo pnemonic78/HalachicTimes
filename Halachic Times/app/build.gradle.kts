@@ -68,6 +68,9 @@ android {
     }
 
     compileOptions {
+        // For java.time before SDK 26
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = BuildVersions.jvm
         targetCompatibility = BuildVersions.jvm
     }
@@ -151,6 +154,8 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":locations"))
     implementation(project(":compass-lib"))
+
+    coreLibraryDesugaring(libs.desugar)
 
     // Background tasks
     implementation(alibs.work.runtime)
