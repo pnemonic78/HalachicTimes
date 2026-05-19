@@ -49,6 +49,7 @@ import androidx.core.content.PermissionChecker
 import androidx.core.net.toUri
 import com.github.times.BuildConfig
 import com.github.times.CandleData
+import com.github.times.KosherDate
 import com.github.times.R
 import com.github.times.TimeMillis
 import com.github.times.ZmanViewHolder
@@ -60,6 +61,7 @@ import com.github.times.ZmanimHelper.formatDateTime
 import com.github.times.ZmanimItem
 import com.github.times.ZmanimItem.Companion.NEVER
 import com.github.times.ZmanimPopulater
+import com.github.times.calendar
 import com.github.times.isNullOrEmptyOrElapsed
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
@@ -127,8 +129,8 @@ class ZmanimReminder(private val context: Context) {
     ) {
         val latest = settings.latestReminder
         Timber.i("remind latest [%s]", formatDateTime(latest))
-        val gcal = Calendar.getInstance()
-        val now = gcal.timeInMillis
+        val gcal: KosherDate = KosherDate.now()
+        val now = System.currentTimeMillis()
         val was = now - WAS_DELTA
         val soon = now + SOON_DELTA
         var item: ZmanimItem?
@@ -143,15 +145,15 @@ class ZmanimReminder(private val context: Context) {
         val jcal = JewishCalendar(gcal).apply {
             inIsrael = populater.isInIsrael
         }
-        val cal = populater.calendar.calendar
+        val cal: Calendar = populater.calendar.calendar
         var candles: CandleData
 
         // Find the first reminder in the upcoming week.
         var day = 1
         while (nextDay && day <= DAYS_FORWARD) {
             if (day > 1) {
-                gcal.add(Calendar.DAY_OF_MONTH, 1)
-                jcal.setDate(gcal)
+                gcal.plusDays(1)
+                jcal.setGregorianDate(gcal)
                 cal.add(Calendar.DAY_OF_MONTH, 1)
                 populater.setCalendar(cal)
             }

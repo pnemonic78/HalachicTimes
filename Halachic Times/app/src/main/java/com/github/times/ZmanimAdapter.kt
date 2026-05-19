@@ -24,17 +24,16 @@ import androidx.annotation.StringRes
 import com.github.times.databinding.TimesItemBinding
 import com.github.times.preference.ZmanimPreferences
 import com.github.util.TimeUtils.roundUp
-import com.github.util.dayOfWeek
-import com.github.util.era
 import com.github.util.getDefaultLocale
 import com.github.util.isLocaleRTL
 import com.github.widget.ArrayAdapter
-import com.kosherjava.zmanim.ComplexZmanimCalendar
+import com.kosherjava.zmanim.ComprehensiveZmanimCalendar
 import com.kosherjava.zmanim.hebrewcalendar.HebrewDateFormatter
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate
 import java.text.SimpleDateFormat
-import java.util.GregorianCalendar
+import java.time.chrono.IsoEra
+import java.util.TimeZone
 
 /**
  * Adapter for halachic times list.
@@ -54,14 +53,16 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     /**
      * The calendar for the relevant day that the adapter is populated.
      */
-    var calendar: ComplexZmanimCalendar = ComplexZmanimCalendar().apply {
+    var calendar: ComprehensiveZmanimCalendar = ComprehensiveZmanimCalendar().apply {
         setShaahZmanisType(settings.hourType)
         isUseElevation = settings.isUseElevation
     }
+
+    var timeZone: TimeZone = TimeZone.getDefault()
         set(value) {
             field = value
-            timeFormat.timeZone = value.calendar.timeZone
-            timeFormatSeasonalHour.timeZone = value.calendar.timeZone
+            timeFormat.timeZone = value
+            timeFormatSeasonalHour.timeZone = value
         }
 
     private val now = System.currentTimeMillis()
@@ -177,7 +178,7 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     fun add(
         @StringRes titleId: Int,
         @StringRes summaryId: Int,
-        date: KosherDate,
+        date: KosherDateTime,
         jewishDate: JewishDate?,
         remote: Boolean = false
     ) = add(titleId, summaryId, date?.time, jewishDate, remote)
@@ -233,7 +234,7 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
     fun add(
         @StringRes titleId: Int,
         summary: CharSequence?,
-        date: KosherDate,
+        date: KosherDateTime,
         jewishDate: JewishDate?,
         remote: Boolean,
         hour: Boolean = (titleId == R.string.hour)
@@ -309,12 +310,12 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
      */
     val jewishCalendar: JewishCalendar?
         get() {
-            val gcal = calendar.calendar
-            if (gcal.era < GregorianCalendar.AD) {
+            val date = calendar.localDate
+            if (date.era == IsoEra.BCE) {
                 // Avoid future "IllegalArgumentException".
                 return null
             }
-            return JewishCalendar(gcal).apply {
+            return JewishCalendar(date).apply {
                 this.inIsrael = this@ZmanimAdapter.inIsrael
             }
         }
@@ -424,7 +425,7 @@ open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
      * @return the day.
      */
     val dayOfWeek: Int
-        get() = calendar.calendar.dayOfWeek
+        get() = calendar.localDate.dayOfWeek.value
 
     companion object {
         /**

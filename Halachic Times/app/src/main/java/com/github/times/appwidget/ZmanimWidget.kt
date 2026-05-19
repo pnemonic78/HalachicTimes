@@ -32,7 +32,6 @@ import com.github.times.ZmanimItem
 import com.github.times.copy
 import com.github.times.isNullOrEmptyOrElapsed
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate
-import java.util.Calendar
 
 /**
  * Shows a list of halachic times (*zmanim*) for prayers in a widget.
@@ -69,7 +68,7 @@ open class ZmanimWidget : ZmanimAppWidget() {
         val candlesTomorrow = adapterToday.candlesCount
         val omerTomorrow = adapterTomorrow.dayOfOmerToday
         val jewishDateOvermorrow = (jewishDateTomorrow.copy()).apply {
-            forward(Calendar.DATE, 1)
+            plusDays(1)
         }
         val holidayOvermorrow = adapterTomorrow.holidayTomorrow
         val candlesOvermorrow = adapterTomorrow.candlesCount

@@ -17,6 +17,7 @@ package com.github.times.location
 
 import android.content.Context
 import com.kosherjava.zmanim.util.GeoLocation
+import java.time.ZoneId
 import java.util.TimeZone
 import kotlin.math.max
 
@@ -33,13 +34,22 @@ class ZmanimLocations(context: Context) : LocationsProvider(context) {
      * @return the location - `null` otherwise.
      */
     fun getGeoLocation(timeZone: TimeZone): GeoLocation? {
+        return getGeoLocation(timeZone.toZoneId())
+    }
+    /**
+     * Get the location.
+     *
+     * @param zone the time zone.
+     * @return the location - `null` otherwise.
+     */
+    fun getGeoLocation(zone: ZoneId): GeoLocation? {
         val location = getLocation() ?: return null
         val locationName = location.provider
         val latitude = location.latitude
         val longitude = location.longitude
         val elevation =
             if (location.hasAltitude()) max(GEOLOCATION_ELEVATION_MIN, location.altitude) else 0.0
-        return GeoLocation(locationName, latitude, longitude, elevation, timeZone)
+        return GeoLocation(locationName, latitude, longitude, elevation, zone)
     }
 
     /**

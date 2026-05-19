@@ -42,7 +42,6 @@ import com.github.times.preference.ZmanimPreferences
 import com.github.util.isLocaleRTL
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate
-import java.util.Calendar
 
 /**
  * Factory to create views for list widget.
@@ -175,8 +174,8 @@ class ZmanimWidgetViewsFactory(
                     jewishDate = item.jewishDate
                 } else if (itemTomorrow == null && item.jewishDate != jewishDate) {
                     val zmanCal = adapter.calendar
-                    jcal = JewishCalendar(zmanCal.calendar)
-                    jcal.forward(Calendar.DATE, 1)
+                    jcal = JewishCalendar(zmanCal.localDate)
+                    jcal.plusDays(1)
                     itemTomorrow = ZmanimItem(adapter.formatDate(context, jcal)).apply {
                         jewishDate = jcal
                         items.add(this)
