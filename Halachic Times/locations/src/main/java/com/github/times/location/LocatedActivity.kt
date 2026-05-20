@@ -15,13 +15,11 @@
  */
 package com.github.times.location
 
-import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -31,8 +29,8 @@ import com.github.app.ThemeCallbacks
 import com.github.preference.ThemePreferences
 import com.github.times.location.LocationsProvider.Companion.hasNoLocationPermission
 import com.github.times.location.ZmanimLocation.Companion.compare
-import java.util.TimeZone
 import timber.log.Timber
+import java.util.TimeZone
 
 /**
  * Activity that needs locations.
@@ -114,9 +112,7 @@ abstract class LocatedActivity<P : ThemePreferences> : InsetsActivity(),
         if (location != null) {
             locations.setLocation(location)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            initPermissions()
-        }
+        initPermissions()
     }
 
     override fun onPreCreate() {
@@ -219,7 +215,6 @@ abstract class LocatedActivity<P : ThemePreferences> : InsetsActivity(),
         return address?.formatted ?: getString(R.string.location_unknown)
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     protected fun initPermissions() {
         val permissions = mutableSetOf<String>()
         checkPermissions(permissions)
@@ -228,7 +223,6 @@ abstract class LocatedActivity<P : ThemePreferences> : InsetsActivity(),
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     protected open fun checkPermissions(permissions: MutableCollection<String>) {
         if (hasNoLocationPermission(this)) {
             permissions.addAll(LocationsProvider.PERMISSIONS)

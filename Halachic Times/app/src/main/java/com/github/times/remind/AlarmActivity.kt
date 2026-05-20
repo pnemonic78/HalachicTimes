@@ -16,11 +16,9 @@
 package com.github.times.remind
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -45,11 +43,11 @@ import com.github.times.databinding.AlarmActivityBinding
 import com.github.times.preference.RingtonePreference
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
-import com.github.util.getDefaultLocale
 import com.github.util.TimeUtils.roundUp
+import com.github.util.getDefaultLocale
+import timber.log.Timber
 import java.text.Format
 import java.text.SimpleDateFormat
-import timber.log.Timber
 
 /**
  * Shows a reminder alarm for a (*zman*).
@@ -112,9 +110,7 @@ class AlarmActivity<P : ZmanimPreferences> : InsetsActivity(), ThemeCallbacks<P>
         }
         handleIntent(intent)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkPermissions()
-        }
+        checkPermissions()
     }
 
     override fun onPreCreate() {
@@ -248,7 +244,6 @@ class AlarmActivity<P : ZmanimPreferences> : InsetsActivity(), ThemeCallbacks<P>
         return stopService(intent)
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     private fun checkPermissions() {
         val context: Context = this
         if (PermissionChecker.checkCallingOrSelfPermission(

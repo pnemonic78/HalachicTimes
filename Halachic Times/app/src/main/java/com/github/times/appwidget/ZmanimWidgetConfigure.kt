@@ -1,6 +1,5 @@
 package com.github.times.appwidget
 
-import android.annotation.TargetApi
 import android.app.AlertDialog
 import android.appwidget.AppWidgetManager
 import android.content.Context
@@ -32,9 +31,7 @@ class ZmanimWidgetConfigure : InsetsActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.widget_configure_activity)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkWallpaperPermission(this)
-        }
+        checkWallpaperPermission(this)
         val appWidgetId = intent.extras?.getInt(
             AppWidgetManager.EXTRA_APPWIDGET_ID,
             AppWidgetManager.INVALID_APPWIDGET_ID
@@ -46,7 +43,6 @@ class ZmanimWidgetConfigure : InsetsActivity() {
     /**
      * @see com.github.times.preference.AppearancePreferenceFragment
      */
-    @TargetApi(Build.VERSION_CODES.M)
     private fun checkWallpaperPermission(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             // Wallpaper colors don't need permissions.

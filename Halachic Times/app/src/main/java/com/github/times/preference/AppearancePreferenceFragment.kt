@@ -37,8 +37,8 @@ import com.github.times.preference.ZmanimPreferences.Companion.KEY_THEME_WIDGET
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_THEME_WIDGET_RATIONALE
 import com.github.util.LocaleUtils.sortByDisplay
 import com.github.util.LocaleUtils.unique
-import java.util.Locale
 import timber.log.Timber
+import java.util.Locale
 
 /**
  * This fragment shows the preferences for the Appearance header.
@@ -124,32 +124,30 @@ class AppearancePreferenceFragment : AbstractPreferenceFragment() {
             // Wallpaper colors don't need permissions.
             return true
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (PermissionChecker.checkCallingOrSelfPermission(
-                    context,
+        if (PermissionChecker.checkCallingOrSelfPermission(
+                context,
+                PERMISSION_WALLPAPER
+            ) != PermissionChecker.PERMISSION_GRANTED
+        ) {
+            val activity: Activity = requireActivity()
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    activity,
                     PERMISSION_WALLPAPER
-                ) != PermissionChecker.PERMISSION_GRANTED
+                )
             ) {
-                val activity: Activity = requireActivity()
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        activity,
-                        PERMISSION_WALLPAPER
-                    )
-                ) {
-                    AlertDialog.Builder(context)
-                        .setTitle(R.string.appwidget_theme_title)
-                        .setMessage(R.string.appwidget_theme_permission_rationale)
-                        .setCancelable(true)
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
-                            requestPermission.launch(PERMISSION_WALLPAPER)
-                        }
-                        .show()
-                } else {
-                    requestPermission.launch(PERMISSION_WALLPAPER)
-                }
-                return true
+                AlertDialog.Builder(context)
+                    .setTitle(R.string.appwidget_theme_title)
+                    .setMessage(R.string.appwidget_theme_permission_rationale)
+                    .setCancelable(true)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(android.R.string.ok) { _: DialogInterface, _: Int ->
+                        requestPermission.launch(PERMISSION_WALLPAPER)
+                    }
+                    .show()
+            } else {
+                requestPermission.launch(PERMISSION_WALLPAPER)
             }
+            return true
         }
         return false
     }

@@ -16,7 +16,6 @@
 package com.github.times.preference
 
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import androidx.annotation.AttrRes
 import androidx.annotation.StyleRes
@@ -49,20 +48,18 @@ class RingtonePreference @JvmOverloads constructor(
     private var requestPermissions = false
 
     override fun onClick() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (requestPermissions) {
-                val context = context
-                if (PermissionChecker.checkCallingOrSelfPermission(
-                        context,
-                        PERMISSION_RINGTONE
-                    ) != PermissionChecker.PERMISSION_GRANTED
-                ) {
-                    val owner = requestPermissionsFragment
-                    val requestCode = requestPermissionsCode
-                    if (owner != null) {
-                        owner.requestPermissions(arrayOf(PERMISSION_RINGTONE), requestCode)
-                        return
-                    }
+        if (requestPermissions) {
+            val context = context
+            if (PermissionChecker.checkCallingOrSelfPermission(
+                    context,
+                    PERMISSION_RINGTONE
+                ) != PermissionChecker.PERMISSION_GRANTED
+            ) {
+                val owner = requestPermissionsFragment
+                val requestCode = requestPermissionsCode
+                if (owner != null) {
+                    owner.requestPermissions(arrayOf(PERMISSION_RINGTONE), requestCode)
+                    return
                 }
             }
         }

@@ -15,7 +15,6 @@
  */
 package com.github.times.appwidget
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -72,21 +71,18 @@ class ZmanimWidgetPreferenceFragment : AbstractPreferenceFragment() {
         return super.onPreferenceClick(preference)
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     private fun checkWallpaperPermission(context: Context): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             // Wallpaper colors don't need permissions.
             return true
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (PermissionChecker.checkCallingOrSelfPermission(
-                    context,
-                    PERMISSION_WALLPAPER
-                ) != PermissionChecker.PERMISSION_GRANTED
-            ) {
-                requestPermission.launch(PERMISSION_WALLPAPER)
-                return true
-            }
+        if (PermissionChecker.checkCallingOrSelfPermission(
+                context,
+                PERMISSION_WALLPAPER
+            ) != PermissionChecker.PERMISSION_GRANTED
+        ) {
+            requestPermission.launch(PERMISSION_WALLPAPER)
+            return true
         }
         return false
     }

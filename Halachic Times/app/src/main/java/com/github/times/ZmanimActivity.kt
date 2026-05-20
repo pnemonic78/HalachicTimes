@@ -15,7 +15,6 @@
  */
 package com.github.times
 
-import android.annotation.TargetApi
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
@@ -24,7 +23,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.location.Location
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -216,9 +214,7 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            initPermissions()
-        }
+        initPermissions()
         handleIntent(intent)
     }
 
@@ -837,7 +833,6 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
         return SimpleThemeCallbacks(context, preferences)
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     override fun checkPermissions(permissions: MutableCollection<String>) {
         super.checkPermissions(permissions)
         ZmanimReminder.checkPermissions(this, permissions)

@@ -41,7 +41,6 @@ import android.os.PowerManager
 import android.os.PowerManager.WakeLock
 import android.provider.Settings
 import android.text.format.DateUtils
-import androidx.annotation.RequiresApi
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -341,7 +340,7 @@ class ZmanimReminder(private val context: Context) {
         ZmanimReminderWorker.enqueueFuture(
             context,
             workIntent,
-            triggerAt - DateUtils.MINUTE_IN_MILLIS
+            triggerAt - DateUtils.SECOND_IN_MILLIS
         )
     }
 
@@ -1014,7 +1013,6 @@ class ZmanimReminder(private val context: Context) {
         private const val FLAGS_UPDATE =
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
 
-        @RequiresApi(api = Build.VERSION_CODES.M)
         fun checkPermissions(context: Context, permissions: MutableCollection<String>) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 val nm =
@@ -1029,7 +1027,6 @@ class ZmanimReminder(private val context: Context) {
             }
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.M)
         fun checkPermissions(activity: Activity) {
             val context: Context = activity
             val permissions = mutableSetOf<String>()
