@@ -22,7 +22,7 @@ class AlarmKlaxon(private val context: Context, private val preferences: ZmanimP
 
     private fun startNoise() {
         Timber.v("start noise")
-        playSound(context)
+        playSound()
         vibrate(true)
     }
 
@@ -32,11 +32,15 @@ class AlarmKlaxon(private val context: Context, private val preferences: ZmanimP
         vibrate(false)
     }
 
-    private fun playSound(context: Context) {
-        val ringtone = getRingtone(context)
-        Timber.v("play sound %s", ringtone)
-        if ((ringtone != null) && !ringtone.isPlaying) {
-            ringtone.start()
+    private fun playSound() {
+        try {
+            val ringtone = getRingtone(context)
+            Timber.v("play sound %s", ringtone)
+            if ((ringtone != null) && !ringtone.isPlaying) {
+                ringtone.start()
+            }
+        } catch (e: IllegalStateException) {
+            Timber.e(e, "error playing sound: %s", e.message)
         }
     }
 
@@ -114,7 +118,6 @@ class AlarmKlaxon(private val context: Context, private val preferences: ZmanimP
     }
 
     companion object {
-        const val REQUEST_PERMISSIONS = 0x702E // TONE
         private const val VIBRATE_DURATION = DateUtils.SECOND_IN_MILLIS
     }
 }
