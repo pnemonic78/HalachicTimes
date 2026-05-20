@@ -644,7 +644,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         val twilight: KosherDateTime = date
         val summaryTwilight = summary
 
-        var opinionNightfall = settings.nightfall
+        val opinionNightfall = settings.nightfall
         dateAndSummary = getNightfall(cal, opinionNightfall)
         date = dateAndSummary.first
         summary = dateAndSummary.second
@@ -784,7 +784,6 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         dateAndSummary =
             getMidnight(calYesterday, opinionMidnight, middayYesterday, nightfallYesterday)
         date = dateAndSummary.first
-        val midnight = date
         if (date != null && date < sunset) {
             calDate.assign(date)
             if (isSameDay(gcal, calDate)) {
@@ -798,40 +797,54 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote)
         }
 
-        when (settings.guardsCount) {
-            OPINION_4 -> {
-                date = getMidnightGuard4(sunset, midnightTomorrow)
-                summary = R.string.guard_second
-            }
-
-            else -> {
-                date = getMidnightGuard3(sunset, sunriseTomorrow)
-                summary = R.string.guard_second
-            }
+        val startGuards = when (settings.guardBegins) {
+            OPINION_TWILIGHT -> twilight
+            OPINION_NIGHT -> nightfall
+            else -> sunset
         }
-        adapter.add(R.string.midnight_guard, summary, date, jewishDateTomorrow, remote)
+        val finishGuards = when (settings.guardEnds) {
+            OPINION_DAWN -> getDawnTomorrow(cal, settings)
+            else -> sunriseTomorrow
+        }
+        val startGuardsYesterday = when (settings.guardBegins) {
+            OPINION_TWILIGHT -> getTwilight(calYesterday, settings.twilight).first
+            OPINION_NIGHT -> nightfallYesterday
+            else -> getSunset(calYesterday, opinionSunset).first
+        }
+        val finishGuardsYesterday = when (settings.guardEnds) {
+            OPINION_DAWN -> dawn
+            else -> sunrise
+        }
 
         when (settings.guardsCount) {
             OPINION_4 -> {
-                summary = R.string.guard_fourth
-                if (midnight != null && midnight < sunrise) {
-                    date = getMorningGuard4(midnight, sunrise)
-                    adapter.add(R.string.morning_guard, summary, date, jewishDate, remote)
-                } else {
-                    date = getMorningGuard4(midnightTomorrow, sunriseTomorrow)
-                    adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote)
-                }
-            }
+                date = getMidnightGuard4(startGuards, finishGuards)
+                summary = R.string.guard_second
+                adapter.add(R.string.midnight_guard, summary, date, jewishDateTomorrow, remote)
 
-            else -> {
-                summary = R.string.guard_third
-                date = getMorningGuard3(sunset, sunriseTomorrow)
+                date = getMorningGuard4(startGuards, finishGuards)
+                summary = R.string.guard_fourth
                 calDate.assign(date)
                 if (isSameDay(gcal, calDate)) {
                     adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote)
                 } else {
-                    val sunsetYesterday = getSunset(calYesterday, opinionSunset).first
-                    date = getMorningGuard3(sunsetYesterday, sunrise)
+                    date = getMorningGuard4(startGuardsYesterday, finishGuardsYesterday)
+                    adapter.add(R.string.morning_guard, summary, date, jewishDate, remote)
+                }
+            }
+
+            else -> {
+                date = getMidnightGuard3(startGuards, finishGuards)
+                summary = R.string.guard_second
+                adapter.add(R.string.midnight_guard, summary, date, jewishDateTomorrow, remote)
+
+                summary = R.string.guard_third
+                date = getMorningGuard3(startGuards, finishGuards)
+                calDate.assign(date)
+                if (isSameDay(gcal, calDate)) {
+                    adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote)
+                } else {
+                    date = getMorningGuard3(startGuardsYesterday, finishGuardsYesterday)
                     adapter.add(R.string.morning_guard, summary, date, jewishDate, remote)
                 }
             }
@@ -1563,28 +1576,6 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         return getMidnight(cal, opinion, midday, nightfall).first
     }
 
-    /**
-     * A method that returns "the midnight guard" (ashmurat hatichona).
-     *
-     * Nocturnal guard is from sunset until 22:00.<br/>
-     * Midnight guard is from 22:00 until 02:00.<br/>
-     * Morning guard is from 02:00 until sunrise.
-     *
-     * @return the Second Guard.
-     */
-    protected fun getMidnightGuard(
-        cal: ComprehensiveZmanimCalendar,
-        settings: ZmanimPreferences
-    ): KosherDateTime {
-        val sunset = getSunset(cal, settings)
-        val opinion = settings.guardsCount
-        return if (OPINION_4 == opinion) {
-            getMidnightGuard4(sunset, getMidnight(cal, settings))
-        } else {
-            getMidnightGuard3(sunset, getSunriseTomorrow(cal, settings))
-        }
-    }
-
     protected fun getMidnightGuard3(start: KosherDateTime, finish: KosherDateTime): KosherDateTime {
         if (start.isNever() || finish.isNever()) {
             return NEVER
@@ -1597,28 +1588,6 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             return NEVER
         }
         return start + ((finish - start) / 4)
-    }
-
-    /**
-     * A method that returns "the morning guard" (ashmurat haboker).
-     *
-     * Nocturnal guard is from sunset until 22:00.<br/>
-     * Midnight guard is from 22:00 until 02:00.<br/>
-     * Morning guard is from 02:00 until sunrise.
-     *
-     * @return the Third Guard.
-     */
-    protected fun getMorningGuard(
-        cal: ComprehensiveZmanimCalendar,
-        settings: ZmanimPreferences
-    ): KosherDateTime {
-        val sunrise = getSunriseTomorrow(cal, settings)
-        val opinion = settings.guardsCount
-        return if (OPINION_4 == opinion) {
-            getMorningGuard4(getMidnight(cal, settings), sunrise)
-        } else {
-            getMorningGuard3(getSunset(cal, settings), sunrise)
-        }
     }
 
     protected fun getMorningGuard3(start: KosherDateTime, finish: KosherDateTime): KosherDateTime {
