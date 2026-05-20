@@ -5,13 +5,15 @@ import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
+import android.os.Build
 import android.text.format.DateUtils
+import androidx.core.content.ContextCompat.createAttributionContext
 import com.github.media.RingtoneManager
 import com.github.os.VibratorCompat
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
-import java.io.IOException
 import timber.log.Timber
+import java.io.IOException
 
 class AlarmKlaxon(private val context: Context, private val preferences: ZmanimPreferences) {
 
@@ -34,6 +36,7 @@ class AlarmKlaxon(private val context: Context, private val preferences: ZmanimP
 
     private fun playSound() {
         try {
+            val context = createAttributionContext(context, "media")
             val ringtone = getRingtone(context)
             Timber.v("play sound %s", ringtone)
             if ((ringtone != null) && !ringtone.isPlaying) {
@@ -67,7 +70,13 @@ class AlarmKlaxon(private val context: Context, private val preferences: ZmanimP
                         .setLegacyStreamType(audioStreamType)
                         .setUsage(AudioAttributes.USAGE_ALARM)
                         .build()
-                    ringtone = MediaPlayer().apply {
+                    val ringtone =
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                            MediaPlayer(context)
+                        } else {
+                            MediaPlayer()
+                        }
+                    ringtone.apply {
                         setDataSource(context, uri)
                         setAudioAttributes(audioAttributes)
                         isLooping = audioStreamType == AudioManager.STREAM_ALARM
@@ -77,9 +86,7 @@ class AlarmKlaxon(private val context: Context, private val preferences: ZmanimP
                     Timber.e(
                         e,
                         "error preparing ringtone: %s for %s ~ %s",
-                        e.message,
-                        prefRingtone,
-                        uri
+                        e.message, prefRingtone, uri
                     )
                 }
                 this.ringtone = ringtone
