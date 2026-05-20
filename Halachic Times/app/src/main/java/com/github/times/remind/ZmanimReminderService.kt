@@ -25,6 +25,7 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.SystemClock
 import android.text.format.DateUtils
+import com.github.times.R
 import com.github.times.TimeMillis
 import com.github.times.ZmanimHelper.formatDateTime
 import com.github.times.preference.SimpleZmanimPreferences
@@ -33,6 +34,7 @@ import com.github.times.remind.ZmanimReminder.Companion.ACTION_CANCEL
 import com.github.times.remind.ZmanimReminder.Companion.ACTION_DISMISS
 import com.github.times.remind.ZmanimReminder.Companion.ACTION_REMIND
 import timber.log.Timber
+import kotlin.math.max
 
 /**
  * Check for reminders, and manage the notifications.
@@ -113,7 +115,7 @@ class ZmanimReminderService : Service() {
             this.silenceRunnable = silenceRunnable
         }
         val now = System.currentTimeMillis()
-        val delayMillis = silenceAt - now
+        val delayMillis = max(silenceAt - now, 0L)
         handler.postDelayed(silenceRunnable, delayMillis)
     }
 
@@ -157,13 +159,21 @@ class ZmanimReminderService : Service() {
 
     private fun handleRemind(intent: Intent) {
         val context: Context = this
-        val item = ZmanimReminderItemData.from(context, intent)
+        val now = System.currentTimeMillis()
+        val item: ZmanimReminderItem? = ZmanimReminderItemData.from(context, intent)
         if (item == null) {
             Timber.w("no item to remind!")
+            // start the service before stopping itself to avoid `ForegroundServiceDidNotStartInTimeException`
+            val itemBlank = ZmanimReminderItem(
+                0,
+                context.getText(R.string.app_name),
+                context.getText(R.string.reminder),
+                now
+            )
+            showNotification(context, itemBlank, now)
             stopSelf()
             return
         }
-        val now = System.currentTimeMillis()
         val silenceAt = now + getSilenceOffsetMillis(settings)
         showNotification(context, item, silenceAt)
         startAlarm()
