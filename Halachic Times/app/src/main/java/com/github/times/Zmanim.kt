@@ -186,17 +186,15 @@ var JewishDate.date: KosherDateTime
     }
 
 fun isSameDay(expected: Calendar, actual: LocalDate): Boolean {
-    //val e1 = expected.era
     val y1 = expected.year
     val m1 = expected.month
     val d1 = expected.dayOfMonth
 
-    //val e2 = actual.era
     val y2 = actual.year
     val m2 = actual.monthValue - 1
     val d2 = actual.dayOfMonth
 
-    return /*(e1 == e2) &&*/ (y1 == y2) && (m1 == m2) && (d1 == d2)
+    return (y1 == y2) && (m1 == m2) && (d1 == d2)
 }
 
 fun isSameDay(expected: LocalDate, actual: Calendar): Boolean {
@@ -204,33 +202,11 @@ fun isSameDay(expected: LocalDate, actual: Calendar): Boolean {
 }
 
 fun isSameDay(expected: Calendar, actual: Instant): Boolean {
-    //val e1 = expected.era
-    val y1 = expected.year
-    val m1 = expected.month
-    val d1 = expected.dayOfMonth
-
-    val a2 = actual.toKosherDate()
-    //val e2 = a2.era
-    val y2 = a2.year
-    val m2 = a2.monthValue - 1
-    val d2 = a2.dayOfMonth
-
-    return /*(e1 == e2) &&*/ (y1 == y2) && (m1 == m2) && (d1 == d2)
+    return isSameDay(expected, actual.toKosherDate())
 }
 
 fun isSameDay(expected: LocalDate, actual: Instant): Boolean {
-    //val e1 = expected.era
-    val y1 = expected.year
-    val m1 = expected.month
-    val d1 = expected.dayOfMonth
-
-    val a2 = actual.toKosherDate()
-    //val e2 = a2.era
-    val y2 = a2.year
-    val m2 = a2.month
-    val d2 = a2.dayOfMonth
-
-    return /*(e1 == e2) &&*/ (y1 == y2) && (m1 == m2) && (d1 == d2)
+    return expected == actual.toKosherDate()
 }
 
 fun DateTimeFormatter.withZone(zone: TimeZone): DateTimeFormatter {
@@ -241,6 +217,11 @@ fun DateTimeFormatter.format(time: TimeMillis): String {
     return format(Instant.ofEpochMilli(time))
 }
 
-fun TimeMillis.toKosherDate(): KosherDate {
-    return KosherDate.now()
+fun TimeMillis.toKosherDate(zone: TimeZone = TimeZone.getDefault()): KosherDate {
+    return toKosherDate(zone.toZoneId())
+}
+
+fun TimeMillis.toKosherDate(zone: ZoneId = ZoneId.systemDefault()): KosherDate {
+    val epochMilli: Long = this
+    return KosherDate.ofInstant(Instant.ofEpochMilli(epochMilli), zone)
 }

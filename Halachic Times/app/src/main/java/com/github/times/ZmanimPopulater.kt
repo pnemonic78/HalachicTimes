@@ -1072,8 +1072,8 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
      *
      * @param time the time in milliseconds.
      */
-    fun setCalendar(time: Long) {
-        calendar.localDate = time.toKosherDate()
+    fun setCalendar(time: TimeMillis) {
+        calendar.localDate = time.toKosherDate(timeZone)
     }
 
     /**

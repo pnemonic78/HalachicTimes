@@ -112,11 +112,9 @@ open class ZmanimWidget : ZmanimAppWidget() {
             item = items[position]
             if (positionToday < 0 && jewishDateToday == item.jewishDate) {
                 positionToday = position
-            }
-            if (positionTomorrow < 0 && jewishDateTomorrow == item.jewishDate) {
+            } else if (positionTomorrow < 0 && jewishDateTomorrow == item.jewishDate) {
                 positionTomorrow = position
-            }
-            if (positionOvermorrow < 0 && jewishDateOvermorrow == item.jewishDate) {
+            } else if (positionOvermorrow < 0 && jewishDateOvermorrow == item.jewishDate) {
                 positionOvermorrow = position
             }
             position++
@@ -132,7 +130,8 @@ open class ZmanimWidget : ZmanimAppWidget() {
                 candlesToday,
                 omerToday
             )
-        } else if (positionTomorrow >= 0) {
+        }
+        if (positionTomorrow >= 0) {
             bindViewsHeader(
                 context,
                 adapterTomorrow,
@@ -143,7 +142,8 @@ open class ZmanimWidget : ZmanimAppWidget() {
                 candlesTomorrow,
                 omerTomorrow
             )
-        } else if (positionOvermorrow >= 0) {
+        }
+        if (positionOvermorrow >= 0) {
             bindViewsHeader(
                 context,
                 adapterTomorrow,

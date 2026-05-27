@@ -53,8 +53,8 @@ import com.github.util.isLocaleRTL
 import com.github.util.millisecond
 import com.github.util.minute
 import com.github.util.second
-import java.util.Calendar
 import timber.log.Timber
+import java.util.Calendar
 
 /**
  * Halachic times (*zmanim*) widget.
@@ -222,7 +222,12 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
      * @param time         the time to update.
      * @param id           the pending intent's id.
      */
-    private fun schedulePending(context: Context, appWidgetIds: IntArray, time: TimeMillis, id: Int) {
+    private fun schedulePending(
+        context: Context,
+        appWidgetIds: IntArray,
+        time: TimeMillis,
+        id: Int
+    ) {
         Timber.i("schedulePending [%s]", formatDateTime(time))
         val alarmIntent = Intent(context, javaClass)
             .setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
@@ -325,12 +330,11 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
         val locations = getLocations(context)
         val gloc = locations.geoLocation ?: return null
         val preferences = preferences
-        val populater: ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>> =
-            ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences).apply {
-                this.setCalendar(day)
-                this.setGeoLocation(gloc)
-                this.isInIsrael = locations.isInIsrael
-            }
+        val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences).apply {
+            setCalendar(day)
+            setGeoLocation(gloc)
+            isInIsrael = locations.isInIsrael
+        }
 
         val adapter = ZmanimAdapter<ZmanViewHolder>(context, preferences)
         populater.populate(adapter, true)
