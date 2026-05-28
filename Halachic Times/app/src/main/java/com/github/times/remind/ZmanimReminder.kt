@@ -331,7 +331,7 @@ class ZmanimReminder(private val context: Context) {
         ZmanimReminderWorker.enqueueFuture(
             context,
             workIntent,
-            triggerAt - DateUtils.SECOND_IN_MILLIS
+            triggerAt - DateUtils.MINUTE_IN_MILLIS
         )
     }
 
