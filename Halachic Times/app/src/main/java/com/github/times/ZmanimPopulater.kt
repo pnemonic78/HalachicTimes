@@ -295,7 +295,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
         adapter.add(tallisTitle, summary, date, jewishDate, remote)
 
-        dateAndSummary = getSunrise(cal, settings.sunrise)
+        dateAndSummary = getSunrise(cal, settings.sunrise, settings.isUseElevation)
         date = dateAndSummary.first
         summary = dateAndSummary.second
         adapter.add(R.string.sunrise, summary, date, jewishDate, remote)
@@ -1242,31 +1242,32 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
 
     private fun getSunrise(
         cal: ComprehensiveZmanimCalendar,
-        opinion: String?
+        opinion: String?,
+        isUseElevation: Boolean
     ): Pair<KosherDateTime, Int> {
         val date: KosherDateTime
         val summary: Int
-        when (opinion) {
-            OPINION_SEA -> {
-                date = cal.seaLevelSunrise
-                summary = R.string.sunrise_sea
+        when {
+            isUseElevation -> {
+                date = cal.sunrise
+                summary = R.string.sunrise_elevated
             }
 
-            OPINION_BAAL_HATANYA -> {
+            opinion == OPINION_BAAL_HATANYA -> {
                 date = cal.seaLevelSunrise
                 summary = R.string.sunrise_baal_hatanya
             }
 
             else -> {
-                date = cal.sunrise
-                summary = R.string.sunrise_elevated
+                date = cal.seaLevelSunrise
+                summary = R.string.sunrise_sea
             }
         }
         return Pair.create(toTime(date), summary)
     }
 
     private fun getSunrise(cal: ComprehensiveZmanimCalendar, settings: ZmanimPreferences) =
-        getSunrise(cal, settings.sunrise).first
+        getSunrise(cal, settings.sunrise, settings.isUseElevation).first
 
     protected fun getSunriseTomorrow(
         cal: ComprehensiveZmanimCalendar,
