@@ -23,11 +23,11 @@ import kotlin.contracts.contract
 /**
  * Time row item.
  */
-class ZmanimItem @JvmOverloads constructor(
+class ZmanimItem(
     /**
      * The title id.
      */
-    @StringRes
+    @field:StringRes
     val titleId: Int,
     /**
      * The title.

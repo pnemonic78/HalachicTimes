@@ -26,7 +26,7 @@ import kotlin.random.Random
  *
  * @author Moshe Waisberg
  */
-class CandleAnimation @JvmOverloads constructor(
+class CandleAnimation(
     private val handler: Handler,
     /** The image view. */
     view: ImageView,

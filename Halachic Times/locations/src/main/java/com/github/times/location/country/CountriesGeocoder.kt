@@ -41,7 +41,7 @@ import kotlin.math.min
  *
  * @author Moshe Waisberg
  */
-class CountriesGeocoder @JvmOverloads constructor(
+class CountriesGeocoder(
     context: Context,
     locale: Locale = context.getDefaultLocale()
 ) : GeocoderBase(locale) {

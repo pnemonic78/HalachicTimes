@@ -165,13 +165,7 @@ class ZmanimReminder(private val context: Context) {
 
                 // Is the zman to be reminded?
                 whenRemind = settings.getReminder(item.titleId, item.time)
-                if (whenRemind != NEVER && allowReminder(
-                        settings,
-                        item,
-                        jcal,
-                        candles
-                    )
-                ) {
+                if (whenRemind != NEVER && allowReminder(settings, item, jcal, candles)) {
                     if (nextDay && latest < whenRemind && was <= whenRemind && whenRemind <= soon) {
                         notifyNow(settings, item)
                         nextDay = false
@@ -252,9 +246,8 @@ class ZmanimReminder(private val context: Context) {
      * @param item     the zmanim item to notify about.
      */
     fun notifyNow(settings: ZmanimPreferences, item: ZmanimItem) {
-        val contentTitle = item.title
-        val contentText = context.getText(R.string.reminder)
-        val reminderItem = ZmanimReminderItem(item.titleId, contentTitle, contentText, item.time)
+        val contentText = item.summary ?: context.getText(R.string.reminder)
+        val reminderItem = ZmanimReminderItem(item.titleId, item.title, contentText, item.time)
         notifyNow(settings, reminderItem)
     }
 
@@ -282,16 +275,14 @@ class ZmanimReminder(private val context: Context) {
 
             RingtoneManager.TYPE_NOTIFICATION -> {
                 val contentIntent = createActivityIntent()
-                val notification =
-                    createReminderNotification(settings, item, contentIntent)
+                val notification = createReminderNotification(settings, item, contentIntent)
                 showReminderNotification(notification)
                 silenceFuture(item, silenceAt)
             }
 
             else -> {
                 val contentIntent = createActivityIntent()
-                val notification =
-                    createReminderNotification(settings, item, contentIntent)
+                val notification = createReminderNotification(settings, item, contentIntent)
                 showReminderNotification(notification)
                 silenceFuture(item, silenceAt)
             }

@@ -32,7 +32,7 @@ import kotlin.math.round
  *
  * @author Moshe Waisberg
  */
-class CountryPolygon @JvmOverloads constructor(
+class CountryPolygon(
     val countryCode: String,
     npoints: Int = MIN_LENGTH,
     latitudes: IntArray = IntArray(npoints),

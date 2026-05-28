@@ -25,39 +25,30 @@ import androidx.annotation.StyleRes
 interface CompassPreferences {
     object Values {
         /** Default summaries hidden.  */
-        @JvmField
         var SUMMARIES_DEFAULT = false
 
         /** The default bearing.  */
-        @JvmField
         var BEARING_DEFAULT: String? = null
 
         /** Calculates the bearing for a Great Circle (shortest distance).  */
-        @JvmField
         var BEARING_GREAT_CIRCLE: String? = null
 
         /** Calculates the bearing for a Rhumb Line (constant angle).  */
-        @JvmField
         var BEARING_RHUMB_LINE: String? = null
 
         /** Original theme.  */
-        @JvmField
         var THEME_ORIGINAL: String? = null
 
         /** Gold theme.  */
-        @JvmField
         var THEME_GOLD: String? = null
 
         /** Silver theme.  */
-        @JvmField
         var THEME_SILVER: String? = null
 
         /** Classic theme.  */
-        @JvmField
         var THEME_CLASSIC: String? = null
 
         /** Default theme.  */
-        @JvmField
         var THEME_COMPASS_DEFAULT: String? = null
     }
 

@@ -45,7 +45,7 @@ import timber.log.Timber
  *
  * @author Moshe Waisberg
  */
-class AddressProvider @JvmOverloads constructor(
+class AddressProvider(
     private val context: Context,
     private val locale: Locale = context.getDefaultLocale(),
     private val isOnline: Boolean = true
@@ -93,11 +93,11 @@ class AddressProvider @JvmOverloads constructor(
         if (listener == null) return null
 
         val latitude = location.latitude
-        if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX) {
+        if (latitude !in LATITUDE_MIN..LATITUDE_MAX) {
             return null
         }
         val longitude = location.longitude
-        if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX) {
+        if (longitude !in LONGITUDE_MIN..LONGITUDE_MAX) {
             return null
         }
         val forceFetch = location.extras?.getBoolean(PARAMETER_FORCE, FORCE_DEFAULT).isTrue

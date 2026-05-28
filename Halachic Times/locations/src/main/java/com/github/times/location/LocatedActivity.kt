@@ -66,13 +66,11 @@ abstract class LocatedActivity<P : ThemePreferences> : InsetsActivity(),
     /**
      * The location header location.
      */
-    @JvmField
     protected var headerLocation: TextView? = null
 
     /**
      * The location header for formatted address.
      */
-    @JvmField
     protected var headerAddress: TextView? = null
 
     /**

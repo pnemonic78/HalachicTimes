@@ -31,213 +31,83 @@ import java.util.Calendar
  */
 interface ZmanimPreferences : ThemePreferences, LocalePreferences {
     object Values : LocationPreferences.Values() {
-        @JvmField
         var OPINION_2_STARS: String? = null
-
-        @JvmField
         var OPINION_2: String? = null
-
-        @JvmField
         var OPINION_3_65: String? = null
-
-        @JvmField
         var OPINION_3_676: String? = null
-
-        @JvmField
         var OPINION_3_7: String? = null
-
-        @JvmField
         var OPINION_3_8: String? = null
-
-        @JvmField
         var OPINION_3: String? = null
-
-        @JvmField
         var OPINION_4: String? = null
-
-        @JvmField
         var OPINION_4_37: String? = null
-
-        @JvmField
         var OPINION_4_61: String? = null
-
-        @JvmField
         var OPINION_4_8: String? = null
-
-        @JvmField
         var OPINION_5_88: String? = null
-
-        @JvmField
         var OPINION_5_95: String? = null
-
-        @JvmField
         var OPINION_6: String? = null
-
-        @JvmField
         var OPINION_6_45: String? = null
-
-        @JvmField
         var OPINION_7: String? = null
-
-        @JvmField
         var OPINION_7_083_ZMANIS: String? = null
-
-        @JvmField
         var OPINION_7_083: String? = null
-
-        @JvmField
         var OPINION_7_65: String? = null
-
-        @JvmField
         var OPINION_7_67: String? = null
-
-        @JvmField
         var OPINION_8_5: String? = null
-
-        @JvmField
         var OPINION_9_3: String? = null
-
-        @JvmField
         var OPINION_9_5: String? = null
-
-        @JvmField
         var OPINION_9_75: String? = null
-
-        @JvmField
         var OPINION_10_2: String? = null
-
-        @JvmField
         var OPINION_11: String? = null
-
-        @JvmField
         var OPINION_12: String? = null
-
-        @JvmField
         var OPINION_13: String? = null
-
-        @JvmField
         var OPINION_15_ALOS: String? = null
-
-        @JvmField
         var OPINION_15: String? = null
-
-        @JvmField
         var OPINION_16_1_ALOS: String? = null
-
-        @JvmField
         var OPINION_16_1_SUNSET: String? = null
-
-        @JvmField
         var OPINION_16_1: String? = null
-
-        @JvmField
         var OPINION_18: String? = null
-
-        @JvmField
         var OPINION_19_8: String? = null
-
-        @JvmField
         var OPINION_19: String? = null
-
-        @JvmField
         var OPINION_26: String? = null
-
-        @JvmField
         var OPINION_30: String? = null
-
-        @JvmField
         var OPINION_58: String? = null
-
-        @JvmField
         var OPINION_60: String? = null
-
-        @JvmField
         var OPINION_72_ZMANIS: String? = null
-
-        @JvmField
         var OPINION_72: String? = null
-
-        @JvmField
         var OPINION_90_ZMANIS: String? = null
-
-        @JvmField
         var OPINION_90: String? = null
-
-        @JvmField
         var OPINION_96_ZMANIS: String? = null
-
-        @JvmField
         var OPINION_96: String? = null
-
-        @JvmField
         var OPINION_120_ZMANIS: String? = null
-
-        @JvmField
         var OPINION_120: String? = null
-
-        @JvmField
         var OPINION_168: String? = null
-
-        @JvmField
         var OPINION_ATERET: String? = null
-
-        @JvmField
         var OPINION_BAAL_HATANYA: String? = null
-
-        @JvmField
         var OPINION_DAWN: String? = null
-
-        @JvmField
         var OPINION_FIXED: String? = null
-
-        @JvmField
         var OPINION_GRA: String? = null
-
-        @JvmField
         var OPINION_HALF: String? = null
-
-        @JvmField
         var OPINION_LEVEL: String? = null
-
-        @JvmField
         var OPINION_MGA: String? = null
-
-        @JvmField
         var OPINION_NIGHT: String? = null
-
-        @JvmField
         var OPINION_NONE: String? = null
-
-        @JvmField
         var OPINION_SEA: String? = null
-
-        @JvmField
         var OPINION_SUNRISE: String? = null
-
-        @JvmField
         var OPINION_SUNSET: String? = null
-
-        @JvmField
         var OPINION_TWILIGHT: String? = null
 
         /** Show zmanim list without background.  */
-        @JvmField
         var THEME_NONE: String? = null
 
         /** Show zmanim list with white background.  */
-        @JvmField
         var THEME_WHITE: String? = null
 
         /** No omer count.  */
-        @JvmField
         var OMER_NONE: String? = null
 
         /** Omer count has "BaOmer" suffix.  */
-        @JvmField
         var OMER_B: String? = null
 
         /** Omer count has "LaOmer" suffix.  */
-        @JvmField
         var OMER_L: String? = null
     }
 

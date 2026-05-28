@@ -32,7 +32,7 @@ import java.util.TreeSet
  *
  * @author Moshe Waisberg
  */
-open class LocationAdapter @JvmOverloads constructor(
+open class LocationAdapter(
     context: Context,
     items: List<LocationItem>,
     listener: LocationItemListener? = null

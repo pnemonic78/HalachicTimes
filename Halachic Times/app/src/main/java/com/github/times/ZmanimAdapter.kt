@@ -43,7 +43,7 @@ import java.util.TimeZone
  *
  * @author Moshe Waisberg
  */
-open class ZmanimAdapter<VH : ZmanViewHolder> @JvmOverloads constructor(
+open class ZmanimAdapter<VH : ZmanViewHolder>(
     protected val context: Context,
     protected val settings: ZmanimPreferences,
     protected val listener: OnZmanItemClickListener? = null,
