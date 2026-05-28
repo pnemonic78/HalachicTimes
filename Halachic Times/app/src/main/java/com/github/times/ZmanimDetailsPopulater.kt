@@ -118,10 +118,6 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         title = R.string.hour_gra
         adapter.addHour(title, SUMMARY_NONE, time - offset)
 
-        time = cal.shaahZmanisMGA
-        title = R.string.hour_mga
-        adapter.addHour(title, SUMMARY_NONE, time - offset)
-
         time = cal.shaahZmanis120Minutes
         title = R.string.hour_120
         adapter.addHour(title, SUMMARY_NONE, time - offset)

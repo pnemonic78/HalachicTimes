@@ -217,14 +217,14 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                     summary = R.string.hour_ateret
                 }
 
-                OPINION_MGA -> {
-                    time = cal.shaahZmanisMGA
-                    summary = R.string.hour_mga
-                }
-
                 OPINION_BAAL_HATANYA -> {
                     time = cal.shaahZmanisBaalHatanya
                     summary = R.string.hour_baal_hatanya
+                }
+
+                OPINION_MGA -> {
+                    time = cal.shaahZmanis72Minutes
+                    summary = R.string.hour_mga
                 }
 
                 else -> {
@@ -378,6 +378,11 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.shema_baal_hatanya
             }
 
+            OPINION_MGA -> {
+                date = cal.sofZmanShmaMGA72Minutes
+                summary = R.string.shema_mga
+            }
+
             else -> {
                 date = cal.sofZmanShmaGRA
                 summary = R.string.shema_gra
@@ -451,6 +456,11 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.prayers_baal_hatanya
             }
 
+            OPINION_MGA -> {
+                date = cal.sofZmanTfilaMGA72Minutes
+                summary = R.string.prayers_mga
+            }
+
             else -> {
                 date = cal.sofZmanTfilaGRA
                 summary = R.string.prayers_gra
@@ -493,7 +503,12 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
 
             OPINION_GRA -> {
                 date = cal.minchaGedolaGRA
-                summary = R.string.opinion_value_gra
+                summary = R.string.opinion_gra
+            }
+
+            OPINION_MGA -> {
+                date = cal.minchaGedola72Minutes
+                summary = R.string.opinion_mga
             }
 
             else -> {
@@ -527,6 +542,11 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             OPINION_GRA -> {
                 date = cal.minchaKetanaGRA
                 summary = R.string.opinion_gra
+            }
+
+            OPINION_MGA -> {
+                date = cal.minchaKetana72Minutes
+                summary = R.string.opinion_mga
             }
 
             else -> {
@@ -620,6 +640,11 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             OPINION_BAAL_HATANYA -> {
                 date = cal.plagHaminchaBaalHatanya
                 summary = R.string.plug_hamincha_baal_hatanya
+            }
+
+            OPINION_MGA -> {
+                date = cal.plagHamincha72Minutes
+                summary = R.string.opinion_mga
             }
 
             else -> {
@@ -868,6 +893,11 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                         summary = R.string.eat_chametz_baal_hatanya
                     }
 
+                    OPINION_MGA -> {
+                        date = cal.sofZmanAchilasChametzMGA72Minutes
+                        summary = R.string.opinion_mga
+                    }
+
                     else -> {
                         date = cal.sofZmanAchilasChametzGRA
                         summary = R.string.eat_chametz_gra
@@ -952,6 +982,11 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 OPINION_BAAL_HATANYA -> {
                     date = cal.sofZmanBiurChametzBaalHatanya
                     summary = R.string.destroy_chametz_baal_hatanya
+                }
+
+                OPINION_MGA -> {
+                    date = cal.sofZmanBiurChametzMGA72Minutes
+                    summary = R.string.opinion_mga
                 }
 
                 else -> {
@@ -1219,6 +1254,11 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             OPINION_BAAL_HATANYA -> {
                 date = cal.alosBaalHatanya
                 summary = R.string.dawn_baal_hatanya
+            }
+
+            OPINION_MGA -> {
+                date = cal.alos72Minutes
+                summary = R.string.opinion_mga
             }
 
             else -> {
@@ -1521,6 +1561,11 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             OPINION_BAAL_HATANYA -> {
                 date = cal.tzaisBaalHatanya
                 summary = R.string.nightfall_baal_hatanya
+            }
+
+            OPINION_MGA -> {
+                date = cal.tzais72Minutes
+                summary = R.string.opinion_mga
             }
 
             else -> {

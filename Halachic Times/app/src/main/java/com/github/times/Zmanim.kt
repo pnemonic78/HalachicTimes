@@ -161,8 +161,6 @@ var AstronomicalCalendar.calendar: Calendar
 
 val KosherDateTime.time: TimeMillis get() = this!!.toEpochMilli()
 
-val ComprehensiveZmanimCalendar.shaahZmanisMGA: Long get() = shaahZmanis72Minutes
-
 fun Calendar.assign(time: KosherDateTime) {
     if (time == null) {
         timeInMillis = ZmanimItem.NEVER
