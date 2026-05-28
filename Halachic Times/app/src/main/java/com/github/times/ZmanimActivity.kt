@@ -40,6 +40,7 @@ import android.view.animation.AnimationUtils
 import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.ViewSwitcher
+import androidx.activity.addCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.github.app.LocaleCallbacks
 import com.github.app.LocaleHelper
@@ -75,7 +76,6 @@ import kotlin.math.abs
  */
 class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
     OnDateSetListener,
-    View.OnClickListener,
     GestureDetector.OnGestureListener,
     OnDoubleTapListener,
     AnimationListener,
@@ -213,6 +213,9 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        onBackPressedDispatcher.addCallback(this) {
+            handleBackPressed()
+        }
         init()
         initPermissions()
         handleIntent(intent)
@@ -328,14 +331,14 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
                 }
         }
         val header = binding.header
-        header.root.setOnClickListener(this)
+        header.root.setOnClickListener { toggleNavigationView() }
         headerGregorianDate = header.dateGregorian
         headerLocation = header.headerLocation.coordinates
         headerAddress = header.headerLocation.address
         buttonYesterday = header.navYesterday
-        buttonYesterday.setOnClickListener(this)
+        buttonYesterday.setOnClickListener { navigateYesterday() }
         buttonTomorrow = header.navTomorrow
-        buttonTomorrow.setOnClickListener(this)
+        buttonTomorrow.setOnClickListener { navigateTomorrow() }
         slideRightToLeft = AnimationUtils.loadAnimation(
             context,
             com.github.times.common.R.anim.slide_right_to_left
@@ -525,25 +528,13 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
+    private fun handleBackPressed() {
         masterFragment.unhighlight()
         if (isDetailsShowing) {
             hideDetails()
             return
         }
         finishAfterTransition()
-    }
-
-    override fun onClick(view: View) {
-        val id = view.id
-        if (id == R.id.header) {
-            toggleNavigationView()
-        } else if (id == R.id.nav_yesterday) {
-            navigateYesterday()
-        } else if (id == R.id.nav_tomorrow) {
-            navigateTomorrow()
-        }
     }
 
     private fun toggleNavigationView() {
@@ -774,8 +765,8 @@ class ZmanimActivity : LocatedActivity<ZmanimPreferences>(),
      */
     private fun hasDetails(itemId: Int): Boolean {
         return itemId != 0
-            && itemId != R.string.fast_begins
-            && itemId != R.string.molad
+                && itemId != R.string.fast_begins
+                && itemId != R.string.molad
     }
 
     private fun updateReminders() {

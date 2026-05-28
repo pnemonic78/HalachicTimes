@@ -15,7 +15,6 @@
  */
 package com.github.times.remind
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -29,6 +28,7 @@ import android.text.format.DateUtils
 import android.text.style.RelativeSizeSpan
 import android.view.Window
 import android.view.WindowManager
+import androidx.activity.addCallback
 import androidx.core.content.PermissionChecker
 import com.github.app.InsetsActivity
 import com.github.app.LocaleCallbacks
@@ -79,12 +79,16 @@ class AlarmActivity<P : ZmanimPreferences> : InsetsActivity(), ThemeCallbacks<P>
         onPreCreate()
         super.onCreate(savedInstanceState)
 
+        onBackPressedDispatcher.addCallback(this) {
+            handleBackPressed()
+        }
+
         // Turn on the screen.
         window.addFlags(
             WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                    or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                    or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                    or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         )
 
         val binding = AlarmActivityBinding.inflate(layoutInflater)
@@ -188,9 +192,7 @@ class AlarmActivity<P : ZmanimPreferences> : InsetsActivity(), ThemeCallbacks<P>
         binding.title.text = item.title
     }
 
-    @SuppressLint("MissingSuperCall")
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
+    private fun handleBackPressed() {
         // User must explicitly cancel the reminder.
         setResult(RESULT_CANCELED)
     }
