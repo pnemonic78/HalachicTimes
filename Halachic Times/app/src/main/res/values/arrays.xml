@@ -308,14 +308,9 @@
     <string-array name="nightfall_values" translatable="false">
         <item>@string/opinion_value_ateret</item>
         <item>@string/opinion_value_baal_hatanya</item>
-        <item>@string/opinion_value_3_65</item>
-        <item>@string/opinion_value_3_676</item>
         <item>@string/opinion_value_3_7</item>
         <item>@string/opinion_value_3_8</item>
-        <item>@string/opinion_value_4_37</item>
-        <item>@string/opinion_value_4_61</item>
         <item>@string/opinion_value_4_8</item>
-        <item>@string/opinion_value_5_88</item>
         <item>@string/opinion_value_5_95</item>
         <item>@string/opinion_value_6_45</item>
         <item>@string/opinion_value_7_083</item>
@@ -340,14 +335,9 @@
     <string-array name="nightfall_entries" translatable="false">
         <item>@string/nightfall_ateret</item>
         <item>@string/nightfall_baal_hatanya</item>
-        <item>@string/nightfall_3_65</item>
-        <item>@string/nightfall_3_676</item>
         <item>@string/nightfall_3_7</item>
         <item>@string/nightfall_3_8</item>
-        <item>@string/nightfall_4_37</item>
-        <item>@string/nightfall_4_61</item>
         <item>@string/nightfall_4_8</item>
-        <item>@string/nightfall_5_88</item>
         <item>@string/nightfall_5_95</item>
         <item>@string/nightfall_6_45</item>
         <item>@string/nightfall_7</item>

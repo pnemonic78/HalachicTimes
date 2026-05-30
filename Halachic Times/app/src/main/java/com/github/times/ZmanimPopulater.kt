@@ -1483,16 +1483,6 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.nightfall_ateret
             }
 
-//            OPINION_3_65 -> {
-//                date = cal.tzaisGeonim3Point65Degrees
-//                summary = R.string.nightfall_3_65
-//            }
-//
-//            OPINION_3_676 -> {
-//                date = cal.tzaisGeonim3Point676Degrees
-//                summary = R.string.nightfall_3_676
-//            }
-
             OPINION_3_7 -> {
                 date = cal.tzaisGeonim3Point7Degrees
                 summary = R.string.nightfall_3_7
@@ -1503,25 +1493,10 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.nightfall_3_8
             }
 
-//            OPINION_4_37 -> {
-//                date = cal.tzaisGeonim4Point37Degrees
-//                summary = R.string.nightfall_4_37
-//            }
-//
-//            OPINION_4_61 -> {
-//                date = cal.tzaisGeonim4Point61Degrees
-//                summary = R.string.nightfall_4_61
-//            }
-
             OPINION_4_8 -> {
                 date = cal.tzaisGeonim4Point8Degrees
                 summary = R.string.nightfall_4_8
             }
-
-//            OPINION_5_88 -> {
-//                date = cal.tzaisGeonim5Point88Degrees
-//                summary = R.string.nightfall_5_88
-//            }
 
             OPINION_5_95 -> {
                 date = cal.tzaisGeonim5Point95Degrees

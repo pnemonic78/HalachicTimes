@@ -725,18 +725,6 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
         }
 
-//        date = cal.tzaisGeonim3Point65Degrees
-//        if (date != null) {
-//            title = R.string.nightfall_3_65
-//            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
-//        }
-//
-//        date = cal.tzaisGeonim3Point676Degrees
-//        if (date != null) {
-//            title = R.string.nightfall_3_676
-//            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
-//        }
-
         date = cal.tzaisGeonim3Point7Degrees
         if (date != null) {
             title = R.string.nightfall_3_7
@@ -749,29 +737,11 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
         }
 
-//        date = cal.tzaisGeonim4Point37Degrees
-//        if (date != null) {
-//            title = R.string.nightfall_4_37
-//            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
-//        }
-//
-//        date = cal.tzaisGeonim4Point61Degrees
-//        if (date != null) {
-//            title = R.string.nightfall_4_61
-//            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
-//        }
-
         date = cal.tzaisGeonim4Point8Degrees
         if (date != null) {
             title = R.string.nightfall_4_8
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
         }
-
-//        date = cal.tzaisGeonim5Point88Degrees
-//        if (date != null) {
-//            title = R.string.nightfall_5_88
-//            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
-//        }
 
         date = cal.tzaisGeonim5Point95Degrees
         if (date != null) {
