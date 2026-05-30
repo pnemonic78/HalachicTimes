@@ -5,7 +5,6 @@
         <item>@string/opinion_value_ateret</item>
         <item>@string/opinion_value_baal_hatanya</item>
         <item>@string/opinion_value_gra</item>
-        <item>@string/opinion_value_mga</item>
         <item>@string/opinion_value_16</item>
         <item>@string/opinion_value_18</item>
         <item>@string/opinion_value_19_8</item>
@@ -24,7 +23,6 @@
         <item>@string/hour_ateret</item>
         <item>@string/hour_baal_hatanya</item>
         <item>@string/hour_gra</item>
-        <item>@string/hour_mga</item>
         <item>@string/hour_16</item>
         <item>@string/hour_18</item>
         <item>@string/hour_19_8</item>
@@ -106,7 +104,6 @@
         <item>@string/opinion_value_baal_hatanya</item>
         <item>@string/opinion_value_fixed</item>
         <item>@string/opinion_value_gra</item>
-        <item>@string/opinion_value_mga</item>
         <item>@string/opinion_value_3</item>
         <item>@string/opinion_value_7_083</item>
         <item>@string/opinion_value_16</item>
@@ -126,7 +123,6 @@
         <item>@string/shema_baal_hatanya</item>
         <item>@string/shema_fixed</item>
         <item>@string/shema_gra</item>
-        <item>@string/shema_mga</item>
         <item>@string/shema_3</item>
         <item>@string/shema_7</item>
         <item>@string/shema_16</item>
@@ -147,7 +143,6 @@
         <item>@string/opinion_value_baal_hatanya</item>
         <item>@string/opinion_value_fixed</item>
         <item>@string/opinion_value_gra</item>
-        <item>@string/opinion_value_mga</item>
         <item>@string/opinion_value_2</item>
         <item>@string/opinion_value_16</item>
         <item>@string/opinion_value_18</item>
@@ -165,7 +160,6 @@
         <item>@string/prayers_baal_hatanya</item>
         <item>@string/prayers_fixed</item>
         <item>@string/prayers_gra</item>
-        <item>@string/prayers_mga</item>
         <item>@string/prayers_2</item>
         <item>@string/prayers_16</item>
         <item>@string/prayers_18</item>

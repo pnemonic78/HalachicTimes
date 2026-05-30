@@ -20,6 +20,7 @@ import android.media.AudioManager
 import android.net.Uri
 import android.text.format.DateUtils
 import androidx.annotation.StyleRes
+import androidx.core.net.toUri
 import com.github.content.isNightMode
 import com.github.media.RingtoneManager
 import com.github.preference.LocalePreferences
@@ -78,13 +79,13 @@ import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_SUNSE
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_TALLIS
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_TFILA
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_OPINION_TWILIGHT
+import com.github.times.preference.ZmanimPreferences.Companion.KEY_PARSHA
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_PAST
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_LATEST
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_RINGTONE
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_SILENCE
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_REMINDER_STREAM
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_SECONDS
-import com.github.times.preference.ZmanimPreferences.Companion.KEY_PARSHA
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_SUMMARIES
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_THEME_WIDGET
 import com.github.times.preference.ZmanimPreferences.Companion.KEY_YEAR_FINAL
@@ -164,7 +165,7 @@ import com.kosherjava.zmanim.ShaahZmanis
 import java.io.File
 import java.util.Calendar
 import java.util.Locale
-import androidx.core.net.toUri
+import androidx.core.content.edit
 
 /**
  * Simple application preferences implementation.
@@ -270,54 +271,24 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
     override val hourType: ShaahZmanis
         get() {
             val opinion = hour
-            if (OPINION_19_8 == opinion) {
-                return ShaahZmanis.DEGREES_19POINT8
+            return when (opinion) {
+                OPINION_19_8 -> ShaahZmanis.DEGREES_19POINT8
+                OPINION_120 -> ShaahZmanis.MINUTES_120
+                OPINION_120_ZMANIS -> ShaahZmanis.MINUTES_120
+                OPINION_18 -> ShaahZmanis.DEGREES_18
+                OPINION_26 -> ShaahZmanis.DEGREES_26
+                OPINION_16_1 -> ShaahZmanis.DEGREES_16POINT1
+                OPINION_96 -> ShaahZmanis.MINUTES_96
+                OPINION_96_ZMANIS -> ShaahZmanis.MINUTES_96
+                OPINION_90 -> ShaahZmanis.MINUTES_90
+                OPINION_90_ZMANIS -> ShaahZmanis.MINUTES_90
+                OPINION_72 -> ShaahZmanis.MINUTES_72
+                OPINION_72_ZMANIS -> ShaahZmanis.MINUTES_72
+                OPINION_60 -> ShaahZmanis.MINUTES_60
+                OPINION_BAAL_HATANYA -> ShaahZmanis.BAAL_HATANYA
+                OPINION_ATERET -> ShaahZmanis.ATERET
+                else -> ShaahZmanis.GRA
             }
-            if (OPINION_120 == opinion) {
-                return ShaahZmanis.MINUTES_120
-            }
-            if (OPINION_120_ZMANIS == opinion) {
-                return ShaahZmanis.MINUTES_120
-            }
-            if (OPINION_18 == opinion) {
-                return ShaahZmanis.DEGREES_18
-            }
-            if (OPINION_26 == opinion) {
-                return ShaahZmanis.DEGREES_26
-            }
-            if (OPINION_16_1 == opinion) {
-                return ShaahZmanis.DEGREES_16POINT1
-            }
-            if (OPINION_96 == opinion) {
-                return ShaahZmanis.MINUTES_96
-            }
-            if (OPINION_96_ZMANIS == opinion) {
-                return ShaahZmanis.MINUTES_96
-            }
-            if (OPINION_90 == opinion) {
-                return ShaahZmanis.MINUTES_90
-            }
-            if (OPINION_90_ZMANIS == opinion) {
-                return ShaahZmanis.MINUTES_90
-            }
-            if (OPINION_72 == opinion) {
-                return ShaahZmanis.MINUTES_72
-            }
-            if (OPINION_72_ZMANIS == opinion) {
-                return ShaahZmanis.MINUTES_72
-            }
-            if (OPINION_60 == opinion) {
-                return ShaahZmanis.MINUTES_60
-            }
-            if (OPINION_MGA == opinion) {
-                return ShaahZmanis.MGA
-            }
-            if (OPINION_BAAL_HATANYA == opinion) {
-                return ShaahZmanis.BAAL_HATANYA
-            }
-            return if (OPINION_ATERET == opinion) {
-                ShaahZmanis.ATERET
-            } else ShaahZmanis.GRA
         }
 
     override val dawn: String?
@@ -548,7 +519,7 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
     override var latestReminder: Long
         get() = preferences.getLong(KEY_REMINDER_LATEST, 0L)
         set(time) {
-            preferences.edit().putLong(KEY_REMINDER_LATEST, time).apply()
+            preferences.edit { putLong(KEY_REMINDER_LATEST, time) }
         }
 
     override val isCandlesAnimated: Boolean

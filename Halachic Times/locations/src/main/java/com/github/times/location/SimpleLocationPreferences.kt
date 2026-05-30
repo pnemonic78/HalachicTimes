@@ -17,6 +17,7 @@ package com.github.times.location
 
 import android.content.Context
 import android.location.Location
+import androidx.core.content.edit
 import com.github.preference.SimplePreferences
 import com.github.times.location.LocationPreferences.Companion.KEY_COORDS_ELEVATION
 import com.github.times.location.LocationPreferences.Companion.KEY_COORDS_FORMAT
@@ -75,24 +76,24 @@ class SimpleLocationPreferences(context: Context) : SimplePreferences(context),
         set(value) = putLocation(value)
 
     private fun putLocation(location: Location?) {
-        val editor = preferences.edit()
-        if (location != null) {
-            editor.putString(KEY_PROVIDER, location.provider)
-                .putString(KEY_LATITUDE, location.latitude.toString())
-                .putString(KEY_LONGITUDE, location.longitude.toString())
-                .putString(
+        preferences.edit {
+            if (location != null) {
+                putString(KEY_PROVIDER, location.provider)
+                putString(KEY_LATITUDE, location.latitude.toString())
+                putString(KEY_LONGITUDE, location.longitude.toString())
+                putString(
                     KEY_ELEVATION,
                     (if (location.hasAltitude()) location.altitude else 0.0).toString()
                 )
-                .putLong(KEY_TIME, location.time)
-        } else {
-            editor.remove(KEY_PROVIDER)
-                .remove(KEY_LATITUDE)
-                .remove(KEY_LONGITUDE)
-                .remove(KEY_ELEVATION)
-                .remove(KEY_TIME)
+                putLong(KEY_TIME, location.time)
+            } else {
+                remove(KEY_PROVIDER)
+                remove(KEY_LATITUDE)
+                remove(KEY_LONGITUDE)
+                remove(KEY_ELEVATION)
+                remove(KEY_TIME)
+            }
         }
-        editor.apply()
     }
 
     /**

@@ -25,6 +25,7 @@ import android.os.Bundle
 import androidx.annotation.Keep
 import androidx.annotation.XmlRes
 import androidx.core.content.PermissionChecker
+import androidx.core.content.edit
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
@@ -261,29 +262,29 @@ open class ZmanPreferenceFragment : AbstractPreferenceFragment() {
     private fun chooseBaalHatanyaOpinions(context: Context) {
         val opinion = OPINION_BAAL_HATANYA
         val preferences = getSharedPreferences(context)
-        preferences.edit()
-            .putString(KEY_OPINION_HOUR, opinion)
-            .putString(KEY_OPINION_DAWN, opinion)
-            .putString(KEY_OPINION_TALLIS, opinion)
-            .putString(KEY_OPINION_SUNRISE, OPINION_SEA)
-            .putString(KEY_OPINION_SHEMA, opinion)
-            .putString(KEY_OPINION_TFILA, opinion)
-            .putString(KEY_OPINION_EAT, opinion)
-            .putString(KEY_OPINION_DESTROY, opinion)
-            .putString(KEY_OPINION_NOON, opinion)
-            .putString(KEY_OPINION_EARLIEST_MINCHA, opinion)
-            .putString(KEY_OPINION_MINCHA, opinion)
-            .putString(KEY_OPINION_PLUG_MINCHA, opinion)
-            .putString(KEY_OPINION_SUNSET, OPINION_SEA)
-            .putString(KEY_OPINION_NIGHTFALL, opinion)
-            .putString(KEY_OPINION_SHABBATH_ENDS_AFTER, OPINION_NIGHT)
-            .putString(KEY_OPINION_SHABBATH_ENDS_NIGHTFALL, OPINION_8_5)
-            .putString(KEY_OPINION_GUARDS, OPINION_3)
-            .putString(KEY_OPINION_GUARD_BEGINS, OPINION_SUNSET)
-            .putString(KEY_OPINION_GUARD_ENDS, OPINION_SUNRISE)
-            .putInt(KEY_OPINION_CANDLES, 30)
-            .putInt(KEY_OPINION_SHABBATH_ENDS_MINUTES, 0)
-            .apply()
+        preferences.edit {
+            putString(KEY_OPINION_HOUR, opinion)
+            putString(KEY_OPINION_DAWN, opinion)
+            putString(KEY_OPINION_TALLIS, opinion)
+            putString(KEY_OPINION_SUNRISE, OPINION_SEA)
+            putString(KEY_OPINION_SHEMA, opinion)
+            putString(KEY_OPINION_TFILA, opinion)
+            putString(KEY_OPINION_EAT, opinion)
+            putString(KEY_OPINION_DESTROY, opinion)
+            putString(KEY_OPINION_NOON, opinion)
+            putString(KEY_OPINION_EARLIEST_MINCHA, opinion)
+            putString(KEY_OPINION_MINCHA, opinion)
+            putString(KEY_OPINION_PLUG_MINCHA, opinion)
+            putString(KEY_OPINION_SUNSET, OPINION_SEA)
+            putString(KEY_OPINION_NIGHTFALL, opinion)
+            putString(KEY_OPINION_SHABBATH_ENDS_AFTER, OPINION_NIGHT)
+            putString(KEY_OPINION_SHABBATH_ENDS_NIGHTFALL, OPINION_8_5)
+            putString(KEY_OPINION_GUARDS, OPINION_3)
+            putString(KEY_OPINION_GUARD_BEGINS, OPINION_SUNSET)
+            putString(KEY_OPINION_GUARD_ENDS, OPINION_SUNRISE)
+            putInt(KEY_OPINION_CANDLES, 30)
+            putInt(KEY_OPINION_SHABBATH_ENDS_MINUTES, 0)
+        }
     }
 
     private fun requestReminderPermissions(context: Context) {
