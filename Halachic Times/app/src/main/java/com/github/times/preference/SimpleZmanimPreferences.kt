@@ -20,6 +20,7 @@ import android.media.AudioManager
 import android.net.Uri
 import android.text.format.DateUtils
 import androidx.annotation.StyleRes
+import androidx.core.content.edit
 import androidx.core.net.toUri
 import com.github.content.isNightMode
 import com.github.media.RingtoneManager
@@ -142,6 +143,7 @@ import com.github.times.preference.ZmanimPreferences.Values.OPINION_9_3
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_9_5
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_9_75
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_ATERET
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_AZIMUTH
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_BAAL_HATANYA
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_DAWN
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_FIXED
@@ -155,6 +157,12 @@ import com.github.times.preference.ZmanimPreferences.Values.OPINION_SEA
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_SUNRISE
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_SUNSET
 import com.github.times.preference.ZmanimPreferences.Values.OPINION_TWILIGHT
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_YEREIM_13
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_YEREIM_16
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_YEREIM_18
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_YEREIM_2_1
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_YEREIM_2_8
+import com.github.times.preference.ZmanimPreferences.Values.OPINION_YEREIM_3
 import com.github.times.preference.ZmanimPreferences.Values.THEME_NONE
 import com.github.times.preference.ZmanimPreferences.Values.THEME_WHITE
 import com.github.util.hour
@@ -165,7 +173,6 @@ import com.kosherjava.zmanim.ShaahZmanis
 import java.io.File
 import java.util.Calendar
 import java.util.Locale
-import androidx.core.content.edit
 
 /**
  * Simple application preferences implementation.
@@ -799,9 +806,26 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
          */
         fun init(context: Context) {
             val res = context.resources
+            OPINION_10_2 = res.getString(R.string.opinion_value_10)
+            OPINION_11 = res.getString(R.string.opinion_value_11)
+            OPINION_12 = res.getString(R.string.opinion_value_12)
+            OPINION_120 = res.getString(R.string.opinion_value_120)
+            OPINION_120_ZMANIS = res.getString(R.string.opinion_value_120_zmanis)
+            OPINION_13 = res.getString(R.string.opinion_value_13)
+            OPINION_15 = res.getString(R.string.opinion_value_15)
+            OPINION_15_ALOS = res.getString(R.string.opinion_value_15_alos)
+            OPINION_168 = res.getString(R.string.opinion_value_168)
+            OPINION_16_1 = res.getString(R.string.opinion_value_16)
+            OPINION_16_1_ALOS = res.getString(R.string.opinion_value_16_alos)
+            OPINION_16_1_SUNSET = res.getString(R.string.opinion_value_16_sunset)
+            OPINION_18 = res.getString(R.string.opinion_value_18)
+            OPINION_19 = res.getString(R.string.opinion_value_19)
+            OPINION_19_8 = res.getString(R.string.opinion_value_19_8)
             OPINION_2 = res.getString(R.string.opinion_value_2)
+            OPINION_26 = res.getString(R.string.opinion_value_26)
             OPINION_2_STARS = res.getString(R.string.opinion_value_2_stars)
             OPINION_3 = res.getString(R.string.opinion_value_3)
+            OPINION_30 = res.getString(R.string.opinion_value_30)
             OPINION_3_65 = res.getString(R.string.opinion_value_3_65)
             OPINION_3_676 = res.getString(R.string.opinion_value_3_676)
             OPINION_3_7 = res.getString(R.string.opinion_value_3_7)
@@ -810,45 +834,29 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
             OPINION_4_37 = res.getString(R.string.opinion_value_4_37)
             OPINION_4_61 = res.getString(R.string.opinion_value_4_61)
             OPINION_4_8 = res.getString(R.string.opinion_value_4_8)
+            OPINION_58 = res.getString(R.string.opinion_value_58)
             OPINION_5_88 = res.getString(R.string.opinion_value_5_88)
             OPINION_5_95 = res.getString(R.string.opinion_value_5_95)
             OPINION_6 = res.getString(R.string.opinion_value_6)
+            OPINION_60 = res.getString(R.string.opinion_value_60)
             OPINION_6_45 = res.getString(R.string.opinion_value_6_45)
             OPINION_7 = res.getString(R.string.opinion_value_7)
+            OPINION_72 = res.getString(R.string.opinion_value_72)
+            OPINION_72_ZMANIS = res.getString(R.string.opinion_value_72_zmanis)
             OPINION_7_083 = res.getString(R.string.opinion_value_7_083)
             OPINION_7_083_ZMANIS = res.getString(R.string.opinion_value_7_083_zmanis)
             OPINION_7_65 = res.getString(R.string.opinion_value_7_65)
             OPINION_7_67 = res.getString(R.string.opinion_value_7_67)
             OPINION_8_5 = res.getString(R.string.opinion_value_8)
-            OPINION_9_3 = res.getString(R.string.opinion_value_9_3)
-            OPINION_9_5 = res.getString(R.string.opinion_value_9_5)
-            OPINION_9_75 = res.getString(R.string.opinion_value_9_75)
-            OPINION_10_2 = res.getString(R.string.opinion_value_10)
-            OPINION_11 = res.getString(R.string.opinion_value_11)
-            OPINION_12 = res.getString(R.string.opinion_value_12)
-            OPINION_13 = res.getString(R.string.opinion_value_13)
-            OPINION_15 = res.getString(R.string.opinion_value_15)
-            OPINION_15_ALOS = res.getString(R.string.opinion_value_15_alos)
-            OPINION_16_1 = res.getString(R.string.opinion_value_16)
-            OPINION_16_1_ALOS = res.getString(R.string.opinion_value_16_alos)
-            OPINION_16_1_SUNSET = res.getString(R.string.opinion_value_16_sunset)
-            OPINION_18 = res.getString(R.string.opinion_value_18)
-            OPINION_19 = res.getString(R.string.opinion_value_19)
-            OPINION_19_8 = res.getString(R.string.opinion_value_19_8)
-            OPINION_26 = res.getString(R.string.opinion_value_26)
-            OPINION_30 = res.getString(R.string.opinion_value_30)
-            OPINION_58 = res.getString(R.string.opinion_value_58)
-            OPINION_60 = res.getString(R.string.opinion_value_60)
-            OPINION_72 = res.getString(R.string.opinion_value_72)
-            OPINION_72_ZMANIS = res.getString(R.string.opinion_value_72_zmanis)
             OPINION_90 = res.getString(R.string.opinion_value_90)
             OPINION_90_ZMANIS = res.getString(R.string.opinion_value_90_zmanis)
             OPINION_96 = res.getString(R.string.opinion_value_96)
             OPINION_96_ZMANIS = res.getString(R.string.opinion_value_96_zmanis)
-            OPINION_120 = res.getString(R.string.opinion_value_120)
-            OPINION_120_ZMANIS = res.getString(R.string.opinion_value_120_zmanis)
-            OPINION_168 = res.getString(R.string.opinion_value_168)
+            OPINION_9_3 = res.getString(R.string.opinion_value_9_3)
+            OPINION_9_5 = res.getString(R.string.opinion_value_9_5)
+            OPINION_9_75 = res.getString(R.string.opinion_value_9_75)
             OPINION_ATERET = res.getString(R.string.opinion_value_ateret)
+            OPINION_AZIMUTH = res.getString(R.string.opinion_value_azimuth)
             OPINION_BAAL_HATANYA = res.getString(R.string.opinion_value_baal_hatanya)
             OPINION_DAWN = res.getString(R.string.opinion_value_dawn)
             OPINION_FIXED = res.getString(R.string.opinion_value_fixed)
@@ -862,6 +870,12 @@ open class SimpleZmanimPreferences(context: Context) : SimplePreferences(context
             OPINION_SUNRISE = res.getString(R.string.opinion_value_sunrise)
             OPINION_SUNSET = res.getString(R.string.opinion_value_sunset)
             OPINION_TWILIGHT = res.getString(R.string.opinion_value_twilight)
+            OPINION_YEREIM_13 = res.getString(R.string.opinion_value_yereim_13)
+            OPINION_YEREIM_16 = res.getString(R.string.opinion_value_yereim_16)
+            OPINION_YEREIM_18 = res.getString(R.string.opinion_value_yereim_18)
+            OPINION_YEREIM_2_1 = res.getString(R.string.opinion_value_yereim_2_1)
+            OPINION_YEREIM_2_8 = res.getString(R.string.opinion_value_yereim_2_8)
+            OPINION_YEREIM_3 = res.getString(R.string.opinion_value_yereim_3)
 
             THEME_NONE = res.getString(R.string.theme_value_none)
             THEME_WHITE = res.getString(R.string.theme_value_white)

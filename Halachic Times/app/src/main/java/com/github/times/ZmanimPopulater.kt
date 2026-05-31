@@ -136,6 +136,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 jcal.upcomingParshah
             }
         }
+        val isUseElevation = settings.isUseElevation
 
         var date: KosherDateTime
         @StringRes var summary: Int
@@ -295,7 +296,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
         adapter.add(tallisTitle, summary, date, jewishDate, remote)
 
-        dateAndSummary = getSunrise(cal, settings.sunrise, settings.isUseElevation)
+        dateAndSummary = getSunrise(cal, settings.sunrise, isUseElevation)
         date = dateAndSummary.first
         summary = dateAndSummary.second
         adapter.add(R.string.sunrise, summary, date, jewishDate, remote)
@@ -486,19 +487,24 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.earliest_mincha_30
             }
 
-            OPINION_ATERET -> {
-                date = cal.minchaGedolaAteretTorah
-                summary = R.string.earliest_mincha_ateret
-            }
-
             OPINION_72 -> {
                 date = cal.minchaGedola72Minutes
                 summary = R.string.earliest_mincha_72
             }
 
+            OPINION_ATERET -> {
+                date = cal.minchaGedolaAteretTorah
+                summary = R.string.earliest_mincha_ateret
+            }
+
             OPINION_BAAL_HATANYA -> {
                 date = cal.minchaGedolaBaalHatanya
                 summary = R.string.earliest_mincha_baal_hatanya
+            }
+
+            OPINION_FIXED -> {
+                date = cal.minchaGedolaGRAFixedLocalChatzos30Minutes
+                summary = R.string.earliest_mincha_30
             }
 
             OPINION_GRA -> {
@@ -654,7 +660,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
         adapter.add(R.string.plug_hamincha, summary, date, jewishDate, remote)
 
-        dateAndSummary = getSunset(cal, settings.sunset)
+        dateAndSummary = getSunset(cal, settings.sunset, isUseElevation)
         date = dateAndSummary.first
         summary = dateAndSummary.second
         adapter.add(R.string.sunset, summary, date, jewishDate, remote)
@@ -665,7 +671,13 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         dateAndSummary = getTwilight(cal, settings.twilight)
         date = dateAndSummary.first
         summary = dateAndSummary.second
-        adapter.add(R.string.twilight, summary, date, jewishDateTomorrow, remote)
+        if (date.isDate()) {
+            if (date <= sunset) {
+                adapter.add(R.string.twilight, summary, date, jewishDate, remote)
+            } else {
+                adapter.add(R.string.twilight, summary, date, jewishDateTomorrow, remote)
+            }
+        }
         val twilight: KosherDateTime = date
         val summaryTwilight = summary
 
@@ -834,7 +846,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         val startGuardsYesterday = when (settings.guardBegins) {
             OPINION_TWILIGHT -> getTwilight(calYesterday, settings.twilight).first
             OPINION_NIGHT -> nightfallYesterday
-            else -> getSunset(calYesterday, opinionSunset).first
+            else -> getSunset(calYesterday, opinionSunset, isUseElevation).first
         }
         val finishGuardsYesterday = when (settings.guardEnds) {
             OPINION_DAWN -> dawn
@@ -1003,7 +1015,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         }
 
         // Molad.
-        if (jewishDayOfMonth <= 1 || jewishDayOfMonth >= 25) {
+        if (jewishDayOfMonth !in 2..<25) {
             val y = gcal.year
             val m = gcal.monthValue - 1
             val d = gcal.dayOfMonth
@@ -1287,18 +1299,26 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
     ): Pair<KosherDateTime, Int> {
         val date: KosherDateTime
         val summary: Int
-        when {
-            isUseElevation -> {
-                date = cal.sunrise
-                summary = R.string.sunrise_elevated
+        when (opinion) {
+            OPINION_AZIMUTH -> {
+                date = cal.sunriseOrEasternmostSolarAzimuth
+                summary = R.string.sunrise_azimuth
             }
 
-            opinion == OPINION_BAAL_HATANYA -> {
+            OPINION_BAAL_HATANYA -> {
                 date = cal.seaLevelSunrise
                 summary = R.string.sunrise_baal_hatanya
             }
 
-            else -> {
+            OPINION_SEA -> {
+                date = cal.seaLevelSunrise
+                summary = R.string.sunrise_sea
+            }
+
+            else -> if (isUseElevation) {
+                date = cal.sunrise
+                summary = R.string.sunrise_elevated
+            } else {
                 date = cal.seaLevelSunrise
                 summary = R.string.sunrise_sea
             }
@@ -1324,14 +1344,19 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         val date: KosherDateTime
         val summary: Int
         when (opinion) {
+            OPINION_BAAL_HATANYA -> {
+                date = cal.chatzosBaalHatanya
+                summary = R.string.midday_baal_hatanya
+            }
+
             OPINION_FIXED -> {
                 date = cal.fixedLocalChatzosHayom
                 summary = R.string.midday_fixed
             }
 
-            OPINION_BAAL_HATANYA -> {
-                date = cal.chatzosBaalHatanya
-                summary = R.string.midday_baal_hatanya
+            OPINION_HALF -> {
+                date = cal.chatzosHayomAsHalfDay
+                summary = R.string.midday_half
             }
 
             else -> {
@@ -1347,14 +1372,15 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
 
     private fun getSunset(
         cal: ComprehensiveZmanimCalendar,
-        opinion: String?
+        opinion: String?,
+        isUseElevation: Boolean
     ): Pair<KosherDateTime, Int> {
         val date: KosherDateTime
         val summary: Int
         when (opinion) {
-            OPINION_SEA -> {
-                date = cal.seaLevelSunset
-                summary = R.string.sunset_sea
+            OPINION_AZIMUTH -> {
+                date = cal.sunsetOrWesternmostSolarAzimuth
+                summary = R.string.sunset_azimuth
             }
 
             OPINION_BAAL_HATANYA -> {
@@ -1362,16 +1388,24 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 summary = R.string.sunset_baal_hatanya
             }
 
-            else -> {
+            OPINION_SEA -> {
+                date = cal.seaLevelSunset
+                summary = R.string.sunset_sea
+            }
+
+            else -> if (isUseElevation) {
                 date = cal.sunset
                 summary = R.string.sunset_elevated
+            } else {
+                date = cal.seaLevelSunset
+                summary = R.string.sunset_sea
             }
         }
         return Pair.create(toTime(date), summary)
     }
 
     protected fun getSunset(cal: ComprehensiveZmanimCalendar, settings: ZmanimPreferences) =
-        getSunset(cal, settings.sunset).first
+        getSunset(cal, settings.sunset, settings.isUseElevation).first
 
     private fun getTwilight(
         cal: ComprehensiveZmanimCalendar,
@@ -1393,6 +1427,36 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             OPINION_13 -> {
                 date = cal.bainHashmashosRT13Point24Degrees
                 summary = R.string.twilight_13
+            }
+
+            OPINION_YEREIM_13 -> {
+                date = cal.bainHashmashosYereim13Point5Minutes
+                summary = R.string.twilight_yereim_13
+            }
+
+            OPINION_YEREIM_16 -> {
+                date = cal.bainHashmashosYereim16Point875Minutes
+                summary = R.string.twilight_yereim_16
+            }
+
+            OPINION_YEREIM_18 -> {
+                date = cal.bainHashmashosYereim18Minutes
+                summary = R.string.twilight_yereim_18
+            }
+
+            OPINION_YEREIM_2_1 -> {
+                date = cal.bainHashmashosYereim2Point1Degrees
+                summary = R.string.twilight_yereim_2_1
+            }
+
+            OPINION_YEREIM_2_8 -> {
+                date = cal.bainHashmashosYereim2Point8Degrees
+                summary = R.string.twilight_yereim_2_8
+            }
+
+            OPINION_YEREIM_3 -> {
+                date = cal.bainHashmashosYereim3Point05Degrees
+                summary = R.string.twilight_yereim_3
             }
 
             else -> {
@@ -1656,6 +1720,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         remote: Boolean
     ): Pair<KosherDateTime, CharSequence> {
         val shabbathAfter = settings.shabbathEndsAfter
+        val isUseElevation = settings.isUseElevation
 
         val date: KosherDateTime
         when (shabbathAfter) {
@@ -1664,7 +1729,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 date = if (OPINION_NONE == opinion) {
                     sunset
                 } else {
-                    getSunset(cal, opinion).first
+                    getSunset(cal, opinion, isUseElevation).first
                 }
             }
 
@@ -1746,6 +1811,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         remote: Boolean
     ) {
         val fastAfter = settings.fastEndsAfter
+        val isUseElevation = settings.isUseElevation
 
         val date: KosherDateTime
         when (fastAfter) {
@@ -1754,7 +1820,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
                 date = if (OPINION_NONE == opinion) {
                     sunset
                 } else {
-                    getSunset(cal, opinion).first
+                    getSunset(cal, opinion, isUseElevation).first
                 }
             }
 
@@ -1855,6 +1921,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         internal val OPINION_9_5 = ZmanimPreferences.Values.OPINION_9_5
         internal val OPINION_9_75 = ZmanimPreferences.Values.OPINION_9_75
         internal val OPINION_ATERET = ZmanimPreferences.Values.OPINION_ATERET
+        internal val OPINION_AZIMUTH = ZmanimPreferences.Values.OPINION_AZIMUTH
         internal val OPINION_BAAL_HATANYA = ZmanimPreferences.Values.OPINION_BAAL_HATANYA
         internal val OPINION_DAWN = ZmanimPreferences.Values.OPINION_DAWN
         internal val OPINION_FIXED = ZmanimPreferences.Values.OPINION_FIXED
@@ -1868,6 +1935,12 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
         internal val OPINION_SUNRISE = ZmanimPreferences.Values.OPINION_SUNRISE
         internal val OPINION_SUNSET = ZmanimPreferences.Values.OPINION_SUNSET
         internal val OPINION_TWILIGHT = ZmanimPreferences.Values.OPINION_TWILIGHT
+        internal val OPINION_YEREIM_13 = ZmanimPreferences.Values.OPINION_YEREIM_13
+        internal val OPINION_YEREIM_16 = ZmanimPreferences.Values.OPINION_YEREIM_16
+        internal val OPINION_YEREIM_18 = ZmanimPreferences.Values.OPINION_YEREIM_18
+        internal val OPINION_YEREIM_2_1 = ZmanimPreferences.Values.OPINION_YEREIM_2_1
+        internal val OPINION_YEREIM_2_8 = ZmanimPreferences.Values.OPINION_YEREIM_2_8
+        internal val OPINION_YEREIM_3 = ZmanimPreferences.Values.OPINION_YEREIM_3
 
         /**
          * No summary.

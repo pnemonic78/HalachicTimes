@@ -179,6 +179,14 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         title = R.string.dawn_baal_hatanya
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
+        date = cal.alos16Point1Degrees
+        title = R.string.dawn_16
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.alos18Degrees
+        title = R.string.dawn_18
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
         date = cal.alos19Degrees
         title = R.string.dawn_19
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
@@ -187,40 +195,12 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         title = R.string.dawn_19_8
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.alos120Minutes
-        title = R.string.dawn_120
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos120Zmanis
-        title = R.string.dawn_120_zmanis
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos18Degrees
-        title = R.string.dawn_18
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
         date = cal.alos26Degrees
         title = R.string.dawn_26
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.alos16Point1Degrees
-        title = R.string.dawn_16
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos96Minutes
-        title = R.string.dawn_96
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos96Zmanis
-        title = R.string.dawn_96_zmanis
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos90Minutes
-        title = R.string.dawn_90
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.alos90Zmanis
-        title = R.string.dawn_90_zmanis
+        date = cal.alos60Minutes
+        title = R.string.dawn_60
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.alos72Minutes
@@ -231,8 +211,28 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         title = R.string.dawn_72_zmanis
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.alos60Minutes
-        title = R.string.dawn_60
+        date = cal.alos90Minutes
+        title = R.string.dawn_90
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.alos90Zmanis
+        title = R.string.dawn_90_zmanis
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.alos96Minutes
+        title = R.string.dawn_96
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.alos96Zmanis
+        title = R.string.dawn_96_zmanis
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.alos120Minutes
+        title = R.string.dawn_120
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.alos120Zmanis
+        title = R.string.dawn_120_zmanis
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
@@ -276,14 +276,30 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         date = cal.sunrise
         title = R.string.sunrise_elevated
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.sunriseOrEasternmostSolarAzimuth
+        title = R.string.sunrise_azimuth
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
     private fun populateShema(adapter: A, cal: ComprehensiveZmanimCalendar, jewishDate: JewishDate) {
         var date: KosherDateTime
         var title: Int
 
+        date = cal.sofZmanShmaAteretTorah
+        title = R.string.shema_ateret
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
         date = cal.sofZmanShmaBaalHatanya
         title = R.string.shema_baal_hatanya
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.sofZmanShmaGRA
+        title = R.string.shema_gra
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.sofZmanShmaGRASunriseToFixedLocalChatzos
+        title = R.string.shema_fixed
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.sofZmanShmaAlos16Point1ToSunset
@@ -294,36 +310,20 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         title = R.string.shema_7
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.sofZmanShmaMGA19Point8Degrees
-        title = R.string.shema_19_8
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
         date = cal.sofZmanShmaMGA120Minutes
         title = R.string.shema_120
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.sofZmanShmaMGA18Degrees
-        title = R.string.shema_18
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.sofZmanShmaMGA96Minutes
-        title = R.string.shema_96
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.sofZmanShmaMGA96MinutesZmanis
-        title = R.string.shema_96_zmanis
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.sofZmanShmaMGA16Point1Degrees
         title = R.string.shema_16
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.sofZmanShmaMGA90Minutes
-        title = R.string.shema_90
+        date = cal.sofZmanShmaMGA18Degrees
+        title = R.string.shema_18
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.sofZmanShmaMGA90MinutesZmanis
-        title = R.string.shema_90_zmanis
+        date = cal.sofZmanShmaMGA19Point8Degrees
+        title = R.string.shema_19_8
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.sofZmanShmaMGA72Minutes
@@ -334,20 +334,24 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         title = R.string.shema_72_zmanis
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.sofZmanShmaAteretTorah
-        title = R.string.shema_ateret
+        date = cal.sofZmanShmaMGA90Minutes
+        title = R.string.shema_90
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.sofZmanShmaMGA90MinutesZmanis
+        title = R.string.shema_90_zmanis
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.sofZmanShmaMGA96Minutes
+        title = R.string.shema_96
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.sofZmanShmaMGA96MinutesZmanis
+        title = R.string.shema_96_zmanis
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.sofZmanShma3HoursBeforeChatzos
         title = R.string.shema_3
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.sofZmanShmaGRASunriseToFixedLocalChatzos
-        title = R.string.shema_fixed
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.sofZmanShmaGRA
-        title = R.string.shema_gra
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
@@ -355,44 +359,36 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         var date: KosherDateTime
         var title: Int
 
+        date = cal.sofZmanTfilaAteretTorah
+        title = R.string.prayers_ateret
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
         date = cal.sofZmanTfilaBaalHatanya
         title = R.string.prayers_baal_hatanya
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.sofZmanTfilaGRA
+        title = R.string.prayers_gra
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.sofZmanTfila2HoursBeforeChatzos
+        title = R.string.prayers_2
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.sofZmanTfilaMGA120Minutes
         title = R.string.prayers_120
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.sofZmanTfilaMGA96Minutes
-        title = R.string.prayers_96
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.sofZmanTfilaMGA96MinutesZmanis
-        title = R.string.prayers_96_zmanis
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.sofZmanTfilaMGA19Point8Degrees
-        title = R.string.prayers_19_8
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.sofZmanTfilaMGA90Minutes
-        title = R.string.prayers_90
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.sofZmanTfilaMGA90MinutesZmanis
-        title = R.string.prayers_90_zmanis
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.sofZmanTfilaAteretTorah
-        title = R.string.prayers_ateret
+        date = cal.sofZmanTfilaMGA16Point1Degrees
+        title = R.string.prayers_16
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.sofZmanTfilaMGA18Degrees
         title = R.string.prayers_18
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.sofZmanTfilaMGA16Point1Degrees
-        title = R.string.prayers_16
+        date = cal.sofZmanTfilaMGA19Point8Degrees
+        title = R.string.prayers_19_8
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.sofZmanTfilaMGA72Minutes
@@ -403,12 +399,20 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         title = R.string.prayers_72_zmanis
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.sofZmanTfila2HoursBeforeChatzos
-        title = R.string.prayers_2
+        date = cal.sofZmanTfilaMGA90Minutes
+        title = R.string.prayers_90
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.sofZmanTfilaGRA
-        title = R.string.prayers_gra
+        date = cal.sofZmanTfilaMGA90MinutesZmanis
+        title = R.string.prayers_90_zmanis
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.sofZmanTfilaMGA96Minutes
+        title = R.string.prayers_96
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.sofZmanTfilaMGA96MinutesZmanis
+        title = R.string.prayers_96_zmanis
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
@@ -427,6 +431,10 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         date = cal.chatzosHayom
         title = R.string.midday_solar
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.chatzosHayomAsHalfDay
+        title = R.string.midday_half
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
     private fun populateEarliestMincha(
@@ -437,8 +445,24 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         var date: KosherDateTime
         var title: Int
 
+        date = cal.minchaGedolaAhavatShalom
+        title = R.string.opinion_ahavat_shalom
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.minchaGedola72Minutes
+        title = R.string.earliest_mincha_72
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
         date = cal.minchaGedolaBaalHatanya
         title = R.string.earliest_mincha_baal_hatanya
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.minchaGedolaGRA
+        title = R.string.earliest_mincha_greater
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.minchaGedolaGRAFixedLocalChatzos30Minutes
+        title = R.string.earliest_mincha_30_fixed
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.minchaGedola16Point1Degrees
@@ -452,22 +476,30 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         date = cal.minchaGedolaAteretTorah
         title = R.string.earliest_mincha_ateret
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.minchaGedola72Minutes
-        title = R.string.earliest_mincha_72
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.minchaGedolaGRA
-        title = R.string.earliest_mincha_greater
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
     private fun populateMincha(adapter: A, cal: ComprehensiveZmanimCalendar, jewishDate: JewishDate) {
         var date: KosherDateTime
         var title: Int
 
+        date = cal.minchaKetanaAhavatShalom
+        title = R.string.opinion_ahavat_shalom
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.minchaKetanaAteretTorah
+        title = R.string.mincha_ateret
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
         date = cal.minchaKetanaBaalHatanya
         title = R.string.mincha_baal_hatanya
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.minchaKetanaGRA
+        title = R.string.mincha_lesser
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.minchaKetanaGRAFixedLocalChatzosToSunset
+        title = R.string.mincha_fixed
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.minchaKetana16Point1Degrees
@@ -476,14 +508,6 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
 
         date = cal.minchaKetana72Minutes
         title = R.string.mincha_72
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.minchaKetanaAteretTorah
-        title = R.string.mincha_ateret
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.minchaKetanaGRA
-        title = R.string.mincha_lesser
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
@@ -495,60 +519,36 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         var date: KosherDateTime
         var title: Int
 
+        date = cal.plagHaminchaAteretTorah
+        title = R.string.plug_hamincha_ateret
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
         date = cal.plagHaminchaBaalHatanya
         title = R.string.plug_hamincha_baal_hatanya
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.plagHaminchaGRA
+        title = R.string.plug_hamincha_gra
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.plagAlosToSunset
         title = R.string.plug_hamincha_16_sunset
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.plagAlos16Point1ToTzaisGeonim7Point083Degrees
-        title = R.string.plug_hamincha_16_alos
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.plagHaminchaAteretTorah
-        title = R.string.plug_hamincha_ateret
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.plagHamincha60Minutes
-        title = R.string.plug_hamincha_60
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.plagHamincha72Minutes
-        title = R.string.plug_hamincha_72
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.plagHamincha72MinutesZmanis
-        title = R.string.plug_hamincha_72_zmanis
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
         date = cal.plagHamincha16Point1Degrees
         title = R.string.plug_hamincha_16
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.plagAlos16Point1ToTzaisGeonim7Point083Degrees
+        title = R.string.plug_hamincha_16_alos
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.plagHamincha18Degrees
         title = R.string.plug_hamincha_18
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.plagHamincha90Minutes
-        title = R.string.plug_hamincha_90
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.plagHamincha90MinutesZmanis
-        title = R.string.plug_hamincha_90_zmanis
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
         date = cal.plagHamincha19Point8Degrees
         title = R.string.plug_hamincha_19_8
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.plagHamincha96Minutes
-        title = R.string.plug_hamincha_96
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.plagHamincha96MinutesZmanis
-        title = R.string.plug_hamincha_96_zmanis
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.plagHamincha120Minutes
@@ -563,8 +563,32 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         title = R.string.plug_hamincha_26
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
-        date = cal.plagHaminchaGRA
-        title = R.string.plug_hamincha_gra
+        date = cal.plagHamincha60Minutes
+        title = R.string.plug_hamincha_60
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.plagHamincha72Minutes
+        title = R.string.plug_hamincha_72
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.plagHamincha72MinutesZmanis
+        title = R.string.plug_hamincha_72_zmanis
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.plagHamincha90Minutes
+        title = R.string.plug_hamincha_90
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.plagHamincha90MinutesZmanis
+        title = R.string.plug_hamincha_90_zmanis
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.plagHamincha96Minutes
+        title = R.string.plug_hamincha_96
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
+        date = cal.plagHamincha96MinutesZmanis
+        title = R.string.plug_hamincha_96_zmanis
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 
@@ -572,7 +596,7 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         adapter: A,
         cal: ComprehensiveZmanimCalendar,
         jewishDate: JewishDate,
-        offset: Long = 0
+        offset: TimeMillis = 0
     ) {
         var date: KosherDateTime
         var title: Int
@@ -588,13 +612,19 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
             title = R.string.sunset_elevated
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
         }
+
+        date = cal.sunsetOrWesternmostSolarAzimuth
+        if (date != null) {
+            title = R.string.sunset_azimuth
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
+        }
     }
 
     private fun populateTwilight(
         adapter: A,
         cal: ComprehensiveZmanimCalendar,
         jewishDate: JewishDate,
-        offset: Long = 0
+        offset: TimeMillis = 0
     ) {
         var date: KosherDateTime
         var title: Int
@@ -606,15 +636,15 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
         }
 
-        date = cal.bainHashmashosRT58Point5Minutes
-        if (date != null) {
-            title = R.string.twilight_58
-            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
-        }
-
         date = cal.bainHashmashosRT13Point24Degrees
         if (date != null) {
             title = R.string.twilight_13
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
+        }
+
+        date = cal.bainHashmashosRT58Point5Minutes
+        if (date != null) {
+            title = R.string.twilight_58
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
         }
 
@@ -623,13 +653,49 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
             title = R.string.twilight_2stars
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
         }
+
+        date = cal.bainHashmashosYereim13Point5Minutes
+        if (date != null) {
+            title = R.string.twilight_yereim_13
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
+        }
+
+        date = cal.bainHashmashosYereim16Point875Minutes
+        if (date != null) {
+            title = R.string.twilight_yereim_16
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
+        }
+
+        date = cal.bainHashmashosYereim18Minutes
+        if (date != null) {
+            title = R.string.twilight_yereim_18
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
+        }
+
+        date = cal.bainHashmashosYereim2Point1Degrees
+        if (date != null) {
+            title = R.string.twilight_yereim_2_1
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
+        }
+
+        date = cal.bainHashmashosYereim2Point8Degrees
+        if (date != null) {
+            title = R.string.twilight_yereim_2_8
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
+        }
+
+        date = cal.bainHashmashosYereim3Point05Degrees
+        if (date != null) {
+            title = R.string.twilight_yereim_3
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate)
+        }
     }
 
     private fun populateNightfall(
         adapter: A,
         cal: ComprehensiveZmanimCalendar,
         jewishDate: JewishDate,
-        offset: Long = 0
+        offset: TimeMillis = 0
     ) {
         var date: KosherDateTime
         var title: Int
@@ -898,16 +964,16 @@ class ZmanimDetailsPopulater<A : ZmanimAdapter<ZmanDetailsViewHolder>>(
         title = R.string.eat_chametz_baal_hatanya
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
+        date = cal.sofZmanAchilasChametzGRA
+        title = R.string.eat_chametz_gra
+        adapter.add(title, SUMMARY_NONE, date, jewishDate)
+
         date = cal.sofZmanAchilasChametzMGA16Point1Degrees
         title = R.string.eat_chametz_16
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
 
         date = cal.sofZmanAchilasChametzMGA72Minutes
         title = R.string.eat_chametz_72
-        adapter.add(title, SUMMARY_NONE, date, jewishDate)
-
-        date = cal.sofZmanAchilasChametzGRA
-        title = R.string.eat_chametz_gra
         adapter.add(title, SUMMARY_NONE, date, jewishDate)
     }
 

@@ -22,6 +22,7 @@
     <string name="opinion_96">Day is 96 minutes before sunrise / after sunset</string>
     <string name="opinion_96_zmanis">Day is 96 זמניות minutes before sunrise / after sunset</string>
     <string name="opinion_ateret">According to Yeshivat Ateret Torah</string>
+    <string name="opinion_ahavat_shalom">According to Ahavat Shalom</string>
     <string name="opinion_baal_hatanya">According to Baal haTanya</string>
     <string name="opinion_gra">According to GRA</string>
     <string name="opinion_mga">According to Magen Avraham</string>
@@ -81,9 +82,10 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Sunrise</string>
+    <string name="sunrise_azimuth">Adjusted for elevation or easternmost solar azimuth</string>
+    <string name="sunrise_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
     <string name="sunrise_elevated">Adjusted for elevation</string>
     <string name="sunrise_sea">At sea level</string>
-    <string name="sunrise_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Latest shema -->
     <string name="shema">Latest <i>shema</i></string>
@@ -129,6 +131,7 @@
     <string name="midday">Midday</string>
     <string name="midday_solar">Solar noon</string>
     <string name="midday_fixed">Noon adjusted for the local latitude</string>
+    <string name="midday_half">Halfway between sunrise and sunset</string>
     <string name="midday_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Earliest mincha -->
@@ -137,11 +140,13 @@
     <string name="earliest_mincha_ateret" translatable="false">@string/opinion_ateret</string>
     <string name="earliest_mincha_72" translatable="false">@string/opinion_72</string>
     <string name="earliest_mincha_30">30 minutes after midday</string>
+    <string name="earliest_mincha_30_fixed">30 minutes after fixed midday</string>
     <string name="earliest_mincha_16" translatable="false">@string/opinion_16</string>
     <string name="earliest_mincha_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Afternoon prayers</string>
+    <string name="mincha_fixed">‎3.5 זמניות hours after fixed local midday</string>
     <string name="mincha_lesser">Lesser <i>mincha</i></string>
     <string name="mincha_72" translatable="false">@string/opinion_72</string>
     <string name="mincha_16" translatable="false">@string/opinion_16</string>
@@ -193,14 +198,20 @@
     <string name="sunset_elevated" translatable="false">@string/sunrise_elevated</string>
     <string name="sunset_sea" translatable="false">@string/sunrise_sea</string>
     <string name="sunset_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
+    <string name="sunset_azimuth">Adjusted for elevation or westernmost solar azimuth</string>
 
     <!-- Twilight -->
     <string name="twilight">Twilight</string>
     <string name="twilight_2stars">2 stars visible</string>
     <string name="twilight_7_083">13.5 minutes before 7.083° nightfall</string>
-    <string name="twilight_7_083_zmanis">13.5 minutes זמניות before 7.083° nightfall</string>
     <string name="twilight_58">58.5 minutes after sunset</string>
     <string name="twilight_13">Sun is 13.24° below horizon</string>
+    <string name="twilight_yereim_13">13.5 minutes before sunset</string>
+    <string name="twilight_yereim_16">16.875 minutes before sunset</string>
+    <string name="twilight_yereim_18">18 minutes before sunset</string>
+    <string name="twilight_yereim_2_1">2.1° before sunset</string>
+    <string name="twilight_yereim_2_8">2.8° before sunset</string>
+    <string name="twilight_yereim_3">3.05° before sunset</string>
 
     <!-- Nightfall -->
     <string name="nightfall">Nightfall</string>
