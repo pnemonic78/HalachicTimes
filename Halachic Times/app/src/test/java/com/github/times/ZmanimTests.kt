@@ -1,8 +1,10 @@
 package com.github.times
 
+import android.location.Location
 import android.text.format.DateFormat
 import android.text.format.DateUtils
 import com.github.test.assertDelta
+import com.github.times.location.GeocoderBase.Companion.USER_PROVIDER
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
 import com.github.util.dayOfMonth
@@ -19,7 +21,10 @@ import com.kosherjava.zmanim.util.NOAACalculator
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.time.LocalDate
+import java.time.Month
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.TimeZone
@@ -32,7 +37,6 @@ class ZmanimTests : BaseTests() {
         assertNotNull(preferences)
         val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences)
         assertNotNull(populater)
-        populater.isInIsrael = true
         assertMolad(populater, 2018, Calendar.DECEMBER, 7, 22, 29)
         assertMolad(populater, 2019, Calendar.JANUARY, 6, 11, 13)
         assertMolad(populater, 2019, Calendar.FEBRUARY, 4, 23, 57)
@@ -159,7 +163,6 @@ class ZmanimTests : BaseTests() {
         }
         assertNotNull(preferences)
         val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences)
-        populater.isInIsrael = false
 
         val adapter = ZmanimAdapter<ZmanViewHolder>(context, preferences)
         assertEquals(0, adapter.itemCount)
@@ -208,7 +211,6 @@ class ZmanimTests : BaseTests() {
         }
         assertNotNull(preferences)
         val populater = ZmanimDetailsPopulater<ZmanimDetailsAdapter>(context, preferences)
-        populater.isInIsrael = true
 
         val adapter = ZmanimDetailsAdapter(context, preferences, isHour24 = true)
         assertEquals(0, adapter.itemCount)
@@ -263,7 +265,6 @@ class ZmanimTests : BaseTests() {
         }
         assertNotNull(preferences)
         val populater = ZmanimDetailsPopulater<ZmanimDetailsAdapter>(context, preferences)
-        populater.isInIsrael = true
 
         val adapter = ZmanimDetailsAdapter(context, preferences, isHour24 = true)
         assertEquals(0, adapter.itemCount)
@@ -318,7 +319,6 @@ class ZmanimTests : BaseTests() {
         }
         assertNotNull(preferences)
         val populater = ZmanimDetailsPopulater<ZmanimDetailsAdapter>(context, preferences)
-        populater.isInIsrael = true
 
         val adapter = ZmanimDetailsAdapter(context, preferences, isHour24 = true)
         assertEquals(0, adapter.itemCount)
@@ -377,7 +377,6 @@ class ZmanimTests : BaseTests() {
         }
         assertNotNull(preferences)
         val populater = ZmanimDetailsPopulater<ZmanimDetailsAdapter>(context, preferences)
-        populater.isInIsrael = true
 
         val adapter = ZmanimDetailsAdapter(context, preferences, isHour24 = true)
         assertEquals(0, adapter.itemCount)
@@ -402,5 +401,69 @@ class ZmanimTests : BaseTests() {
         assertNotNull(item3!!)
         assertEquals(R.string.guard_fourth, item3.titleId)
         assertEquals("02:23", item3.timeLabel)
+    }
+
+    @Test
+    fun `shavuot and shabbat`() {
+        val tz = TimeZone.getTimeZone("Asia/Jerusalem")
+        val loc = Location(USER_PROVIDER).apply {
+            latitude = 31.76904
+            longitude = 35.21633
+            altitude = 786.0
+        }
+
+        val preferences: ZmanimPreferences = SimpleZmanimPreferences(context)
+        assertNotNull(preferences)
+        val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences)
+        populater.setLocation(loc)
+        populater.timeZone = tz
+        assertTrue(populater.isInIsrael)
+
+        val adapter = ZmanimAdapter<ZmanViewHolder>(context, preferences, isHour24 = true)
+        assertEquals(0, adapter.itemCount)
+
+        populater.setCalendar(LocalDate.of(2026, Month.MAY, 22))
+        populater.populate(adapter, false)
+        assertEquals(17, adapter.itemCount)
+        assertEquals(R.string.midnight, adapter[0]!!.titleId)
+        assertEquals(R.string.morning_guard, adapter[1]!!.titleId)
+        assertEquals(R.string.dawn, adapter[2]!!.titleId)
+        assertEquals(R.string.tallis_only, adapter[3]!!.titleId)
+        assertEquals(R.string.sunrise, adapter[4]!!.titleId)
+        assertEquals(R.string.shema, adapter[5]!!.titleId)
+        assertEquals(R.string.prayers, adapter[6]!!.titleId)
+        assertEquals(R.string.midday, adapter[7]!!.titleId)
+        assertEquals(R.string.earliest_mincha, adapter[8]!!.titleId)
+        assertEquals(R.string.mincha, adapter[9]!!.titleId)
+        assertEquals(R.string.plug_hamincha, adapter[10]!!.titleId)
+        assertEquals(R.string.candles, adapter[11]!!.titleId)
+        assertEquals(R.string.sunset, adapter[12]!!.titleId)
+        assertEquals(R.string.twilight, adapter[13]!!.titleId)
+        assertEquals(R.string.nightfall, adapter[14]!!.titleId)
+        assertEquals(R.string.festival_ends, adapter[15]!!.titleId)
+        assertEquals(
+            R.string.midnight_guard,
+            adapter[16]!!.titleId
+        )
+
+        populater.setCalendar(LocalDate.of(2026, Month.MAY, 23))
+        populater.populate(adapter, false)
+        assertEquals(16, adapter.itemCount)
+        assertEquals(R.string.midnight, adapter[0]!!.titleId)
+        assertEquals(R.string.morning_guard, adapter[1]!!.titleId)
+        assertEquals(R.string.dawn, adapter[2]!!.titleId)
+        assertEquals(R.string.tallis_only, adapter[3]!!.titleId)
+        assertEquals(R.string.sunrise, adapter[4]!!.titleId)
+        assertEquals(R.string.shema, adapter[5]!!.titleId)
+        assertEquals(R.string.prayers, adapter[6]!!.titleId)
+        assertEquals(R.string.midday, adapter[7]!!.titleId)
+        assertEquals(R.string.earliest_mincha, adapter[8]!!.titleId)
+        assertEquals(R.string.mincha, adapter[9]!!.titleId)
+        assertEquals(R.string.plug_hamincha, adapter[10]!!.titleId)
+        assertEquals(R.string.sunset, adapter[11]!!.titleId)
+        assertEquals(R.string.twilight, adapter[12]!!.titleId)
+        assertEquals(R.string.nightfall, adapter[13]!!.titleId)
+        assertEquals(R.string.shabbath_ends, adapter[14]!!.titleId)
+        assertEquals(R.string.midnight_guard, adapter[15]!!.titleId)
     }
 }

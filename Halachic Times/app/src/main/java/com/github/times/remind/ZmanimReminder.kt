@@ -109,7 +109,6 @@ class ZmanimReminder(private val context: Context) {
         val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, settings)
         populater.setCalendar(System.currentTimeMillis())
         populater.setGeoLocation(gloc)
-        populater.isInIsrael = locations.isInIsrael
         val adapter = ZmanimAdapter<ZmanViewHolder>(context, settings, null)
         remind(settings, populater, adapter)
     }

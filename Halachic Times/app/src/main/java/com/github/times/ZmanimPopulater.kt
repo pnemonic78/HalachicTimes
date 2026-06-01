@@ -17,6 +17,7 @@ package com.github.times
 
 import android.content.Context
 import android.content.res.Resources
+import android.location.Location
 import android.text.format.DateUtils
 import android.util.Pair
 import androidx.annotation.StringRes
@@ -24,6 +25,7 @@ import androidx.core.util.component1
 import androidx.core.util.component2
 import com.github.times.ZmanimDays.NO_HOLIDAY
 import com.github.times.ZmanimDays.SHABBATH
+import com.github.times.location.LocationsProvider
 import com.github.times.preference.ZmanimPreferences
 import com.github.util.millisecond
 import com.kosherjava.zmanim.AstronomicalCalendar
@@ -32,6 +34,7 @@ import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate
 import com.kosherjava.zmanim.util.GeoLocation
 import timber.log.Timber
+import java.time.LocalDate
 import java.time.chrono.IsoEra
 import java.util.Calendar
 import java.util.TimeZone
@@ -57,7 +60,6 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
     }
 
     var timeZone: TimeZone = TimeZone.getDefault()
-        private set
 
     /**
      * Is the current location in Israel?<br/>
@@ -66,6 +68,7 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
      * @return `true` if user is in Israel - `false` otherwise.
      */
     var isInIsrael = false
+        private set
 
     protected open fun prePopulate(adapter: A) {
         adapter.clear()
@@ -280,7 +283,9 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
             }
         }
         var tallisTitle = R.string.tallis
-        when (holidayToday) {
+        if (dayOfWeek == Calendar.SATURDAY) {
+            tallisTitle = R.string.tallis_only
+        } else when (holidayToday) {
             SHABBATH,
             JewishCalendar.PESACH,
             JewishCalendar.CHOL_HAMOED_PESACH,
@@ -1124,12 +1129,31 @@ open class ZmanimPopulater<A : ZmanimAdapter<*>>(
     }
 
     /**
+     * Set the calendar.
+     *
+     * @param date the date.
+     */
+    fun setCalendar(date: LocalDate) {
+        calendar.localDate = date
+    }
+
+    /**
      * Sets the [GeoLocation].
      *
      * @param geoLocation the location.
      */
     fun setGeoLocation(geoLocation: GeoLocation) {
         calendar.geoLocation = geoLocation
+        isInIsrael = LocationsProvider.isInIsrael(geoLocation.latitude, geoLocation.longitude)
+    }
+
+    /**
+     * Sets the [Location].
+     *
+     * @param location the location.
+     */
+    fun setLocation(location: Location) {
+        setGeoLocation(location.toGeoLocation())
     }
 
     /**

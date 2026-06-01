@@ -499,30 +499,6 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     }
 
     /**
-     * Is the location in Israel?<br/>
-     * Used to determine if user is in diaspora for 2-day festivals.
-     *
-     * @param location the location.
-     * @param timeZone the time zone.
-     * @return `true` if user is in Israel - `false` otherwise.
-     */
-    private fun isInIsrael(location: Location?, timeZone: TimeZone?): Boolean {
-        if (location == null) {
-            val tz = timeZone ?: this.timeZone
-            val id = tz.id
-            if (TZ_JERUSALEM == id || TZ_BEIRUT == id) return true
-            // Check offsets because "IST" could be "Ireland ST",
-            // "JST" could be "Japan ST".
-            val offset = tz.rawOffset + tz.dstSavings
-            return (offset in TZ_OFFSET_ISRAEL..TZ_OFFSET_DST_ISRAEL) &&
-                    (TZ_IDT == id || TZ_IST == id || TZ_JST == id)
-        }
-        val latitude = location.latitude
-        val longitude = location.longitude
-        return (latitude in ISRAEL_SOUTH..ISRAEL_NORTH) && (longitude in ISRAEL_WEST..ISRAEL_EAST)
-    }
-
-    /**
      * Is the current location in Israel?<br/>
      * Used to determine if user is in diaspora for 2-day festivals.
      *
@@ -530,7 +506,7 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
      * @return `true` if user is in Israel - `false` otherwise.
      */
     private fun isInIsrael(timeZone: TimeZone?): Boolean {
-        return isInIsrael(getLocation(), timeZone)
+        return isInIsrael(getLocation(), timeZone ?: this.timeZone)
     }
 
     /**
@@ -980,6 +956,39 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
                 context,
                 PERMISSIONS[0]
             ) != PermissionChecker.PERMISSION_GRANTED
+        }
+
+        /**
+         * Is the location in Israel?<br/>
+         * Used to determine if user is in diaspora for 2-day festivals.
+         *
+         * @param location the location.
+         * @param timeZone the time zone.
+         * @return `true` if user is in Israel - `false` otherwise.
+         */
+        fun isInIsrael(location: Location?, timeZone: TimeZone): Boolean {
+            if (location == null) {
+                val id = timeZone.id
+                if (TZ_JERUSALEM == id || TZ_BEIRUT == id) return true
+                // Check offsets because "IST" could be "Ireland ST",
+                // "JST" could be "Japan ST".
+                val offset = timeZone.rawOffset + timeZone.dstSavings
+                return (offset in TZ_OFFSET_ISRAEL..TZ_OFFSET_DST_ISRAEL) &&
+                        (TZ_IDT == id || TZ_IST == id || TZ_JST == id)
+            }
+            return isInIsrael(location.latitude, location.longitude)
+        }
+
+        /**
+         * Is the location in Israel?<br/>
+         * Used to determine if user is in diaspora for 2-day festivals.
+         *
+         * @param latitude the latitude.
+         * @param longitude the longitude.
+         * @return `true` if user is in Israel - `false` otherwise.
+         */
+        fun isInIsrael(latitude: Double, longitude: Double): Boolean {
+            return (latitude in ISRAEL_SOUTH..ISRAEL_NORTH) && (longitude in ISRAEL_WEST..ISRAEL_EAST)
         }
     }
 }

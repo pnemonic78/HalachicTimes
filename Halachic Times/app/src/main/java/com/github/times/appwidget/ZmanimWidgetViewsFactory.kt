@@ -127,7 +127,6 @@ class ZmanimWidgetViewsFactory(
         ZmanimPopulater<ZmanimAdapter<*>>(context, preferences).apply {
             setCalendar(time)
             setGeoLocation(gloc)
-            isInIsrael = locations.isInIsrael
             populate(adapter, false)
         }
 

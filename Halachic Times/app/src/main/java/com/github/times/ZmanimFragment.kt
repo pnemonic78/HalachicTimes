@@ -186,7 +186,6 @@ open class ZmanimFragment<VH : ZmanViewHolder, A : ZmanimAdapter<VH>, P : Zmanim
         val populater: P = populater
         populater.setCalendar(date)
         populater.setGeoLocation(gloc)
-        populater.isInIsrael = locations.isInIsrael
         val adapter = createAdapter(contextImpl) ?: return null
         populater.populate(adapter, false)
         this.adapter = adapter

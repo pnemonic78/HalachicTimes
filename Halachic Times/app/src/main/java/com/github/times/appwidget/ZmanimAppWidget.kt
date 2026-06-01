@@ -333,7 +333,6 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
         val populater = ZmanimPopulater<ZmanimAdapter<ZmanViewHolder>>(context, preferences).apply {
             setCalendar(day)
             setGeoLocation(gloc)
-            isInIsrael = locations.isInIsrael
         }
 
         val adapter = ZmanimAdapter<ZmanViewHolder>(context, preferences)

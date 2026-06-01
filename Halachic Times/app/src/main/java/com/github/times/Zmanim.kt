@@ -1,11 +1,12 @@
 package com.github.times
 
+import android.location.Location
 import com.github.util.dayOfMonth
 import com.github.util.month
 import com.github.util.year
 import com.kosherjava.zmanim.AstronomicalCalendar
-import com.kosherjava.zmanim.ComprehensiveZmanimCalendar
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate
+import com.kosherjava.zmanim.util.GeoLocation
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -222,4 +223,8 @@ fun TimeMillis.toKosherDate(zone: TimeZone = TimeZone.getDefault()): KosherDate 
 fun TimeMillis.toKosherDate(zone: ZoneId = ZoneId.systemDefault()): KosherDate {
     val epochMilli: Long = this
     return KosherDate.ofInstant(Instant.ofEpochMilli(epochMilli), zone)
+}
+
+fun Location.toGeoLocation(zone: TimeZone = TimeZone.getDefault()): GeoLocation {
+    return GeoLocation(provider, latitude, longitude, altitude, zone.toZoneId())
 }

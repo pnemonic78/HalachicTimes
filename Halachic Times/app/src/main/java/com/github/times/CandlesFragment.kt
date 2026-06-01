@@ -87,7 +87,6 @@ class CandlesFragment : Fragment() {
         val populater = createPopulater(context).apply {
             setCalendar(date)
             setGeoLocation(gloc)
-            isInIsrael = locations.isInIsrael
         }
         val candles = populater.populateCandles(preferences) ?: return
         val animate = preferences.isCandlesAnimated
