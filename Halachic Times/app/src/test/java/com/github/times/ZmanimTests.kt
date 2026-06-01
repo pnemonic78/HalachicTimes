@@ -16,6 +16,7 @@ import com.github.util.year
 import com.kosherjava.zmanim.ComprehensiveZmanimCalendar
 import com.kosherjava.zmanim.ShaahZmanis
 import com.kosherjava.zmanim.ZmanimCalendar
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
 import com.kosherjava.zmanim.util.GeoLocation
 import com.kosherjava.zmanim.util.NOAACalculator
 import org.junit.Assert.assertEquals
@@ -424,6 +425,8 @@ class ZmanimTests : BaseTests() {
 
         populater.setCalendar(LocalDate.of(2026, Month.MAY, 22))
         populater.populate(adapter, false)
+        assertEquals(Calendar.FRIDAY, adapter.dayOfWeek)
+        assertEquals(JewishCalendar.SHAVUOS, adapter.holidayToday)
         assertEquals(17, adapter.itemCount)
         assertEquals(R.string.midnight, adapter[0]!!.titleId)
         assertEquals(R.string.morning_guard, adapter[1]!!.titleId)
@@ -449,6 +452,8 @@ class ZmanimTests : BaseTests() {
         populater.setCalendar(LocalDate.of(2026, Month.MAY, 23))
         populater.populate(adapter, false)
         assertEquals(16, adapter.itemCount)
+        assertEquals(Calendar.SATURDAY, adapter.dayOfWeek)
+        assertEquals(JewishCalendar.ISRU_CHAG, adapter.holidayToday)
         assertEquals(R.string.midnight, adapter[0]!!.titleId)
         assertEquals(R.string.morning_guard, adapter[1]!!.titleId)
         assertEquals(R.string.dawn, adapter[2]!!.titleId)

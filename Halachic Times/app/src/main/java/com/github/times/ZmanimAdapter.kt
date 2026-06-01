@@ -32,7 +32,9 @@ import com.kosherjava.zmanim.hebrewcalendar.HebrewDateFormatter
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate
 import java.text.SimpleDateFormat
+import java.time.DayOfWeek
 import java.time.chrono.IsoEra
+import java.util.Calendar
 import java.util.TimeZone
 
 /**
@@ -422,10 +424,10 @@ open class ZmanimAdapter<VH : ZmanViewHolder>(
     /**
      * Get today's day-of-the-week.
      *
-     * @return the day.
+     * @return the calendar day.
      */
     val dayOfWeek: Int
-        get() = calendar.localDate.dayOfWeek.value
+        get() = calendarDayOfWeek[calendar.localDate.dayOfWeek]!!
 
     companion object {
         /**
@@ -460,5 +462,15 @@ open class ZmanimAdapter<VH : ZmanViewHolder>(
          * of the year.
          */
         protected const val ADAR_I = JewishDate.ADAR_II + 1
+
+        private val calendarDayOfWeek = mapOf(
+            DayOfWeek.SUNDAY to Calendar.SUNDAY,
+            DayOfWeek.MONDAY to Calendar.MONDAY,
+            DayOfWeek.TUESDAY to Calendar.TUESDAY,
+            DayOfWeek.WEDNESDAY to Calendar.WEDNESDAY,
+            DayOfWeek.THURSDAY to Calendar.THURSDAY,
+            DayOfWeek.FRIDAY to Calendar.FRIDAY,
+            DayOfWeek.SATURDAY to Calendar.SATURDAY,
+        )
     }
 }

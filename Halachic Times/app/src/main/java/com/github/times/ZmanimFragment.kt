@@ -26,6 +26,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.ScrollView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isNotEmpty
 import androidx.fragment.app.Fragment
 import com.github.times.ZmanViewHolder.Companion.TAG_ITEM
 import com.github.times.ZmanimDays.getName
@@ -213,6 +214,8 @@ open class ZmanimFragment<VH : ZmanViewHolder, A : ZmanimAdapter<VH>, P : Zmanim
         var viewHolder: ZmanViewHolder
         val timeViews = arrayOfNulls<View>(count)
         var jewishDatePrevious: JewishDate? = null
+        val isDarkTheme = preferences.isDarkTheme
+
         if (count > 0) {
             item = adapter[position]
             if (item != null) {
@@ -227,22 +230,23 @@ open class ZmanimFragment<VH : ZmanViewHolder, A : ZmanimAdapter<VH>, P : Zmanim
                 }
                 jewishDatePrevious = item?.jewishDate
             }
-            bindViewGrouping(list, dateHebrew)
+            bindViewGrouping(list, dateHebrew, isDarkTheme)
+
             val dayOfWeekToday = adapter.dayOfWeek
             val holidayToday = adapter.holidayToday
             val candlesToday = adapter.candlesTodayCount
             val holidayName = getName(context, dayOfWeekToday, holidayToday, candlesToday)
-            bindViewGrouping(list, holidayName)
+            bindViewGrouping(list, holidayName, isDarkTheme)
 
             // Parsha of the week.
             val parshaName = getName(context, adapter.parsha)
-            bindViewGrouping(list, parshaName)
+            bindViewGrouping(list, parshaName, isDarkTheme)
 
             // Sefirat HaOmer?
             val omerToday = adapter.dayOfOmerToday
             if (omerToday >= 1) {
                 val omerLabel = adapter.formatOmer(context, omerToday)
-                bindViewGrouping(list, omerLabel)
+                bindViewGrouping(list, omerLabel, isDarkTheme)
             }
             while (position < count) {
                 item = adapter[position]
@@ -261,18 +265,19 @@ open class ZmanimFragment<VH : ZmanViewHolder, A : ZmanimAdapter<VH>, P : Zmanim
                         jewishDate.jewishDayOfMonth
                     )
                     dateHebrew = adapter.formatDate(context, jewishDate)
-                    bindViewGrouping(list, dateHebrew)
+                    bindViewGrouping(list, dateHebrew, isDarkTheme)
                     val dayOfWeekTomorrow = jcal.dayOfWeek
                     val holidayTomorrow = adapter.holidayTomorrow
                     val candlesTomorrow = adapter.candlesCount
-                    val holidayTomorrowName = getName(context, dayOfWeekTomorrow, holidayTomorrow, candlesTomorrow)
-                    bindViewGrouping(list, holidayTomorrowName)
+                    val holidayTomorrowName =
+                        getName(context, dayOfWeekTomorrow, holidayTomorrow, candlesTomorrow)
+                    bindViewGrouping(list, holidayTomorrowName, isDarkTheme)
 
                     // Sefirat HaOmer?
                     val omerTomorrow = adapter.dayOfOmerTomorrow
                     if (omerTomorrow >= 1) {
                         val omerLabel = adapter.formatOmer(context, omerTomorrow)
-                        bindViewGrouping(list, omerLabel)
+                        bindViewGrouping(list, omerLabel, isDarkTheme)
                     }
                 }
                 viewHolder = adapter.onCreateViewHolder(list, 0)
@@ -314,14 +319,19 @@ open class ZmanimFragment<VH : ZmanViewHolder, A : ZmanimAdapter<VH>, P : Zmanim
      *
      * @param list  the list.
      * @param label the formatted Hebrew date label.
+     * @param isDarkTheme is the theme dark?
      */
-    private fun bindViewGrouping(list: ViewGroup, label: CharSequence?) {
+    private fun bindViewGrouping(
+        list: ViewGroup,
+        label: CharSequence?,
+        isDarkTheme: Boolean
+    ) {
         if (label.isNullOrEmpty()) return
-        if (list.childCount > 0) {
+        if (list.isNotEmpty()) {
             bindDivider(list)
         }
         val inflater = LayoutInflater.from(list.context)
-        if (preferences.isDarkTheme) {
+        if (isDarkTheme) {
             val binding = DateGroupBinding.inflate(inflater, list, false)
             binding.title.text = label
             val row: View = binding.root
