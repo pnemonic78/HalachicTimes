@@ -2,11 +2,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(alibs.plugins.android.application)
-    alias(alibs.plugins.kotlin.android)
 }
 
-val versionMajor = project.properties["APP_VERSION_MAJOR"].toString().toInt()
-val versionMinor = project.properties["APP_VERSION_MINOR"].toString().toInt()
+val versionMajor = project.property("APP_VERSION_MAJOR").toString().toInt()
+val versionMinor = project.property("APP_VERSION_MINOR").toString().toInt()
 
 android {
     compileSdk = libs.versions.android.compileSdk.toInt()
@@ -17,7 +16,7 @@ android {
         minSdk = libs.versions.android.minSdk.toInt()
         targetSdk = libs.versions.android.targetSdk.toInt()
         versionCode = versionMajor * 100 + versionMinor
-        versionName = "${versionMajor}." + versionMinor.toString().padStart(2, '0')
+        versionName = "${versionMajor}.${versionMinor}"
     }
 
     compileOptions {
@@ -34,9 +33,9 @@ android {
     signingConfigs {
         create("release") {
             storeFile = file("../release.keystore")
-            storePassword = project.properties["STORE_PASSWORD_RELEASE"] as String
+            storePassword = project.property("STORE_PASSWORD_RELEASE").toString()
             keyAlias = "release"
-            keyPassword = project.properties["KEY_PASSWORD_RELEASE"] as String
+            keyPassword = project.property("KEY_PASSWORD_RELEASE").toString()
         }
     }
 
@@ -51,6 +50,7 @@ android {
         }
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFile(getDefaultProguardFile("proguard-android-optimize.txt"))
             proguardFile("proguard-rules.pro")
             signingConfig = signingConfigs["release"]

@@ -4,12 +4,11 @@ import java.util.Base64
 
 plugins {
     alias(alibs.plugins.android.library)
-    alias(alibs.plugins.kotlin.android)
     alias(alibs.plugins.kotlin.serialization)
 }
 
 fun LibraryDefaultConfig.encodeApiKey(name: String) {
-    val value = project.properties[name].toString()
+    val value = project.property(name).toString()
     val bytes = value.encodeToByteArray()
     val encoded = Base64.getEncoder().encodeToString(bytes)
     buildConfigField("String", name, "\"" + encoded + "\"")

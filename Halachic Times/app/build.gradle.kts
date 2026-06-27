@@ -4,14 +4,13 @@ import java.util.Locale
 
 plugins {
     alias(alibs.plugins.android.application)
-    alias(alibs.plugins.kotlin.android)
     alias(alibs.plugins.kotlin.serialization)
     alias(alibs.plugins.crashlytics)
     alias(alibs.plugins.google.services)
 }
 
-val versionMajor = project.properties["APP_VERSION_MAJOR"].toString().toInt()
-val versionMinor = project.properties["APP_VERSION_MINOR"].toString().toInt()
+val versionMajor = project.property("APP_VERSION_MAJOR").toString().toInt()
+val versionMinor = project.property("APP_VERSION_MINOR").toString().toInt()
 
 android {
     compileSdk = libs.versions.android.compileSdk.toInt()
@@ -84,15 +83,14 @@ android {
     signingConfigs {
         create("release") {
             storeFile = file("../release.keystore")
-            storePassword = project.properties["STORE_PASSWORD_RELEASE"] as String
+            storePassword = project.property("STORE_PASSWORD_RELEASE").toString()
             keyAlias = "release"
-            keyPassword = project.properties["KEY_PASSWORD_RELEASE"] as String
+            keyPassword = project.property("KEY_PASSWORD_RELEASE").toString()
         }
     }
 
     buildFeatures {
         buildConfig = true
-        compose = true
         viewBinding = true
     }
 

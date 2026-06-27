@@ -1,8 +1,5 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     application
-    alias(alibs.plugins.kotlin.jvm)
     alias(alibs.plugins.kotlin.serialization)
 }
 
@@ -10,12 +7,6 @@ application {
     java {
         sourceCompatibility = BuildVersions.jvm
         targetCompatibility = BuildVersions.jvm
-    }
-
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.fromTarget(BuildVersions.jvm.toString()))
-        }
     }
 
     sourceSets {
