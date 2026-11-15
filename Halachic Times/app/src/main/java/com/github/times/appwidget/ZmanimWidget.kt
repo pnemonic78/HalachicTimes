@@ -17,6 +17,7 @@ package com.github.times.appwidget
 
 import android.content.Context
 import android.graphics.Color
+import android.util.TypedValue
 import android.widget.RemoteViews
 import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
@@ -223,6 +224,10 @@ open class ZmanimWidget : ZmanimAppWidget() {
         row.setTextViewText(R.id.time, item.timeLabel)
         row.setTextColor(R.id.title, colorEnabled)
         row.setTextColor(R.id.time, colorEnabled)
+        if (item.isEmphasis) {
+            row.setTextViewTextSize(R.id.title, TypedValue.COMPLEX_UNIT_SP, textSizeEmphasis)
+            row.setTextViewTextSize(R.id.time, TypedValue.COMPLEX_UNIT_SP, textSizeEmphasis)
+        }
         bindViewRowSpecial(context, row, position, item)
         list.addView(ID_LIST, row)
     }

@@ -402,5 +402,7 @@ abstract class ZmanimAppWidget : AppWidgetProvider() {
 
         @IdRes
         internal val ID_LIST = android.R.id.list
+
+        internal val textSizeEmphasis = 17f
     }
 }

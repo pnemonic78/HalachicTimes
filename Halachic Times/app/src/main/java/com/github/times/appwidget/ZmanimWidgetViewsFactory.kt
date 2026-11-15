@@ -18,6 +18,7 @@ package com.github.times.appwidget
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.util.TypedValue
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService.RemoteViewsFactory
 import androidx.annotation.ColorInt
@@ -35,6 +36,7 @@ import com.github.times.ZmanimApplication
 import com.github.times.ZmanimDays.getName
 import com.github.times.ZmanimItem
 import com.github.times.ZmanimPopulater
+import com.github.times.appwidget.ZmanimAppWidget.Companion.textSizeEmphasis
 import com.github.times.isNullOrEmpty
 import com.github.times.location.ZmanimLocations
 import com.github.times.preference.SimpleZmanimPreferences
@@ -224,6 +226,10 @@ class ZmanimWidgetViewsFactory(
         } else {
             row.setTextColor(R.id.title, colorEnabled)
             row.setTextColor(R.id.time, colorEnabled)
+        }
+        if (item.isEmphasis) {
+            row.setTextViewTextSize(R.id.title, TypedValue.COMPLEX_UNIT_SP, textSizeEmphasis)
+            row.setTextViewTextSize(R.id.time, TypedValue.COMPLEX_UNIT_SP, textSizeEmphasis)
         }
         // Enable clicking to open the main activity.
         row.setOnClickFillInIntent(R.id.widget_item, Intent())
