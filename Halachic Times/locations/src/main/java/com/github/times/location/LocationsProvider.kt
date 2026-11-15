@@ -189,7 +189,6 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         }
         if (keepLocation) {
             this.locationLocal = locationNew
-            this.locationSaved = locationNew
         }
         notifyLocationChanged(locationNew)
         if (findAddress) {
@@ -343,17 +342,6 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         }
 
     /**
-     * Get a location from the saved preferences.
-     *
-     * @return the location - {@code null} otherwise.
-     */
-    private var locationSaved: Location?
-        get() = preferences.location
-        set(value) {
-            preferences.location = value
-        }
-
-    /**
      * Get a location from the time zone.
      *
      * @return the location - `null` otherwise.
@@ -379,8 +367,6 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     fun getLocation(): Location? {
         var location = locationLocal
         if (isValid(location)) return location
-        location = locationSaved
-        if (isValid(location)) return location
         location = locationGPS
         if (isValid(location)) return location
         location = locationNetwork
@@ -401,11 +387,6 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
      */
     private fun loadLocation() {
         var location = locationLocal
-        if (isValid(location)) {
-            handleLocationChanged(location)
-            return
-        }
-        location = locationSaved
         if (isValid(location)) {
             handleLocationChanged(location)
             return
@@ -571,7 +552,6 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
     fun setLocation(location: Location?) {
         this.locationLocal = null
         this.locationManual = location
-        this.locationSaved = null
         if (location == null) {
             handler.removeMessages(WHAT_CHANGED)
             handler.removeMessages(WHAT_START)
@@ -593,7 +573,6 @@ open class LocationsProvider(private val context: Context) : ZmanimLocationListe
         }
         if (reset) {
             this.locationLocal = null
-            this.locationSaved = null
         }
         loadLocation()
         val provider = getBestProvider(locationManager)

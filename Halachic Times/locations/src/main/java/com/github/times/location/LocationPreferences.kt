@@ -47,11 +47,6 @@ interface LocationPreferences {
     }
 
     /**
-     * The location.
-     */
-    var location: Location?
-
-    /**
      * Are coordinates visible?
      *
      * @return `true` to show coordinates.
@@ -73,21 +68,6 @@ interface LocationPreferences {
     val isElevationVisible: Boolean
 
     companion object {
-        /** Preference name for the latitude.  */
-        const val KEY_LATITUDE = "location.latitude"
-
-        /** Preference name for the longitude.  */
-        const val KEY_LONGITUDE = "location.longitude"
-
-        /** Preference key for the elevation / altitude.  */
-        const val KEY_ELEVATION = "location.altitude"
-
-        /** Preference name for the location provider.  */
-        const val KEY_PROVIDER = "location.provider"
-
-        /** Preference name for the location time.  */
-        const val KEY_TIME = "location.time"
-
         /** Preference name for the co-ordinates format.  */
         const val KEY_COORDS_FORMAT = "coords.format"
 

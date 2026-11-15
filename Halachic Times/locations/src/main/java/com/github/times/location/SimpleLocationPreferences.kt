@@ -16,22 +16,14 @@
 package com.github.times.location
 
 import android.content.Context
-import android.location.Location
-import androidx.core.content.edit
 import com.github.preference.SimplePreferences
 import com.github.times.location.LocationPreferences.Companion.KEY_COORDS_ELEVATION
 import com.github.times.location.LocationPreferences.Companion.KEY_COORDS_FORMAT
-import com.github.times.location.LocationPreferences.Companion.KEY_ELEVATION
-import com.github.times.location.LocationPreferences.Companion.KEY_LATITUDE
-import com.github.times.location.LocationPreferences.Companion.KEY_LONGITUDE
-import com.github.times.location.LocationPreferences.Companion.KEY_PROVIDER
-import com.github.times.location.LocationPreferences.Companion.KEY_TIME
 import com.github.times.location.LocationPreferences.Values.Companion.ELEVATION_VISIBLE_DEFAULT
 import com.github.times.location.LocationPreferences.Values.Companion.FORMAT_DECIMAL
 import com.github.times.location.LocationPreferences.Values.Companion.FORMAT_DEFAULT
 import com.github.times.location.LocationPreferences.Values.Companion.FORMAT_NONE
 import com.github.times.location.LocationPreferences.Values.Companion.FORMAT_SEXAGESIMAL
-import timber.log.Timber
 
 /**
  * Simple location preferences implementation.
@@ -43,57 +35,6 @@ class SimpleLocationPreferences(context: Context) : SimplePreferences(context),
 
     init {
         init(context)
-    }
-
-    override var location: Location?
-        get() {
-            if (!preferences.contains(KEY_LATITUDE)
-                || !preferences.contains(KEY_LONGITUDE)
-            ) {
-                return null
-            }
-            val latitude: Double
-            val longitude: Double
-            val elevation: Double
-            try {
-                latitude = preferences.getString(KEY_LATITUDE, "0")!!.toDouble()
-                longitude =
-                    preferences.getString(KEY_LONGITUDE, "0")!!.toDouble()
-                elevation =
-                    preferences.getString(KEY_ELEVATION, "0")!!.toDouble()
-            } catch (nfe: NumberFormatException) {
-                Timber.e(nfe)
-                return null
-            }
-            val provider = preferences.getString(KEY_PROVIDER, "")
-            val location = Location(provider)
-            location.latitude = latitude
-            location.longitude = longitude
-            location.altitude = elevation
-            location.time = preferences.getLong(KEY_TIME, 0L)
-            return location
-        }
-        set(value) = putLocation(value)
-
-    private fun putLocation(location: Location?) {
-        preferences.edit {
-            if (location != null) {
-                putString(KEY_PROVIDER, location.provider)
-                putString(KEY_LATITUDE, location.latitude.toString())
-                putString(KEY_LONGITUDE, location.longitude.toString())
-                putString(
-                    KEY_ELEVATION,
-                    (if (location.hasAltitude()) location.altitude else 0.0).toString()
-                )
-                putLong(KEY_TIME, location.time)
-            } else {
-                remove(KEY_PROVIDER)
-                remove(KEY_LATITUDE)
-                remove(KEY_LONGITUDE)
-                remove(KEY_ELEVATION)
-                remove(KEY_TIME)
-            }
-        }
     }
 
     /**
