@@ -46,12 +46,6 @@ android {
         targetCompatibility = BuildVersions.jvm
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
-        }
-    }
-
     lint {
         disable += "LocaleFolder"
         disable += "RtlHardcoded"
@@ -63,6 +57,12 @@ android {
         unitTests {
             isIncludeAndroidResources = true
         }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
     }
 }
 

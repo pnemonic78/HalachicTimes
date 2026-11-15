@@ -74,12 +74,6 @@ android {
         targetCompatibility = BuildVersions.jvm
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
-        }
-    }
-
     signingConfigs {
         create("release") {
             storeFile = file("../release.keystore")
@@ -143,6 +137,12 @@ android {
         unitTests {
             isIncludeAndroidResources = true
         }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
     }
 }
 

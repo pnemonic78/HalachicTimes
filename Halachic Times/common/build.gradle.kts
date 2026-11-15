@@ -50,12 +50,6 @@ android {
         targetCompatibility = BuildVersions.jvm
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
-        }
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -68,6 +62,12 @@ android {
     lint {
         disable += "LocaleFolder"
         disable += "UnusedResources"
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
     }
 }
 

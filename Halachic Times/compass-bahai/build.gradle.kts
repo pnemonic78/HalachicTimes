@@ -24,12 +24,6 @@ android {
         targetCompatibility = BuildVersions.jvm
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
-        }
-    }
-
     signingConfigs {
         create("release") {
             storeFile = file("../release.keystore")
@@ -64,6 +58,12 @@ android {
         disable += "Overdraw"
         disable += "PluralsCandidate"
         disable += "UnusedAttribute"
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
     }
 }
 

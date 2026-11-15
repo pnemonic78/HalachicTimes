@@ -32,15 +32,15 @@ android {
         targetCompatibility = BuildVersions.jvm
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
-        }
-    }
-
     lint {
         disable += "LocaleFolder"
         disable += "UnusedResources"
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.fromTarget(BuildVersions.jvm.toString())
     }
 }
 
